@@ -1,0 +1,28 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls static admin_list %}
+
+{% block title %}{{ title }} | Dj Control Room Base{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+{% if dj_cr_load_default_css %}<link rel="stylesheet" href="{% static 'dj_control_room_base/css/styles.css' %}">{% endif %}
+{{ dj_cr_extra_css }}
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'dj_control_room_base:index' %}">Dj Control Room Base</a></h1>
+{% endblock %}
+
+{% block messages %}
+{% endblock %}
+
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+&rsaquo; {% trans 'Dj Control Room Base' %}
+</div>
+{% endblock %}
+
+{% block content %}
+{% endblock %}
