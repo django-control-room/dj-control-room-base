@@ -28,14 +28,14 @@ class TestAdminIntegration(CeleryPanelTestCase):
 
         # Check that the link to the changelist exists
         changelist_url = reverse(
-            "admin:dj_control_room_base_celerypanelplaceholder_changelist"
+            "admin:dj_control_room_base_basepanelplaceholder_changelist"
         )
         self.assertContains(response, changelist_url)
 
     def test_celery_panel_changelist_redirects_to_index(self):
         """Test that clicking the Panel in admin redirects to the Panel index."""
         changelist_url = reverse(
-            "admin:dj_control_room_base_celerypanelplaceholder_changelist"
+            "admin:dj_control_room_base_basepanelplaceholder_changelist"
         )
         response = self.client.get(changelist_url)
 
@@ -48,7 +48,7 @@ class TestAdminIntegration(CeleryPanelTestCase):
         """Test that unauthenticated users cannot access the Panel through admin."""
         client = Client()
         changelist_url = reverse(
-            "admin:dj_control_room_base_celerypanelplaceholder_changelist"
+            "admin:dj_control_room_base_basepanelplaceholder_changelist"
         )
         response = client.get(changelist_url)
 
@@ -67,7 +67,7 @@ class TestAdminIntegration(CeleryPanelTestCase):
         client.force_login(user)
 
         changelist_url = reverse(
-            "admin:dj_control_room_base_celerypanelplaceholder_changelist"
+            "admin:dj_control_room_base_basepanelplaceholder_changelist"
         )
         response = client.get(changelist_url)
 

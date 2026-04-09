@@ -33,14 +33,42 @@ class PanelConfig:
         self.settings_key = settings_key
         self.defaults = defaults or {}
 
+        # This is used by the dj-control-room package to override settings for the panel
+        # in order to provide a consistent interface for all panels. It is not needed
+        # when using panels standalone.
+        self._override_settings = {}
+
+    def apply_override_settings(self, settings: dict) -> None:
+        """Apply the DJ Control Room override settings to the panel config."""
+        self._override_settings = settings
+
     def get_settings(self, key: str | None = None) -> dict:
         """Return merged panel settings (defined settings overrides applied over defaults)."""
         # settings defined for the panel in the consuming project's app settings
         defined_settings = getattr(django_settings, self.settings_key, None) or {}
 
-        # combine defaults with defined settings. settings not defined by the project will use
-        # the defaults
-        combined_settings = {**self.defaults, **defined_settings}
+        # combine settings and follow the order of precedence
+        # 1. defaults - settings defined in a panel's conf.py
+        # 2. override settings - settings defined in the dj-control-room package like
+        # DJ_CONTROL_ROOM_SETTINGS = {
+        #     "LOAD_DEFAULT_CSS": False,
+        #     "EXTRA_CSS": ["dj_control_room_base/css/overrides.css"],
+        #     "panels": {
+        #         "dj_redis_panel": {
+        #             "ALLOW_OPTION": True,
+        #         }
+        #     }
+        # }
+        # 3. defined settings - settings defined in the consuming project's app settings
+        # DJ_REDIS_PANEL_SETTINGS = {
+        #     "LOAD_DEFAULT_CSS": False,
+        #     "ALLOW_OPTION": True,
+        # }
+        combined_settings = {
+            **self.defaults,
+            **self._override_settings,
+            **defined_settings,
+        }
         if key is not None:
             # get a specific key and fall back to defaults if not defined
             return combined_settings.get(key, self.defaults.get(key, None))
