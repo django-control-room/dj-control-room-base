@@ -1,14 +1,11 @@
-from django.db import models
+from dj_control_room_base.core import PanelPlaceholderModel
 
 
-class BasePanelPlaceholder(models.Model):
+class BasePanelPlaceholder(PanelPlaceholderModel):
     """
-    This is a fake model used to create an entry in the admin panel for dj_control_room_base.
-    When we register this app with the admin site, it is configured to simply load
-    the panel templates.
+    Placeholder model that registers the base panel in the Django admin sidebar.
     """
 
-    class Meta:
-        managed = False
+    class Meta(PanelPlaceholderModel.Meta):
         verbose_name = "Dj Control Room Base"
         verbose_name_plural = "Dj Control Room Base"
