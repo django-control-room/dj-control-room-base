@@ -8,3 +8,9 @@ from dj_control_room_base.conf import panel_config
 def index(request):
     context = panel_config.get_context(request, title="Dj Control Room Base")
     return render(request, "admin/dj_control_room_base/index.html", context)
+
+
+@staff_member_required
+def examples(request):
+    context = panel_config.get_context(request, title="Examples")
+    return render(request, "admin/dj_control_room_base/examples.html", context)
