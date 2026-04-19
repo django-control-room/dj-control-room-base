@@ -1,0 +1,407 @@
+{% extends "admin/dj_control_room_base/base.html" %}
+{% load i18n static %}
+
+{% block panel_scripts %}
+<link rel="stylesheet" href="{% static 'dj_control_room_base/vendor/highlight-github-dark.min.css' %}">
+<script src="{% static 'dj_control_room_base/vendor/highlight.min.js' %}"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.dcr-code-viewer__body code').forEach(function (el) {
+      hljs.highlightElement(el);
+    });
+  });
+</script>
+{% endblock %}
+
+{% block panel_title %}{% trans "Examples" %}{% endblock %}
+
+{# Override breadcrumbs to show the full hierarchy #}
+{% block panel_breadcrumbs %}
+&rsaquo; <a href="{% url 'dj_control_room_base:index' %}">{% trans "Dj Control Room Base" %}</a>
+&rsaquo; {% trans "Examples" %}
+{% endblock %}
+
+{% block panel_content %}
+
+{# ── Page header ──────────────────────────────────────────────────────────── #}
+<div class="dcr-page-header">
+  <h1 class="dcr-page-header__title">{% trans "Worker Dashboard" %}</h1>
+  <div class="dcr-page-header__actions">
+    <button class="dcr-btn">{% trans "Refresh" %}</button>
+  </div>
+</div>
+
+{# ── Worker cards ─────────────────────────────────────────────────────────── #}
+<div class="dcr-card-grid">
+
+  <div class="dcr-card">
+    <span class="dcr-pill dcr-pill--success"><span class="dcr-pill__dot"></span>worker-1</span>
+    <div class="dcr-card__bottom">
+      <span class="dcr-card__meta">142 {% trans "tasks" %}</span>
+      <span class="dcr-card__meta">CPU 23%</span>
+    </div>
+  </div>
+
+  <div class="dcr-card">
+    <span class="dcr-pill dcr-pill--success"><span class="dcr-pill__dot"></span>worker-2</span>
+    <div class="dcr-card__bottom">
+      <span class="dcr-card__meta">89 {% trans "tasks" %}</span>
+      <span class="dcr-card__meta">CPU 18%</span>
+    </div>
+  </div>
+
+  <div class="dcr-card">
+    <span class="dcr-pill dcr-pill--warning"><span class="dcr-pill__dot"></span>worker-3</span>
+    <div class="dcr-card__bottom">
+      <span class="dcr-card__meta">231 {% trans "tasks" %}</span>
+      <span class="dcr-card__meta">CPU 67%</span>
+    </div>
+  </div>
+
+</div>
+
+{# ── Queue depth chart ────────────────────────────────────────────────────── #}
+<div class="dcr-data-table" style="margin-bottom:var(--dcr-space-lg)">
+  <div class="dcr-data-table__header">
+    <h3 class="dcr-data-table__title">{% trans "Queue Depth" %}</h3>
+    <span style="font-size:var(--dcr-font-size-sm);color:var(--dcr-color-text-muted)">{% trans "Last 60 min" %}</span>
+  </div>
+  <div class="dcr-bar-chart">
+    <div class="dcr-bar-chart__inner" aria-hidden="true">
+      {# ~40 bars normalised against a peak of 70 — each height is (value/70)*100% #}
+      <div class="dcr-bar-chart__bar" style="height:21%"></div>
+      <div class="dcr-bar-chart__bar" style="height:31%"></div>
+      <div class="dcr-bar-chart__bar" style="height:26%"></div>
+      <div class="dcr-bar-chart__bar" style="height:43%"></div>
+      <div class="dcr-bar-chart__bar" style="height:29%"></div>
+      <div class="dcr-bar-chart__bar" style="height:36%"></div>
+      <div class="dcr-bar-chart__bar" style="height:21%"></div>
+      <div class="dcr-bar-chart__bar" style="height:50%"></div>
+      <div class="dcr-bar-chart__bar" style="height:40%"></div>
+      <div class="dcr-bar-chart__bar" style="height:29%"></div>
+      <div class="dcr-bar-chart__bar" style="height:57%"></div>
+      <div class="dcr-bar-chart__bar" style="height:43%"></div>
+      <div class="dcr-bar-chart__bar" style="height:31%"></div>
+      <div class="dcr-bar-chart__bar" style="height:79%"></div>
+      <div class="dcr-bar-chart__bar" style="height:57%"></div>
+      <div class="dcr-bar-chart__bar" style="height:69%"></div>
+      <div class="dcr-bar-chart__bar" style="height:50%"></div>
+      <div class="dcr-bar-chart__bar" style="height:89%"></div>
+      <div class="dcr-bar-chart__bar" style="height:71%"></div>
+      <div class="dcr-bar-chart__bar" style="height:64%"></div>
+      <div class="dcr-bar-chart__bar" style="height:100%"></div>
+      <div class="dcr-bar-chart__bar" style="height:83%"></div>
+      <div class="dcr-bar-chart__bar" style="height:69%"></div>
+      <div class="dcr-bar-chart__bar" style="height:93%"></div>
+      <div class="dcr-bar-chart__bar" style="height:74%"></div>
+      <div class="dcr-bar-chart__bar" style="height:64%"></div>
+      <div class="dcr-bar-chart__bar" style="height:83%"></div>
+      <div class="dcr-bar-chart__bar" style="height:69%"></div>
+      <div class="dcr-bar-chart__bar" style="height:57%"></div>
+      <div class="dcr-bar-chart__bar" style="height:74%"></div>
+      <div class="dcr-bar-chart__bar" style="height:60%"></div>
+      <div class="dcr-bar-chart__bar" style="height:50%"></div>
+      <div class="dcr-bar-chart__bar" style="height:69%"></div>
+      <div class="dcr-bar-chart__bar" style="height:54%"></div>
+      <div class="dcr-bar-chart__bar" style="height:60%"></div>
+      <div class="dcr-bar-chart__bar" style="height:50%"></div>
+      <div class="dcr-bar-chart__bar" style="height:57%"></div>
+      <div class="dcr-bar-chart__bar" style="height:64%"></div>
+      <div class="dcr-bar-chart__bar" style="height:54%"></div>
+      <div class="dcr-bar-chart__bar" style="height:60%"></div>
+    </div>
+  </div>
+</div>
+
+{# ── Recent tasks table ───────────────────────────────────────────────────── #}
+<div class="dcr-data-table">
+  <div class="dcr-data-table__header">
+    <h3 class="dcr-data-table__title">{% trans "Recent Tasks" %}</h3>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>{% trans "Task" %}</th>
+        <th>{% trans "Status" %}</th>
+        <th>{% trans "Duration" %}</th>
+        <th style="text-align:right">{% trans "When" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code class="dcr-code">send_welcome_email</code></td>
+        <td><span class="dcr-status-text dcr-status-text--success">✓ {% trans "Success" %}</span></td>
+        <td><code class="dcr-code">0.4s</code></td>
+        <td style="text-align:right;color:var(--dcr-color-text-muted)">{% trans "2m ago" %}</td>
+      </tr>
+      <tr>
+        <td><code class="dcr-code">process_payment</code></td>
+        <td><span class="dcr-status-text dcr-status-text--success">✓ {% trans "Success" %}</span></td>
+        <td><code class="dcr-code">1.2s</code></td>
+        <td style="text-align:right;color:var(--dcr-color-text-muted)">{% trans "4m ago" %}</td>
+      </tr>
+      <tr>
+        <td><code class="dcr-code">generate_report</code></td>
+        <td><span class="dcr-status-text dcr-status-text--warning">◷ {% trans "Running" %}</span></td>
+        <td><code class="dcr-code">—</code></td>
+        <td style="text-align:right;color:var(--dcr-color-text-muted)">{% trans "now" %}</td>
+      </tr>
+      <tr>
+        <td><code class="dcr-code">sync_inventory</code></td>
+        <td><span class="dcr-status-text dcr-status-text--danger">✕ {% trans "Failed" %}</span></td>
+        <td><code class="dcr-code">8.1s</code></td>
+        <td style="text-align:right;color:var(--dcr-color-text-muted)">{% trans "6m ago" %}</td>
+      </tr>
+      <tr>
+        <td><code class="dcr-code">resize_image</code></td>
+        <td><span class="dcr-status-text dcr-status-text--muted">↺ {% trans "Retry" %}</span></td>
+        <td><code class="dcr-code">—</code></td>
+        <td style="text-align:right;color:var(--dcr-color-text-muted)">{% trans "7m ago" %}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+{# ── Failed task callout ───────────────────────────────────────────────────── #}
+<div class="dcr-callout dcr-callout--danger">
+  <p class="dcr-callout__title">sync_inventory {% trans "failed" %}</p>
+  <p class="dcr-callout__body">ConnectionRefusedError: {% trans "Could not connect to inventory service at 10.0.1.42:5432. The task will not be retried automatically — check service health and requeue manually." %}</p>
+</div>
+
+<hr class="dcr-divider">
+
+{# ════════════════════════════════════════════════════════════════════════════ #}
+{# KEY BROWSER — search / filter / results pattern                            #}
+{# ════════════════════════════════════════════════════════════════════════════ #}
+
+{# ── Page header ──────────────────────────────────────────────────────────── #}
+<div class="dcr-page-header">
+  <h1 class="dcr-page-header__title">{% trans "Key Browser" %}
+    <span class="dcr-badge" style="vertical-align:middle;margin-left:var(--dcr-space-sm)">12 TOTAL</span>
+  </h1>
+  <div class="dcr-page-header__actions">
+    <span class="dcr-pill dcr-pill--success"><span class="dcr-pill__dot"></span>Redis · default</span>
+  </div>
+</div>
+
+{# ── Single card: header + controls + table + pagination ─────────────────── #}
+<div class="dcr-data-table">
+
+  {# Zone 1: header #}
+  <div class="dcr-data-table__header">
+    <div class="dcr-data-table__header-info">
+      <h3 class="dcr-data-table__title">
+        {% trans "Key Browser" %}
+        <span class="dcr-badge">12 TOTAL</span>
+      </h3>
+      <p class="dcr-data-table__subtitle">{% trans "Browse every key across all databases on this Redis instance." %}</p>
+    </div>
+    <div class="dcr-data-table__meta">
+      <span>{% trans "Showing 12 of 12" %}</span>
+      <span>{% trans "Updated just now" %}</span>
+    </div>
+  </div>
+
+  {# Zone 2: search + filters #}
+  <div class="dcr-data-table__controls">
+    <form class="dcr-search-form" method="get">
+      <div class="dcr-search-form__search-row">
+        <div style="flex:1;display:flex;flex-direction:column;gap:var(--dcr-space-xs)">
+          <label class="dcr-search-form__label" for="ex-pattern">{% trans "Search by key" %}</label>
+          <div class="dcr-search-field">
+            <span class="dcr-search-field__icon">&#9906;</span>
+            <input id="ex-pattern" class="dcr-search-field__input" type="text" name="q"
+                   value="session:*" placeholder="{% trans 'e.g. user:*, session:*, queue:default' %}">
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-end">
+          <button type="submit" class="dcr-btn dcr-btn--primary">{% trans "Search" %}</button>
+        </div>
+      </div>
+      <div class="dcr-search-form__filter-row">
+        <div class="dcr-filter-group">
+          <label class="dcr-filter-group__label" for="ex-type">&#9663; {% trans "Type" %}</label>
+          <select id="ex-type" name="type">
+            <option selected>{% trans "All types" %}</option>
+            <option>String</option>
+            <option>Hash</option>
+            <option>List</option>
+            <option>Set</option>
+            <option>ZSet</option>
+          </select>
+        </div>
+        <div class="dcr-filter-group">
+          <label class="dcr-filter-group__label" for="ex-backend">{% trans "Database" %}</label>
+          <select id="ex-backend" name="backend">
+            <option selected>{% trans "All databases" %}</option>
+            <option>db0</option>
+            <option>db1</option>
+          </select>
+        </div>
+        <div style="flex:1"></div>
+        <button type="button" class="dcr-btn" style="align-self:flex-end">{% trans "Reset all filters" %}</button>
+      </div>
+    </form>
+  </div>
+
+  {# Zone 3: table body #}
+  <table>
+    <thead>
+      <tr>
+        <th>{% trans "Key" %}</th>
+        <th>{% trans "Type" %}</th>
+        <th>{% trans "DB" %}</th>
+        <th class="dcr-col--right">{% trans "Size" %}</th>
+        <th class="dcr-col--right">{% trans "TTL" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a href="#" class="dcr-data-table__link">user:42:profile</a></td>
+        <td><span class="dcr-badge dcr-badge--warning">hash</span></td>
+        <td>db0</td>
+        <td class="dcr-col--right">412 B</td>
+        <td class="dcr-col--right">1h</td>
+      </tr>
+      <tr>
+        <td><a href="#" class="dcr-data-table__link">session:s9k2lq</a></td>
+        <td><span class="dcr-badge dcr-badge--info">string</span></td>
+        <td>db1</td>
+        <td class="dcr-col--right">1.2 KB</td>
+        <td class="dcr-col--right">14d</td>
+      </tr>
+      <tr>
+        <td><a href="#" class="dcr-data-table__link">queue:default</a></td>
+        <td><span class="dcr-badge dcr-badge--muted">list</span></td>
+        <td>db0</td>
+        <td class="dcr-col--right">8.2 KB</td>
+        <td class="dcr-col--right">never</td>
+      </tr>
+      <tr>
+        <td><a href="#" class="dcr-data-table__link">leaderboard:weekly</a></td>
+        <td><span class="dcr-badge dcr-badge--danger">zset</span></td>
+        <td>db0</td>
+        <td class="dcr-col--right">24.2 KB</td>
+        <td class="dcr-col--right">7d</td>
+      </tr>
+      <tr>
+        <td><a href="#" class="dcr-data-table__link">online_users</a></td>
+        <td><span class="dcr-badge dcr-badge--success">set</span></td>
+        <td>db0</td>
+        <td class="dcr-col--right">612 B</td>
+        <td class="dcr-col--right">never</td>
+      </tr>
+    </tbody>
+  </table>
+
+  {# Zone 4: pagination #}
+  <div class="dcr-pagination">
+    <div class="dcr-pagination__per-page">
+      <span class="dcr-pagination__summary">{% trans "Showing" %} <strong>1–5</strong> {% trans "of" %} <strong>12</strong></span>
+      <label>{% trans "Per page" %} <select class="dcr-pagination__per-page-select"><option>5</option><option>10</option><option>25</option></select></label>
+    </div>
+    <div class="dcr-pagination__controls">
+      <span class="dcr-pagination__btn" aria-disabled="true" aria-label="{% trans 'Previous' %}">‹ {% trans "Previous" %}</span>
+      <span class="dcr-pagination__page dcr-pagination__page--active">1</span>
+      <a href="#" class="dcr-pagination__page">2</a>
+      <a href="#" class="dcr-pagination__page">3</a>
+      <a href="#" class="dcr-pagination__btn" aria-label="{% trans 'Next' %}">{% trans "Next" %} ›</a>
+    </div>
+  </div>
+
+</div>
+
+{# ── Empty state — shown when a search returns no matches ────────────────── #}
+{# Separated by a callout to make the "alternative state" context clear.     #}
+<div class="dcr-callout dcr-callout--info">
+  <p class="dcr-callout__title">{% trans "No results state" %}</p>
+  <p class="dcr-callout__body">{% trans "When a search returns no matching keys, replace the results table with dcr-empty. Combine with a 'Clear search' action link." %}</p>
+</div>
+
+<div class="dcr-data-table">
+  <div class="dcr-data-table__header">
+    <h3 class="dcr-data-table__title">{% trans "Results" %}</h3>
+  </div>
+  <div class="dcr-empty">
+    <h2 class="dcr-empty__title">{% trans "No keys found" %}</h2>
+    <p class="dcr-empty__body">{% trans "No keys matched the pattern cache:missing_* in the Redis default backend. Try a broader pattern or switch backend." %}</p>
+  </div>
+</div>
+
+<hr class="dcr-divider">
+
+{# ════════════════════════════════════════════════════════════════════════════ #}
+{# KEY DETAIL — back-link, section-header, definition list, code viewer       #}
+{# ════════════════════════════════════════════════════════════════════════════ #}
+
+<a href="#" class="dcr-back-link">← {% trans "Back to all keys" %}</a>
+
+<div class="dcr-page-header">
+  <h1 class="dcr-page-header__title" style="font-family:var(--dcr-font-mono)">user:42:profile
+    <span class="dcr-badge dcr-badge--warning" style="vertical-align:middle;margin-left:var(--dcr-space-sm)">HASH</span>
+    <span class="dcr-badge dcr-badge--muted" style="vertical-align:middle">db0</span>
+  </h1>
+  <div class="dcr-page-header__actions">
+    <button class="dcr-btn">{% trans "Copy value" %}</button>
+    <button class="dcr-btn dcr-btn--danger">{% trans "Delete key" %}</button>
+  </div>
+</div>
+
+<div class="dcr-section-header">
+  <h2 class="dcr-section-header__title">{% trans "Key Information" %}</h2>
+</div>
+
+<dl class="dcr-dl">
+  <div class="dcr-dl__row">
+    <dt class="dcr-dl__label">{% trans "Key" %}</dt>
+    <dd class="dcr-dl__value dcr-dl__value--mono">user:42:profile</dd>
+  </div>
+  <div class="dcr-dl__row">
+    <dt class="dcr-dl__label">{% trans "Type" %}</dt>
+    <dd class="dcr-dl__value"><span class="dcr-badge dcr-badge--warning">HASH</span></dd>
+  </div>
+  <div class="dcr-dl__row">
+    <dt class="dcr-dl__label">{% trans "Database" %}</dt>
+    <dd class="dcr-dl__value">db0</dd>
+  </div>
+  <div class="dcr-dl__row">
+    <dt class="dcr-dl__label">{% trans "Encoding" %}</dt>
+    <dd class="dcr-dl__value">listpack</dd>
+  </div>
+  <div class="dcr-dl__row">
+    <dt class="dcr-dl__label">{% trans "Size" %}</dt>
+    <dd class="dcr-dl__value">412 B</dd>
+  </div>
+  <div class="dcr-dl__row">
+    <dt class="dcr-dl__label">{% trans "TTL" %}</dt>
+    <dd class="dcr-dl__value">1h <span class="dcr-dl__secondary">(31m {% trans "remaining" %})</span></dd>
+  </div>
+  <div class="dcr-dl__row">
+    <dt class="dcr-dl__label">{% trans "Idle time" %}</dt>
+    <dd class="dcr-dl__value">12s</dd>
+  </div>
+</dl>
+
+<div class="dcr-section-header">
+  <h2 class="dcr-section-header__title">{% trans "Stored Value" %}</h2>
+  <span class="dcr-badge dcr-badge--warning">HASH</span>
+</div>
+
+<div class="dcr-code-viewer">
+  <div class="dcr-code-viewer__header">
+    <span class="dcr-code-viewer__label">&lt;&gt; {% trans "Raw Value" %}</span>
+    <span class="dcr-code-viewer__meta">412 B</span>
+  </div>
+  <pre class="dcr-code-viewer__body"><code class="language-json">{
+  "id": "42",
+  "username": "ada",
+  "email": "ada@example.com",
+  "joined": "2023-04-12T09:14:00Z",
+  "is_staff": "1",
+  "theme": "dark",
+  "timezone": "UTC",
+  "last_login": "2024-04-17T08:51:14Z"
+}</code></pre>
+</div>
+
+{% endblock %}

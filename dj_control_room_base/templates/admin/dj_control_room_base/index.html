@@ -1,47 +1,1148 @@
 {% extends "admin/dj_control_room_base/base.html" %}
 {% load i18n static %}
 
-{% block content %}
-<div class="panel-welcome">
-    <svg class="panel-welcome-icon" viewBox="0 0 160 220" fill="none" xmlns="http://www.w3.org/2000/svg" width="120" height="165" aria-hidden="true">
-        <style>
-            @keyframes panel-exhaust-pulse {
-                0%, 100% { opacity: 0.15; }
-                50% { opacity: 0.35; }
-            }
-            @keyframes panel-flame-flicker {
-                0%, 100% { transform: scaleY(1) scaleX(1); }
-                25% { transform: scaleY(0.95) scaleX(1.03); }
-                75% { transform: scaleY(1.05) scaleX(0.97); }
-            }
-            .rocket-exhaust { animation: panel-exhaust-pulse 1.5s ease-in-out infinite; transform-origin: 80px 205px; }
-            .rocket-flame { animation: panel-flame-flicker 0.35s ease-in-out infinite; transform-origin: 80px 175px; }
-        </style>
-        <ellipse cx="80" cy="205" rx="20" ry="14" fill="#ef4444" fill-opacity="0.15" class="rocket-exhaust"/>
-        <g class="rocket-flame">
-            <path d="M55 175 C55 178 65 215 80 222 C95 215 105 178 105 175" fill="#dc2626" fill-opacity="0.7"/>
-            <path d="M62 175 C62 178 70 208 80 214 C90 208 98 178 98 175" fill="#f97316" fill-opacity="0.8"/>
-            <path d="M69 175 C69 178 74 200 80 205 C86 200 91 178 91 175" fill="#fb923c" fill-opacity="0.9"/>
-            <path d="M74 175 C74 177 77 193 80 196 C83 193 86 177 86 175" fill="#fbbf24"/>
-        </g>
-        <path d="M56 155 C40 170 38 185 40 190 L60 170 Z" fill="rgba(46,125,50,0.8)"/>
-        <path d="M104 155 C120 170 122 185 120 190 L100 170 Z" fill="rgba(46,125,50,0.8)"/>
-        <path d="M76 170 L80 190 L84 170 Z" fill="rgba(46,125,50,0.6)"/>
-        <path d="M60 170 L60 90 C60 55 80 28 80 28 C80 28 100 55 100 90 L100 170 Z" fill="#2e7d32"/>
-        <path d="M64 165 L64 92 C64 60 78 35 80 32 C80 32 68 58 68 92 L68 165 Z" fill="rgba(255,255,255,0.1)"/>
-        <ellipse cx="80" cy="50" rx="4" ry="6" fill="rgba(255,255,255,0.15)"/>
-        <circle cx="80" cy="100" r="14" fill="#2e7d32" stroke="white" stroke-width="2" stroke-opacity="0.3"/>
-        <circle cx="80" cy="100" r="10" fill="#81c784"/>
-        <circle cx="76" cy="96" r="4" fill="rgba(255,255,255,0.3)"/>
-        <rect x="60" y="130" width="40" height="4" rx="1" fill="rgba(255,255,255,0.1)"/>
-        <text x="80" y="150" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="11" font-weight="bold" style="font-family: system-ui, sans-serif;">Dj</text>
-    </svg>
-    <h1 class="panel-welcome-title">{% trans "Welcome to your Django Control Room Panel" %}</h1>
-    <p class="panel-welcome-subtitle">{% trans "Your panel is set up and ready to build." %}</p>
-    <ul class="panel-welcome-links">
-        <li><a href="https://github.com/yassi/dj-control-room" target="_blank" rel="noopener">{% trans "DJ Control Room on GitHub" %}</a></li>
-        <li><a href="https://yassi.github.io/dj-control-room/" target="_blank" rel="noopener">{% trans "Documentation" %}</a></li>
-        <li><a href="https://github.com/yassi/cookiecutter-dj-control-room-plugin" target="_blank" rel="noopener">{% trans "Panel cookiecutter template" %}</a></li>
-    </ul>
+{% block panel_scripts %}
+<link rel="stylesheet" href="{% static 'dj_control_room_base/vendor/highlight-github-dark.min.css' %}">
+<script src="{% static 'dj_control_room_base/vendor/highlight.min.js' %}"></script>
+<script src="{% static 'dj_control_room_base/vendor/highlight-python.min.js' %}"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.dcr-sg-code code, .dcr-code-viewer__body code').forEach(function (el) {
+      hljs.highlightElement(el);
+    });
+  });
+</script>
+{% endblock %}
+
+{% block panel_content %}
+
+{# ── Intro ────────────────────────────────────────────────────────────────── #}
+<div class="dcr-sg-intro">
+  <h1 class="dcr-sg-intro__title">{% trans "DCR Design System" %}</h1>
+  <p class="dcr-sg-intro__desc">{% trans "Components and tokens for building Django Control Room panels. Install " %}<code class="dcr-code">dj-control-room-base</code>{% trans ", add it to " %}<code class="dcr-code">INSTALLED_APPS</code>{% trans ", and extend " %}<code class="dcr-code">panel_base.html</code>{% trans " to inherit this design system." %}</p>
+  <p class="dcr-sg-intro__links">
+    <a href="{% url 'dj_control_room_base:examples' %}">{% trans "View reference panel →" %}</a>
+  </p>
 </div>
+
+{# ── Jump-to nav ──────────────────────────────────────────────────────────── #}
+<nav class="dcr-sg-jumpto" aria-label="{% trans 'Jump to section' %}">
+  <span class="dcr-sg-jumpto__label">{% trans "Tokens" %}</span>
+  <a href="#colors">{% trans "Colors" %}</a>
+  <a href="#spacing">{% trans "Spacing" %}</a>
+  <span class="dcr-sg-jumpto__sep"></span>
+  <span class="dcr-sg-jumpto__label">{% trans "Components" %}</span>
+  <a href="#badge">{% trans "Badge" %}</a>
+  <a href="#pill">{% trans "Pill" %}</a>
+  <a href="#button">{% trans "Button" %}</a>
+  <a href="#metric">{% trans "Metric" %}</a>
+  <a href="#back-link">{% trans "Back Link" %}</a>
+  <a href="#section-header">{% trans "Section Header" %}</a>
+  <a href="#definition-list">{% trans "Definition List" %}</a>
+  <a href="#code-viewer">{% trans "Code Viewer" %}</a>
+  <a href="#data-table">{% trans "Data Table" %}</a>
+  <a href="#pagination">{% trans "Pagination" %}</a>
+  <a href="#callout">{% trans "Callout" %}</a>
+  <a href="#page-header">{% trans "Page Header" %}</a>
+  <a href="#danger-zone">{% trans "Danger Zone" %}</a>
+  <a href="#code">{% trans "Code" %}</a>
+  <a href="#empty-state">{% trans "Empty State" %}</a>
+  <a href="#inline-edit">{% trans "Inline Edit" %}</a>
+  <a href="#ability-matrix">{% trans "Ability Matrix" %}</a>
+</nav>
+
+{# ── TOKENS: Colors ───────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="colors">
+  <p class="dcr-sg-section__pre-label">{% trans "Tokens" %}</p>
+  <h2 class="dcr-sg-section__title">{% trans "Color palette" %}</h2>
+  <div class="dcr-sg-palette">
+
+    <p class="dcr-sg-palette__intro">
+      {% trans "Palette swatches reflect the current mode. All " %}<code class="dcr-code">dcr-*</code>{% trans " components consume only these tokens — override them on " %}<code class="dcr-code">:root</code>{% trans " to theme every component at once." %}
+    </p>
+
+    {# ── Group 1: Surfaces ── #}
+    <div class="dcr-sg-palette__group">
+      <p class="dcr-sg-palette__group-title">{% trans "Surfaces" %}</p>
+      <p class="dcr-sg-palette__group-desc">{% trans "Page, card, and control backgrounds plus border colours." %}</p>
+      <div class="dcr-sg-palette__grid">
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-bg);border-bottom:1px solid var(--dcr-color-border)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">bg</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-bg</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Page and card background" %}</p>
+          </div>
+        </div>
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-bg-subtle)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">bg-subtle</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-bg-subtle</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Table headers, controls zones" %}</p>
+          </div>
+        </div>
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-border)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">border</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-border</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Card borders, row dividers" %}</p>
+          </div>
+        </div>
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-text)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">text</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-text</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Primary body text" %}</p>
+          </div>
+        </div>
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-text-muted)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">text-muted</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-text-muted</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Labels, captions, placeholders" %}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {# ── Group 2: Semantic colours ── #}
+    <div class="dcr-sg-palette__group">
+      <p class="dcr-sg-palette__group-title">{% trans "Semantic" %}</p>
+      <p class="dcr-sg-palette__group-desc">{% trans "Solid colours for buttons, badges, icons, and status indicators." %}</p>
+      <div class="dcr-sg-palette__grid">
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-accent)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">accent</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-accent</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Primary actions, links" %}</p>
+          </div>
+        </div>
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-success)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">success</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-success</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Healthy, active, connected" %}</p>
+          </div>
+        </div>
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-warning)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">warning</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-warning</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Caution, degraded states" %}</p>
+          </div>
+        </div>
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-danger)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">danger</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-danger</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Errors, destructive actions" %}</p>
+          </div>
+        </div>
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-info)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">info</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-info</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Informational, neutral notices" %}</p>
+          </div>
+        </div>
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-muted)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">muted</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-muted</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Disabled, secondary content" %}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {# ── Group 3: Tinted backgrounds ── #}
+    <div class="dcr-sg-palette__group">
+      <p class="dcr-sg-palette__group-title">{% trans "Tinted backgrounds" %}</p>
+      <p class="dcr-sg-palette__group-desc">{% trans "Soft fills paired with each semantic colour — used for tinted badges and hover states." %}</p>
+      <div class="dcr-sg-palette__grid">
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-accent-bg)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">accent-bg</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-accent-bg</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Default badge fill" %}</p>
+          </div>
+        </div>
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-success-bg)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">success-bg</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-success-bg</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Success badge fill" %}</p>
+          </div>
+        </div>
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-warning-bg)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">warning-bg</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-warning-bg</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Warning badge fill" %}</p>
+          </div>
+        </div>
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-danger-bg)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">danger-bg</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-danger-bg</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Danger badge fill" %}</p>
+          </div>
+        </div>
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-info-bg)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">info-bg</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-info-bg</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Info badge fill" %}</p>
+          </div>
+        </div>
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-muted-bg)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">muted-bg</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-muted-bg</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Muted badge fill" %}</p>
+          </div>
+        </div>
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-purple-bg)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">purple-bg</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-purple-bg</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Purple badge fill" %}</p>
+          </div>
+        </div>
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-indigo-bg)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">indigo-bg</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-indigo-bg</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Indigo badge fill" %}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {# ── Group 4: Extended semantic ── #}
+    <div class="dcr-sg-palette__group">
+      <p class="dcr-sg-palette__group-title">{% trans "Extended semantic" %}</p>
+      <p class="dcr-sg-palette__group-desc">{% trans "Additional colours for task states, log levels, and signal kinds." %}</p>
+      <div class="dcr-sg-palette__grid">
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-purple)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">purple</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-purple</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Pending, scheduled states" %}</p>
+          </div>
+        </div>
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-indigo)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">indigo</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-indigo</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Custom signals, built-in tags" %}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{# ── TOKENS: Spacing ──────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="spacing">
+  <p class="dcr-sg-section__pre-label">{% trans "Tokens" %}</p>
+  <h2 class="dcr-sg-section__title">{% trans "Spacing" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "Five-step scale used for padding, margin, and gap throughout the design system. Always reference a token — never hardcode pixel values." %}</p>
+  <div class="dcr-sg-space-row">
+    <div class="dcr-sg-space-item"><div class="dcr-sg-space-item__bar" style="width:4px"></div><span class="dcr-sg-space-item__label">--dcr-space-xs &nbsp;·&nbsp; 4px</span></div>
+    <div class="dcr-sg-space-item"><div class="dcr-sg-space-item__bar" style="width:8px"></div><span class="dcr-sg-space-item__label">--dcr-space-sm &nbsp;·&nbsp; 8px</span></div>
+    <div class="dcr-sg-space-item"><div class="dcr-sg-space-item__bar" style="width:16px"></div><span class="dcr-sg-space-item__label">--dcr-space-md &nbsp;·&nbsp; 16px</span></div>
+    <div class="dcr-sg-space-item"><div class="dcr-sg-space-item__bar" style="width:24px"></div><span class="dcr-sg-space-item__label">--dcr-space-lg &nbsp;·&nbsp; 24px</span></div>
+    <div class="dcr-sg-space-item"><div class="dcr-sg-space-item__bar" style="width:48px"></div><span class="dcr-sg-space-item__label">--dcr-space-xl &nbsp;·&nbsp; 48px</span></div>
+  </div>
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;!-- padding --&gt;
+&lt;div style="padding: var(--dcr-space-md)"&gt;...&lt;/div&gt;
+
+&lt;!-- margin --&gt;
+&lt;p style="margin-bottom: var(--dcr-space-lg)"&gt;...&lt;/p&gt;
+
+&lt;!-- gap in a flex/grid container --&gt;
+&lt;div style="display:flex; gap: var(--dcr-space-sm)"&gt;...&lt;/div&gt;</code></pre>
+  <p class="dcr-sg-code-label">{% trans "In CSS" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;style&gt;
+.my-card {
+  padding: var(--dcr-space-md) var(--dcr-space-lg);
+  margin-bottom: var(--dcr-space-xl);
+  gap: var(--dcr-space-sm);
+}
+&lt;/style&gt;</code></pre>
+</section>
+
+{# ── Badge ────────────────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="badge">
+  <h2 class="dcr-sg-section__title">{% trans "Badge" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "Rectangular label for type tags, counts, and category markers. Always uppercase. Use in tables, KV rows, and anywhere data needs a compact inline label." %}</p>
+
+  <div class="dcr-sg-preview dcr-sg-preview--stack">
+    <span class="dcr-sg-row-label">{% trans "Tinted" %}</span>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:var(--dcr-space-sm);margin-bottom:var(--dcr-space-lg)">
+      <span class="dcr-badge">default</span>
+      <span class="dcr-badge dcr-badge--success">success</span>
+      <span class="dcr-badge dcr-badge--warning">warning</span>
+      <span class="dcr-badge dcr-badge--danger">danger</span>
+      <span class="dcr-badge dcr-badge--info">info</span>
+      <span class="dcr-badge dcr-badge--muted">muted</span>
+      <span class="dcr-badge dcr-badge--purple">purple</span>
+      <span class="dcr-badge dcr-badge--indigo">indigo</span>
+    </div>
+    <span class="dcr-sg-row-label">{% trans "Solid" %}</span>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:var(--dcr-space-sm)">
+      <span class="dcr-badge dcr-badge--solid">default</span>
+      <span class="dcr-badge dcr-badge--solid dcr-badge--success">success</span>
+      <span class="dcr-badge dcr-badge--solid dcr-badge--warning">warning</span>
+      <span class="dcr-badge dcr-badge--solid dcr-badge--danger">danger</span>
+      <span class="dcr-badge dcr-badge--solid dcr-badge--info">info</span>
+      <span class="dcr-badge dcr-badge--solid dcr-badge--muted">muted</span>
+      <span class="dcr-badge dcr-badge--solid dcr-badge--purple">purple</span>
+      <span class="dcr-badge dcr-badge--solid dcr-badge--indigo">indigo</span>
+    </div>
+  </div>
+
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;!-- Tinted (default) --&gt;
+&lt;span class="dcr-badge dcr-badge--warning"&gt;hash&lt;/span&gt;
+
+&lt;!-- Solid --&gt;
+&lt;span class="dcr-badge dcr-badge--solid dcr-badge--danger"&gt;culprit&lt;/span&gt;
+
+&lt;!-- Variants: (none) · success · warning · danger · info · muted · purple · indigo --&gt;</code></pre>
+</section>
+
+{# ── Pill ─────────────────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="pill">
+  <h2 class="dcr-sg-section__title">{% trans "Pill" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "Fully-rounded chip for live status and state indicators. Sentence-case — write naturally, not in ALL CAPS. Add " %}<code class="dcr-code">__dot</code>{% trans " for a coloured dot that always matches the pill's current colour." %}</p>
+
+  <div class="dcr-sg-preview dcr-sg-preview--stack">
+    <span class="dcr-sg-row-label">{% trans "Tinted · with dot" %}</span>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:var(--dcr-space-sm);margin-bottom:var(--dcr-space-lg)">
+      <span class="dcr-pill dcr-pill--success"><span class="dcr-pill__dot"></span>{% trans "Connected" %}</span>
+      <span class="dcr-pill dcr-pill--warning"><span class="dcr-pill__dot"></span>{% trans "Degraded" %}</span>
+      <span class="dcr-pill dcr-pill--danger"><span class="dcr-pill__dot"></span>{% trans "Error" %}</span>
+      <span class="dcr-pill dcr-pill--info"><span class="dcr-pill__dot"></span>{% trans "Syncing" %}</span>
+      <span class="dcr-pill dcr-pill--muted"><span class="dcr-pill__dot"></span>{% trans "Idle" %}</span>
+      <span class="dcr-pill dcr-pill--purple"><span class="dcr-pill__dot"></span>{% trans "Queued" %}</span>
+      <span class="dcr-pill dcr-pill--indigo"><span class="dcr-pill__dot"></span>{% trans "Scheduled" %}</span>
+    </div>
+    <span class="dcr-sg-row-label">{% trans "Solid" %}</span>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:var(--dcr-space-sm)">
+      <span class="dcr-pill dcr-pill--solid dcr-pill--success">{% trans "Active" %}</span>
+      <span class="dcr-pill dcr-pill--solid dcr-pill--warning">{% trans "Retrying" %}</span>
+      <span class="dcr-pill dcr-pill--solid dcr-pill--danger">{% trans "Critical" %}</span>
+      <span class="dcr-pill dcr-pill--solid dcr-pill--info">{% trans "Running" %}</span>
+      <span class="dcr-pill dcr-pill--solid dcr-pill--purple">{% trans "Pending" %}</span>
+      <span class="dcr-pill dcr-pill--solid dcr-pill--muted">{% trans "Disabled" %}</span>
+    </div>
+  </div>
+
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;!-- Tinted with dot --&gt;
+&lt;span class="dcr-pill dcr-pill--success"&gt;
+  &lt;span class="dcr-pill__dot"&gt;&lt;/span&gt;Connected
+&lt;/span&gt;
+
+&lt;!-- Tinted without dot --&gt;
+&lt;span class="dcr-pill dcr-pill--warning"&gt;Degraded&lt;/span&gt;
+
+&lt;!-- Solid --&gt;
+&lt;span class="dcr-pill dcr-pill--solid dcr-pill--success"&gt;Active&lt;/span&gt;
+
+&lt;!-- Variants: (none) · success · warning · danger · info · muted · purple · indigo --&gt;</code></pre>
+</section>
+
+{# ── Button ───────────────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="button">
+  <h2 class="dcr-sg-section__title">{% trans "Button" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "Use " %}<code class="dcr-code">dcr-btn</code>{% trans " instead of Django admin's " %}<code class="dcr-code">.button</code>{% trans " everywhere inside DCR panels. Works on both " %}<code class="dcr-code">&lt;button&gt;</code>{% trans " and " %}<code class="dcr-code">&lt;a&gt;</code>{% trans "." %}</p>
+  <div class="dcr-sg-preview" style="align-items:flex-end;gap:var(--dcr-space-md);flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:var(--dcr-space-sm);align-items:flex-start">
+      <span style="font-size:var(--dcr-font-size-xs);font-weight:600;color:var(--dcr-color-text-muted);text-transform:uppercase;letter-spacing:0.4px">{% trans "Default" %}</span>
+      <button class="dcr-btn">{% trans "Refresh" %}</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:var(--dcr-space-sm);align-items:flex-start">
+      <span style="font-size:var(--dcr-font-size-xs);font-weight:600;color:var(--dcr-color-text-muted);text-transform:uppercase;letter-spacing:0.4px">{% trans "Primary" %}</span>
+      <button class="dcr-btn dcr-btn--primary">{% trans "Search" %}</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:var(--dcr-space-sm);align-items:flex-start">
+      <span style="font-size:var(--dcr-font-size-xs);font-weight:600;color:var(--dcr-color-text-muted);text-transform:uppercase;letter-spacing:0.4px">{% trans "Success" %}</span>
+      <button class="dcr-btn dcr-btn--success">{% trans "Approve" %}</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:var(--dcr-space-sm);align-items:flex-start">
+      <span style="font-size:var(--dcr-font-size-xs);font-weight:600;color:var(--dcr-color-text-muted);text-transform:uppercase;letter-spacing:0.4px">{% trans "Warning" %}</span>
+      <button class="dcr-btn dcr-btn--warning">{% trans "Retry" %}</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:var(--dcr-space-sm);align-items:flex-start">
+      <span style="font-size:var(--dcr-font-size-xs);font-weight:600;color:var(--dcr-color-text-muted);text-transform:uppercase;letter-spacing:0.4px">{% trans "Danger" %}</span>
+      <button class="dcr-btn dcr-btn--danger">{% trans "Flush cache" %}</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:var(--dcr-space-sm);align-items:flex-start">
+      <span style="font-size:var(--dcr-font-size-xs);font-weight:600;color:var(--dcr-color-text-muted);text-transform:uppercase;letter-spacing:0.4px">{% trans "Info" %}</span>
+      <button class="dcr-btn dcr-btn--info">{% trans "Details" %}</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:var(--dcr-space-sm);align-items:flex-start">
+      <span style="font-size:var(--dcr-font-size-xs);font-weight:600;color:var(--dcr-color-text-muted);text-transform:uppercase;letter-spacing:0.4px">{% trans "Muted" %}</span>
+      <button class="dcr-btn dcr-btn--muted">{% trans "Archive" %}</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:var(--dcr-space-sm);align-items:flex-start">
+      <span style="font-size:var(--dcr-font-size-xs);font-weight:600;color:var(--dcr-color-text-muted);text-transform:uppercase;letter-spacing:0.4px">{% trans "Small" %}</span>
+      <button class="dcr-btn dcr-btn--sm">{% trans "Filter…" %}</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:var(--dcr-space-sm);align-items:flex-start">
+      <span style="font-size:var(--dcr-font-size-xs);font-weight:600;color:var(--dcr-color-text-muted);text-transform:uppercase;letter-spacing:0.4px">{% trans "Disabled" %}</span>
+      <button class="dcr-btn dcr-btn--danger" disabled>{% trans "Flush cache" %}</button>
+    </div>
+  </div>
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;!-- All variants: outlined at rest, tinted background on hover --&gt;
+&lt;button class="dcr-btn"&gt;Default&lt;/button&gt;
+&lt;button class="dcr-btn dcr-btn--primary"&gt;Primary&lt;/button&gt;
+&lt;button class="dcr-btn dcr-btn--success"&gt;Success&lt;/button&gt;
+&lt;button class="dcr-btn dcr-btn--warning"&gt;Warning&lt;/button&gt;
+&lt;button class="dcr-btn dcr-btn--danger"&gt;Danger&lt;/button&gt;
+&lt;button class="dcr-btn dcr-btn--info"&gt;Info&lt;/button&gt;
+&lt;button class="dcr-btn dcr-btn--muted"&gt;Muted&lt;/button&gt;
+
+&lt;!-- Small size — combines with any variant --&gt;
+&lt;button class="dcr-btn dcr-btn--sm"&gt;Filter…&lt;/button&gt;
+&lt;button class="dcr-btn dcr-btn--sm dcr-btn--primary"&gt;Save&lt;/button&gt;
+
+&lt;!-- Disabled — any variant accepts the disabled attribute --&gt;
+&lt;button class="dcr-btn dcr-btn--danger" disabled&gt;Flush cache&lt;/button&gt;
+
+&lt;!-- Works on &lt;a&gt; too --&gt;
+&lt;a href="…" class="dcr-btn"&gt;Export CSV&lt;/a&gt;</code></pre>
+</section>
+
+{# ── Metric ───────────────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="metric">
+  <h2 class="dcr-sg-section__title">{% trans "Metric" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "KPI tiles for at-a-glance numeric summaries. Wrap tiles in " %}<code class="dcr-code">dcr-metric-grid</code>{% trans " for automatic responsive columns." %}</p>
+  <div class="dcr-sg-preview">
+    <div class="dcr-metric-grid" style="width:100%">
+      <div class="dcr-metric"><span class="dcr-metric__label">Active Workers</span><span class="dcr-metric__value">12</span></div>
+      <div class="dcr-metric"><span class="dcr-metric__label">Tasks Processed</span><span class="dcr-metric__value dcr-metric__value--success">847</span></div>
+      <div class="dcr-metric"><span class="dcr-metric__label">Retrying</span><span class="dcr-metric__value dcr-metric__value--warning">3</span></div>
+      <div class="dcr-metric"><span class="dcr-metric__label">Failed</span><span class="dcr-metric__value dcr-metric__value--danger">1</span></div>
+      <div class="dcr-metric"><span class="dcr-metric__label">Offline</span><span class="dcr-metric__value dcr-metric__value--disabled">—</span></div>
+    </div>
+  </div>
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;!-- value modifiers: (none) · success · warning · danger · disabled --&gt;
+&lt;div class="dcr-metric-grid"&gt;
+  &lt;div class="dcr-metric"&gt;
+    &lt;span class="dcr-metric__label"&gt;Tasks Processed&lt;/span&gt;
+    &lt;span class="dcr-metric__value dcr-metric__value--success"&gt;847&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+</section>
+
+{# ── Back Link ────────────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="back-link">
+  <h2 class="dcr-sg-section__title">{% trans "Back Link" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "Navigation link placed above the page header on detail views." %}</p>
+  <div class="dcr-sg-preview">
+    <a href="#" class="dcr-back-link">← {% trans "Back to all keys" %}</a>
+  </div>
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;a href="/cache/keys/" class="dcr-back-link"&gt;← Back to all keys&lt;/a&gt;</code></pre>
+</section>
+
+{# ── Section Header ───────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="section-header">
+  <h2 class="dcr-sg-section__title">{% trans "Section Header" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "Uppercase label + bottom rule to head sub-sections on a panel page. Optionally followed by a badge." %}</p>
+  <div class="dcr-sg-preview dcr-sg-preview--stack">
+    <div style="width:100%">
+      <div class="dcr-section-header">
+        <h2 class="dcr-section-header__title">{% trans "Key Information" %}</h2>
+      </div>
+    </div>
+    <div style="width:100%">
+      <div class="dcr-section-header">
+        <h2 class="dcr-section-header__title">{% trans "Stored Value" %}</h2>
+        <span class="dcr-badge dcr-badge--warning">HASH</span>
+      </div>
+    </div>
+  </div>
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;div class="dcr-section-header"&gt;
+  &lt;h2 class="dcr-section-header__title"&gt;Key Information&lt;/h2&gt;
+&lt;/div&gt;
+
+&lt;!-- with inline badge --&gt;
+&lt;div class="dcr-section-header"&gt;
+  &lt;h2 class="dcr-section-header__title"&gt;Stored Value&lt;/h2&gt;
+  &lt;span class="dcr-badge dcr-badge--warning"&gt;HASH&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+</section>
+
+{# ── Definition List ──────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="definition-list">
+  <h2 class="dcr-sg-section__title">{% trans "Definition List" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "Label / value pairs on a subtle background. Two layouts: " %}<strong>{% trans "vertical" %}</strong>{% trans " (stacked rows, default) and " %}<strong>{% trans "horizontal" %}</strong>{% trans " (inline info bar, add " %}<code class="dcr-code">--horizontal</code>{% trans ")." %}</p>
+
+  <p class="dcr-sg-pre-label">{% trans "Vertical (default)" %}</p>
+  <div class="dcr-sg-preview">
+    <dl class="dcr-dl" style="width:100%">
+      <div class="dcr-dl__row">
+        <dt class="dcr-dl__label">{% trans "Key" %}</dt>
+        <dd class="dcr-dl__value dcr-dl__value--mono">user:42:profile</dd>
+      </div>
+      <div class="dcr-dl__row">
+        <dt class="dcr-dl__label">{% trans "Type" %}</dt>
+        <dd class="dcr-dl__value"><span class="dcr-badge dcr-badge--warning">HASH</span></dd>
+      </div>
+      <div class="dcr-dl__row">
+        <dt class="dcr-dl__label">{% trans "TTL" %}</dt>
+        <dd class="dcr-dl__value">1h <span class="dcr-dl__secondary">(31m {% trans "remaining" %})</span></dd>
+      </div>
+      <div class="dcr-dl__row">
+        <dt class="dcr-dl__label">{% trans "Size" %}</dt>
+        <dd class="dcr-dl__value">412 B</dd>
+      </div>
+    </dl>
+  </div>
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;dl class="dcr-dl"&gt;
+  &lt;div class="dcr-dl__row"&gt;
+    &lt;dt class="dcr-dl__label"&gt;Key&lt;/dt&gt;
+    &lt;dd class="dcr-dl__value dcr-dl__value--mono"&gt;user:42:profile&lt;/dd&gt;
+  &lt;/div&gt;
+  &lt;div class="dcr-dl__row"&gt;
+    &lt;dt class="dcr-dl__label"&gt;Type&lt;/dt&gt;
+    &lt;dd class="dcr-dl__value"&gt;&lt;span class="dcr-badge dcr-badge--warning"&gt;HASH&lt;/span&gt;&lt;/dd&gt;
+  &lt;/div&gt;
+  &lt;div class="dcr-dl__row"&gt;
+    &lt;dt class="dcr-dl__label"&gt;TTL&lt;/dt&gt;
+    &lt;dd class="dcr-dl__value"&gt;1h &lt;span class="dcr-dl__secondary"&gt;(31m remaining)&lt;/span&gt;&lt;/dd&gt;
+  &lt;/div&gt;
+&lt;/dl&gt;</code></pre>
+
+  <p class="dcr-sg-pre-label" style="margin-top:var(--dcr-space-lg)">{% trans "Horizontal (--horizontal)" %}</p>
+  <div class="dcr-sg-preview">
+    <dl class="dcr-dl dcr-dl--horizontal" style="width:100%">
+      <div class="dcr-dl__item">
+        <dt class="dcr-dl__label">{% trans "Host" %}</dt>
+        <dd class="dcr-dl__value dcr-dl__value--mono">redis-prod-1.internal:6379</dd>
+      </div>
+      <div class="dcr-dl__item">
+        <dt class="dcr-dl__label">{% trans "Version" %}</dt>
+        <dd class="dcr-dl__value">7.2.4</dd>
+      </div>
+      <div class="dcr-dl__item">
+        <dt class="dcr-dl__label">{% trans "Databases" %}</dt>
+        <dd class="dcr-dl__value">16</dd>
+      </div>
+      <div class="dcr-dl__item">
+        <dt class="dcr-dl__label">{% trans "Total Keys" %}</dt>
+        <dd class="dcr-dl__value">12</dd>
+      </div>
+    </dl>
+  </div>
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;dl class="dcr-dl dcr-dl--horizontal"&gt;
+  &lt;div class="dcr-dl__item"&gt;
+    &lt;dt class="dcr-dl__label"&gt;Host&lt;/dt&gt;
+    &lt;dd class="dcr-dl__value dcr-dl__value--mono"&gt;redis-prod-1.internal:6379&lt;/dd&gt;
+  &lt;/div&gt;
+  &lt;div class="dcr-dl__item"&gt;
+    &lt;dt class="dcr-dl__label"&gt;Version&lt;/dt&gt;
+    &lt;dd class="dcr-dl__value"&gt;7.2.4&lt;/dd&gt;
+  &lt;/div&gt;
+  &lt;div class="dcr-dl__item"&gt;
+    &lt;dt class="dcr-dl__label"&gt;Databases&lt;/dt&gt;
+    &lt;dd class="dcr-dl__value"&gt;16&lt;/dd&gt;
+  &lt;/div&gt;
+  &lt;div class="dcr-dl__item"&gt;
+    &lt;dt class="dcr-dl__label"&gt;Total Keys&lt;/dt&gt;
+    &lt;dd class="dcr-dl__value"&gt;12&lt;/dd&gt;
+  &lt;/div&gt;
+&lt;/dl&gt;</code></pre>
+</section>
+
+{# ── Code Viewer ──────────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="code-viewer">
+  <h2 class="dcr-sg-section__title">{% trans "Code Viewer" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "Labelled header strip above a dark syntax-highlighted code body. Use for raw values, source snippets, and import paths. Requires highlight.js to be loaded on the page." %}</p>
+  <div class="dcr-sg-preview dcr-sg-preview--stack">
+    <div class="dcr-code-viewer" style="width:100%">
+      <div class="dcr-code-viewer__header">
+        <span class="dcr-code-viewer__label">&lt;&gt; {% trans "Raw Value" %}</span>
+        <span class="dcr-code-viewer__meta">412 B</span>
+      </div>
+      <pre class="dcr-code-viewer__body"><code class="language-json">{"id": "42", "username": "ada", "theme": "dark"}</code></pre>
+    </div>
+  </div>
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;div class="dcr-code-viewer"&gt;
+  &lt;div class="dcr-code-viewer__header"&gt;
+    &lt;span class="dcr-code-viewer__label"&gt;&lt;&gt; Raw Value&lt;/span&gt;
+    &lt;span class="dcr-code-viewer__meta"&gt;412 B&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;pre class="dcr-code-viewer__body"&gt;&lt;code class="language-json"&gt;{"key": "value"}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;</code></pre>
+</section>
+
+{# ── Data Table ───────────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="data-table">
+  <h2 class="dcr-sg-section__title">{% trans "Data Table" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "Card-wrapped table with four named zones: " %}<strong>{% trans "header" %}</strong>{% trans " (title + badge + subtitle + right meta), " %}<strong>{% trans "controls" %}</strong>{% trans " (search + filters, subtle bg), " %}<strong>{% trans "table body" %}</strong>{% trans ", and " %}<strong>{% trans "pagination" %}</strong>{% trans ". All zones are optional — use only what you need." %}</p>
+
+  {# Simple — header + table only #}
+  <p class="dcr-sg-pre-label">{% trans "Simple (header + table)" %}</p>
+  <div class="dcr-sg-preview">
+    <div class="dcr-data-table" style="width:100%">
+      <table>
+        <thead>
+          <tr>
+            <th>{% trans "App" %}</th>
+            <th>{% trans "Label" %}</th>
+            <th>{% trans "Models" %}</th>
+            <th class="dcr-col--right">{% trans "Migrations" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="#" class="dcr-data-table__link">django.contrib.auth</a></td>
+            <td>auth</td>
+            <td>4</td>
+            <td class="dcr-col--right"><span class="dcr-badge dcr-badge--success">up to date</span></td>
+          </tr>
+          <tr>
+            <td><a href="#" class="dcr-data-table__link">django.contrib.contenttypes</a></td>
+            <td>contenttypes</td>
+            <td>1</td>
+            <td class="dcr-col--right"><span class="dcr-badge dcr-badge--success">up to date</span></td>
+          </tr>
+          <tr>
+            <td><a href="#" class="dcr-data-table__link">myapp.billing</a></td>
+            <td>billing</td>
+            <td>6</td>
+            <td class="dcr-col--right"><span class="dcr-badge dcr-badge--warning">1 pending</span></td>
+          </tr>
+          <tr>
+            <td><a href="#" class="dcr-data-table__link">myapp.notifications</a></td>
+            <td>notifications</td>
+            <td>3</td>
+            <td class="dcr-col--right"><span class="dcr-badge dcr-badge--danger">unapplied</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;div class="dcr-data-table"&gt;
+  &lt;div class="dcr-data-table__header"&gt;
+    &lt;div class="dcr-data-table__header-info"&gt;
+      &lt;h3 class="dcr-data-table__title"&gt;Installed Apps &lt;span class="dcr-badge"&gt;4&lt;/span&gt;&lt;/h3&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;table&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th&gt;App&lt;/th&gt;
+        &lt;th&gt;Label&lt;/th&gt;
+        &lt;th&gt;Models&lt;/th&gt;
+        &lt;th class="dcr-col--right"&gt;Migrations&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;td&gt;&lt;a href="/apps/auth/" class="dcr-data-table__link"&gt;django.contrib.auth&lt;/a&gt;&lt;/td&gt;
+        &lt;td&gt;auth&lt;/td&gt;
+        &lt;td&gt;4&lt;/td&gt;
+        &lt;td class="dcr-col--right"&gt;&lt;span class="dcr-badge dcr-badge--success"&gt;up to date&lt;/span&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;</code></pre>
+
+  {# Full — all four zones #}
+  <p class="dcr-sg-pre-label" style="margin-top:var(--dcr-space-6)">{% trans "Full (all four zones)" %}</p>
+  <div class="dcr-sg-preview dcr-sg-preview--stack">
+    <div class="dcr-data-table" style="width:100%">
+
+      {# Zone 1 — header #}
+      <div class="dcr-data-table__header">
+        <div class="dcr-data-table__header-info">
+          <h3 class="dcr-data-table__title">
+            {% trans "Key Browser" %}
+            <span class="dcr-badge">12 TOTAL</span>
+          </h3>
+          <p class="dcr-data-table__subtitle">{% trans "Browse every key across all databases on this Redis instance." %}</p>
+        </div>
+        <div class="dcr-data-table__meta">
+          <span>{% trans "Showing 12 of 12" %}</span>
+          <span>{% trans "Updated just now" %}</span>
+        </div>
+      </div>
+
+      {# Zone 2 — controls #}
+      <div class="dcr-data-table__controls">
+        <form class="dcr-search-form">
+          <div class="dcr-search-form__search-row">
+            <div style="flex:1;display:flex;flex-direction:column;gap:var(--dcr-space-xs)">
+              <label class="dcr-search-form__label" for="sg-key-q">{% trans "Search by key" %}</label>
+              <div class="dcr-search-field">
+                <span class="dcr-search-field__icon">&#9906;</span>
+                <input id="sg-key-q" class="dcr-search-field__input" type="text" placeholder="{% trans 'e.g. user:*, session:*, queue:default' %}">
+              </div>
+            </div>
+            <div style="display:flex;align-items:flex-end">
+              <button type="submit" class="dcr-btn dcr-btn--primary">{% trans "Search" %}</button>
+            </div>
+          </div>
+          <div class="dcr-search-form__filter-row">
+            <div class="dcr-filter-group">
+              <label class="dcr-filter-group__label">&#9663; {% trans "Type" %}</label>
+              <select><option>{% trans "All types" %}</option></select>
+            </div>
+            <div class="dcr-filter-group">
+              <label class="dcr-filter-group__label">{% trans "Database" %}</label>
+              <select><option>{% trans "All databases" %}</option></select>
+            </div>
+            <div style="flex:1"></div>
+            <button type="button" class="dcr-btn" style="align-self:flex-end">{% trans "Reset all filters" %}</button>
+          </div>
+        </form>
+      </div>
+
+      {# Zone 3 — table body #}
+      <table>
+        <thead>
+          <tr>
+            <th>{% trans "Key" %}</th>
+            <th>{% trans "Type" %}</th>
+            <th>{% trans "DB" %}</th>
+            <th class="dcr-col--right">{% trans "Size" %}</th>
+            <th class="dcr-col--right">{% trans "TTL" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="#" class="dcr-data-table__link">user:42:profile</a></td>
+            <td><span class="dcr-badge dcr-badge--warning">hash</span></td>
+            <td>db0</td>
+            <td class="dcr-col--right">412 B</td>
+            <td class="dcr-col--right">1h</td>
+          </tr>
+          <tr>
+            <td><a href="#" class="dcr-data-table__link">session:s9k2lq</a></td>
+            <td><span class="dcr-badge dcr-badge--info">string</span></td>
+            <td>db1</td>
+            <td class="dcr-col--right">1.2 KB</td>
+            <td class="dcr-col--right">14d</td>
+          </tr>
+          <tr>
+            <td><a href="#" class="dcr-data-table__link">queue:default</a></td>
+            <td><span class="dcr-badge dcr-badge--muted">list</span></td>
+            <td>db0</td>
+            <td class="dcr-col--right">8.2 KB</td>
+            <td class="dcr-col--right">never</td>
+          </tr>
+          <tr>
+            <td><a href="#" class="dcr-data-table__link">leaderboard:weekly</a></td>
+            <td><span class="dcr-badge dcr-badge--danger">zset</span></td>
+            <td>db0</td>
+            <td class="dcr-col--right">24.2 KB</td>
+            <td class="dcr-col--right">7d</td>
+          </tr>
+          <tr>
+            <td><a href="#" class="dcr-data-table__link">online_users</a></td>
+            <td><span class="dcr-badge dcr-badge--success">set</span></td>
+            <td>db0</td>
+            <td class="dcr-col--right">612 B</td>
+            <td class="dcr-col--right">never</td>
+          </tr>
+        </tbody>
+      </table>
+
+      {# Zone 4 — pagination #}
+      <div class="dcr-pagination">
+        <div class="dcr-pagination__per-page">
+          <span class="dcr-pagination__summary">{% trans "Showing" %} <strong>1–5</strong> {% trans "of" %} <strong>12</strong></span>
+          <label>{% trans "Per page" %} <select class="dcr-pagination__per-page-select"><option>5</option><option>10</option><option>25</option></select></label>
+        </div>
+        <div class="dcr-pagination__controls">
+          <span class="dcr-pagination__btn" aria-disabled="true" aria-label="{% trans 'Previous' %}">‹ {% trans "Previous" %}</span>
+          <span class="dcr-pagination__page dcr-pagination__page--active">1</span>
+          <a href="#" class="dcr-pagination__page">2</a>
+          <a href="#" class="dcr-pagination__page">3</a>
+          <a href="#" class="dcr-pagination__btn" aria-label="{% trans 'Next' %}">{% trans "Next" %} ›</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;div class="dcr-data-table"&gt;
+
+  &lt;!-- Zone 1: header --&gt;
+  &lt;div class="dcr-data-table__header"&gt;
+    &lt;div class="dcr-data-table__header-info"&gt;
+      &lt;h3 class="dcr-data-table__title"&gt;Key Browser &lt;span class="dcr-badge"&gt;12 TOTAL&lt;/span&gt;&lt;/h3&gt;
+      &lt;p class="dcr-data-table__subtitle"&gt;Browse every key across all databases.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="dcr-data-table__meta"&gt;
+      &lt;span&gt;Showing 12 of 12&lt;/span&gt;
+      &lt;span&gt;Updated just now&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Zone 2: controls (optional) --&gt;
+  &lt;div class="dcr-data-table__controls"&gt;
+    &lt;form class="dcr-search-form"&gt;
+      &lt;div class="dcr-search-form__search-row"&gt;
+        &lt;div style="flex:1;display:flex;flex-direction:column;gap:4px"&gt;
+          &lt;label class="dcr-search-form__label" for="q"&gt;Search by key&lt;/label&gt;
+          &lt;div class="dcr-search-field"&gt;
+            &lt;span class="dcr-search-field__icon"&gt;&#9906;&lt;/span&gt;
+            &lt;input id="q" class="dcr-search-field__input" type="text" placeholder="e.g. user:*, session:*"&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div style="display:flex;align-items:flex-end"&gt;
+          &lt;button type="submit" class="dcr-btn dcr-btn--primary"&gt;Search&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="dcr-search-form__filter-row"&gt;
+        &lt;div class="dcr-filter-group"&gt;
+          &lt;label class="dcr-filter-group__label"&gt;&#9663; Type&lt;/label&gt;
+          &lt;select&gt;&lt;option&gt;All types&lt;/option&gt;&lt;/select&gt;
+        &lt;/div&gt;
+        &lt;div style="flex:1"&gt;&lt;/div&gt;
+        &lt;button type="button" class="dcr-btn" style="align-self:flex-end"&gt;Reset all filters&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/form&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Zone 3: table body --&gt;
+  &lt;table&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th&gt;Key&lt;/th&gt;
+        &lt;th&gt;Type&lt;/th&gt;
+        &lt;th class="dcr-col--right"&gt;Size&lt;/th&gt;
+        &lt;th class="dcr-col--right"&gt;TTL&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;td&gt;&lt;a href="/keys/user:42/" class="dcr-data-table__link"&gt;user:42:profile&lt;/a&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;span class="dcr-badge dcr-badge--warning"&gt;hash&lt;/span&gt;&lt;/td&gt;
+        &lt;td class="dcr-col--right"&gt;412 B&lt;/td&gt;
+        &lt;td class="dcr-col--right"&gt;1h&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+
+  &lt;!-- Zone 4: pagination (optional) --&gt;
+  &lt;div class="dcr-pagination"&gt;
+    &lt;div class="dcr-pagination__per-page"&gt;
+      &lt;span class="dcr-pagination__summary"&gt;Showing &lt;strong&gt;1–5&lt;/strong&gt; of &lt;strong&gt;12&lt;/strong&gt;&lt;/span&gt;
+      &lt;label&gt;Per page &lt;select class="dcr-pagination__per-page-select"&gt;&lt;option&gt;5&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;
+    &lt;/div&gt;
+    &lt;div class="dcr-pagination__controls"&gt;
+      &lt;span class="dcr-pagination__btn" aria-disabled="true"&gt;‹ Previous&lt;/span&gt;
+      &lt;span class="dcr-pagination__page dcr-pagination__page--active"&gt;1&lt;/span&gt;
+      &lt;a href="?page=2" class="dcr-pagination__page"&gt;2&lt;/a&gt;
+      &lt;a href="?page=3" class="dcr-pagination__page"&gt;3&lt;/a&gt;
+      &lt;a href="?page=2" class="dcr-pagination__btn"&gt;Next ›&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+&lt;/div&gt;</code></pre>
+</section>
+
+{# ── Pagination ───────────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="pagination">
+  <h2 class="dcr-sg-section__title">{% trans "Pagination" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "Placed inside a " %}<code class="dcr-code">dcr-data-table</code>{% trans " card, after the " %}<code class="dcr-code">&lt;table&gt;</code>{% trans ". Supports numbered pages and cursor-only (prev / next) modes. Use " %}<code class="dcr-code">&lt;a&gt;</code>{% trans " for active controls, " %}<code class="dcr-code">&lt;span aria-disabled&gt;</code>{% trans " for disabled ones." %}</p>
+
+  {# Page-based pagination #}
+  <p style="font-size:var(--dcr-font-size-sm);font-weight:600;color:var(--dcr-color-text-muted);text-transform:uppercase;letter-spacing:0.4px;margin:0 0 var(--dcr-space-xs) 0">{% trans "Page-based" %}</p>
+  <div class="dcr-sg-preview" style="display:block;padding:0">
+    <div class="dcr-data-table">
+      <div class="dcr-data-table__header">
+        <h3 class="dcr-data-table__title">{% trans "Results" %}</h3>
+        <span class="dcr-badge dcr-badge--muted">847 keys</span>
+      </div>
+      <table>
+        <thead><tr><th>{% trans "Key" %}</th><th>{% trans "TTL" %}</th><th>{% trans "Size" %}</th></tr></thead>
+        <tbody>
+          <tr><td><code class="dcr-code">views.homepage</code></td><td>300s</td><td>1.2 KB</td></tr>
+          <tr><td><code class="dcr-code">views.product_42</code></td><td>600s</td><td>4.7 KB</td></tr>
+        </tbody>
+      </table>
+      <div class="dcr-pagination">
+        <div class="dcr-pagination__per-page">
+          <span class="dcr-pagination__summary">{% trans "Showing" %} <strong>1–20</strong> {% trans "of" %} <strong>847</strong></span>
+          <label>{% trans "Per page" %} <select class="dcr-pagination__per-page-select"><option>20</option><option>50</option></select></label>
+        </div>
+        <div class="dcr-pagination__controls">
+          <span class="dcr-pagination__btn" aria-disabled="true" aria-label="{% trans 'Previous' %}">‹ {% trans "Previous" %}</span>
+          <span class="dcr-pagination__page dcr-pagination__page--active">1</span>
+          <a href="#" class="dcr-pagination__page">2</a>
+          <a href="#" class="dcr-pagination__page">3</a>
+          <span class="dcr-pagination__ellipsis">…</span>
+          <a href="#" class="dcr-pagination__page">43</a>
+          <a href="#" class="dcr-pagination__btn" aria-label="{% trans 'Next' %}">{% trans "Next" %} ›</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {# Cursor-based pagination #}
+  <p style="font-size:var(--dcr-font-size-sm);font-weight:600;color:var(--dcr-color-text-muted);text-transform:uppercase;letter-spacing:0.4px;margin:var(--dcr-space-lg) 0 var(--dcr-space-xs) 0">{% trans "Cursor-based" %}</p>
+  <div class="dcr-sg-preview" style="display:block;padding:0">
+    <div class="dcr-data-table">
+      <div class="dcr-data-table__header">
+        <div class="dcr-data-table__header-info">
+          <h3 class="dcr-data-table__title">{% trans "Keys" %}</h3>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>{% trans "Key" %}</th><th>{% trans "Type" %}</th></tr></thead>
+        <tbody>
+          <tr><td><a href="#" class="dcr-data-table__link">session:user_4821</a></td><td><span class="dcr-badge dcr-badge--info">string</span></td></tr>
+          <tr><td><a href="#" class="dcr-data-table__link">session:cart_5518</a></td><td><span class="dcr-badge dcr-badge--warning">hash</span></td></tr>
+        </tbody>
+      </table>
+      <div class="dcr-pagination">
+        <span class="dcr-pagination__summary">{% trans "Cursor scan — page 2" %}</span>
+        <div class="dcr-pagination__controls">
+          <a href="#" class="dcr-pagination__btn" aria-label="{% trans 'Previous' %}">‹ {% trans "Previous" %}</a>
+          <a href="#" class="dcr-pagination__btn" aria-label="{% trans 'Next' %}">{% trans "Next" %} ›</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;!-- Inside a dcr-data-table, after &lt;/table&gt; --&gt;
+&lt;div class="dcr-pagination"&gt;
+  &lt;span class="dcr-pagination__summary"&gt;Showing 1–20 of 847&lt;/span&gt;
+  &lt;div class="dcr-pagination__controls"&gt;
+    &lt;span class="dcr-pagination__btn" aria-disabled="true"&gt;‹&lt;/span&gt;
+    &lt;span class="dcr-pagination__page dcr-pagination__page--active"&gt;1&lt;/span&gt;
+    &lt;a href="?page=2" class="dcr-pagination__page"&gt;2&lt;/a&gt;
+    &lt;span class="dcr-pagination__ellipsis"&gt;…&lt;/span&gt;
+    &lt;a href="?page=43" class="dcr-pagination__page"&gt;43&lt;/a&gt;
+    &lt;a href="?page=2" class="dcr-pagination__btn"&gt;›&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+</section>
+
+{# ── Callout ──────────────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="callout">
+  <h2 class="dcr-sg-section__title">{% trans "Callout" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "Static informational panel with a left-border accent. For persistent guidance, not flash messages." %}</p>
+  <div class="dcr-sg-preview dcr-sg-preview--stack">
+    <div class="dcr-callout"><p class="dcr-callout__body">Default callout with no modifier.</p></div>
+    <div class="dcr-callout dcr-callout--info"><p class="dcr-callout__title">Info</p><p class="dcr-callout__body">Use for contextual guidance and configuration notes.</p></div>
+    <div class="dcr-callout dcr-callout--success"><p class="dcr-callout__title">Success</p><p class="dcr-callout__body">Operation completed without errors.</p></div>
+    <div class="dcr-callout dcr-callout--warning"><p class="dcr-callout__title">Warning</p><p class="dcr-callout__body">Check your configuration before proceeding.</p></div>
+    <div class="dcr-callout dcr-callout--danger"><p class="dcr-callout__title">Danger</p><p class="dcr-callout__body">This action cannot be undone.</p></div>
+  </div>
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;!-- modifiers: (none) · info · success · warning · danger --&gt;
+&lt;div class="dcr-callout dcr-callout--info"&gt;
+  &lt;p class="dcr-callout__title"&gt;Info&lt;/p&gt;
+  &lt;p class="dcr-callout__body"&gt;Contextual guidance here.&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+</section>
+
+{# ── Page Header ──────────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="page-header">
+  <h2 class="dcr-sg-section__title">{% trans "Page Header" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "Title row with an optional action area. Use at the top of each panel sub-page." %}</p>
+  <div class="dcr-sg-preview dcr-sg-preview--stack">
+    <div class="dcr-page-header">
+      <h1 class="dcr-page-header__title">{% trans "Cache Keys" %}</h1>
+    </div>
+    <div class="dcr-page-header">
+      <h1 class="dcr-page-header__title">{% trans "Cache Keys" %}</h1>
+      <div class="dcr-page-header__actions">
+        <button class="dcr-btn">{% trans "Flush All" %}</button>
+      </div>
+    </div>
+  </div>
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;!-- title only --&gt;
+&lt;div class="dcr-page-header"&gt;
+  &lt;h1 class="dcr-page-header__title"&gt;Cache Keys&lt;/h1&gt;
+&lt;/div&gt;
+
+&lt;!-- with actions --&gt;
+&lt;div class="dcr-page-header"&gt;
+  &lt;h1 class="dcr-page-header__title"&gt;Cache Keys&lt;/h1&gt;
+  &lt;div class="dcr-page-header__actions"&gt;
+    &lt;button class="dcr-btn"&gt;Flush All&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+</section>
+
+{# ── Danger Zone ──────────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="danger-zone">
+  <h2 class="dcr-sg-section__title">{% trans "Danger Zone" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "Visually isolated section for irreversible operations. Always pair with a confirmation mechanism." %}</p>
+  <div class="dcr-sg-preview">
+    <div class="dcr-danger-zone" style="width:100%">
+      <p class="dcr-danger-zone__title">{% trans "Flush all cache keys" %}</p>
+      <p class="dcr-danger-zone__body">{% trans "Permanently deletes every key in the selected cache backend. This cannot be undone." %}</p>
+      <button class="dcr-btn dcr-btn--danger" disabled>{% trans "Flush cache" %}</button>
+    </div>
+  </div>
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;div class="dcr-danger-zone"&gt;
+  &lt;p class="dcr-danger-zone__title"&gt;Flush all cache keys&lt;/p&gt;
+  &lt;p class="dcr-danger-zone__body"&gt;Permanently deletes every key…&lt;/p&gt;
+  &lt;button class="dcr-btn dcr-btn--danger"&gt;Flush cache&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+</section>
+
+{# ── Code ─────────────────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="code">
+  <h2 class="dcr-sg-section__title">{% trans "Code" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "Monospace display for keys, values, payloads, or any machine-readable content. Inline and block variants." %}</p>
+  <div class="dcr-sg-preview dcr-sg-preview--stack">
+    <p>{% trans "Cache key:" %} <code class="dcr-code">sessions:abc123def456</code></p>
+    <code class="dcr-code dcr-code--block">{"status": "ok", "workers": 4, "queues": ["default", "high"]}</code>
+  </div>
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">{# Inline #}
+&lt;code class="dcr-code"&gt;sessions:abc123&lt;/code&gt;
+
+{# Block #}
+&lt;code class="dcr-code dcr-code--block"&gt;{"status": "ok"}&lt;/code&gt;</code></pre>
+</section>
+
+{# ── Empty State ──────────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="empty-state">
+  <h2 class="dcr-sg-section__title">{% trans "Empty State" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "Full-page placeholder when a panel has no data, or as a welcome screen before configuration." %}</p>
+  <div class="dcr-sg-preview">
+    <div class="dcr-empty">
+      <h2 class="dcr-empty__title">{% trans "No tasks found" %}</h2>
+      <p class="dcr-empty__body">{% trans "There are no tasks matching your current filters. Try broadening your search or check that workers are running." %}</p>
+    </div>
+  </div>
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;div class="dcr-empty"&gt;
+  &lt;h2 class="dcr-empty__title"&gt;No tasks found&lt;/h2&gt;
+  &lt;p class="dcr-empty__body"&gt;There are no tasks matching your current filters.&lt;/p&gt;
+  &lt;!-- optional links list --&gt;
+  &lt;ul class="dcr-empty__links"&gt;
+    &lt;li&gt;&lt;a href="/..."&gt;View all tasks&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;</code></pre>
+</section>
+
+{# ── Inline Edit ──────────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="inline-edit">
+  <h2 class="dcr-sg-section__title">{% trans "Inline Edit" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "Edit a single value in place without navigating to a full change form. Useful for TTLs, retry counts, or short string values." %}</p>
+  <div class="dcr-sg-preview">
+    <span class="dcr-inline-edit">
+      <input class="dcr-inline-edit__input" type="text" value="3600" aria-label="{% trans 'TTL' %}">
+      <button class="dcr-inline-edit__btn" title="{% trans 'Save' %}">✓</button>
+      <button class="dcr-inline-edit__btn dcr-inline-edit__btn--danger" title="{% trans 'Delete' %}">✕</button>
+    </span>
+    <span class="dcr-inline-edit" style="margin-left:var(--dcr-space-md)">
+      <input class="dcr-inline-edit__input" type="text" value="disabled" disabled aria-label="{% trans 'Disabled example' %}">
+      <button class="dcr-inline-edit__btn" disabled>✓</button>
+    </span>
+  </div>
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;span class="dcr-inline-edit"&gt;
+  &lt;input class="dcr-inline-edit__input" type="text" value="3600"&gt;
+  &lt;button class="dcr-inline-edit__btn"&gt;✓&lt;/button&gt;
+  &lt;button class="dcr-inline-edit__btn dcr-inline-edit__btn--danger"&gt;✕&lt;/button&gt;
+&lt;/span&gt;</code></pre>
+</section>
+
+{# ── Ability Matrix ───────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="ability-matrix">
+  <h2 class="dcr-sg-section__title">{% trans "Ability Matrix" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "Tabular display of what a backend supports. Use on overview pages that manage multiple backends." %}</p>
+  <div class="dcr-sg-preview">
+    <div class="dcr-data-table" style="width:100%">
+      <div class="dcr-data-table__header">
+        <h3 class="dcr-data-table__title">{% trans "Backend Capabilities" %}</h3>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>{% trans "Backend" %}</th>
+            <th>{% trans "Key listing" %}</th>
+            <th>{% trans "TTL support" %}</th>
+            <th>{% trans "Flush" %}</th>
+            <th>{% trans "Inline edit" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code class="dcr-code">LocMemCache</code></td>
+            <td><span class="dcr-ability-indicator dcr-ability-indicator--yes" aria-label="{% trans 'Supported' %}">✓</span></td>
+            <td><span class="dcr-ability-indicator dcr-ability-indicator--no"  aria-label="{% trans 'Not supported' %}">–</span></td>
+            <td><span class="dcr-ability-indicator dcr-ability-indicator--yes" aria-label="{% trans 'Supported' %}">✓</span></td>
+            <td><span class="dcr-ability-indicator dcr-ability-indicator--no"  aria-label="{% trans 'Not supported' %}">–</span></td>
+          </tr>
+          <tr>
+            <td><code class="dcr-code">RedisCache</code></td>
+            <td><span class="dcr-ability-indicator dcr-ability-indicator--yes" aria-label="{% trans 'Supported' %}">✓</span></td>
+            <td><span class="dcr-ability-indicator dcr-ability-indicator--yes" aria-label="{% trans 'Supported' %}">✓</span></td>
+            <td><span class="dcr-ability-indicator dcr-ability-indicator--yes" aria-label="{% trans 'Supported' %}">✓</span></td>
+            <td><span class="dcr-ability-indicator dcr-ability-indicator--yes" aria-label="{% trans 'Supported' %}">✓</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;div class="dcr-data-table"&gt;
+  &lt;div class="dcr-data-table__header"&gt;
+    &lt;h3 class="dcr-data-table__title"&gt;Backend Capabilities&lt;/h3&gt;
+  &lt;/div&gt;
+  &lt;table&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;&lt;th&gt;Backend&lt;/th&gt;&lt;th&gt;Key listing&lt;/th&gt;&lt;th&gt;TTL support&lt;/th&gt;&lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;td&gt;&lt;code class="dcr-code"&gt;RedisCache&lt;/code&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;span class="dcr-ability-indicator dcr-ability-indicator--yes"&gt;✓&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;span class="dcr-ability-indicator dcr-ability-indicator--no"&gt;–&lt;/span&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;</code></pre>
+</section>
+
 {% endblock %}
