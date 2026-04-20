@@ -40,6 +40,7 @@
   <a href="#section-header">{% trans "Section Header" %}</a>
   <a href="#definition-list">{% trans "Definition List" %}</a>
   <a href="#code-viewer">{% trans "Code Viewer" %}</a>
+  <a href="#forms">{% trans "Forms" %}</a>
   <a href="#data-table">{% trans "Data Table" %}</a>
   <a href="#pagination">{% trans "Pagination" %}</a>
   <a href="#callout">{% trans "Callout" %}</a>
@@ -380,64 +381,71 @@
 {# ── Button ───────────────────────────────────────────────────────────────── #}
 <section class="dcr-sg-section" id="button">
   <h2 class="dcr-sg-section__title">{% trans "Button" %}</h2>
-  <p class="dcr-sg-section__desc">{% trans "Use " %}<code class="dcr-code">dcr-btn</code>{% trans " instead of Django admin's " %}<code class="dcr-code">.button</code>{% trans " everywhere inside DCR panels. Works on both " %}<code class="dcr-code">&lt;button&gt;</code>{% trans " and " %}<code class="dcr-code">&lt;a&gt;</code>{% trans "." %}</p>
-  <div class="dcr-sg-preview" style="align-items:flex-end;gap:var(--dcr-space-md);flex-wrap:wrap">
-    <div style="display:flex;flex-direction:column;gap:var(--dcr-space-sm);align-items:flex-start">
-      <span style="font-size:var(--dcr-font-size-xs);font-weight:600;color:var(--dcr-color-text-muted);text-transform:uppercase;letter-spacing:0.4px">{% trans "Default" %}</span>
-      <button class="dcr-btn">{% trans "Refresh" %}</button>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:var(--dcr-space-sm);align-items:flex-start">
-      <span style="font-size:var(--dcr-font-size-xs);font-weight:600;color:var(--dcr-color-text-muted);text-transform:uppercase;letter-spacing:0.4px">{% trans "Primary" %}</span>
-      <button class="dcr-btn dcr-btn--primary">{% trans "Search" %}</button>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:var(--dcr-space-sm);align-items:flex-start">
-      <span style="font-size:var(--dcr-font-size-xs);font-weight:600;color:var(--dcr-color-text-muted);text-transform:uppercase;letter-spacing:0.4px">{% trans "Success" %}</span>
-      <button class="dcr-btn dcr-btn--success">{% trans "Approve" %}</button>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:var(--dcr-space-sm);align-items:flex-start">
-      <span style="font-size:var(--dcr-font-size-xs);font-weight:600;color:var(--dcr-color-text-muted);text-transform:uppercase;letter-spacing:0.4px">{% trans "Warning" %}</span>
-      <button class="dcr-btn dcr-btn--warning">{% trans "Retry" %}</button>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:var(--dcr-space-sm);align-items:flex-start">
-      <span style="font-size:var(--dcr-font-size-xs);font-weight:600;color:var(--dcr-color-text-muted);text-transform:uppercase;letter-spacing:0.4px">{% trans "Danger" %}</span>
-      <button class="dcr-btn dcr-btn--danger">{% trans "Flush cache" %}</button>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:var(--dcr-space-sm);align-items:flex-start">
-      <span style="font-size:var(--dcr-font-size-xs);font-weight:600;color:var(--dcr-color-text-muted);text-transform:uppercase;letter-spacing:0.4px">{% trans "Info" %}</span>
-      <button class="dcr-btn dcr-btn--info">{% trans "Details" %}</button>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:var(--dcr-space-sm);align-items:flex-start">
-      <span style="font-size:var(--dcr-font-size-xs);font-weight:600;color:var(--dcr-color-text-muted);text-transform:uppercase;letter-spacing:0.4px">{% trans "Muted" %}</span>
-      <button class="dcr-btn dcr-btn--muted">{% trans "Archive" %}</button>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:var(--dcr-space-sm);align-items:flex-start">
-      <span style="font-size:var(--dcr-font-size-xs);font-weight:600;color:var(--dcr-color-text-muted);text-transform:uppercase;letter-spacing:0.4px">{% trans "Small" %}</span>
-      <button class="dcr-btn dcr-btn--sm">{% trans "Filter…" %}</button>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:var(--dcr-space-sm);align-items:flex-start">
-      <span style="font-size:var(--dcr-font-size-xs);font-weight:600;color:var(--dcr-color-text-muted);text-transform:uppercase;letter-spacing:0.4px">{% trans "Disabled" %}</span>
-      <button class="dcr-btn dcr-btn--danger" disabled>{% trans "Flush cache" %}</button>
-    </div>
+  <p class="dcr-sg-section__desc">{% trans "Solid fill by default. Add " %}<code class="dcr-code">--ghost</code>{% trans " for transparent background + coloured border. Place any " %}<code class="dcr-code">&lt;svg class=\"dcr-btn__icon\"&gt;</code>{% trans " as a direct child — flex gap handles spacing automatically." %}</p>
+
+  {# Solid row #}
+  <p class="dcr-sg-pre-label">{% trans "Solid (default)" %}</p>
+  <div class="dcr-sg-preview" style="gap:var(--dcr-space-sm);flex-wrap:wrap;align-items:center">
+    <button class="dcr-btn">{% trans "Default" %}</button>
+    <button class="dcr-btn dcr-btn--primary">{% trans "Primary" %}</button>
+    <button class="dcr-btn dcr-btn--success">{% trans "Success" %}</button>
+    <button class="dcr-btn dcr-btn--warning">{% trans "Warning" %}</button>
+    <button class="dcr-btn dcr-btn--danger">{% trans "Danger" %}</button>
+    <button class="dcr-btn dcr-btn--info">{% trans "Info" %}</button>
+    <button class="dcr-btn dcr-btn--muted">{% trans "Muted" %}</button>
   </div>
+
+  {# Ghost row #}
+  <p class="dcr-sg-pre-label" style="margin-top:var(--dcr-space-lg)">{% trans "Ghost (--ghost)" %}</p>
+  <div class="dcr-sg-preview" style="gap:var(--dcr-space-sm);flex-wrap:wrap;align-items:center">
+    <button class="dcr-btn dcr-btn--ghost">{% trans "Default" %}</button>
+    <button class="dcr-btn dcr-btn--primary dcr-btn--ghost">{% trans "Primary" %}</button>
+    <button class="dcr-btn dcr-btn--success dcr-btn--ghost">{% trans "Success" %}</button>
+    <button class="dcr-btn dcr-btn--warning dcr-btn--ghost">{% trans "Warning" %}</button>
+    <button class="dcr-btn dcr-btn--danger dcr-btn--ghost">{% trans "Danger" %}</button>
+    <button class="dcr-btn dcr-btn--info dcr-btn--ghost">{% trans "Info" %}</button>
+    <button class="dcr-btn dcr-btn--muted dcr-btn--ghost">{% trans "Muted" %}</button>
+  </div>
+
+  {# Sizes + icon + disabled #}
+  <p class="dcr-sg-pre-label" style="margin-top:var(--dcr-space-lg)">{% trans "Sizes, icons, disabled" %}</p>
+  <div class="dcr-sg-preview" style="gap:var(--dcr-space-sm);flex-wrap:wrap;align-items:center">
+    <button class="dcr-btn dcr-btn--primary dcr-btn--sm">{% trans "Small" %}</button>
+    <button class="dcr-btn dcr-btn--primary">{% trans "Default size" %}</button>
+    <button class="dcr-btn dcr-btn--primary">
+      <svg class="dcr-btn__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      {% trans "SEARCH" %}
+    </button>
+    <button class="dcr-btn dcr-btn--ghost dcr-btn--icon-only" aria-label="{% trans 'Refresh' %}">
+      <svg class="dcr-btn__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+    </button>
+    <button class="dcr-btn dcr-btn--danger" disabled>{% trans "Disabled" %}</button>
+  </div>
+
   <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
-<pre class="dcr-sg-code"><code class="language-html">&lt;!-- All variants: outlined at rest, tinted background on hover --&gt;
-&lt;button class="dcr-btn"&gt;Default&lt;/button&gt;
-&lt;button class="dcr-btn dcr-btn--primary"&gt;Primary&lt;/button&gt;
-&lt;button class="dcr-btn dcr-btn--success"&gt;Success&lt;/button&gt;
-&lt;button class="dcr-btn dcr-btn--warning"&gt;Warning&lt;/button&gt;
-&lt;button class="dcr-btn dcr-btn--danger"&gt;Danger&lt;/button&gt;
-&lt;button class="dcr-btn dcr-btn--info"&gt;Info&lt;/button&gt;
-&lt;button class="dcr-btn dcr-btn--muted"&gt;Muted&lt;/button&gt;
+<pre class="dcr-sg-code"><code class="language-html">&lt;!-- Solid (default) --&gt;
+&lt;button class="dcr-btn dcr-btn--primary"&gt;Search&lt;/button&gt;
+&lt;button class="dcr-btn dcr-btn--danger"&gt;Delete&lt;/button&gt;
 
-&lt;!-- Small size — combines with any variant --&gt;
-&lt;button class="dcr-btn dcr-btn--sm"&gt;Filter…&lt;/button&gt;
-&lt;button class="dcr-btn dcr-btn--sm dcr-btn--primary"&gt;Save&lt;/button&gt;
+&lt;!-- Ghost / outlined --&gt;
+&lt;button class="dcr-btn dcr-btn--primary dcr-btn--ghost"&gt;Cancel&lt;/button&gt;
+&lt;button class="dcr-btn dcr-btn--ghost"&gt;Reset all filters&lt;/button&gt;
 
-&lt;!-- Disabled — any variant accepts the disabled attribute --&gt;
-&lt;button class="dcr-btn dcr-btn--danger" disabled&gt;Flush cache&lt;/button&gt;
+&lt;!-- With icon --&gt;
+&lt;button class="dcr-btn dcr-btn--primary"&gt;
+  &lt;svg class="dcr-btn__icon" …&gt;&lt;/svg&gt; Search
+&lt;/button&gt;
 
-&lt;!-- Works on &lt;a&gt; too --&gt;
-&lt;a href="…" class="dcr-btn"&gt;Export CSV&lt;/a&gt;</code></pre>
+&lt;!-- Icon-only --&gt;
+&lt;button class="dcr-btn dcr-btn--ghost dcr-btn--icon-only" aria-label="Refresh"&gt;
+  &lt;svg class="dcr-btn__icon" …&gt;&lt;/svg&gt;
+&lt;/button&gt;
+
+&lt;!-- Small --&gt;
+&lt;button class="dcr-btn dcr-btn--primary dcr-btn--sm"&gt;Save&lt;/button&gt;
+
+&lt;!-- Works on &lt;a&gt; --&gt;
+&lt;a href="…" class="dcr-btn dcr-btn--primary"&gt;Export CSV&lt;/a&gt;</code></pre>
 </section>
 
 {# ── Metric ───────────────────────────────────────────────────────────────── #}
@@ -610,6 +618,115 @@
 &lt;/div&gt;</code></pre>
 </section>
 
+{# ── Forms ────────────────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="forms">
+  <h2 class="dcr-sg-section__title">{% trans "Forms" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "Composable form primitives. Combine " %}<code class="dcr-code">dcr-form</code>{% trans ", " %}<code class="dcr-code">dcr-form__row</code>{% trans ", " %}<code class="dcr-code">dcr-field</code>{% trans ", " %}<code class="dcr-code">dcr-input</code>{% trans " / " %}<code class="dcr-code">dcr-select</code>{% trans ", and " %}<code class="dcr-code">dcr-input-group</code>{% trans " to build any panel form." %}</p>
+
+  {# Plain input + select #}
+  <p class="dcr-sg-pre-label">{% trans "Plain input and select" %}</p>
+  <div class="dcr-sg-preview">
+    <div style="display:flex;gap:var(--dcr-space-md);flex-wrap:wrap;width:100%">
+      <div class="dcr-field dcr-field--grow">
+        <label class="dcr-field__label" for="sg-plain-input">{% trans "Queue name" %}</label>
+        <input id="sg-plain-input" class="dcr-input" type="text" placeholder="{% trans 'e.g. celery, default' %}">
+      </div>
+      <div class="dcr-field">
+        <label class="dcr-field__label" for="sg-plain-select">{% trans "State" %}</label>
+        <select id="sg-plain-select" class="dcr-select">
+          <option>{% trans "All states" %}</option>
+          <option>SUCCESS</option>
+          <option>FAILURE</option>
+          <option>STARTED</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  {# Full search + filter form — matches data table controls zone #}
+  <p class="dcr-sg-pre-label" style="margin-top:var(--dcr-space-lg)">{% trans "Search + filter form" %}</p>
+  <div class="dcr-sg-preview dcr-sg-preview--stack">
+    <form class="dcr-form" style="background:var(--dcr-color-bg-subtle);border-radius:var(--dcr-radius);">
+
+      {# Row 1: labelled group (label above, input+button stretch-row below) #}
+      <div class="dcr-form__group">
+        <label class="dcr-form__label" for="sg-form-q">{% trans "Search by task name or ID" %}</label>
+        <div class="dcr-form__row--stretch">
+          <div class="dcr-input-group">
+            <span class="dcr-input-group__icon">&#9906;</span>
+            <input id="sg-form-q" class="dcr-input-group__input" type="text"
+                   placeholder="{% trans 'e.g. send_order_email, f81d4fae' %}">
+          </div>
+          <button type="submit" class="dcr-btn dcr-btn--primary">{% trans "SEARCH" %}</button>
+        </div>
+      </div>
+
+      {# Row 2: filter selects + reset #}
+      <div class="dcr-form__row">
+        <div class="dcr-field">
+          <label class="dcr-field__label" for="sg-form-state">&#9663; {% trans "State" %}</label>
+          <select id="sg-form-state" class="dcr-select">
+            <option>{% trans "All states" %}</option>
+          </select>
+        </div>
+        <div class="dcr-field">
+          <label class="dcr-field__label" for="sg-form-queue">{% trans "Queue" %}</label>
+          <select id="sg-form-queue" class="dcr-select">
+            <option>{% trans "All queues" %}</option>
+          </select>
+        </div>
+        <div style="flex:1"></div>
+        <button type="button" class="dcr-btn" style="align-self:flex-end">{% trans "Reset all filters" %}</button>
+      </div>
+
+    </form>
+  </div>
+
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;!-- Plain input --&gt;
+&lt;div class="dcr-field"&gt;
+  &lt;label class="dcr-field__label" for="name"&gt;Queue name&lt;/label&gt;
+  &lt;input id="name" class="dcr-input" type="text" placeholder="e.g. celery"&gt;
+&lt;/div&gt;
+
+&lt;!-- Select --&gt;
+&lt;div class="dcr-field"&gt;
+  &lt;label class="dcr-field__label" for="state"&gt;State&lt;/label&gt;
+  &lt;select id="state" class="dcr-select"&gt;&lt;option&gt;All states&lt;/option&gt;&lt;/select&gt;
+&lt;/div&gt;
+
+&lt;!-- Search + button (input group label sits above both) --&gt;
+&lt;div class="dcr-form__group"&gt;
+  &lt;label class="dcr-form__label" for="q"&gt;Search by task name or ID&lt;/label&gt;
+  &lt;div class="dcr-form__row--stretch"&gt;
+    &lt;div class="dcr-input-group"&gt;
+      &lt;span class="dcr-input-group__icon"&gt;&#9906;&lt;/span&gt;
+      &lt;input id="q" class="dcr-input-group__input" type="text" placeholder="e.g. send_order_email"&gt;
+    &lt;/div&gt;
+    &lt;button type="submit" class="dcr-btn dcr-btn--primary"&gt;Search&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Full search + filter form --&gt;
+&lt;form class="dcr-form"&gt;
+  &lt;div class="dcr-form__group"&gt;
+    &lt;label class="dcr-form__label" for="q"&gt;Search by task name or ID&lt;/label&gt;
+    &lt;div class="dcr-form__row--stretch"&gt;
+      &lt;div class="dcr-input-group"&gt;…&lt;/div&gt;
+      &lt;button class="dcr-btn dcr-btn--primary"&gt;Search&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="dcr-form__row"&gt;
+    &lt;div class="dcr-field"&gt;
+      &lt;label class="dcr-field__label" for="state"&gt;&#9663; State&lt;/label&gt;
+      &lt;select id="state" class="dcr-select"&gt;&lt;option&gt;All states&lt;/option&gt;&lt;/select&gt;
+    &lt;/div&gt;
+    &lt;div style="flex:1"&gt;&lt;/div&gt;
+    &lt;button class="dcr-btn" style="align-self:flex-end"&gt;Reset all filters&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/form&gt;</code></pre>
+</section>
+
 {# ── Data Table ───────────────────────────────────────────────────────────── #}
 <section class="dcr-sg-section" id="data-table">
   <h2 class="dcr-sg-section__title">{% trans "Data Table" %}</h2>
@@ -706,27 +823,26 @@
 
       {# Zone 2 — controls #}
       <div class="dcr-data-table__controls">
-        <form class="dcr-search-form">
-          <div class="dcr-search-form__search-row">
-            <div style="flex:1;display:flex;flex-direction:column;gap:var(--dcr-space-xs)">
-              <label class="dcr-search-form__label" for="sg-key-q">{% trans "Search by key" %}</label>
-              <div class="dcr-search-field">
-                <span class="dcr-search-field__icon">&#9906;</span>
-                <input id="sg-key-q" class="dcr-search-field__input" type="text" placeholder="{% trans 'e.g. user:*, session:*, queue:default' %}">
+        <form class="dcr-form">
+          <div class="dcr-form__group">
+            <label class="dcr-form__label" for="sg-key-q">{% trans "Search by key" %}</label>
+            <div class="dcr-form__row--stretch">
+              <div class="dcr-input-group">
+                <span class="dcr-input-group__icon">&#9906;</span>
+                <input id="sg-key-q" class="dcr-input-group__input" type="text"
+                       placeholder="{% trans 'e.g. user:*, session:*, queue:default' %}">
               </div>
-            </div>
-            <div style="display:flex;align-items:flex-end">
-              <button type="submit" class="dcr-btn dcr-btn--primary">{% trans "Search" %}</button>
+              <button type="submit" class="dcr-btn dcr-btn--primary">{% trans "SEARCH" %}</button>
             </div>
           </div>
-          <div class="dcr-search-form__filter-row">
-            <div class="dcr-filter-group">
-              <label class="dcr-filter-group__label">&#9663; {% trans "Type" %}</label>
-              <select><option>{% trans "All types" %}</option></select>
+          <div class="dcr-form__row">
+            <div class="dcr-field">
+              <label class="dcr-field__label" for="sg-type">&#9663; {% trans "Type" %}</label>
+              <select id="sg-type" class="dcr-select"><option>{% trans "All types" %}</option></select>
             </div>
-            <div class="dcr-filter-group">
-              <label class="dcr-filter-group__label">{% trans "Database" %}</label>
-              <select><option>{% trans "All databases" %}</option></select>
+            <div class="dcr-field">
+              <label class="dcr-field__label" for="sg-db">{% trans "Database" %}</label>
+              <select id="sg-db" class="dcr-select"><option>{% trans "All databases" %}</option></select>
             </div>
             <div style="flex:1"></div>
             <button type="button" class="dcr-btn" style="align-self:flex-end">{% trans "Reset all filters" %}</button>
@@ -818,23 +934,21 @@
 
   &lt;!-- Zone 2: controls (optional) --&gt;
   &lt;div class="dcr-data-table__controls"&gt;
-    &lt;form class="dcr-search-form"&gt;
-      &lt;div class="dcr-search-form__search-row"&gt;
-        &lt;div style="flex:1;display:flex;flex-direction:column;gap:4px"&gt;
-          &lt;label class="dcr-search-form__label" for="q"&gt;Search by key&lt;/label&gt;
-          &lt;div class="dcr-search-field"&gt;
-            &lt;span class="dcr-search-field__icon"&gt;&#9906;&lt;/span&gt;
-            &lt;input id="q" class="dcr-search-field__input" type="text" placeholder="e.g. user:*, session:*"&gt;
+    &lt;form class="dcr-form"&gt;
+      &lt;div class="dcr-form__group"&gt;
+        &lt;label class="dcr-form__label" for="q"&gt;Search by key&lt;/label&gt;
+        &lt;div class="dcr-form__row--stretch"&gt;
+          &lt;div class="dcr-input-group"&gt;
+            &lt;span class="dcr-input-group__icon"&gt;&#9906;&lt;/span&gt;
+            &lt;input id="q" class="dcr-input-group__input" type="text" placeholder="e.g. user:*, session:*"&gt;
           &lt;/div&gt;
-        &lt;/div&gt;
-        &lt;div style="display:flex;align-items:flex-end"&gt;
           &lt;button type="submit" class="dcr-btn dcr-btn--primary"&gt;Search&lt;/button&gt;
         &lt;/div&gt;
       &lt;/div&gt;
-      &lt;div class="dcr-search-form__filter-row"&gt;
-        &lt;div class="dcr-filter-group"&gt;
-          &lt;label class="dcr-filter-group__label"&gt;&#9663; Type&lt;/label&gt;
-          &lt;select&gt;&lt;option&gt;All types&lt;/option&gt;&lt;/select&gt;
+      &lt;div class="dcr-form__row"&gt;
+        &lt;div class="dcr-field"&gt;
+          &lt;label class="dcr-field__label" for="type"&gt;&#9663; Type&lt;/label&gt;
+          &lt;select id="type" class="dcr-select"&gt;&lt;option&gt;All types&lt;/option&gt;&lt;/select&gt;
         &lt;/div&gt;
         &lt;div style="flex:1"&gt;&lt;/div&gt;
         &lt;button type="button" class="dcr-btn" style="align-self:flex-end"&gt;Reset all filters&lt;/button&gt;

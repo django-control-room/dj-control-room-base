@@ -22,14 +22,14 @@
 
 :root {
   /* Text */
-  --dcr-color-text:         #111827;
-  --dcr-color-text-muted:   #6b7280;
+  --dcr-color-text: #111827;
+  --dcr-color-text-muted: #6b7280;
   --dcr-color-text-inverse: #ffffff;
 
   /* Surfaces */
-  --dcr-color-bg:           #ffffff;
-  --dcr-color-bg-subtle:    #f9fafb;
-  --dcr-color-border:       #e5e7eb;
+  --dcr-color-bg: #ffffff;
+  --dcr-color-bg-subtle: #f9fafb;
+  --dcr-color-border: #e5e7eb;
 
   /* Semantic */
   --dcr-color-accent: #417690;
@@ -58,6 +58,7 @@
 
   /* Shape */
   --dcr-radius: 4px;
+  --dcr-radius-md: 6px;
   --dcr-radius-lg: 8px;
   --dcr-radius-xl: 12px;
 
@@ -78,82 +79,82 @@
       directly on <html> regardless of OS preference.             */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --dcr-color-text:         #f3f4f6;
-    --dcr-color-text-muted:   #9ca3af;
+    --dcr-color-text: #f3f4f6;
+    --dcr-color-text-muted: #9ca3af;
     --dcr-color-text-inverse: #111827;
-    --dcr-color-bg:           #1a1a1a;
-    --dcr-color-bg-subtle:    #252525;
-    --dcr-color-border:       rgb(46, 46, 46);
+    --dcr-color-bg: #1a1a1a;
+    --dcr-color-bg-subtle: #252525;
+    --dcr-color-border: rgb(46, 46, 46);
 
-    --dcr-color-accent-bg:    rgba(65, 118, 144, 0.20);
-    --dcr-color-success:      #66bb6a;
-    --dcr-color-success-bg:   rgba(102, 187, 106, 0.12);
-    --dcr-color-warning:      #fbbf24;
-    --dcr-color-warning-bg:   rgba(251, 191, 36, 0.12);
-    --dcr-color-danger:       #ef5350;
-    --dcr-color-danger-bg:    rgba(239, 83, 80, 0.12);
-    --dcr-color-info:         #42a5f5;
-    --dcr-color-info-bg:      rgba(66, 165, 245, 0.12);
-    --dcr-color-muted:        #888;
-    --dcr-color-muted-bg:     rgba(255, 255, 255, 0.08);
-    --dcr-color-purple:       #a78bfa;
-    --dcr-color-purple-bg:    rgba(167, 139, 250, 0.12);
-    --dcr-color-indigo:       #818cf8;
-    --dcr-color-indigo-bg:    rgba(129, 140, 248, 0.12);
+    --dcr-color-accent-bg: rgba(65, 118, 144, 0.20);
+    --dcr-color-success: #66bb6a;
+    --dcr-color-success-bg: rgba(102, 187, 106, 0.12);
+    --dcr-color-warning: #fbbf24;
+    --dcr-color-warning-bg: rgba(251, 191, 36, 0.12);
+    --dcr-color-danger: #ef5350;
+    --dcr-color-danger-bg: rgba(239, 83, 80, 0.12);
+    --dcr-color-info: #42a5f5;
+    --dcr-color-info-bg: rgba(66, 165, 245, 0.12);
+    --dcr-color-muted: #888;
+    --dcr-color-muted-bg: rgba(255, 255, 255, 0.08);
+    --dcr-color-purple: #a78bfa;
+    --dcr-color-purple-bg: rgba(167, 139, 250, 0.12);
+    --dcr-color-indigo: #818cf8;
+    --dcr-color-indigo-bg: rgba(129, 140, 248, 0.12);
   }
 }
 
 /* Explicit dark toggle from Django admin (data-theme="dark" on <html>) */
 :root[data-theme="dark"] {
-  --dcr-color-text:         #f3f4f6;
-  --dcr-color-text-muted:   #9ca3af;
+  --dcr-color-text: #f3f4f6;
+  --dcr-color-text-muted: #9ca3af;
   --dcr-color-text-inverse: #111827;
-  --dcr-color-bg:           #1a1a1a;
-  --dcr-color-bg-subtle:    #252525;
-  --dcr-color-border:       rgb(46, 46, 46);
+  --dcr-color-bg: #1a1a1a;
+  --dcr-color-bg-subtle: #252525;
+  --dcr-color-border: rgb(46, 46, 46);
 
-  --dcr-color-accent-bg:    rgba(65, 118, 144, 0.20);
-  --dcr-color-success:      #66bb6a;
-  --dcr-color-success-bg:   rgba(102, 187, 106, 0.12);
-  --dcr-color-warning:      #fbbf24;
-  --dcr-color-warning-bg:   rgba(251, 191, 36, 0.12);
-  --dcr-color-danger:       #ef5350;
-  --dcr-color-danger-bg:    rgba(239, 83, 80, 0.12);
-  --dcr-color-info:         #42a5f5;
-  --dcr-color-info-bg:      rgba(66, 165, 245, 0.12);
-  --dcr-color-muted:        #888;
-  --dcr-color-muted-bg:     rgba(255, 255, 255, 0.08);
-  --dcr-color-purple:       #a78bfa;
-  --dcr-color-purple-bg:    rgba(167, 139, 250, 0.12);
-  --dcr-color-indigo:       #818cf8;
-  --dcr-color-indigo-bg:    rgba(129, 140, 248, 0.12);
+  --dcr-color-accent-bg: rgba(65, 118, 144, 0.20);
+  --dcr-color-success: #66bb6a;
+  --dcr-color-success-bg: rgba(102, 187, 106, 0.12);
+  --dcr-color-warning: #fbbf24;
+  --dcr-color-warning-bg: rgba(251, 191, 36, 0.12);
+  --dcr-color-danger: #ef5350;
+  --dcr-color-danger-bg: rgba(239, 83, 80, 0.12);
+  --dcr-color-info: #42a5f5;
+  --dcr-color-info-bg: rgba(66, 165, 245, 0.12);
+  --dcr-color-muted: #888;
+  --dcr-color-muted-bg: rgba(255, 255, 255, 0.08);
+  --dcr-color-purple: #a78bfa;
+  --dcr-color-purple-bg: rgba(167, 139, 250, 0.12);
+  --dcr-color-indigo: #818cf8;
+  --dcr-color-indigo-bg: rgba(129, 140, 248, 0.12);
 }
 
 /* Explicit light toggle — always force light tokens even on a dark-OS system */
 :root[data-theme="light"] {
-  --dcr-color-text:         #111827;
-  --dcr-color-text-muted:   #6b7280;
+  --dcr-color-text: #111827;
+  --dcr-color-text-muted: #6b7280;
   --dcr-color-text-inverse: #ffffff;
-  --dcr-color-bg:           #ffffff;
-  --dcr-color-bg-subtle:    #f9fafb;
-  --dcr-color-border:       #e5e7eb;
+  --dcr-color-bg: #ffffff;
+  --dcr-color-bg-subtle: #f9fafb;
+  --dcr-color-border: #e5e7eb;
 
-  --dcr-color-accent:       #417690;
-  --dcr-color-accent-bg:    rgba(65, 118, 144, 0.10);
-  --dcr-color-success:      #2e7d32;
-  --dcr-color-success-bg:   rgba(46, 125, 50, 0.10);
-  --dcr-color-warning:      #b45309;
-  --dcr-color-warning-bg:   rgba(180, 83, 9, 0.10);
-  --dcr-color-danger:       #c62828;
-  --dcr-color-danger-bg:    rgba(198, 40, 40, 0.10);
-  --dcr-color-info:         #0277bd;
-  --dcr-color-info-bg:      rgba(2, 119, 189, 0.10);
-  --dcr-color-muted:        #6b7280;
-  --dcr-color-muted-bg:     rgba(107, 114, 128, 0.10);
-  --dcr-color-purple:       #7c3aed;
-  --dcr-color-purple-bg:    rgba(124, 58, 237, 0.10);
-  --dcr-color-indigo:       #4338ca;
-  --dcr-color-indigo-bg:    rgba(67, 56, 202, 0.10);
+  --dcr-color-accent: #417690;
+  --dcr-color-accent-bg: rgba(65, 118, 144, 0.10);
+  --dcr-color-success: #2e7d32;
+  --dcr-color-success-bg: rgba(46, 125, 50, 0.10);
+  --dcr-color-warning: #b45309;
+  --dcr-color-warning-bg: rgba(180, 83, 9, 0.10);
+  --dcr-color-danger: #c62828;
+  --dcr-color-danger-bg: rgba(198, 40, 40, 0.10);
+  --dcr-color-info: #0277bd;
+  --dcr-color-info-bg: rgba(2, 119, 189, 0.10);
+  --dcr-color-muted: #6b7280;
+  --dcr-color-muted-bg: rgba(107, 114, 128, 0.10);
+  --dcr-color-purple: #7c3aed;
+  --dcr-color-purple-bg: rgba(124, 58, 237, 0.10);
+  --dcr-color-indigo: #4338ca;
+  --dcr-color-indigo-bg: rgba(67, 56, 202, 0.10);
 }
 
 
@@ -222,125 +223,226 @@
  * Use <button> or <a> — the styles work on both.
  */
 
+/*
+ * Buttons  (.dcr-btn)
+ *
+ * Base + variant controls the colour.
+ * --ghost modifier switches any variant to transparent background + coloured border.
+ * Icons: place any <svg> or inline element as a direct child — flex gap handles spacing.
+ *
+ *   <!-- Solid (default) -->
+ *   <button class="dcr-btn dcr-btn--primary">Save</button>
+ *
+ *   <!-- Ghost / outlined -->
+ *   <button class="dcr-btn dcr-btn--primary dcr-btn--ghost">Cancel</button>
+ *
+ *   <!-- With icon -->
+ *   <button class="dcr-btn dcr-btn--primary">
+ *     <svg class="dcr-btn__icon" …></svg> Search
+ *   </button>
+ *
+ *   <!-- Icon-only -->
+ *   <button class="dcr-btn dcr-btn--ghost dcr-btn--icon-only" aria-label="Refresh">
+ *     <svg class="dcr-btn__icon" …></svg>
+ *   </button>
+ */
+
 .dcr-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--dcr-space-xs);
-  padding: 5px var(--dcr-space-md);
+  gap: 6px;
+  padding: 8px 20px;
   font-size: var(--dcr-font-size-sm);
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.4;
-  border: 1px solid var(--dcr-color-border);
-  border-radius: var(--dcr-radius);
-  background: var(--dcr-color-bg);
+  border: 1px solid transparent;
+  border-radius: var(--dcr-radius-xl) !important;
+  background: var(--dcr-color-bg-subtle);
   color: var(--dcr-color-text);
   cursor: pointer;
   text-decoration: none;
   white-space: nowrap;
-  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  transition: background 0.15s ease, border-color 0.15s ease,
+    color 0.15s ease, opacity 0.15s ease;
   user-select: none;
+  letter-spacing: 0.1em;
 }
 
 .dcr-btn:hover:not(:disabled) {
-  background: var(--dcr-color-bg-subtle);
-  border-color: var(--dcr-color-accent);
-  color: var(--dcr-color-accent);
+  border-color: var(--dcr-color-border);
+  opacity: 0.9;
 }
 
 .dcr-btn:active:not(:disabled) {
-  background: var(--dcr-color-accent-bg);
+  opacity: 0.75;
 }
 
 .dcr-btn:disabled,
 .dcr-btn[aria-disabled="true"] {
-  opacity: 0.4;
+  opacity: 0.38;
   cursor: not-allowed;
   pointer-events: none;
 }
 
-/* Semantic variants — all follow the same outlined → tinted hover pattern.
-   Each explicitly sets background: var(--dcr-color-bg) at rest so no admin
-   rule can bleed through with a solid fill. */
+/* Icon sizing inside buttons */
+.dcr-btn__icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+/* Icon-only — square, no horizontal text padding */
+.dcr-btn--icon-only {
+  padding: 8px;
+}
+
+/* ── Solid semantic variants ──────────────────────────────────────────── */
 
 .dcr-btn--primary {
   background: var(--dcr-color-accent);
-  border-color: var(--dcr-color-accent);
   color: #fff;
 }
 
 .dcr-btn--primary:hover:not(:disabled) {
   background: var(--dcr-color-accent);
-  border-color: var(--dcr-color-accent);
-  color: #fff;
   opacity: 0.88;
+  border-color: transparent;
 }
 
 .dcr-btn--success {
-  background: var(--dcr-color-bg);
-  border-color: var(--dcr-color-success);
-  color: var(--dcr-color-success);
+  background: var(--dcr-color-success);
+  color: #fff;
 }
 
 .dcr-btn--success:hover:not(:disabled) {
-  background: var(--dcr-color-success-bg);
-  border-color: var(--dcr-color-success);
-  color: var(--dcr-color-success);
+  background: var(--dcr-color-success);
+  opacity: 0.88;
+  border-color: transparent;
 }
 
 .dcr-btn--warning {
-  background: var(--dcr-color-bg);
-  border-color: var(--dcr-color-warning);
-  color: var(--dcr-color-warning);
+  background: var(--dcr-color-warning);
+  color: #fff;
 }
 
 .dcr-btn--warning:hover:not(:disabled) {
-  background: var(--dcr-color-warning-bg);
-  border-color: var(--dcr-color-warning);
-  color: var(--dcr-color-warning);
+  background: var(--dcr-color-warning);
+  opacity: 0.88;
+  border-color: transparent;
 }
 
 .dcr-btn--danger {
   background: var(--dcr-color-danger);
-  border-color: var(--dcr-color-danger);
   color: #fff;
 }
 
 .dcr-btn--danger:hover:not(:disabled) {
   background: var(--dcr-color-danger);
-  border-color: var(--dcr-color-danger);
-  color: #fff;
   opacity: 0.88;
+  border-color: transparent;
 }
 
 .dcr-btn--info {
-  background: var(--dcr-color-bg);
-  border-color: var(--dcr-color-info);
-  color: var(--dcr-color-info);
+  background: var(--dcr-color-info);
+  color: #fff;
 }
 
 .dcr-btn--info:hover:not(:disabled) {
-  background: var(--dcr-color-info-bg);
+  background: var(--dcr-color-info);
+  opacity: 0.88;
+  border-color: transparent;
+}
+
+.dcr-btn--muted {
+  background: var(--dcr-color-muted);
+  color: #fff;
+}
+
+.dcr-btn--muted:hover:not(:disabled) {
+  background: var(--dcr-color-muted);
+  opacity: 0.88;
+  border-color: transparent;
+}
+
+/* ── Ghost modifier — transparent bg, coloured border + text ─────────── */
+/* Combine with any variant: dcr-btn--primary dcr-btn--ghost              */
+
+.dcr-btn--ghost {
+  background: transparent;
+  border-color: var(--dcr-color-border);
+  color: var(--dcr-color-text);
+}
+
+.dcr-btn--ghost:hover:not(:disabled) {
+  background: var(--dcr-color-bg-subtle);
+  opacity: 1;
+}
+
+.dcr-btn--primary.dcr-btn--ghost {
+  border-color: var(--dcr-color-accent);
+  color: var(--dcr-color-accent);
+}
+
+.dcr-btn--success.dcr-btn--ghost {
+  border-color: var(--dcr-color-success);
+  color: var(--dcr-color-success);
+}
+
+.dcr-btn--warning.dcr-btn--ghost {
+  border-color: var(--dcr-color-warning);
+  color: var(--dcr-color-warning);
+}
+
+.dcr-btn--danger.dcr-btn--ghost {
+  border-color: var(--dcr-color-danger);
+  color: var(--dcr-color-danger);
+}
+
+.dcr-btn--info.dcr-btn--ghost {
   border-color: var(--dcr-color-info);
   color: var(--dcr-color-info);
 }
 
-.dcr-btn--muted {
-  background: var(--dcr-color-bg);
+.dcr-btn--muted.dcr-btn--ghost {
   border-color: var(--dcr-color-muted);
   color: var(--dcr-color-muted);
 }
 
-.dcr-btn--muted:hover:not(:disabled) {
+.dcr-btn--ghost:hover:not(:disabled),
+.dcr-btn--primary.dcr-btn--ghost:hover:not(:disabled) {
+  background: var(--dcr-color-accent-bg);
+}
+
+.dcr-btn--success.dcr-btn--ghost:hover:not(:disabled) {
+  background: var(--dcr-color-success-bg);
+}
+
+.dcr-btn--warning.dcr-btn--ghost:hover:not(:disabled) {
+  background: var(--dcr-color-warning-bg);
+}
+
+.dcr-btn--danger.dcr-btn--ghost:hover:not(:disabled) {
+  background: var(--dcr-color-danger-bg);
+}
+
+.dcr-btn--info.dcr-btn--ghost:hover:not(:disabled) {
+  background: var(--dcr-color-info-bg);
+}
+
+.dcr-btn--muted.dcr-btn--ghost:hover:not(:disabled) {
   background: var(--dcr-color-muted-bg);
-  border-color: var(--dcr-color-muted);
-  color: var(--dcr-color-muted);
 }
 
-/* Size modifier — combines with any variant */
+/* ── Size modifier ───────────────────────────────────────────────────── */
 .dcr-btn--sm {
-  padding: 3px var(--dcr-space-sm);
+  padding: 4px 12px;
   font-size: var(--dcr-font-size-xs);
+  border-radius: var(--dcr-radius-md);
+}
+
+.dcr-btn--sm.dcr-btn--icon-only {
+  padding: 4px;
 }
 
 
@@ -374,23 +476,81 @@
 }
 
 /* Tinted semantic variants */
-.dcr-badge--success { background: var(--dcr-color-success-bg); color: var(--dcr-color-success); }
-.dcr-badge--warning { background: var(--dcr-color-warning-bg); color: var(--dcr-color-warning); }
-.dcr-badge--danger  { background: var(--dcr-color-danger-bg);  color: var(--dcr-color-danger);  }
-.dcr-badge--info    { background: var(--dcr-color-info-bg);    color: var(--dcr-color-info);    }
-.dcr-badge--muted   { background: var(--dcr-color-muted-bg);   color: var(--dcr-color-muted);   }
-.dcr-badge--purple  { background: var(--dcr-color-purple-bg);  color: var(--dcr-color-purple);  }
-.dcr-badge--indigo  { background: var(--dcr-color-indigo-bg);  color: var(--dcr-color-indigo);  }
+.dcr-badge--success {
+  background: var(--dcr-color-success-bg);
+  color: var(--dcr-color-success);
+}
+
+.dcr-badge--warning {
+  background: var(--dcr-color-warning-bg);
+  color: var(--dcr-color-warning);
+}
+
+.dcr-badge--danger {
+  background: var(--dcr-color-danger-bg);
+  color: var(--dcr-color-danger);
+}
+
+.dcr-badge--info {
+  background: var(--dcr-color-info-bg);
+  color: var(--dcr-color-info);
+}
+
+.dcr-badge--muted {
+  background: var(--dcr-color-muted-bg);
+  color: var(--dcr-color-muted);
+}
+
+.dcr-badge--purple {
+  background: var(--dcr-color-purple-bg);
+  color: var(--dcr-color-purple);
+}
+
+.dcr-badge--indigo {
+  background: var(--dcr-color-indigo-bg);
+  color: var(--dcr-color-indigo);
+}
 
 /* Solid fill */
-.dcr-badge--solid                          { background: var(--dcr-color-accent);   color: #fff; }
-.dcr-badge--solid.dcr-badge--success       { background: var(--dcr-color-success);  color: #fff; }
-.dcr-badge--solid.dcr-badge--warning       { background: var(--dcr-color-warning);  color: #fff; }
-.dcr-badge--solid.dcr-badge--danger        { background: var(--dcr-color-danger);   color: #fff; }
-.dcr-badge--solid.dcr-badge--info          { background: var(--dcr-color-info);     color: #fff; }
-.dcr-badge--solid.dcr-badge--muted         { background: var(--dcr-color-muted);    color: #fff; }
-.dcr-badge--solid.dcr-badge--purple        { background: var(--dcr-color-purple);   color: #fff; }
-.dcr-badge--solid.dcr-badge--indigo        { background: var(--dcr-color-indigo);   color: #fff; }
+.dcr-badge--solid {
+  background: var(--dcr-color-accent);
+  color: #fff;
+}
+
+.dcr-badge--solid.dcr-badge--success {
+  background: var(--dcr-color-success);
+  color: #fff;
+}
+
+.dcr-badge--solid.dcr-badge--warning {
+  background: var(--dcr-color-warning);
+  color: #fff;
+}
+
+.dcr-badge--solid.dcr-badge--danger {
+  background: var(--dcr-color-danger);
+  color: #fff;
+}
+
+.dcr-badge--solid.dcr-badge--info {
+  background: var(--dcr-color-info);
+  color: #fff;
+}
+
+.dcr-badge--solid.dcr-badge--muted {
+  background: var(--dcr-color-muted);
+  color: #fff;
+}
+
+.dcr-badge--solid.dcr-badge--purple {
+  background: var(--dcr-color-purple);
+  color: #fff;
+}
+
+.dcr-badge--solid.dcr-badge--indigo {
+  background: var(--dcr-color-indigo);
+  color: #fff;
+}
 
 
 /* --- Pill ------------------------------------------------------------------- */
@@ -434,23 +594,81 @@
 }
 
 /* Tinted semantic variants */
-.dcr-pill--success { background: var(--dcr-color-success-bg); color: var(--dcr-color-success); }
-.dcr-pill--warning { background: var(--dcr-color-warning-bg); color: var(--dcr-color-warning); }
-.dcr-pill--danger  { background: var(--dcr-color-danger-bg);  color: var(--dcr-color-danger);  }
-.dcr-pill--info    { background: var(--dcr-color-info-bg);    color: var(--dcr-color-info);    }
-.dcr-pill--muted   { background: var(--dcr-color-muted-bg);   color: var(--dcr-color-muted);   }
-.dcr-pill--purple  { background: var(--dcr-color-purple-bg);  color: var(--dcr-color-purple);  }
-.dcr-pill--indigo  { background: var(--dcr-color-indigo-bg);  color: var(--dcr-color-indigo);  }
+.dcr-pill--success {
+  background: var(--dcr-color-success-bg);
+  color: var(--dcr-color-success);
+}
+
+.dcr-pill--warning {
+  background: var(--dcr-color-warning-bg);
+  color: var(--dcr-color-warning);
+}
+
+.dcr-pill--danger {
+  background: var(--dcr-color-danger-bg);
+  color: var(--dcr-color-danger);
+}
+
+.dcr-pill--info {
+  background: var(--dcr-color-info-bg);
+  color: var(--dcr-color-info);
+}
+
+.dcr-pill--muted {
+  background: var(--dcr-color-muted-bg);
+  color: var(--dcr-color-muted);
+}
+
+.dcr-pill--purple {
+  background: var(--dcr-color-purple-bg);
+  color: var(--dcr-color-purple);
+}
+
+.dcr-pill--indigo {
+  background: var(--dcr-color-indigo-bg);
+  color: var(--dcr-color-indigo);
+}
 
 /* Solid fill */
-.dcr-pill--solid                       { background: var(--dcr-color-accent);  color: #fff; }
-.dcr-pill--solid.dcr-pill--success     { background: var(--dcr-color-success); color: #fff; }
-.dcr-pill--solid.dcr-pill--warning     { background: var(--dcr-color-warning); color: #fff; }
-.dcr-pill--solid.dcr-pill--danger      { background: var(--dcr-color-danger);  color: #fff; }
-.dcr-pill--solid.dcr-pill--info        { background: var(--dcr-color-info);    color: #fff; }
-.dcr-pill--solid.dcr-pill--muted       { background: var(--dcr-color-muted);   color: #fff; }
-.dcr-pill--solid.dcr-pill--purple      { background: var(--dcr-color-purple);  color: #fff; }
-.dcr-pill--solid.dcr-pill--indigo      { background: var(--dcr-color-indigo);  color: #fff; }
+.dcr-pill--solid {
+  background: var(--dcr-color-accent);
+  color: #fff;
+}
+
+.dcr-pill--solid.dcr-pill--success {
+  background: var(--dcr-color-success);
+  color: #fff;
+}
+
+.dcr-pill--solid.dcr-pill--warning {
+  background: var(--dcr-color-warning);
+  color: #fff;
+}
+
+.dcr-pill--solid.dcr-pill--danger {
+  background: var(--dcr-color-danger);
+  color: #fff;
+}
+
+.dcr-pill--solid.dcr-pill--info {
+  background: var(--dcr-color-info);
+  color: #fff;
+}
+
+.dcr-pill--solid.dcr-pill--muted {
+  background: var(--dcr-color-muted);
+  color: #fff;
+}
+
+.dcr-pill--solid.dcr-pill--purple {
+  background: var(--dcr-color-purple);
+  color: #fff;
+}
+
+.dcr-pill--solid.dcr-pill--indigo {
+  background: var(--dcr-color-indigo);
+  color: #fff;
+}
 
 
 /* --- Metric ----------------------------------------------------------------- */
@@ -867,7 +1085,7 @@ a.dcr-pagination__page:hover {
  *
  *     <!-- Zone 2  (optional) -->
  *     <div class="dcr-data-table__controls">
- *       <form class="dcr-search-form">…</form>
+ *       <form class="dcr-form">…</form>
  *     </div>
  *
  *     <!-- Zone 3 -->
@@ -965,7 +1183,7 @@ a.dcr-pagination__page:hover {
   letter-spacing: 0.5px;
   color: var(--dcr-color-text-muted);
   text-align: left;
-  border-bottom: 1px solid var(--dcr-color-border);
+  border-bottom: none;
 }
 
 .dcr-data-table td {
@@ -1298,153 +1516,229 @@ a.dcr-pagination__page:hover {
 }
 
 
-/* --- Search Form ------------------------------------------------------------ */
+/* --- Forms ------------------------------------------------------------------ */
 
 /*
- * Two-row filter bar for data table controls zones.  Sits inside
- * dcr-data-table__controls (which provides the subtle background + border).
+ * General-purpose form primitives for DCR panels.
  *
- * Structure:
- *   <form class="dcr-search-form">
+ * dcr-form          — column container (gap + padding); use anywhere a form lives
+ *   dcr-form__row   — horizontal flex row of fields/controls
+ *   dcr-form__label — small uppercase label above an entire row or group
  *
- *     <!-- Row A: section label + search input + submit button -->
- *     <div class="dcr-search-form__search-row">
- *       <label class="dcr-search-form__label" for="q">Search by key</label>
- *       <div class="dcr-search-field">
- *         <span class="dcr-search-field__icon">⌕</span>
- *         <input id="q" class="dcr-search-field__input" type="text" placeholder="e.g. user:*">
+ * dcr-field         — individual field: stacks label above a control
+ *   dcr-field__label  — xs uppercase label
+ *   dcr-field--grow   — flex:1 so the field expands to fill its row
+ *
+ * dcr-input         — styled plain text / number / email input
+ * dcr-select        — styled <select>
+ *
+ * dcr-input-group   — icon + input combo (e.g. search field with magnifier)
+ *   dcr-input-group__icon
+ *   dcr-input-group__input
+ *
+ * Example — search + filter bar inside dcr-data-table__controls:
+ *
+ *   <form class="dcr-form">
+ *     <div class="dcr-form__row">
+ *       <div class="dcr-field dcr-field--grow">
+ *         <label class="dcr-field__label" for="q">Search by task name or ID</label>
+ *         <div class="dcr-input-group">
+ *           <span class="dcr-input-group__icon">⌕</span>
+ *           <input id="q" class="dcr-input-group__input" type="text" placeholder="e.g. send_order_email">
+ *         </div>
  *       </div>
- *       <button type="submit" class="dcr-btn dcr-btn--primary">Search</button>
+ *       <div style="display:flex;align-items:flex-end">
+ *         <button type="submit" class="dcr-btn dcr-btn--primary">Search</button>
+ *       </div>
  *     </div>
- *
- *     <!-- Row B (optional): dropdowns + trailing reset button -->
- *     <div class="dcr-search-form__filter-row">
- *       <div class="dcr-filter-group">
- *         <label class="dcr-filter-group__label">▽ Type</label>
- *         <select>…</select>
- *       </div>
- *       <div class="dcr-filter-group">
- *         <label class="dcr-filter-group__label">Database</label>
- *         <select>…</select>
+ *     <div class="dcr-form__row">
+ *       <div class="dcr-field">
+ *         <label class="dcr-field__label" for="state">▽ State</label>
+ *         <select id="state" class="dcr-select"><option>All states</option></select>
  *       </div>
  *       <div style="flex:1"></div>
- *       <button type="button" class="dcr-btn">Reset all filters</button>
+ *       <button type="button" class="dcr-btn" style="align-self:flex-end">Reset all filters</button>
  *     </div>
- *
  *   </form>
  */
 
-.dcr-search-form {
+.dcr-form {
   display: flex;
   flex-direction: column;
-  gap: var(--dcr-space-sm);
+  gap: var(--dcr-space-lg);
   padding: var(--dcr-space-md) var(--dcr-space-lg);
 }
 
-/* Row A: label (stacked above) + input+button on one line */
-.dcr-search-form__search-row {
+/* Default row — labels above individual fields, baseline-aligned */
+.dcr-form__row {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--dcr-space-lg);
+  flex-wrap: wrap;
+}
+
+/* Stretch row — all children same height; use for input + button pairs */
+.dcr-form__row--stretch {
   display: flex;
   align-items: stretch;
   gap: var(--dcr-space-sm);
 }
 
-/* Section label sitting above the search input */
-.dcr-search-form__label {
+/* Small uppercase label above an entire row (not a single field) */
+.dcr-form__label {
   display: block;
   font-size: var(--dcr-font-size-xs);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: var(--dcr-color-text-muted);
-  margin-bottom: var(--dcr-space-xs);
+  margin-bottom: 6px;
 }
 
-/* Search field: icon + text input, fills remaining width */
-.dcr-search-field {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  gap: var(--dcr-space-sm);
-  padding: 0 var(--dcr-space-md);
-  border: 1px solid var(--dcr-color-border);
-  border-radius: var(--dcr-radius);
-  background: var(--dcr-color-bg);
-}
-
-.dcr-search-field__icon {
-  color: var(--dcr-color-text-muted);
-  font-size: 16px;
-  flex-shrink: 0;
-  line-height: 1;
-  user-select: none;
-}
-
-.dcr-search-field__input {
-  flex: 1;
-  border: none;
-  outline: none;
-  background: transparent;
-  color: var(--dcr-color-text);
-  font-size: var(--dcr-font-size-base);
-  padding: 7px 0;
-  min-width: 0;
-}
-
-.dcr-search-field__input::placeholder {
-  color: var(--dcr-color-text-muted);
-}
-
-/* Row B: filter dropdowns */
-.dcr-search-form__filter-row {
-  display: flex;
-  align-items: flex-end;
-  gap: var(--dcr-space-sm);
-  flex-wrap: wrap;
-}
-
-/* Individual filter: label stacked above a <select> */
-.dcr-filter-group {
+/* Whole labelled block: label + stretch-row together */
+.dcr-form__group {
   display: flex;
   flex-direction: column;
-  gap: 3px;
-}
-
-.dcr-filter-group__label {
-  font-size: var(--dcr-font-size-xs);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.4px;
-  color: var(--dcr-color-text-muted);
-}
-
-.dcr-filter-group select {
-  border: 1px solid var(--dcr-color-border);
-  border-radius: var(--dcr-radius);
-  padding: 6px var(--dcr-space-sm);
-  background: var(--dcr-color-bg);
-  color: var(--dcr-color-text);
-  font-size: var(--dcr-font-size-sm);
-  cursor: pointer;
-}
-
-/* Backward-compat: old flat single-row field layout */
-.dcr-search-form__field {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.dcr-search-form__field--grow {
   flex: 1;
   min-width: 200px;
 }
 
-.dcr-search-form__field label {
+/* Individual field: label stacked above a single control */
+.dcr-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dcr-field--grow {
+  flex: 1;
+  min-width: 200px;
+}
+
+.dcr-field__label {
   font-size: var(--dcr-font-size-xs);
   font-weight: 700;
-  color: var(--dcr-color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.4px;
+  color: var(--dcr-color-text-muted);
+}
+
+/* Standalone text / number / email input */
+.dcr-input {
+  width: 100%;
+  border: 1px solid var(--dcr-color-border) !important;
+  border-radius: var(--dcr-radius-lg) !important;
+  padding: 10px var(--dcr-space-md) !important;
+  background: var(--dcr-color-bg);
+  color: var(--dcr-color-text);
+  font-size: var(--dcr-font-size-base);
+  outline: none;
+  line-height: 1.4;
+  box-sizing: border-box;
+}
+
+.dcr-input::placeholder {
+  color: var(--dcr-color-text-muted);
+}
+
+.dcr-input:focus {
+  border-color: var(--dcr-color-accent);
+}
+
+/* Standalone select */
+.dcr-select {
+  -webkit-appearance: none;
+  appearance: none;
+  border: 1px solid var(--dcr-color-border) !important;
+  border-radius: var(--dcr-radius-lg) !important;
+  padding: 10px 36px 10px var(--dcr-space-md) !important;
+  background-color: var(--dcr-color-bg);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  color: var(--dcr-color-text);
+  font-size: var(--dcr-font-size-base);
+  cursor: pointer;
+  line-height: 1.4;
+  min-height: 42px;
+  box-sizing: border-box;
+}
+
+.dcr-select:focus {
+  border-color: var(--dcr-color-accent);
+  outline: none;
+}
+
+/* Bare <select> inside dcr-field inherits the same look */
+.dcr-field select {
+  -webkit-appearance: none;
+  appearance: none;
+  border: 1px solid var(--dcr-color-border) !important;
+  border-radius: var(--dcr-radius-xl) !important;
+  padding: 10px 36px 10px var(--dcr-space-md) !important;
+  background-color: var(--dcr-color-bg);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  color: var(--dcr-color-text);
+  font-size: var(--dcr-font-size-base);
+  cursor: pointer;
+  min-height: 42px;
+  box-sizing: border-box;
+}
+
+.dcr-field select:focus {
+  border-color: var(--dcr-color-accent);
+  outline: none;
+}
+
+/* Icon + input combo — icon is absolutely positioned inside the input */
+.dcr-input-group {
+  position: relative;
+  flex: 1;
+  min-height: 42px;
+}
+
+.dcr-input-group__icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--dcr-color-text-muted);
+  font-size: 15px;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.dcr-input-group__input {
+  width: 100%;
+  height: 100%;
+  min-height: 36px;
+  border: 1px solid var(--dcr-color-border) !important;
+  border-radius: var(--dcr-radius-xl) !important;
+  /* !important beats Django admin's input[type="text"] padding override */
+  padding: 10px var(--dcr-space-md) 10px 40px !important;
+  background: var(--dcr-color-bg);
+  color: var(--dcr-color-text);
+  font-size: var(--dcr-font-size-base);
+  outline: none;
+  line-height: 1.4;
+  box-sizing: border-box;
+}
+
+.dcr-input-group__input::placeholder {
+  color: var(--dcr-color-text-muted);
+}
+
+.dcr-input-group__input:focus {
+  border-color: var(--dcr-color-accent);
+}
+
+/* Buttons placed directly in a --stretch row fill the full height */
+.dcr-form__row--stretch>.dcr-btn {
+  align-self: stretch;
+  border-radius: var(--dcr-radius);
 }
 
 

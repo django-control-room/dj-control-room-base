@@ -204,24 +204,22 @@
 
   {# Zone 2: search + filters #}
   <div class="dcr-data-table__controls">
-    <form class="dcr-search-form" method="get">
-      <div class="dcr-search-form__search-row">
-        <div style="flex:1;display:flex;flex-direction:column;gap:var(--dcr-space-xs)">
-          <label class="dcr-search-form__label" for="ex-pattern">{% trans "Search by key" %}</label>
-          <div class="dcr-search-field">
-            <span class="dcr-search-field__icon">&#9906;</span>
-            <input id="ex-pattern" class="dcr-search-field__input" type="text" name="q"
+    <form class="dcr-form" method="get">
+      <div class="dcr-form__group">
+        <label class="dcr-form__label" for="ex-pattern">{% trans "Search by key" %}</label>
+        <div class="dcr-form__row--stretch">
+          <div class="dcr-input-group">
+            <span class="dcr-input-group__icon">&#9906;</span>
+            <input id="ex-pattern" class="dcr-input-group__input" type="text" name="q"
                    value="session:*" placeholder="{% trans 'e.g. user:*, session:*, queue:default' %}">
           </div>
-        </div>
-        <div style="display:flex;align-items:flex-end">
           <button type="submit" class="dcr-btn dcr-btn--primary">{% trans "Search" %}</button>
         </div>
       </div>
-      <div class="dcr-search-form__filter-row">
-        <div class="dcr-filter-group">
-          <label class="dcr-filter-group__label" for="ex-type">&#9663; {% trans "Type" %}</label>
-          <select id="ex-type" name="type">
+      <div class="dcr-form__row">
+        <div class="dcr-field">
+          <label class="dcr-field__label" for="ex-type">&#9663; {% trans "Type" %}</label>
+          <select id="ex-type" name="type" class="dcr-select">
             <option selected>{% trans "All types" %}</option>
             <option>String</option>
             <option>Hash</option>
@@ -230,9 +228,9 @@
             <option>ZSet</option>
           </select>
         </div>
-        <div class="dcr-filter-group">
-          <label class="dcr-filter-group__label" for="ex-backend">{% trans "Database" %}</label>
-          <select id="ex-backend" name="backend">
+        <div class="dcr-field">
+          <label class="dcr-field__label" for="ex-backend">{% trans "Database" %}</label>
+          <select id="ex-backend" name="backend" class="dcr-select">
             <option selected>{% trans "All databases" %}</option>
             <option>db0</option>
             <option>db1</option>
