@@ -1,0 +1,2708 @@
+/* =============================================================================
+   DJ CONTROL ROOM — Design System  (design-system.css)
+
+   Architecture
+   ──────────────
+   1. Tokens      — --dcr-* custom properties, the single source of truth.
+                    Dark mode is handled here as a token override; no
+                    component-level media queries needed.
+   2. Components  — dcr-* classes that consume only --dcr-* tokens.
+                    Zero references to Django admin class names or hex values.
+   3. Panel Patterns — Reusable styles for data-heavy panels (search,
+                    key/value display, action buttons, pagination modes).
+                    Uses original class names so existing panels continue to
+                    work while consuming --dcr-* tokens for colours/spacing.
+
+   Load this file in any panel by extending panel_base.html, or set
+   LOAD_DEFAULT_CSS = False in the panel config to supply your own.
+   ============================================================================= */
+
+/* =============================================================================
+   1. TOKENS
+   ============================================================================= */
+
+:root {
+  /* Text */
+  --dcr-color-text: #111827;
+  --dcr-color-text-muted: #9398a3;
+  --dcr-color-text-inverse: #ffffff;
+
+  /* Surfaces */
+  --dcr-color-bg: #ffffff;
+  --dcr-color-bg-subtle: #f9fafb;
+  --dcr-color-border: #e5e7eb;
+
+  /* Semantic */
+  --dcr-color-accent: #417690;
+  --dcr-color-accent-bg: rgba(65, 118, 144, 0.10);
+  --dcr-color-success: #2e7d32;
+  --dcr-color-success-bg: #e8f5e9;
+  --dcr-color-warning: #b45309;
+  --dcr-color-warning-bg: #fffbeb;
+  --dcr-color-danger: #ba2121;
+  --dcr-color-danger-bg: #fdecea;
+  --dcr-color-info: #01579b;
+  --dcr-color-info-bg: #e1f5fe;
+  --dcr-color-muted: #666;
+  --dcr-color-muted-bg: #ebebeb;
+  --dcr-color-purple: #7c3aed;
+  --dcr-color-purple-bg: #ede9fe;
+  --dcr-color-indigo: #4338ca;
+  --dcr-color-indigo-bg: #e0e7ff;
+
+  /* Spacing scale */
+  --dcr-space-xs: 4px;
+  --dcr-space-sm: 8px;
+  --dcr-space-md: 16px;
+  --dcr-space-lg: 24px;
+  --dcr-space-xl: 48px;
+
+  /* Shape */
+  --dcr-radius: 4px;
+  --dcr-radius-md: 6px;
+  --dcr-radius-lg: 8px;
+  --dcr-radius-xl: 12px;
+
+  /* Typography */
+  --dcr-font-mono: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  --dcr-font-size-xs: 10px;
+  --dcr-font-size-sm: 11px;
+  --dcr-font-size-base: 14px;
+  --dcr-font-size-lg: 18px;
+  --dcr-font-size-xl: 22px;
+}
+
+/* Dark mode — override tokens only; components update automatically.
+   Covers two signals:
+   1. OS/browser preference via media query (guarded so a manually-set
+      data-theme="light" on <html> can always win).
+   2. Django admin's explicit theme toggle, which sets data-theme="dark"
+      directly on <html> regardless of OS preference.             */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --dcr-color-text: #f3f4f6;
+    --dcr-color-text-muted: #9ca3af;
+    --dcr-color-text-inverse: #111827;
+    --dcr-color-bg: #1a1a1a;
+    --dcr-color-bg-subtle: #252525;
+    --dcr-color-border: rgb(46, 46, 46);
+
+    --dcr-color-accent: #79aec8;
+    --dcr-color-accent-bg: rgba(65, 118, 144, 0.20);
+    --dcr-color-success: #66bb6a;
+    --dcr-color-success-bg: rgba(102, 187, 106, 0.12);
+    --dcr-color-warning: #fbbf24;
+    --dcr-color-warning-bg: rgba(251, 191, 36, 0.12);
+    --dcr-color-danger: #ef5350;
+    --dcr-color-danger-bg: rgba(239, 83, 80, 0.12);
+    --dcr-color-info: #42a5f5;
+    --dcr-color-info-bg: rgba(66, 165, 245, 0.12);
+    --dcr-color-muted: #888;
+    --dcr-color-muted-bg: rgba(255, 255, 255, 0.08);
+    --dcr-color-purple: #a78bfa;
+    --dcr-color-purple-bg: rgba(167, 139, 250, 0.12);
+    --dcr-color-indigo: #818cf8;
+    --dcr-color-indigo-bg: rgba(129, 140, 248, 0.12);
+  }
+}
+
+/* Explicit dark toggle from Django admin (data-theme="dark" on <html>) */
+:root[data-theme="dark"] {
+  --dcr-color-text: #f3f4f6;
+  --dcr-color-text-muted: #9ca3af;
+  --dcr-color-text-inverse: #111827;
+  --dcr-color-bg: #1a1a1a;
+  --dcr-color-bg-subtle: #252525;
+  --dcr-color-border: rgb(46, 46, 46);
+
+  --dcr-color-accent: #79aec8;
+  --dcr-color-accent-bg: rgba(65, 118, 144, 0.20);
+  --dcr-color-success: #66bb6a;
+  --dcr-color-success-bg: rgba(102, 187, 106, 0.12);
+  --dcr-color-warning: #fbbf24;
+  --dcr-color-warning-bg: rgba(251, 191, 36, 0.12);
+  --dcr-color-danger: #ef5350;
+  --dcr-color-danger-bg: rgba(239, 83, 80, 0.12);
+  --dcr-color-info: #42a5f5;
+  --dcr-color-info-bg: rgba(66, 165, 245, 0.12);
+  --dcr-color-muted: #888;
+  --dcr-color-muted-bg: rgba(255, 255, 255, 0.08);
+  --dcr-color-purple: #a78bfa;
+  --dcr-color-purple-bg: rgba(167, 139, 250, 0.12);
+  --dcr-color-indigo: #818cf8;
+  --dcr-color-indigo-bg: rgba(129, 140, 248, 0.12);
+}
+
+/* Explicit light toggle — always force light tokens even on a dark-OS system */
+:root[data-theme="light"] {
+  --dcr-color-text: #111827;
+  --dcr-color-text-muted: #6b7280;
+  --dcr-color-text-inverse: #ffffff;
+  --dcr-color-bg: #ffffff;
+  --dcr-color-bg-subtle: #f9fafb;
+  --dcr-color-border: #e5e7eb;
+
+  --dcr-color-accent: #417690;
+  --dcr-color-accent-bg: rgba(65, 118, 144, 0.10);
+  --dcr-color-success: #2e7d32;
+  --dcr-color-success-bg: rgba(46, 125, 50, 0.10);
+  --dcr-color-warning: #b45309;
+  --dcr-color-warning-bg: rgba(180, 83, 9, 0.10);
+  --dcr-color-danger: #c62828;
+  --dcr-color-danger-bg: rgba(198, 40, 40, 0.10);
+  --dcr-color-info: #0277bd;
+  --dcr-color-info-bg: rgba(2, 119, 189, 0.10);
+  --dcr-color-muted: #6b7280;
+  --dcr-color-muted-bg: rgba(107, 114, 128, 0.10);
+  --dcr-color-purple: #7c3aed;
+  --dcr-color-purple-bg: rgba(124, 58, 237, 0.10);
+  --dcr-color-indigo: #4338ca;
+  --dcr-color-indigo-bg: rgba(67, 56, 202, 0.10);
+}
+
+
+/* =============================================================================
+   2. COMPONENTS
+   ============================================================================= */
+
+
+/* --- Page Header ------------------------------------------------------------ */
+
+.dcr-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--dcr-space-lg);
+  gap: var(--dcr-space-md);
+}
+
+.dcr-page-header__title {
+  margin: 0;
+  font-size: var(--dcr-font-size-xl);
+  font-weight: 300;
+  color: var(--dcr-color-text);
+  flex: 1;
+}
+
+.dcr-page-header__actions {
+  display: flex;
+  gap: var(--dcr-space-sm);
+  align-items: center;
+  flex-shrink: 0;
+}
+
+
+/* --- Button ----------------------------------------------------------------- */
+
+/*
+ * Use dcr-btn instead of Django admin's .button everywhere inside DCR panels.
+ * Admin's .button is tied to submit-row / changelist chrome — using it couples
+ * panel UI to admin internals and makes theming impossible.
+ *
+ * All semantic variants share the same visual rule:
+ *   at rest  — transparent background, semantic-colored border + text
+ *   hover    — semantic tinted background added
+ *   active   — slightly deeper tint
+ *
+ * This is consistent across every variant and avoids dark-mode contrast
+ * failures that solid fills would cause on light semantic colours (warning, info).
+ *
+ * Variants:
+ *   (none)      neutral  — gray border, body text; accent tint on hover
+ *   --primary   accent   — primary form submits, main call-to-action
+ *   --success   green    — confirmations, approvals
+ *   --warning   amber    — caution-level actions
+ *   --danger    red      — destructive actions (flush, purge, delete)
+ *   --info      blue     — informational / neutral-positive actions
+ *   --muted     gray     — secondary / de-emphasised actions
+ *   --sm        size     — compact; can combine with any variant
+ *
+ * Use <button> or <a> — the styles work on both.
+ */
+
+/*
+ * Buttons  (.dcr-btn)
+ *
+ * Base + variant controls the colour.
+ * --ghost modifier switches any variant to transparent background + coloured border.
+ * Icons: place any <svg> or inline element as a direct child — flex gap handles spacing.
+ *
+ *   <!-- Solid (default) -->
+ *   <button class="dcr-btn dcr-btn--primary">Save</button>
+ *
+ *   <!-- Ghost / outlined -->
+ *   <button class="dcr-btn dcr-btn--primary dcr-btn--ghost">Cancel</button>
+ *
+ *   <!-- With icon -->
+ *   <button class="dcr-btn dcr-btn--primary">
+ *     <svg class="dcr-btn__icon" …></svg> Search
+ *   </button>
+ *
+ *   <!-- Icon-only -->
+ *   <button class="dcr-btn dcr-btn--ghost dcr-btn--icon-only" aria-label="Refresh">
+ *     <svg class="dcr-btn__icon" …></svg>
+ *   </button>
+ */
+
+.dcr-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 20px;
+  font-size: var(--dcr-font-size-sm);
+  font-weight: 600;
+  line-height: 1.4;
+  border: 1px solid transparent;
+  border-radius: var(--dcr-radius-xl) !important;
+  background: var(--dcr-color-bg-subtle);
+  color: var(--dcr-color-text);
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s ease, border-color 0.15s ease,
+    color 0.15s ease, opacity 0.15s ease;
+  user-select: none;
+  letter-spacing: 0.1em;
+}
+
+.dcr-btn:hover:not(:disabled) {
+  border-color: var(--dcr-color-border);
+  opacity: 0.9;
+}
+
+.dcr-btn:active:not(:disabled) {
+  opacity: 0.75;
+}
+
+.dcr-btn:disabled,
+.dcr-btn[aria-disabled="true"] {
+  opacity: 0.38;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Icon sizing inside buttons */
+.dcr-btn__icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+/* Icon-only — square, no horizontal text padding */
+.dcr-btn--icon-only {
+  padding: 8px;
+}
+
+/* ── Solid semantic variants ──────────────────────────────────────────── */
+
+.dcr-btn--primary {
+  background: var(--dcr-color-accent);
+  color: #fff;
+}
+
+.dcr-btn--primary:hover:not(:disabled) {
+  background: var(--dcr-color-accent);
+  opacity: 0.88;
+  border-color: transparent;
+}
+
+.dcr-btn--success {
+  background: var(--dcr-color-success);
+  color: #fff;
+}
+
+.dcr-btn--success:hover:not(:disabled) {
+  background: var(--dcr-color-success);
+  opacity: 0.88;
+  border-color: transparent;
+}
+
+.dcr-btn--warning {
+  background: var(--dcr-color-warning);
+  color: #fff;
+}
+
+.dcr-btn--warning:hover:not(:disabled) {
+  background: var(--dcr-color-warning);
+  opacity: 0.88;
+  border-color: transparent;
+}
+
+.dcr-btn--danger {
+  background: var(--dcr-color-danger);
+  color: #fff;
+}
+
+.dcr-btn--danger:hover:not(:disabled) {
+  background: var(--dcr-color-danger);
+  opacity: 0.88;
+  border-color: transparent;
+}
+
+.dcr-btn--info {
+  background: var(--dcr-color-info);
+  color: #fff;
+}
+
+.dcr-btn--info:hover:not(:disabled) {
+  background: var(--dcr-color-info);
+  opacity: 0.88;
+  border-color: transparent;
+}
+
+.dcr-btn--muted {
+  background: var(--dcr-color-muted);
+  color: #fff;
+}
+
+.dcr-btn--muted:hover:not(:disabled) {
+  background: var(--dcr-color-muted);
+  opacity: 0.88;
+  border-color: transparent;
+}
+
+/* ── Ghost modifier — transparent bg, coloured border + text ─────────── */
+/* Combine with any variant: dcr-btn--primary dcr-btn--ghost              */
+
+.dcr-btn--ghost {
+  background: transparent;
+  border-color: var(--dcr-color-border);
+  color: var(--dcr-color-text);
+}
+
+.dcr-btn--ghost:hover:not(:disabled) {
+  background: var(--dcr-color-bg-subtle);
+  opacity: 1;
+}
+
+.dcr-btn--primary.dcr-btn--ghost {
+  border-color: var(--dcr-color-accent);
+  color: var(--dcr-color-accent);
+}
+
+.dcr-btn--success.dcr-btn--ghost {
+  border-color: var(--dcr-color-success);
+  color: var(--dcr-color-success);
+}
+
+.dcr-btn--warning.dcr-btn--ghost {
+  border-color: var(--dcr-color-warning);
+  color: var(--dcr-color-warning);
+}
+
+.dcr-btn--danger.dcr-btn--ghost {
+  border-color: var(--dcr-color-danger);
+  color: var(--dcr-color-danger);
+}
+
+.dcr-btn--info.dcr-btn--ghost {
+  border-color: var(--dcr-color-info);
+  color: var(--dcr-color-info);
+}
+
+.dcr-btn--muted.dcr-btn--ghost {
+  border-color: var(--dcr-color-muted);
+  color: var(--dcr-color-muted);
+}
+
+.dcr-btn--ghost:hover:not(:disabled),
+.dcr-btn--primary.dcr-btn--ghost:hover:not(:disabled) {
+  background: var(--dcr-color-accent-bg);
+}
+
+.dcr-btn--success.dcr-btn--ghost:hover:not(:disabled) {
+  background: var(--dcr-color-success-bg);
+}
+
+.dcr-btn--warning.dcr-btn--ghost:hover:not(:disabled) {
+  background: var(--dcr-color-warning-bg);
+}
+
+.dcr-btn--danger.dcr-btn--ghost:hover:not(:disabled) {
+  background: var(--dcr-color-danger-bg);
+}
+
+.dcr-btn--info.dcr-btn--ghost:hover:not(:disabled) {
+  background: var(--dcr-color-info-bg);
+}
+
+.dcr-btn--muted.dcr-btn--ghost:hover:not(:disabled) {
+  background: var(--dcr-color-muted-bg);
+}
+
+/* ── Size modifier ───────────────────────────────────────────────────── */
+.dcr-btn--sm {
+  padding: 4px 12px;
+  font-size: var(--dcr-font-size-xs);
+  border-radius: var(--dcr-radius-md);
+}
+
+.dcr-btn--sm.dcr-btn--icon-only {
+  padding: 4px;
+}
+
+
+/* --- Badge ------------------------------------------------------------------ */
+
+/*
+ * Rectangular label for type tags, counts, and category markers.
+ * Use in tables, KV rows, and anywhere data needs a compact label.
+ *
+ * Variants: (none) · success · warning · danger · info · muted · purple · indigo
+ * Modifiers: --solid
+ *
+ *   <span class="dcr-badge dcr-badge--warning">hash</span>
+ *   <span class="dcr-badge dcr-badge--solid dcr-badge--danger">culprit</span>
+ */
+
+.dcr-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px;
+  border-radius: var(--dcr-radius);
+  font-size: var(--dcr-font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  line-height: 1.6;
+  white-space: nowrap;
+  background: var(--dcr-color-accent-bg);
+  color: var(--dcr-color-accent);
+}
+
+/* Tinted semantic variants */
+.dcr-badge--success {
+  background: var(--dcr-color-success-bg);
+  color: var(--dcr-color-success);
+}
+
+.dcr-badge--warning {
+  background: var(--dcr-color-warning-bg);
+  color: var(--dcr-color-warning);
+}
+
+.dcr-badge--danger {
+  background: var(--dcr-color-danger-bg);
+  color: var(--dcr-color-danger);
+}
+
+.dcr-badge--info {
+  background: var(--dcr-color-info-bg);
+  color: var(--dcr-color-info);
+}
+
+.dcr-badge--muted {
+  background: var(--dcr-color-muted-bg);
+  color: var(--dcr-color-muted);
+}
+
+.dcr-badge--purple {
+  background: var(--dcr-color-purple-bg);
+  color: var(--dcr-color-purple);
+}
+
+.dcr-badge--indigo {
+  background: var(--dcr-color-indigo-bg);
+  color: var(--dcr-color-indigo);
+}
+
+/* Solid fill */
+.dcr-badge--solid {
+  background: var(--dcr-color-accent);
+  color: #fff;
+}
+
+.dcr-badge--solid.dcr-badge--success {
+  background: var(--dcr-color-success);
+  color: #fff;
+}
+
+.dcr-badge--solid.dcr-badge--warning {
+  background: var(--dcr-color-warning);
+  color: #fff;
+}
+
+.dcr-badge--solid.dcr-badge--danger {
+  background: var(--dcr-color-danger);
+  color: #fff;
+}
+
+.dcr-badge--solid.dcr-badge--info {
+  background: var(--dcr-color-info);
+  color: #fff;
+}
+
+.dcr-badge--solid.dcr-badge--muted {
+  background: var(--dcr-color-muted);
+  color: #fff;
+}
+
+.dcr-badge--solid.dcr-badge--purple {
+  background: var(--dcr-color-purple);
+  color: #fff;
+}
+
+.dcr-badge--solid.dcr-badge--indigo {
+  background: var(--dcr-color-indigo);
+  color: #fff;
+}
+
+
+/* --- Pill ------------------------------------------------------------------- */
+
+/*
+ * Fully-rounded chip for live status and state indicators.
+ * Use wherever you need to communicate a running state, not a data category.
+ * Text is sentence-case — write naturally, not in ALL CAPS.
+ *
+ * Variants: (none) · success · warning · danger · info · muted · purple · indigo
+ * Modifiers: --solid
+ * Elements:  __dot  (filled circle, inherits currentColor)
+ *
+ *   <span class="dcr-pill dcr-pill--success">
+ *     <span class="dcr-pill__dot"></span>Connected
+ *   </span>
+ *   <span class="dcr-pill dcr-pill--solid dcr-pill--danger">Critical</span>
+ */
+
+.dcr-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: var(--dcr-font-size-xs);
+  font-weight: 600;
+  line-height: 1.6;
+  white-space: nowrap;
+  background: var(--dcr-color-accent-bg);
+  color: var(--dcr-color-accent);
+}
+
+/* Dot indicator — always matches pill text colour */
+.dcr-pill__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+/* Tinted semantic variants */
+.dcr-pill--success {
+  background: var(--dcr-color-success-bg);
+  color: var(--dcr-color-success);
+}
+
+.dcr-pill--warning {
+  background: var(--dcr-color-warning-bg);
+  color: var(--dcr-color-warning);
+}
+
+.dcr-pill--danger {
+  background: var(--dcr-color-danger-bg);
+  color: var(--dcr-color-danger);
+}
+
+.dcr-pill--info {
+  background: var(--dcr-color-info-bg);
+  color: var(--dcr-color-info);
+}
+
+.dcr-pill--muted {
+  background: var(--dcr-color-muted-bg);
+  color: var(--dcr-color-muted);
+}
+
+.dcr-pill--purple {
+  background: var(--dcr-color-purple-bg);
+  color: var(--dcr-color-purple);
+}
+
+.dcr-pill--indigo {
+  background: var(--dcr-color-indigo-bg);
+  color: var(--dcr-color-indigo);
+}
+
+/* Solid fill */
+.dcr-pill--solid {
+  background: var(--dcr-color-accent);
+  color: #fff;
+}
+
+.dcr-pill--solid.dcr-pill--success {
+  background: var(--dcr-color-success);
+  color: #fff;
+}
+
+.dcr-pill--solid.dcr-pill--warning {
+  background: var(--dcr-color-warning);
+  color: #fff;
+}
+
+.dcr-pill--solid.dcr-pill--danger {
+  background: var(--dcr-color-danger);
+  color: #fff;
+}
+
+.dcr-pill--solid.dcr-pill--info {
+  background: var(--dcr-color-info);
+  color: #fff;
+}
+
+.dcr-pill--solid.dcr-pill--muted {
+  background: var(--dcr-color-muted);
+  color: #fff;
+}
+
+.dcr-pill--solid.dcr-pill--purple {
+  background: var(--dcr-color-purple);
+  color: #fff;
+}
+
+.dcr-pill--solid.dcr-pill--indigo {
+  background: var(--dcr-color-indigo);
+  color: #fff;
+}
+
+
+/* --- Metric ----------------------------------------------------------------- */
+
+/*
+ * KPI tile.  Label first (above, uppercase small), value below (large bold).
+ * Text is left-aligned to match dashboard panel conventions.
+ * Value modifiers add semantic colour when needed.
+ */
+.dcr-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--dcr-space-md);
+  margin-bottom: var(--dcr-space-lg);
+}
+
+.dcr-metric {
+  text-align: left;
+  padding: var(--dcr-space-md) var(--dcr-space-lg);
+  border-radius: var(--dcr-radius-lg);
+  border: 1px solid var(--dcr-color-border);
+  background: var(--dcr-color-bg-subtle);
+}
+
+.dcr-metric__label {
+  display: block;
+  font-size: var(--dcr-font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--dcr-color-text-muted);
+  margin-bottom: var(--dcr-space-xs);
+}
+
+.dcr-metric__value {
+  display: block;
+  font-size: var(--dcr-font-size-xl);
+  font-weight: 700;
+  color: var(--dcr-color-text);
+  line-height: 1.2;
+}
+
+.dcr-metric__value--success {
+  color: var(--dcr-color-success);
+}
+
+.dcr-metric__value--warning {
+  color: var(--dcr-color-warning);
+}
+
+.dcr-metric__value--danger {
+  color: var(--dcr-color-danger);
+}
+
+.dcr-metric__value--disabled {
+  color: var(--dcr-color-muted);
+}
+
+
+/* --- Back link -------------------------------------------------------------- */
+
+/*
+ * Navigation link placed above the page header on detail views.
+ *   <a href="…" class="dcr-back-link">← Back to all keys</a>
+ */
+.dcr-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--dcr-space-xs);
+  font-size: var(--dcr-font-size-sm);
+  color: var(--dcr-color-text-muted);
+  text-decoration: none;
+  margin-bottom: var(--dcr-space-md);
+}
+
+.dcr-back-link:hover {
+  color: var(--dcr-color-accent);
+}
+
+
+/* --- Section header --------------------------------------------------------- */
+
+/*
+ * Uppercase label + optional inline badge + bottom rule.
+ * Used to head sub-sections inside a panel page (KEY INFORMATION, etc.).
+ *
+ *   <div class="dcr-section-header">
+ *     <h2 class="dcr-section-header__title">Key Information</h2>
+ *   </div>
+ *
+ *   <!-- with inline badge -->
+ *   <div class="dcr-section-header">
+ *     <h2 class="dcr-section-header__title">Stored Value</h2>
+ *     <span class="dcr-badge dcr-badge--warning">HASH</span>
+ *   </div>
+ */
+.dcr-section-header {
+  display: flex;
+  align-items: center;
+  gap: var(--dcr-space-sm);
+  padding-bottom: var(--dcr-space-sm);
+  margin-bottom: var(--dcr-space-md);
+  border-bottom: 1px solid var(--dcr-color-border);
+}
+
+.dcr-section-header__title {
+  margin: 0;
+  font-size: var(--dcr-font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--dcr-color-text-muted);
+}
+
+
+/* --- Definition list (KV table) --------------------------------------------- */
+
+/*
+ * Two-column label / value layout for key-detail and signal-info panels.
+ * Wrap in a card (dcr-data-table or similar) for the outer chrome.
+ *
+ *   <dl class="dcr-dl">
+ *     <div class="dcr-dl__row">
+ *       <dt class="dcr-dl__label">Type</dt>
+ *       <dd class="dcr-dl__value">
+ *         <span class="dcr-badge dcr-badge--warning">HASH</span>
+ *       </dd>
+ *     </div>
+ *     <div class="dcr-dl__row">
+ *       <dt class="dcr-dl__label">TTL</dt>
+ *       <dd class="dcr-dl__value">1h <span class="dcr-dl__secondary">(31m remaining)</span></dd>
+ *     </div>
+ *   </dl>
+ */
+.dcr-dl {
+  border: 1px solid var(--dcr-color-border);
+  border-radius: var(--dcr-radius-lg);
+  overflow: hidden;
+  background: var(--dcr-color-bg-subtle);
+  margin-bottom: var(--dcr-space-lg);
+  padding-top: var(--dcr-space-sm);
+  padding-bottom: var(--dcr-space-sm);
+}
+
+.dcr-dl__row {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  align-items: baseline;
+  gap: var(--dcr-space-md);
+  padding: 9px var(--dcr-space-lg);
+}
+
+.dcr-dl__label {
+  font-size: var(--dcr-font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--dcr-color-text-muted);
+  margin: 0;
+  opacity: 0.7;
+}
+
+.dcr-dl__value {
+  font-size: var(--dcr-font-size-base);
+  color: var(--dcr-color-text);
+  margin: 0;
+}
+
+/* Monospace values (key names, import paths, etc.) — no code-block chrome */
+.dcr-dl__value--mono {
+  font-family: var(--dcr-font-mono);
+  font-size: var(--dcr-font-size-sm);
+}
+
+.dcr-dl__secondary {
+  font-size: var(--dcr-font-size-xs);
+  color: var(--dcr-color-text-muted);
+  margin-left: var(--dcr-space-xs);
+  opacity: 0.75;
+}
+
+/*
+ * Horizontal variant — pairs flow left-to-right in a single row.
+ * Good for compact server/connection info bars at the top of a page.
+ *
+ *   <dl class="dcr-dl dcr-dl--horizontal">
+ *     <div class="dcr-dl__item">
+ *       <dt class="dcr-dl__label">Host</dt>
+ *       <dd class="dcr-dl__value">redis-prod-1.internal:6379</dd>
+ *     </div>
+ *     <div class="dcr-dl__item">
+ *       <dt class="dcr-dl__label">Version</dt>
+ *       <dd class="dcr-dl__value">7.2.4</dd>
+ *     </div>
+ *   </dl>
+ */
+.dcr-dl--horizontal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  padding: var(--dcr-space-md) var(--dcr-space-lg);
+  overflow: visible;
+}
+
+.dcr-dl--horizontal .dcr-dl__item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-right: var(--dcr-space-xl);
+}
+
+.dcr-dl--horizontal .dcr-dl__label {
+  opacity: 1;
+}
+
+.dcr-dl--horizontal .dcr-dl__value {
+  font-size: var(--dcr-font-size-base);
+}
+
+
+/* --- Code viewer ------------------------------------------------------------ */
+
+/*
+ * Structured code display with its own outer wrapper.
+ *
+ *   <div class="dcr-code-viewer">
+ *     <!-- Optional title zone (function sig, tags, file path) -->
+ *     <div class="dcr-code-viewer__title"> … </div>
+ *
+ *     <!-- Labelled header strip -->
+ *     <div class="dcr-code-viewer__header">
+ *       <span class="dcr-code-viewer__label">&lt;&gt; Raw Value</span>
+ *       <span class="dcr-code-viewer__meta">412 B</span>
+ *     </div>
+ *
+ *     <!-- Dark code body (highlight.js) -->
+ *     <pre class="dcr-code-viewer__body"><code class="language-json">…</code></pre>
+ *   </div>
+ */
+
+.dcr-code-viewer {
+  background: var(--dcr-color-bg);
+  border: 1px solid var(--dcr-color-border);
+  border-radius: var(--dcr-radius-xl);
+  overflow: hidden;
+  margin-bottom: var(--dcr-space-lg);
+}
+
+.dcr-code-viewer__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--dcr-space-sm) var(--dcr-space-md);
+  background: var(--dcr-color-bg-subtle);
+  border-bottom: 1px solid var(--dcr-color-border);
+}
+
+.dcr-code-viewer__label {
+  font-size: var(--dcr-font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--dcr-color-text-muted);
+}
+
+.dcr-code-viewer__meta {
+  font-size: var(--dcr-font-size-xs);
+  color: var(--dcr-color-text-muted);
+}
+
+/* Optional title bar: white bg, function sig + right-side tags */
+.dcr-code-viewer__title {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: var(--dcr-space-md) var(--dcr-space-lg);
+  border-bottom: 1px solid var(--dcr-color-border);
+  background: var(--dcr-color-bg);
+}
+
+.dcr-code-viewer__title-main {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dcr-code-viewer__title-sig {
+  display: flex;
+  align-items: center;
+  gap: var(--dcr-space-sm);
+}
+
+.dcr-code-viewer__title-lineno {
+  font-size: var(--dcr-font-size-xs);
+  font-weight: 700;
+  background: var(--dcr-color-accent);
+  color: #fff;
+  border-radius: var(--dcr-radius);
+  padding: 1px 7px;
+  font-family: var(--dcr-font-mono);
+  flex-shrink: 0;
+}
+
+.dcr-code-viewer__title-name {
+  font-weight: 700;
+  font-size: var(--dcr-font-size-base);
+  font-family: var(--dcr-font-mono);
+  color: var(--dcr-color-text);
+}
+
+.dcr-code-viewer__title-params {
+  font-size: var(--dcr-font-size-sm);
+  color: var(--dcr-color-text-muted);
+  font-family: var(--dcr-font-mono);
+}
+
+.dcr-code-viewer__title-path {
+  font-size: var(--dcr-font-size-xs);
+  color: var(--dcr-color-text-muted);
+  font-family: var(--dcr-font-mono);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dcr-code-viewer__title-tags {
+  display: flex;
+  gap: var(--dcr-space-xs);
+  flex-shrink: 0;
+  align-items: flex-start;
+  margin-top: 2px;
+}
+
+.dcr-code-viewer__body {
+  margin: 0;
+  overflow-x: auto;
+}
+
+/* hljs github-dark handles background/color; pin font + remove inner radius */
+.dcr-code-viewer__body code {
+  font-family: var(--dcr-font-mono) !important;
+  font-size: 12px !important;
+  border-radius: 0 !important;
+  line-height: 1.6;
+}
+
+
+/* --- Panel Grid ------------------------------------------------------------- */
+
+/*
+ * Responsive 3-column grid for installed-panel overview pages.
+ *
+ *   <div class="dcr-panel-grid">
+ *     <div class="dcr-panel-card">
+ *       <div class="dcr-panel-card__top">
+ *         <svg class="dcr-panel-card__icon">…</svg>
+ *         <span class="dcr-pill dcr-pill--success"><span class="dcr-pill__dot"></span>Connected</span>
+ *       </div>
+ *       <h3 class="dcr-panel-card__title">Redis Panel</h3>
+ *       <p class="dcr-panel-card__desc">Monitor connections…</p>
+ *       <div class="dcr-panel-card__footer">
+ *         <div>
+ *           <div class="dcr-panel-card__metric">1,284</div>
+ *           <div class="dcr-panel-card__metric-label">Keys</div>
+ *         </div>
+ *         <a href="…" class="dcr-panel-card__link">View panel →</a>
+ *       </div>
+ *     </div>
+ *     <div class="dcr-panel-card dcr-panel-card--placeholder">…</div>
+ *   </div>
+ */
+
+.dcr-panel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--dcr-space-lg);
+  margin-bottom: var(--dcr-space-lg);
+}
+
+.dcr-panel-card {
+  background: var(--dcr-color-bg);
+  border: 1px solid var(--dcr-color-border);
+  border-radius: var(--dcr-radius-xl);
+  padding: var(--dcr-space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--dcr-space-sm);
+}
+
+.dcr-panel-card__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--dcr-space-xs);
+}
+
+.dcr-panel-card__icon {
+  width: 28px;
+  height: 28px;
+  color: var(--dcr-color-accent);
+  flex-shrink: 0;
+}
+
+.dcr-panel-card__title {
+  font-size: var(--dcr-font-size-base);
+  font-weight: 700;
+  color: var(--dcr-color-text);
+  margin: 0 0 2px;
+}
+
+.dcr-panel-card__desc {
+  font-size: var(--dcr-font-size-sm);
+  color: var(--dcr-color-text-muted);
+  line-height: 1.5;
+  margin: 0;
+  flex: 1;
+}
+
+.dcr-panel-card__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: auto;
+  padding-top: var(--dcr-space-md);
+}
+
+.dcr-panel-card__metric {
+  font-size: var(--dcr-font-size-xl);
+  font-weight: 700;
+  color: var(--dcr-color-text);
+  line-height: 1;
+  margin-bottom: 2px;
+}
+
+.dcr-panel-card__metric-label {
+  font-size: var(--dcr-font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--dcr-color-text-muted);
+}
+
+.dcr-panel-card__link {
+  font-size: var(--dcr-font-size-sm);
+  color: var(--dcr-color-accent);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.dcr-panel-card__link:hover {
+  text-decoration: underline;
+}
+
+/* Placeholder card — dashed border, centred call-to-action */
+.dcr-panel-card--placeholder {
+  border-style: dashed;
+  background: var(--dcr-color-bg-subtle);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--dcr-color-text-muted);
+  min-height: 180px;
+  gap: var(--dcr-space-xs);
+}
+
+.dcr-panel-card--placeholder svg {
+  width: 24px;
+  height: 24px;
+  margin-bottom: var(--dcr-space-xs);
+  opacity: 0.45;
+}
+
+
+/* --- Panel (generic) -------------------------------------------------------- */
+
+/*
+ * Generic bordered panel with composable zones.
+ * Use this as the base for info cards, activity feeds, code viewers, and
+ * any other card-like container — instead of creating a bespoke wrapper.
+ *
+ * Structure:
+ *   <div class="dcr-card">
+ *     <div class="dcr-card__header">                  ← flex row, border-bottom
+ *       <h3 class="dcr-card__title">
+ *         <svg class="dcr-card__title-icon">…</svg>   ← 16 × 16 icon
+ *         Title text
+ *       </h3>
+ *       <span class="dcr-card__meta">right meta</span>
+ *     </div>
+ *
+ *     <div class="dcr-card__body">…</div>             ← padded body
+ *     <div class="dcr-card__body dcr-card__body--flush">…</div>   ← no padding
+ *
+ *     <!-- Key/value rows (info-card pattern) -->
+ *     <div class="dcr-card__row">
+ *       <span class="dcr-card__row-label">Django</span>
+ *       <span class="dcr-card__row-value">5.0.6</span>
+ *     </div>
+ *
+ *     <!-- Activity rows (feed pattern) -->
+ *     <div class="dcr-card__row">
+ *       <span class="dcr-card__row-source"><span class="dcr-badge …">TAG</span></span>
+ *       <span class="dcr-card__row-text">Description text</span>
+ *       <span class="dcr-card__row-time">2m ago</span>
+ *     </div>
+ *
+ *     <div class="dcr-card__footer">Footer note.</div>
+ *   </div>
+ *
+ * Modifiers:
+ *   dcr-card__header--subtle   tinted header background
+ */
+
+.dcr-card {
+  background: var(--dcr-color-bg);
+  border: 1px solid var(--dcr-color-border);
+  border-radius: var(--dcr-radius-xl);
+  overflow: hidden;
+  margin-bottom: var(--dcr-space-lg);
+  color: var(--dcr-color-text);
+}
+
+.dcr-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--dcr-space-md) var(--dcr-space-lg);
+  border-bottom: 1px solid var(--dcr-color-border);
+}
+
+.dcr-card__header--subtle {
+  background: var(--dcr-color-bg-subtle);
+}
+
+.dcr-card__title {
+  display: flex;
+  align-items: center;
+  gap: var(--dcr-space-sm);
+  font-size: var(--dcr-font-size-base);
+  font-weight: 600;
+  color: var(--dcr-color-text);
+  margin: 0;
+}
+
+.dcr-card__title-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--dcr-color-text-muted);
+}
+
+.dcr-card__meta {
+  font-size: var(--dcr-font-size-sm);
+  color: var(--dcr-color-text-muted);
+  display: flex;
+  align-items: center;
+  gap: var(--dcr-space-sm);
+}
+
+.dcr-card__body {
+  padding: var(--dcr-space-md) var(--dcr-space-lg);
+}
+
+.dcr-card__body--flush {
+  padding: 0;
+}
+
+/* Key/value row (info-card pattern) */
+.dcr-card__row {
+  display: flex;
+  align-items: center;
+  gap: var(--dcr-space-md);
+  padding: var(--dcr-space-sm) var(--dcr-space-lg);
+  border-bottom: 1px solid var(--dcr-color-border);
+}
+
+.dcr-card__row:last-child {
+  border-bottom: none;
+}
+
+.dcr-card__row-label {
+  font-size: var(--dcr-font-size-sm);
+  color: var(--dcr-color-text);
+}
+
+.dcr-card__row-value {
+  font-size: var(--dcr-font-size-sm);
+  color: var(--dcr-color-text);
+  margin-left: auto;
+  text-align: right;
+}
+
+.dcr-card__row-value--bold {
+  font-weight: 700;
+}
+
+/* Activity-feed row extras */
+.dcr-card__row-source {
+  flex-shrink: 0;
+  min-width: 80px;
+}
+
+.dcr-card__row-text {
+  flex: 1;
+  font-size: var(--dcr-font-size-sm);
+  color: var(--dcr-color-text);
+}
+
+.dcr-card__row-time {
+  font-size: var(--dcr-font-size-sm);
+  color: var(--dcr-color-text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.dcr-card__footer {
+  padding: var(--dcr-space-sm) var(--dcr-space-lg);
+  border-top: 1px solid var(--dcr-color-border);
+  font-size: var(--dcr-font-size-sm);
+  color: var(--dcr-color-text-muted);
+}
+
+
+/* --- Pagination ------------------------------------------------------------- */
+
+/*
+ * Pagination bar, typically placed inside a dcr-data-table card below the
+ * <table>.  The border-top creates a natural separator from the last row.
+ *
+ * Supports two modes:
+ *   Page-based   — prev + numbered pages + next
+ *   Cursor-based — prev + next only (for scan-cursor backends like Redis)
+ *
+ * Structure:
+ *   <div class="dcr-pagination">
+ *     <span class="dcr-pagination__summary">Showing 1–20 of 847</span>
+ *     <div class="dcr-pagination__controls">
+ *       <a  href="…" class="dcr-pagination__btn" aria-label="Previous">‹</a>
+ *       <span  class="dcr-pagination__btn" aria-disabled="true">‹</span>  ← disabled
+ *       <a  href="…" class="dcr-pagination__page">1</a>
+ *       <span  class="dcr-pagination__page dcr-pagination__page--active">2</span>
+ *       <span  class="dcr-pagination__ellipsis">…</span>
+ *       <a  href="…" class="dcr-pagination__btn" aria-label="Next">›</a>
+ *     </div>
+ *   </div>
+ *
+ * Use <a> when the control is actionable, <span> when disabled.
+ */
+
+.dcr-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--dcr-space-sm) var(--dcr-space-lg);
+  border-top: 1px solid var(--dcr-color-border);
+  font-size: var(--dcr-font-size-sm);
+}
+
+/* Left side: "Showing 1–5 of 12 · Per page [select]" */
+.dcr-pagination__per-page {
+  display: flex;
+  align-items: center;
+  gap: var(--dcr-space-md);
+  color: var(--dcr-color-text-muted);
+}
+
+.dcr-pagination__per-page-select {
+  border: 1px solid var(--dcr-color-border);
+  border-radius: var(--dcr-radius);
+  padding: 2px 6px;
+  background: var(--dcr-color-bg);
+  color: var(--dcr-color-text);
+  font-size: var(--dcr-font-size-sm);
+  cursor: pointer;
+}
+
+.dcr-pagination__summary {
+  color: var(--dcr-color-text-muted);
+}
+
+.dcr-pagination__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--dcr-space-xs);
+}
+
+/* Shared base for both prev/next arrows and numbered page buttons */
+.dcr-pagination__btn,
+.dcr-pagination__page {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 6px;
+  border: 1px solid var(--dcr-color-border);
+  border-radius: var(--dcr-radius);
+  font-size: var(--dcr-font-size-sm);
+  color: var(--dcr-color-text);
+  text-decoration: none;
+  user-select: none;
+  transition: background 0.1s ease, border-color 0.1s ease, color 0.1s ease;
+}
+
+a.dcr-pagination__btn:hover,
+a.dcr-pagination__page:hover {
+  background: var(--dcr-color-bg-subtle);
+  border-color: var(--dcr-color-accent);
+  color: var(--dcr-color-accent);
+}
+
+/* Active page — filled accent */
+.dcr-pagination__page--active {
+  background: var(--dcr-color-accent);
+  border-color: var(--dcr-color-accent);
+  color: #fff;
+  font-weight: 600;
+  cursor: default;
+}
+
+/* Disabled prev/next arrow */
+[aria-disabled="true"].dcr-pagination__btn {
+  opacity: 0.38;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Ellipsis separator */
+.dcr-pagination__ellipsis {
+  padding: 0 4px;
+  color: var(--dcr-color-text-muted);
+  line-height: 28px;
+}
+
+
+/* --- Data Table ------------------------------------------------------------- */
+
+/*
+ * Card-wrapped table for data browsing panels.  The card is divided into four
+ * optional zones: header, controls, table body, and pagination.
+ *
+ * Zone 1 — Header  (title + subtitle + right meta)
+ * Zone 2 — Controls  (search field + filter dropdowns, subtle bg)
+ * Zone 3 — Table body  (plain <table>, styled via descendants)
+ * Zone 4 — Pagination  (dcr-pagination placed inside the card)
+ *
+ *   <div class="dcr-data-table">
+ *
+ *     <!-- Zone 1 -->
+ *     <div class="dcr-data-table__header">
+ *       <div class="dcr-data-table__header-info">
+ *         <h3 class="dcr-data-table__title">
+ *           Key Browser <span class="dcr-badge">12 TOTAL</span>
+ *         </h3>
+ *         <p class="dcr-data-table__subtitle">Browse every key…</p>
+ *       </div>
+ *       <div class="dcr-data-table__meta">
+ *         <span>Showing 12 of 12</span>
+ *         <span>Updated just now</span>
+ *       </div>
+ *     </div>
+ *
+ *     <!-- Zone 2  (optional) -->
+ *     <div class="dcr-data-table__controls">
+ *       <form class="dcr-form">…</form>
+ *     </div>
+ *
+ *     <!-- Zone 3 -->
+ *     <table>…</table>
+ *
+ *     <!-- Zone 4 (optional) -->
+ *     <div class="dcr-pagination">…</div>
+ *
+ *   </div>
+ */
+
+.dcr-data-table {
+  border: 1px solid var(--dcr-color-border);
+  border-radius: var(--dcr-radius-lg);
+  overflow: hidden;
+  background: var(--dcr-color-bg);
+  margin-bottom: var(--dcr-space-lg);
+}
+
+/* ── Zone 1: Header ── */
+
+.dcr-data-table__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: var(--dcr-space-md) var(--dcr-space-lg);
+  border-bottom: 1px solid var(--dcr-color-border);
+}
+
+/* Tinted header: fills the header zone with the subtle bg colour */
+.dcr-data-table__header--subtle {
+  background: var(--dcr-color-bg-subtle);
+}
+
+/* Left column: title (+ optional badge) + optional subtitle */
+.dcr-data-table__header-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dcr-data-table__title {
+  margin: 0;
+  font-size: var(--dcr-font-size-base);
+  font-weight: 600;
+  color: var(--dcr-color-text);
+  display: flex;
+  align-items: center;
+  gap: var(--dcr-space-sm);
+  flex-wrap: wrap;
+}
+
+/* Optional icon placed before the title text */
+.dcr-data-table__title-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--dcr-color-text-muted);
+}
+
+.dcr-data-table__subtitle {
+  margin: 0;
+  font-size: var(--dcr-font-size-md);
+  color: var(--dcr-color-text-muted);
+}
+
+/* Right column: stacked text info + optional action button */
+.dcr-data-table__meta {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--dcr-space-md);
+  margin-left: var(--dcr-space-lg);
+  flex-shrink: 0;
+}
+
+.dcr-data-table__meta-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  font-size: var(--dcr-font-size-sm);
+  color: var(--dcr-color-text-muted);
+  white-space: nowrap;
+}
+
+/* Legacy flat header (title + right-aligned action buttons, no subtitle) */
+.dcr-data-table__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--dcr-space-sm);
+  flex-shrink: 0;
+}
+
+/* ── Zone 2: Controls ── */
+
+.dcr-data-table__controls {
+  background: var(--dcr-color-bg-subtle);
+  border-bottom: 1px solid var(--dcr-color-border);
+}
+
+/* ── Zone 3: Table body ── */
+
+.dcr-data-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dcr-data-table th {
+  padding: var(--dcr-space-sm) var(--dcr-space-lg);
+  background: var(--dcr-color-bg-subtle);
+  font-size: var(--dcr-font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--dcr-color-text-muted);
+  text-align: left;
+  border-top: 0px solid var(--dcr-color-border);
+  border-bottom: 1px solid var(--dcr-color-border);
+}
+
+.dcr-data-table td {
+  padding: var(--dcr-space-sm) var(--dcr-space-lg);
+  border-bottom: 1px solid var(--dcr-color-border);
+  font-size: var(--dcr-font-size-base);
+  color: var(--dcr-color-text);
+  vertical-align: middle;
+}
+
+/* Monospace accent link used in KEY / SIGNAL / EXCEPTION columns */
+.dcr-data-table td a,
+.dcr-data-table__link {
+  color: var(--dcr-color-accent);
+  text-decoration: none;
+  font-family: var(--dcr-font-mono);
+  font-size: var(--dcr-font-size-sm);
+}
+
+.dcr-data-table td a:hover,
+.dcr-data-table__link:hover {
+  text-decoration: underline;
+}
+
+/* Right-align numeric / short value columns */
+.dcr-data-table th.dcr-col--right,
+.dcr-data-table td.dcr-col--right {
+  text-align: right;
+}
+
+.dcr-data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.dcr-data-table tbody tr:hover td {
+  background: var(--dcr-color-bg-subtle);
+  transition: background 0.1s ease;
+}
+
+
+/* --- Callout --------------------------------------------------------------- */
+
+.dcr-callout {
+  padding: var(--dcr-space-md);
+  border-radius: var(--dcr-radius);
+  border-left: 3px solid var(--dcr-color-accent);
+  background: var(--dcr-color-bg-subtle);
+  margin-bottom: var(--dcr-space-md);
+}
+
+.dcr-callout__title {
+  margin: 0 0 var(--dcr-space-xs) 0;
+  font-weight: bold;
+  font-size: var(--dcr-font-size-base);
+  color: var(--dcr-color-text);
+}
+
+.dcr-callout__body {
+  margin: 0;
+  font-size: var(--dcr-font-size-base);
+  color: var(--dcr-color-text-muted);
+}
+
+.dcr-callout--info {
+  border-left-color: var(--dcr-color-info);
+  background: var(--dcr-color-info-bg);
+}
+
+.dcr-callout--info .dcr-callout__title {
+  color: var(--dcr-color-info);
+}
+
+.dcr-callout--success {
+  border-left-color: var(--dcr-color-success);
+  background: var(--dcr-color-success-bg);
+}
+
+.dcr-callout--success .dcr-callout__title {
+  color: var(--dcr-color-success);
+}
+
+.dcr-callout--warning {
+  border-left-color: var(--dcr-color-warning);
+  background: var(--dcr-color-warning-bg);
+}
+
+.dcr-callout--warning .dcr-callout__title {
+  color: var(--dcr-color-warning);
+}
+
+.dcr-callout--danger {
+  border-left-color: var(--dcr-color-danger);
+  background: var(--dcr-color-danger-bg);
+}
+
+.dcr-callout--danger .dcr-callout__title {
+  color: var(--dcr-color-danger);
+}
+
+
+/* --- Danger Zone ------------------------------------------------------------ */
+
+.dcr-danger-zone {
+  border: 2px solid var(--dcr-color-danger);
+  border-radius: var(--dcr-radius-lg);
+  padding: var(--dcr-space-md) var(--dcr-space-lg);
+  background: var(--dcr-color-danger-bg);
+}
+
+.dcr-danger-zone__title {
+  color: var(--dcr-color-danger);
+  margin: 0 0 var(--dcr-space-sm) 0;
+  font-size: var(--dcr-font-size-base);
+  font-weight: bold;
+}
+
+.dcr-danger-zone__body {
+  color: var(--dcr-color-text-muted);
+  margin: 0 0 var(--dcr-space-md) 0;
+  font-size: var(--dcr-font-size-base);
+}
+
+
+/* --- Code ------------------------------------------------------------------- */
+
+.dcr-code {
+  font-family: var(--dcr-font-mono);
+  font-size: 12px;
+  background: var(--dcr-color-bg-subtle);
+  color: var(--dcr-color-text);
+  padding: 2px 5px;
+  border-radius: var(--dcr-radius);
+  border: 1px solid var(--dcr-color-border);
+}
+
+.dcr-code--block {
+  display: block;
+  padding: var(--dcr-space-md);
+  overflow-x: auto;
+  white-space: pre;
+  line-height: 1.5;
+  margin-bottom: var(--dcr-space-md);
+}
+
+
+/* --- Empty State ------------------------------------------------------------ */
+
+.dcr-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--dcr-space-xl) var(--dcr-space-lg);
+}
+
+.dcr-empty__icon {
+  margin-bottom: var(--dcr-space-lg);
+  opacity: 0.55;
+}
+
+.dcr-empty__title {
+  font-size: var(--dcr-font-size-xl);
+  font-weight: 300;
+  margin: 0 0 var(--dcr-space-sm) 0;
+  color: var(--dcr-color-text);
+}
+
+.dcr-empty__body {
+  font-size: var(--dcr-font-size-base);
+  color: var(--dcr-color-text-muted);
+  margin: 0 0 var(--dcr-space-lg) 0;
+  max-width: 480px;
+}
+
+.dcr-empty__links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: var(--dcr-space-lg);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.dcr-empty__links a {
+  font-size: var(--dcr-font-size-base);
+}
+
+
+/* --- Inline Edit ------------------------------------------------------------ */
+
+.dcr-inline-edit {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--dcr-space-xs);
+}
+
+.dcr-inline-edit__input {
+  font-family: var(--dcr-font-mono);
+  font-size: 12px;
+  padding: 3px var(--dcr-space-sm);
+  border: 1px solid var(--dcr-color-border);
+  border-radius: var(--dcr-radius);
+  background: var(--dcr-color-bg);
+  color: var(--dcr-color-text);
+  min-width: 100px;
+}
+
+.dcr-inline-edit__input:focus {
+  outline: none;
+  border-color: var(--dcr-color-accent);
+  box-shadow: 0 0 0 2px rgba(65, 118, 144, 0.2);
+}
+
+.dcr-inline-edit__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--dcr-color-accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--dcr-radius);
+  cursor: pointer;
+  font-size: var(--dcr-font-size-base);
+  padding: 3px var(--dcr-space-sm);
+  min-width: 28px;
+  height: 26px;
+  transition: opacity 0.15s ease;
+}
+
+.dcr-inline-edit__btn:hover:not(:disabled) {
+  opacity: 0.82;
+}
+
+.dcr-inline-edit__btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.dcr-inline-edit__btn--danger {
+  background: var(--dcr-color-danger);
+}
+
+
+/* --- Card ------------------------------------------------------------------- */
+
+/*
+ * Bordered card tile used for service/worker status summaries.
+ * Wrap in dcr-card-grid for automatic responsive columns.
+ *
+ * Structure:
+ *   <div class="dcr-card">
+ *     <span class="dcr-status dcr-status--ok">…</span>   ← top: status + name
+ *     <div class="dcr-card__bottom">                      ← bottom: meta row
+ *       <span class="dcr-card__meta">…</span>
+ *       <span class="dcr-card__meta">…</span>
+ *     </div>
+ *   </div>
+ */
+
+.dcr-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--dcr-space-md);
+  margin-bottom: var(--dcr-space-lg);
+}
+
+.dcr-card-grid .dcr-card {
+  padding: var(--dcr-space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--dcr-space-sm);
+  margin-bottom: 0;
+}
+
+
+.dcr-card__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dcr-card__meta {
+  font-size: var(--dcr-font-size-sm);
+  color: var(--dcr-color-text-muted);
+}
+
+
+/* --- Bar Chart (CSS-only sparkline) ---------------------------------------- */
+
+/*
+ * Inline bar chart for at-a-glance time-series data (queue depth, hit rate,
+ * etc.).  Bars are plain <div> children; set height as a % to normalise
+ * against your data's maximum value.
+ *
+ * Structure:
+ *   <div class="dcr-bar-chart">
+ *     <div class="dcr-bar-chart__inner">
+ *       <div class="dcr-bar-chart__bar" style="height:60%"></div>
+ *       …
+ *     </div>
+ *   </div>
+ */
+
+.dcr-bar-chart {
+  padding: var(--dcr-space-md) var(--dcr-space-lg) 0;
+}
+
+.dcr-bar-chart__inner {
+  display: flex;
+  align-items: flex-end;
+  height: 80px;
+  gap: 3px;
+}
+
+.dcr-bar-chart__bar {
+  flex: 1;
+  min-width: 4px;
+  background: rgba(46, 125, 50, 0.40);
+  border-radius: var(--dcr-radius) var(--dcr-radius) 0 0;
+}
+
+/* Dark mode: slightly brighter bars */
+@media (prefers-color-scheme: dark) {
+  .dcr-bar-chart__bar {
+    background: rgba(102, 187, 106, 0.45);
+  }
+}
+
+
+/* --- Forms ------------------------------------------------------------------ */
+
+/*
+ * General-purpose form primitives for DCR panels.
+ *
+ * dcr-form          — column container (gap + padding); use anywhere a form lives
+ *   dcr-form__row   — horizontal flex row of fields/controls
+ *   dcr-form__label — small uppercase label above an entire row or group
+ *
+ * dcr-field         — individual field: stacks label above a control
+ *   dcr-field__label  — xs uppercase label
+ *   dcr-field--grow   — flex:1 so the field expands to fill its row
+ *
+ * dcr-input         — styled plain text / number / email input
+ * dcr-select        — styled <select>
+ *
+ * dcr-input-group   — icon + input combo (e.g. search field with magnifier)
+ *   dcr-input-group__icon
+ *   dcr-input-group__input
+ *
+ * Example — search + filter bar inside dcr-data-table__controls:
+ *
+ *   <form class="dcr-form">
+ *     <div class="dcr-form__row">
+ *       <div class="dcr-field dcr-field--grow">
+ *         <label class="dcr-field__label" for="q">Search by task name or ID</label>
+ *         <div class="dcr-input-group">
+ *           <svg class="dcr-input-group__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+ *           <input id="q" class="dcr-input-group__input" type="text" placeholder="e.g. send_order_email">
+ *         </div>
+ *       </div>
+ *       <div style="display:flex;align-items:flex-end">
+ *         <button type="submit" class="dcr-btn dcr-btn--primary">Search</button>
+ *       </div>
+ *     </div>
+ *     <div class="dcr-form__row">
+ *       <div class="dcr-field">
+ *         <label class="dcr-field__label" for="state">▽ State</label>
+ *         <select id="state" class="dcr-select"><option>All states</option></select>
+ *       </div>
+ *       <div style="flex:1"></div>
+ *       <button type="button" class="dcr-btn" style="align-self:flex-end">Reset all filters</button>
+ *     </div>
+ *   </form>
+ */
+
+.dcr-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dcr-space-lg);
+  padding: var(--dcr-space-md) var(--dcr-space-lg);
+}
+
+/* Default row — labels above individual fields, baseline-aligned */
+.dcr-form__row {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--dcr-space-lg);
+  flex-wrap: wrap;
+}
+
+/* Stretch row — all children same height; use for input + button pairs */
+.dcr-form__row--stretch {
+  display: flex;
+  align-items: stretch;
+  gap: var(--dcr-space-sm);
+}
+
+/* Small uppercase label above an entire row (not a single field) */
+.dcr-form__label {
+  display: block;
+  font-size: var(--dcr-font-size-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--dcr-color-text-muted);
+  margin-bottom: 6px;
+}
+
+/* Whole labelled block: label + stretch-row together */
+.dcr-form__group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 200px;
+}
+
+/* Individual field: label stacked above a single control */
+.dcr-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dcr-field--grow {
+  flex: 1;
+  min-width: 200px;
+}
+
+.dcr-field__label {
+  font-size: var(--dcr-font-size-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--dcr-color-text-muted);
+}
+
+/* Standalone text / number / email input */
+.dcr-input {
+  width: 100%;
+  border: 1px solid var(--dcr-color-border) !important;
+  border-radius: var(--dcr-radius-lg) !important;
+  padding: 10px var(--dcr-space-md) !important;
+  background: var(--dcr-color-bg);
+  color: var(--dcr-color-text);
+  font-size: var(--dcr-font-size-base);
+  outline: none;
+  line-height: 1.4;
+  box-sizing: border-box;
+}
+
+.dcr-input::placeholder {
+  color: var(--dcr-color-text-muted) !important;
+}
+
+.dcr-input:focus {
+  border-color: var(--dcr-color-accent);
+}
+
+/* Standalone select */
+.dcr-select {
+  -webkit-appearance: none;
+  appearance: none;
+  border: 1px solid var(--dcr-color-border) !important;
+  border-radius: var(--dcr-radius-lg) !important;
+  padding: 10px 36px 10px var(--dcr-space-md) !important;
+  background-color: var(--dcr-color-bg);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  color: var(--dcr-color-text);
+  font-size: var(--dcr-font-size-base);
+  cursor: pointer;
+  line-height: 1.4;
+  min-height: 42px;
+  box-sizing: border-box;
+}
+
+.dcr-select:focus {
+  border-color: var(--dcr-color-accent);
+  outline: none;
+}
+
+/* Bare <select> inside dcr-field inherits the same look */
+.dcr-field select {
+  -webkit-appearance: none;
+  appearance: none;
+  border: 1px solid var(--dcr-color-border) !important;
+  border-radius: var(--dcr-radius-xl) !important;
+  padding: 10px 36px 10px var(--dcr-space-md) !important;
+  background-color: var(--dcr-color-bg);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  color: var(--dcr-color-text);
+  font-size: var(--dcr-font-size-base);
+  cursor: pointer;
+  min-height: 42px;
+  box-sizing: border-box;
+}
+
+.dcr-field select:focus {
+  border-color: var(--dcr-color-accent);
+  outline: none;
+}
+
+/* Icon + input combo — icon is absolutely positioned inside the input */
+.dcr-input-group {
+  position: relative;
+  flex: 1;
+  min-height: 42px;
+}
+
+.dcr-input-group__icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--dcr-color-text-muted);
+  width: 15px;
+  height: 15px;
+  pointer-events: none;
+  user-select: none;
+}
+
+.dcr-input-group__input {
+  width: 100%;
+  height: 100%;
+  min-height: 36px;
+  border: 1px solid var(--dcr-color-border) !important;
+  border-radius: var(--dcr-radius-xl) !important;
+  /* !important beats Django admin's input[type="text"] padding override */
+  padding: 10px var(--dcr-space-md) 10px 40px !important;
+  background: var(--dcr-color-bg);
+  color: var(--dcr-color-text);
+  font-size: var(--dcr-font-size-base);
+  outline: none;
+  line-height: 1.4;
+  box-sizing: border-box;
+}
+
+.dcr-input-group__input::placeholder {
+  color: var(--dcr-color-text-muted);
+}
+
+.dcr-input-group__input:focus {
+  border-color: var(--dcr-color-accent);
+}
+
+/* Buttons placed directly in a --stretch row fill the full height */
+.dcr-form__row--stretch>.dcr-btn {
+  align-self: stretch;
+  border-radius: var(--dcr-radius);
+}
+
+
+/* --- Divider ---------------------------------------------------------------- */
+
+/*
+ * Full-width horizontal rule between major page sections.
+ * Use between logically distinct content groups within a single panel page.
+ */
+
+.dcr-divider {
+  border: none;
+  border-top: 1px solid var(--dcr-color-border);
+  margin: var(--dcr-space-xl) 0;
+}
+
+
+/* --- Status Text ------------------------------------------------------------ */
+
+/*
+ * Icon + coloured text for use inside table cells.  Unlike dcr-status (dot +
+ * label), this variant renders a symbol and text with no background pill — ideal
+ * for table "Status" columns.
+ *
+ * Usage:
+ *   <span class="dcr-status-text dcr-status-text--success">✓ Success</span>
+ *   <span class="dcr-status-text dcr-status-text--warning">◷ Running</span>
+ *   <span class="dcr-status-text dcr-status-text--danger">✕ Failed</span>
+ *   <span class="dcr-status-text dcr-status-text--muted">↺ Retry</span>
+ */
+
+.dcr-status-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: var(--dcr-font-size-base);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.dcr-status-text--success {
+  color: var(--dcr-color-success);
+}
+
+.dcr-status-text--warning {
+  color: var(--dcr-color-warning);
+}
+
+.dcr-status-text--danger {
+  color: var(--dcr-color-danger);
+}
+
+.dcr-status-text--muted {
+  color: var(--dcr-color-muted);
+}
+
+
+/* --- Ability Matrix --------------------------------------------------------- */
+
+.dcr-ability-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: var(--dcr-space-md);
+  font-size: var(--dcr-font-size-base);
+}
+
+.dcr-ability-table th,
+.dcr-ability-table td {
+  padding: var(--dcr-space-sm) var(--dcr-space-md);
+  border: 1px solid var(--dcr-color-border);
+  text-align: left;
+}
+
+.dcr-ability-table th {
+  font-weight: bold;
+  background: var(--dcr-color-bg-subtle);
+  color: var(--dcr-color-text);
+}
+
+.dcr-ability-indicator {
+  font-size: 1.1em;
+  display: inline-block;
+}
+
+.dcr-ability-indicator--yes {
+  color: var(--dcr-color-success);
+}
+
+.dcr-ability-indicator--no {
+  color: var(--dcr-color-border);
+}
+
+
+
+/* =============================================================================
+   4. PANEL PATTERNS
+   Reusable styles for data-heavy panels (search, key/value display, action
+   buttons, pagination modes, backend metadata). These use the original class
+   names so existing panels continue to work, while consuming --dcr-* tokens
+   for colours and spacing.
+
+   Excluded from this section (Django admin already owns them):
+     #result_list · .messagelist · .submit-row · .field-box · .icon-yes/no
+   ============================================================================= */
+
+
+/* --- Action buttons --------------------------------------------------------- */
+/*
+ * Use for destructive operational actions (flush, delete, purge).
+ * Distinct from Django admin's .default/.deletelink which are form-submit
+ * buttons — these are standalone operation triggers on panel pages.
+ */
+
+.flush-button,
+.delete-button {
+  background-color: var(--dcr-color-danger) !important;
+  color: #fff !important;
+  border: none !important;
+  padding: 10px 20px;
+  border-radius: var(--dcr-radius);
+  cursor: pointer;
+  font-size: var(--dcr-font-size-base);
+  white-space: nowrap;
+  transition: opacity 0.15s ease;
+}
+
+.flush-button:hover:not(:disabled),
+.delete-button:hover:not(:disabled),
+.delete-button:focus:not(:disabled) {
+  opacity: 0.85;
+  color: #fff !important;
+}
+
+.flush-button:disabled,
+.delete-button:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+}
+
+.key-search-flush-form {
+  margin: 0;
+  flex-shrink: 0;
+}
+
+
+/* --- Collection member delete button --------------------------------------- */
+
+.delete-member-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: var(--dcr-space-xs) var(--dcr-space-sm);
+  border-radius: var(--dcr-radius);
+  color: var(--dcr-color-danger);
+  transition: background 0.15s ease, transform 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-member-btn:hover:not(:disabled) {
+  background-color: var(--dcr-color-danger);
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.delete-member-btn:disabled {
+  color: var(--dcr-color-border);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+
+/* --- Key type badges -------------------------------------------------------- */
+/*
+ * Colour-coded chips for Redis/cache data types. Two size variants:
+ *   .key-type       — compact (inside table cells)
+ *   .key-type-badge — slightly larger (standalone labels)
+ */
+
+.key-type {
+  font-size: var(--dcr-font-size-xs);
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: var(--dcr-radius);
+  color: #fff;
+}
+
+.key-type-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: var(--dcr-radius);
+  font-size: var(--dcr-font-size-sm);
+  font-weight: bold;
+  color: #fff;
+}
+
+.key-type-string {
+  background-color: #28a745;
+}
+
+.key-type-list {
+  background-color: #007bff;
+}
+
+.key-type-set {
+  background-color: #d97706;
+}
+
+.key-type-zset {
+  background-color: #17a2b8;
+}
+
+.key-type-hash {
+  background-color: #6f42c1;
+}
+
+.key-type-stream {
+  background-color: #059669;
+}
+
+/* Alternate palette when shown inside .key-search context */
+.key-search .key-type-string {
+  background: var(--dcr-color-accent);
+}
+
+.key-search .key-type-list {
+  background: var(--dcr-color-success);
+}
+
+.key-search .key-type-set {
+  background: var(--dcr-color-warning);
+}
+
+.key-search .key-type-zset {
+  background: #7b68ee;
+}
+
+.key-search .key-type-hash {
+  background: var(--dcr-color-danger);
+}
+
+
+/* --- Panel search form ------------------------------------------------------ */
+/*
+ * A standalone search form on a panel page — not the admin changelist search.
+ * Renders above a results list and supports multiple filter fields inline.
+ */
+
+.search-form {
+  padding: var(--dcr-space-md);
+  border-radius: var(--dcr-radius);
+  margin-bottom: var(--dcr-space-lg);
+  border: 1px solid var(--dcr-color-border);
+  background: var(--dcr-color-bg-subtle);
+}
+
+.search-form .form-row {
+  margin: 0;
+}
+
+.search-form label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: var(--dcr-space-xs);
+}
+
+.search-form .help {
+  font-size: var(--dcr-font-size-sm);
+  margin-top: 3px;
+  opacity: 0.7;
+}
+
+.search-form-row {
+  margin-bottom: var(--dcr-space-md);
+}
+
+.search-form-fields {
+  display: flex;
+  gap: var(--dcr-space-md);
+  align-items: flex-end;
+  margin-bottom: var(--dcr-space-xs);
+}
+
+.search-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.search-field-group label {
+  font-weight: bold;
+  color: var(--dcr-color-text-muted);
+  font-size: var(--dcr-font-size-sm);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.search-field-group input[type="text"],
+.search-field-group select {
+  height: 32px;
+  box-sizing: border-box;
+}
+
+.search-field-group select {
+  min-width: 80px;
+  padding: 6px 8px;
+}
+
+.search-field-group input[type="submit"] {
+  height: 32px;
+  padding: 6px 15px;
+  box-sizing: border-box;
+}
+
+.search-help {
+  margin: var(--dcr-space-xs) 0 0 0;
+}
+
+.search-help .help {
+  margin: 0;
+  color: var(--dcr-color-text-muted);
+  font-size: var(--dcr-font-size-sm);
+  font-style: italic;
+}
+
+
+/* --- Key-value table -------------------------------------------------------- */
+/*
+ * Displays structured key/value data (Redis hash fields, cache entry metadata,
+ * task args, etc.). Distinct from admin changelist — no sorting or pagination.
+ */
+
+.key-value-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--dcr-space-sm) 0;
+}
+
+.key-value-table th,
+.key-value-table td {
+  padding: var(--dcr-space-sm) var(--dcr-space-md);
+  border: 1px solid var(--dcr-color-border);
+  text-align: left;
+}
+
+.key-value-table th {
+  font-weight: bold;
+  background-color: var(--dcr-color-bg-subtle);
+  color: var(--dcr-color-text);
+}
+
+.key-value-table tbody tr:nth-child(even) {
+  background-color: var(--dcr-color-bg-subtle);
+}
+
+.key-value-table code {
+  padding: 2px 4px;
+  border-radius: var(--dcr-radius);
+  font-family: var(--dcr-font-mono);
+  font-size: 12px;
+  background-color: var(--dcr-color-bg-subtle);
+}
+
+.string-value-field {
+  width: 100%;
+}
+
+.key-value-display h3 {
+  margin: 0 0 var(--dcr-space-md) 0;
+  opacity: 0.8;
+}
+
+
+/* --- Inline edit (legacy class names) -------------------------------------- */
+/*
+ * Kept alongside dcr-inline-edit__* for panels already using these names.
+ */
+
+.inline-edit-input {
+  font-family: var(--dcr-font-mono);
+  font-size: 12px;
+  padding: 4px var(--dcr-space-sm);
+  border: 1px solid var(--dcr-color-border);
+  border-radius: var(--dcr-radius);
+  background-color: var(--dcr-color-bg);
+  color: var(--dcr-color-text);
+  min-width: 100px;
+}
+
+.inline-edit-input:focus {
+  outline: none;
+  border-color: var(--dcr-color-accent);
+  box-shadow: 0 0 0 2px rgba(65, 118, 144, 0.2);
+}
+
+.inline-edit-btn {
+  background: var(--dcr-color-accent);
+  border: none;
+  border-radius: var(--dcr-radius);
+  color: #fff;
+  cursor: pointer;
+  font-size: var(--dcr-font-size-base);
+  padding: 4px var(--dcr-space-sm);
+  transition: opacity 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 28px;
+}
+
+.inline-edit-btn:hover:not(:disabled) {
+  opacity: 0.82;
+}
+
+.inline-edit-btn:disabled {
+  background-color: var(--dcr-color-muted-bg);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+
+/* --- Instance stats (legacy class names) ----------------------------------- */
+/*
+ * Kept alongside dcr-metric-grid / dcr-metric for panels already using these.
+ */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--dcr-space-md);
+}
+
+.stat-item {
+  text-align: center;
+  padding: var(--dcr-space-sm);
+  border-radius: var(--dcr-radius);
+  border: 1px solid var(--dcr-color-border);
+}
+
+.stat-value {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--dcr-color-accent);
+}
+
+.stat-value.stat-success {
+  color: var(--dcr-color-success);
+}
+
+.stat-value.stat-warning {
+  color: var(--dcr-color-warning);
+}
+
+.stat-value.stat-disabled {
+  color: var(--dcr-color-muted);
+}
+
+.default-badge {
+  background: var(--dcr-color-accent);
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: var(--dcr-radius);
+  font-size: var(--dcr-font-size-xs);
+  margin-left: var(--dcr-space-xs);
+}
+
+.ttl-value {
+  font-weight: bold;
+  color: var(--dcr-color-accent);
+}
+
+
+/* --- Backend metadata ------------------------------------------------------- */
+
+.backend-name {
+  font-size: 0.9em;
+  font-family: var(--dcr-font-mono);
+}
+
+.backend-error {
+  color: var(--dcr-color-danger);
+  font-size: 0.85em;
+}
+
+.abilities-legend {
+  margin-top: var(--dcr-space-lg);
+  padding: var(--dcr-space-sm);
+  background: var(--dcr-color-bg-subtle);
+  border-left: 3px solid var(--dcr-color-accent);
+  border-radius: var(--dcr-radius);
+}
+
+.abilities-legend-title {
+  margin: 0 0 var(--dcr-space-sm) 0;
+  font-weight: bold;
+  color: var(--dcr-color-text);
+}
+
+.abilities-legend-list {
+  margin: 0;
+  padding-left: 20px;
+  list-style: none;
+  color: var(--dcr-color-text);
+}
+
+.abilities-legend-list li {
+  margin-bottom: var(--dcr-space-xs);
+}
+
+.abilities-legend-list strong {
+  color: var(--dcr-color-text);
+}
+
+
+/* --- Ability indicators (legacy class names) -------------------------------- */
+/* Kept alongside dcr-ability-indicator--yes/no for backward compatibility. */
+
+.ability-indicator {
+  font-size: 1.2em;
+  display: inline-block;
+}
+
+.ability-supported {
+  color: var(--dcr-color-accent);
+}
+
+.ability-unsupported {
+  color: var(--dcr-color-border);
+}
+
+
+/* --- Pagination mode indicator ---------------------------------------------- */
+
+.pagination-mode-indicator {
+  margin-bottom: var(--dcr-space-sm);
+}
+
+.pagination-mode-indicator .badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: var(--dcr-radius);
+  font-size: var(--dcr-font-size-xs);
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.pagination-mode-indicator .badge.cursor-mode {
+  background-color: #2196F3;
+  color: #fff;
+}
+
+.pagination-mode-indicator .badge.page-mode {
+  background-color: #4CAF50;
+  color: #fff;
+}
+
+
+/* --- Welcome page (legacy class names) ------------------------------------- */
+/* Kept for panels using the old rocket SVG welcome screen. New panels should
+   use dcr-empty / the empty_state.html component instead. */
+
+.panel-welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--dcr-space-xl) var(--dcr-space-lg);
+}
+
+.panel-welcome-icon {
+  margin-bottom: var(--dcr-space-lg);
+}
+
+.panel-welcome-title {
+  font-size: var(--dcr-font-size-xl);
+  font-weight: 300;
+  margin: 0 0 var(--dcr-space-sm) 0;
+  color: var(--dcr-color-text);
+}
+
+.panel-welcome-subtitle {
+  font-size: var(--dcr-font-size-base);
+  color: var(--dcr-color-text-muted);
+  margin: 0 0 var(--dcr-space-lg) 0;
+}
+
+.panel-welcome-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: var(--dcr-space-lg);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.panel-welcome-links li a {
+  font-size: var(--dcr-font-size-base);
+}
