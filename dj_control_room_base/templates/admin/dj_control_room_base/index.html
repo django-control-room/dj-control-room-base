@@ -43,6 +43,9 @@
   <a href="#forms">{% trans "Forms" %}</a>
   <a href="#data-table">{% trans "Data Table" %}</a>
   <a href="#pagination">{% trans "Pagination" %}</a>
+  <a href="#panel-grid">{% trans "Panel Grid" %}</a>
+  <a href="#activity-feed">{% trans "Activity Feed" %}</a>
+  <a href="#info-card">{% trans "Info Card" %}</a>
   <a href="#callout">{% trans "Callout" %}</a>
   <a href="#page-header">{% trans "Page Header" %}</a>
   <a href="#danger-zone">{% trans "Danger Zone" %}</a>
@@ -598,7 +601,7 @@
 {# ── Code Viewer ──────────────────────────────────────────────────────────── #}
 <section class="dcr-sg-section" id="code-viewer">
   <h2 class="dcr-sg-section__title">{% trans "Code Viewer" %}</h2>
-  <p class="dcr-sg-section__desc">{% trans "Labelled header strip above a dark syntax-highlighted code body. Use for raw values, source snippets, and import paths. Requires highlight.js to be loaded on the page." %}</p>
+  <p class="dcr-sg-section__desc">{% trans "Use " %}<code class="dcr-code">dcr-code-viewer</code>{% trans " as the outer wrapper. " %}<code class="dcr-code">dcr-code-viewer__header</code>{% trans " / " %}<code class="dcr-code">__label</code>{% trans " / " %}<code class="dcr-code">__meta</code>{% trans " style the labelled header strip. " %}<code class="dcr-code">dcr-code-viewer__body</code>{% trans " holds the highlight.js code block. Optionally add a " %}<code class="dcr-code">dcr-code-viewer__title</code>{% trans " zone for function signatures." %}</p>
   <div class="dcr-sg-preview dcr-sg-preview--stack">
     <div class="dcr-code-viewer" style="width:100%">
       <div class="dcr-code-viewer__header">
@@ -725,13 +728,166 @@
 &lt;/form&gt;</code></pre>
 </section>
 
+{# ── Panel Grid ───────────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="panel-grid">
+  <h2 class="dcr-sg-section__title">{% trans "Panel Grid" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "Responsive 3-column grid of panel cards. Use " %}<code class="dcr-code">dcr-panel-grid</code>{% trans " as the container and " %}<code class="dcr-code">dcr-panel-card</code>{% trans " for each item. Add " %}<code class="dcr-code">dcr-panel-card--placeholder</code>{% trans " for the dashed call-to-action slot." %}</p>
+  <div class="dcr-sg-preview">
+    <div class="dcr-panel-grid" style="width:100%">
+      <div class="dcr-panel-card">
+        <div class="dcr-panel-card__top">
+          <svg class="dcr-panel-card__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg>
+          <span class="dcr-pill dcr-pill--success"><span class="dcr-pill__dot"></span>{% trans "Connected" %}</span>
+        </div>
+        <h3 class="dcr-panel-card__title">{% trans "Redis Panel" %}</h3>
+        <p class="dcr-panel-card__desc">{% trans "Monitor connections, memory, keys, and throughput across every configured Redis instance." %}</p>
+        <div class="dcr-panel-card__footer">
+          <div>
+            <div class="dcr-panel-card__metric">1,284</div>
+            <div class="dcr-panel-card__metric-label">{% trans "Keys" %}</div>
+          </div>
+          <a href="#" class="dcr-panel-card__link">{% trans "View panel" %} →</a>
+        </div>
+      </div>
+      <div class="dcr-panel-card">
+        <div class="dcr-panel-card__top">
+          <svg class="dcr-panel-card__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+          <span class="dcr-pill dcr-pill--warning"><span class="dcr-pill__dot"></span>{% trans "Degraded" %}</span>
+        </div>
+        <h3 class="dcr-panel-card__title">{% trans "Errors Panel" %}</h3>
+        <p class="dcr-panel-card__desc">{% trans "Track recent exceptions, group similar tracebacks, and triage unresolved errors." %}</p>
+        <div class="dcr-panel-card__footer">
+          <div>
+            <div class="dcr-panel-card__metric">3</div>
+            <div class="dcr-panel-card__metric-label">{% trans "Open Groups" %}</div>
+          </div>
+          <a href="#" class="dcr-panel-card__link">{% trans "View panel" %} →</a>
+        </div>
+      </div>
+      <div class="dcr-panel-card dcr-panel-card--placeholder">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <p style="font-weight:600;margin:0;">{% trans "Build your own panel" %}</p>
+        <p style="font-size:var(--dcr-font-size-sm);margin:0;">{% trans "Scaffold a custom panel with the cookiecutter template." %}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ── Activity Feed ─────────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="activity-feed">
+  <h2 class="dcr-sg-section__title">{% trans "Panel — Activity Feed" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "Use " %}<code class="dcr-code">dcr-card</code>{% trans " with " %}<code class="dcr-code">dcr-card__row</code>{% trans " items. Each row uses " %}<code class="dcr-code">dcr-card__row-source</code>{% trans " (badge), " %}<code class="dcr-code">dcr-card__row-text</code>{% trans ", and " %}<code class="dcr-code">dcr-card__row-time</code>{% trans "." %}</p>
+  <div class="dcr-sg-preview">
+    <div class="dcr-card" style="width:100%">
+      <div class="dcr-card__header">
+        <h3 class="dcr-card__title">
+          <svg class="dcr-card__title-icon" style="color:var(--dcr-color-accent)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          {% trans "Recent activity" %}
+        </h3>
+        <span class="dcr-card__meta">{% trans "Across all panels" %}</span>
+      </div>
+      <div class="dcr-card__row">
+        <span class="dcr-card__row-source"><span class="dcr-badge dcr-badge--warning">ERRORS</span></span>
+        <span class="dcr-card__row-text">{% trans "New error group: KeyError in checkout.views.create_order" %}</span>
+        <span class="dcr-card__row-time">2m {% trans "ago" %}</span>
+      </div>
+      <div class="dcr-card__row">
+        <span class="dcr-card__row-source"><span class="dcr-badge dcr-badge--info">CELERY</span></span>
+        <span class="dcr-card__row-text">{% trans "Worker celery@web-2 reconnected after brief disconnect" %}</span>
+        <span class="dcr-card__row-time">14m {% trans "ago" %}</span>
+      </div>
+      <div class="dcr-card__row">
+        <span class="dcr-card__row-source"><span class="dcr-badge dcr-badge--success">CACHE</span></span>
+        <span class="dcr-card__row-text">{% trans "Backend longterm hit rate climbed back above 90%" %}</span>
+        <span class="dcr-card__row-time">38m {% trans "ago" %}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ── Info Card ─────────────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="info-card">
+  <h2 class="dcr-sg-section__title">{% trans "Panel — Key/Value" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "Use " %}<code class="dcr-code">dcr-card</code>{% trans " with " %}<code class="dcr-code">dcr-card__row</code>{% trans " items. Each row uses " %}<code class="dcr-code">dcr-card__row-label</code>{% trans " and " %}<code class="dcr-code">dcr-card__row-value</code>{% trans " (add " %}<code class="dcr-code">--bold</code>{% trans " for emphasis). " %}<code class="dcr-code">dcr-card__footer</code>{% trans " adds a muted note below the rows." %}</p>
+  <div class="dcr-sg-preview">
+    <div class="dcr-card" style="max-width:360px">
+      <div class="dcr-card__header">
+        <h3 class="dcr-card__title">
+          <svg class="dcr-card__title-icon" style="color:var(--dcr-color-success)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          {% trans "System" %}
+        </h3>
+      </div>
+      <div class="dcr-card__row">
+        <span class="dcr-card__row-label">Django</span>
+        <span class="dcr-card__row-value">5.0.6</span>
+      </div>
+      <div class="dcr-card__row">
+        <span class="dcr-card__row-label">Python</span>
+        <span class="dcr-card__row-value">3.12.3</span>
+      </div>
+      <div class="dcr-card__row">
+        <span class="dcr-card__row-label">Database</span>
+        <span class="dcr-card__row-value dcr-card__row-value--bold">PostgreSQL 16</span>
+      </div>
+      <div class="dcr-card__row">
+        <span class="dcr-card__row-label">Cache</span>
+        <span class="dcr-card__row-value dcr-card__row-value--bold">Redis 7.2</span>
+      </div>
+      <div class="dcr-card__footer">{% trans "Last refreshed just now." %}</div>
+    </div>
+  </div>
+</section>
+
 {# ── Data Table ───────────────────────────────────────────────────────────── #}
 <section class="dcr-sg-section" id="data-table">
   <h2 class="dcr-sg-section__title">{% trans "Data Table" %}</h2>
-  <p class="dcr-sg-section__desc">{% trans "Card-wrapped table with four named zones: " %}<strong>{% trans "header" %}</strong>{% trans " (title + badge + subtitle + right meta), " %}<strong>{% trans "controls" %}</strong>{% trans " (search + filters, subtle bg), " %}<strong>{% trans "table body" %}</strong>{% trans ", and " %}<strong>{% trans "pagination" %}</strong>{% trans ". All zones are optional — use only what you need." %}</p>
+  <p class="dcr-sg-section__desc">{% trans "Card-wrapped table with four named zones: " %}<strong>{% trans "header" %}</strong>{% trans " (title + badge + subtitle + right meta), " %}<strong>{% trans "controls" %}</strong>{% trans " (search + filters, subtle bg), " %}<strong>{% trans "table body" %}</strong>{% trans ", and " %}<strong>{% trans "pagination" %}</strong>{% trans ". All zones are optional — use only what you need. Add " %}<code class="dcr-code">dcr-data-table__header--subtle</code>{% trans " to tint the header, and " %}<code class="dcr-code">dcr-data-table__title-icon</code>{% trans " on an SVG to place an icon before the title text." %}</p>
+
+  {# Subtle header — icon + tinted bg #}
+  <p class="dcr-sg-pre-label">{% trans "Subtle header (icon + tinted bg)" %}</p>
+  <div class="dcr-sg-preview">
+    <div class="dcr-data-table" style="width:100%">
+      <div class="dcr-data-table__header dcr-data-table__header--subtle">
+        <div class="dcr-data-table__header-info">
+          <h3 class="dcr-data-table__title">
+            <svg class="dcr-data-table__title-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+            {% trans "Workers" %}
+            <span class="dcr-badge dcr-badge--success">2 ONLINE</span>
+          </h3>
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>{% trans "Hostname" %}</th>
+            <th>{% trans "Pool" %}</th>
+            <th class="dcr-col--right">{% trans "Conc." %}</th>
+            <th class="dcr-col--right">{% trans "Active" %}</th>
+            <th class="dcr-col--right">{% trans "Uptime" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="dcr-pill dcr-pill--success"><span class="dcr-pill__dot"></span>celery@worker-1.prod</span></td>
+            <td>prefork</td>
+            <td class="dcr-col--right">8</td>
+            <td class="dcr-col--right">3</td>
+            <td class="dcr-col--right">12d 4h</td>
+          </tr>
+          <tr>
+            <td><span class="dcr-pill dcr-pill--danger"><span class="dcr-pill__dot"></span>celery@worker-3.prod</span></td>
+            <td>gevent</td>
+            <td class="dcr-col--right">50</td>
+            <td class="dcr-col--right">0</td>
+            <td class="dcr-col--right">—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
   {# Simple — header + table only #}
-  <p class="dcr-sg-pre-label">{% trans "Simple (header + table)" %}</p>
+  <p class="dcr-sg-pre-label" style="margin-top:var(--dcr-space-lg)">{% trans "Simple (header + table)" %}</p>
   <div class="dcr-sg-preview">
     <div class="dcr-data-table" style="width:100%">
       <table>

@@ -23,6 +23,236 @@
 
 {% block panel_content %}
 
+{# ══════════════════════════════════════════════════════════════════════════════
+   Installed Panels — panel grid + activity feed + info card + code viewer title
+   ══════════════════════════════════════════════════════════════════════════════ #}
+
+{# Page header #}
+<div class="dcr-page-header">
+  <div>
+    <h1 class="dcr-page-header__title">{% trans "Installed Panels" %}</h1>
+    <p style="margin:4px 0 0;font-size:var(--dcr-font-size-sm);color:var(--dcr-color-text-muted);">{% trans "Every panel registered in " %}<a href="#" class="dcr-data-table__link">INSTALLED_APPS</a>{% trans ", with current status." %}</p>
+  </div>
+  <span class="dcr-badge">6 PANELS</span>
+</div>
+
+{# Panel card grid #}
+<div class="dcr-panel-grid">
+
+  <div class="dcr-panel-card">
+    <div class="dcr-panel-card__top">
+      <svg class="dcr-panel-card__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg>
+      <span class="dcr-pill dcr-pill--success"><span class="dcr-pill__dot"></span>{% trans "Connected" %}</span>
+    </div>
+    <h3 class="dcr-panel-card__title">{% trans "Redis Panel" %}</h3>
+    <p class="dcr-panel-card__desc">{% trans "Monitor connections, memory, keys, and throughput across every configured Redis instance." %}</p>
+    <div class="dcr-panel-card__footer">
+      <div>
+        <div class="dcr-panel-card__metric">1,284</div>
+        <div class="dcr-panel-card__metric-label">{% trans "Keys" %}</div>
+      </div>
+      <a href="#" class="dcr-panel-card__link">{% trans "View panel" %} →</a>
+    </div>
+  </div>
+
+  <div class="dcr-panel-card">
+    <div class="dcr-panel-card__top">
+      <svg class="dcr-panel-card__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h7v7H3z"/><path d="M14 3h7v7h-7z"/><path d="M14 14h7v7h-7z"/><path d="M3 14h7v7H3z"/></svg>
+      <span class="dcr-pill dcr-pill--success"><span class="dcr-pill__dot"></span>{% trans "Healthy" %}</span>
+    </div>
+    <h3 class="dcr-panel-card__title">{% trans "Cache Panel" %}</h3>
+    <p class="dcr-panel-card__desc">{% trans "Inspect cached entries, hit and miss ratios, and TTL across every backend." %}</p>
+    <div class="dcr-panel-card__footer">
+      <div>
+        <div class="dcr-panel-card__metric">94.2%</div>
+        <div class="dcr-panel-card__metric-label">{% trans "Hit Rate" %}</div>
+      </div>
+      <a href="#" class="dcr-panel-card__link">{% trans "View panel" %} →</a>
+    </div>
+  </div>
+
+  <div class="dcr-panel-card">
+    <div class="dcr-panel-card__top">
+      <svg class="dcr-panel-card__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      <span class="dcr-pill dcr-pill--success"><span class="dcr-pill__dot"></span>{% trans "Connected" %}</span>
+    </div>
+    <h3 class="dcr-panel-card__title">{% trans "Celery Panel" %}</h3>
+    <p class="dcr-panel-card__desc">{% trans "Track workers, monitor task queues, retries, and recent execution history." %}</p>
+    <div class="dcr-panel-card__footer">
+      <div>
+        <div class="dcr-panel-card__metric">6 / 6</div>
+        <div class="dcr-panel-card__metric-label">{% trans "Workers Up" %}</div>
+      </div>
+      <a href="#" class="dcr-panel-card__link">{% trans "View panel" %} →</a>
+    </div>
+  </div>
+
+  <div class="dcr-panel-card">
+    <div class="dcr-panel-card__top">
+      <svg class="dcr-panel-card__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      <span class="dcr-pill dcr-pill--success"><span class="dcr-pill__dot"></span>{% trans "Healthy" %}</span>
+    </div>
+    <h3 class="dcr-panel-card__title">{% trans "URLs Panel" %}</h3>
+    <p class="dcr-panel-card__desc">{% trans "Browse every registered URL pattern grouped by app, namespace, and view." %}</p>
+    <div class="dcr-panel-card__footer">
+      <div>
+        <div class="dcr-panel-card__metric">248</div>
+        <div class="dcr-panel-card__metric-label">{% trans "Patterns" %}</div>
+      </div>
+      <a href="#" class="dcr-panel-card__link">{% trans "View panel" %} →</a>
+    </div>
+  </div>
+
+  <div class="dcr-panel-card">
+    <div class="dcr-panel-card__top">
+      <svg class="dcr-panel-card__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/></svg>
+      <span class="dcr-pill dcr-pill--success"><span class="dcr-pill__dot"></span>{% trans "Connected" %}</span>
+    </div>
+    <h3 class="dcr-panel-card__title">{% trans "Signals Panel" %}</h3>
+    <p class="dcr-panel-card__desc">{% trans "Inspect connected signal receivers, dispatch order, and recent firing history." %}</p>
+    <div class="dcr-panel-card__footer">
+      <div>
+        <div class="dcr-panel-card__metric">57</div>
+        <div class="dcr-panel-card__metric-label">{% trans "Receivers" %}</div>
+      </div>
+      <a href="#" class="dcr-panel-card__link">{% trans "View panel" %} →</a>
+    </div>
+  </div>
+
+  <div class="dcr-panel-card">
+    <div class="dcr-panel-card__top">
+      <svg class="dcr-panel-card__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+      <span class="dcr-pill dcr-pill--warning"><span class="dcr-pill__dot"></span>{% trans "Degraded" %}</span>
+    </div>
+    <h3 class="dcr-panel-card__title">{% trans "Errors Panel" %}</h3>
+    <p class="dcr-panel-card__desc">{% trans "Track recent exceptions, group similar tracebacks, and triage unresolved errors." %}</p>
+    <div class="dcr-panel-card__footer">
+      <div>
+        <div class="dcr-panel-card__metric">3</div>
+        <div class="dcr-panel-card__metric-label">{% trans "Open Groups" %}</div>
+      </div>
+      <a href="#" class="dcr-panel-card__link">{% trans "View panel" %} →</a>
+    </div>
+  </div>
+
+  <div class="dcr-panel-card dcr-panel-card--placeholder">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    <p style="font-weight:600;margin:0;">{% trans "Build your own panel" %}</p>
+    <p style="font-size:var(--dcr-font-size-sm);margin:0;">{% trans "Scaffold a custom panel with the cookiecutter template and it will appear here." %}</p>
+  </div>
+
+</div>
+
+{# Activity feed + System info side-by-side #}
+<div style="display:grid;grid-template-columns:1fr 320px;gap:var(--dcr-space-lg);align-items:start;margin-bottom:var(--dcr-space-lg);">
+
+  <div class="dcr-card">
+    <div class="dcr-card__header">
+      <h3 class="dcr-card__title">
+        <svg class="dcr-card__title-icon" style="color:var(--dcr-color-accent)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        {% trans "Recent activity" %}
+      </h3>
+      <span class="dcr-card__meta">{% trans "Across all panels" %}</span>
+    </div>
+    <div class="dcr-card__row">
+      <span class="dcr-card__row-source"><span class="dcr-badge dcr-badge--warning">ERRORS</span></span>
+      <span class="dcr-card__row-text">{% trans "New error group: KeyError in checkout.views.create_order" %}</span>
+      <span class="dcr-card__row-time">2m {% trans "ago" %}</span>
+    </div>
+    <div class="dcr-card__row">
+      <span class="dcr-card__row-source"><span class="dcr-badge dcr-badge--info">CELERY</span></span>
+      <span class="dcr-card__row-text">{% trans "Worker celery@web-2 reconnected after brief disconnect" %}</span>
+      <span class="dcr-card__row-time">14m {% trans "ago" %}</span>
+    </div>
+    <div class="dcr-card__row">
+      <span class="dcr-card__row-source"><span class="dcr-badge dcr-badge--success">CACHE</span></span>
+      <span class="dcr-card__row-text">{% trans "Backend longterm hit rate climbed back above 90%" %}</span>
+      <span class="dcr-card__row-time">38m {% trans "ago" %}</span>
+    </div>
+    <div class="dcr-card__row">
+      <span class="dcr-card__row-source"><span class="dcr-badge dcr-badge--info">REDIS</span></span>
+      <span class="dcr-card__row-text">{% trans "Memory usage on db 0 dropped from 412MB to 289MB" %}</span>
+      <span class="dcr-card__row-time">1h {% trans "ago" %}</span>
+    </div>
+    <div class="dcr-card__row">
+      <span class="dcr-card__row-source"><span class="dcr-badge">SIGNALS</span></span>
+      <span class="dcr-card__row-text">{% trans "post_save receiver registered for orders.Order" %}</span>
+      <span class="dcr-card__row-time">3h {% trans "ago" %}</span>
+    </div>
+  </div>
+
+  <div class="dcr-card">
+    <div class="dcr-card__header">
+      <h3 class="dcr-card__title">
+        <svg class="dcr-card__title-icon" style="color:var(--dcr-color-success)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        {% trans "System" %}
+      </h3>
+    </div>
+    <div class="dcr-card__row">
+      <span class="dcr-card__row-label">Django</span>
+      <span class="dcr-card__row-value">5.0.6</span>
+    </div>
+    <div class="dcr-card__row">
+      <span class="dcr-card__row-label">Python</span>
+      <span class="dcr-card__row-value">3.12.3</span>
+    </div>
+    <div class="dcr-card__row">
+      <span class="dcr-card__row-label">DCR core</span>
+      <span class="dcr-card__row-value">0.4.1</span>
+    </div>
+    <div class="dcr-card__row">
+      <span class="dcr-card__row-label">Database</span>
+      <span class="dcr-card__row-value dcr-card__row-value--bold">PostgreSQL 16</span>
+    </div>
+    <div class="dcr-card__row">
+      <span class="dcr-card__row-label">Cache</span>
+      <span class="dcr-card__row-value dcr-card__row-value--bold">Redis 7.2</span>
+    </div>
+    <div class="dcr-card__footer">{% trans "Last refreshed just now." %}</div>
+  </div>
+
+</div>
+
+{# Enhanced code viewer with title zone #}
+<div class="dcr-code-viewer">
+  <div class="dcr-code-viewer__title">
+    <div class="dcr-code-viewer__title-main">
+      <div class="dcr-code-viewer__title-sig">
+        <span class="dcr-code-viewer__title-lineno">1</span>
+        <span class="dcr-code-viewer__title-name">create_profile</span>
+        <span class="dcr-code-viewer__title-params">sender = auth.User</span>
+      </div>
+      <div class="dcr-code-viewer__title-path">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        profiles/signals.py:14
+      </div>
+    </div>
+    <div class="dcr-code-viewer__title-tags">
+      <span class="dcr-badge">profiles</span>
+      <span class="dcr-badge">uid</span>
+    </div>
+  </div>
+  <div class="dcr-code-viewer__header">
+    <span class="dcr-code-viewer__label">&lt;&gt; {% trans "Source" %}</span>
+    <span class="dcr-code-viewer__meta">profiles.signals</span>
+  </div>
+  <pre class="dcr-code-viewer__body"><code class="language-python">from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.contrib.auth import get_user_model
+
+from .models import Profile
+
+User = get_user_model()
+
+@receiver(post_save, sender=User, dispatch_uid="profiles.create_profile")
+def create_profile(sender, instance, created, **kwargs):
+    """Auto create a Profile row whenever a new User is created."""
+    if created:
+        Profile.objects.create(user=instance)</code></pre>
+</div>
+
+<div style="margin: var(--dcr-space-8) 0 var(--dcr-space-lg); border-top: 1px solid var(--dcr-color-border);"></div>
+
 {# ── Page header ──────────────────────────────────────────────────────────── #}
 <div class="dcr-page-header">
   <h1 class="dcr-page-header__title">{% trans "Worker Dashboard" %}</h1>
@@ -404,6 +634,73 @@
   "timezone": "UTC",
   "last_login": "2024-04-17T08:51:14Z"
 }</code></pre>
+</div>
+
+{# ══════════════════════════════════════════════════════════════════════════════
+   Workers — compact table with subtle header + title icon
+   ══════════════════════════════════════════════════════════════════════════════ #}
+
+<div style="margin: var(--dcr-space-8) 0 var(--dcr-space-lg); border-top: 1px solid var(--dcr-color-border);"></div>
+
+<div class="dcr-data-table">
+
+  <div class="dcr-data-table__header dcr-data-table__header--subtle">
+    <div class="dcr-data-table__header-info">
+      <h3 class="dcr-data-table__title">
+        <svg class="dcr-data-table__title-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+        {% trans "Workers" %}
+        <span class="dcr-badge dcr-badge--success">2 ONLINE</span>
+      </h3>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>{% trans "Hostname" %}</th>
+        <th>{% trans "Pool" %}</th>
+        <th class="dcr-col--right">{% trans "Conc." %}</th>
+        <th class="dcr-col--right">{% trans "Active" %}</th>
+        <th class="dcr-col--right">{% trans "Uptime" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <span class="dcr-pill dcr-pill--success">
+            <span class="dcr-pill__dot"></span>celery@worker-1.prod
+          </span>
+        </td>
+        <td>prefork</td>
+        <td class="dcr-col--right">8</td>
+        <td class="dcr-col--right">3</td>
+        <td class="dcr-col--right">12d 4h</td>
+      </tr>
+      <tr>
+        <td>
+          <span class="dcr-pill dcr-pill--success">
+            <span class="dcr-pill__dot"></span>celery@worker-2.prod
+          </span>
+        </td>
+        <td>prefork</td>
+        <td class="dcr-col--right">8</td>
+        <td class="dcr-col--right">1</td>
+        <td class="dcr-col--right">12d 4h</td>
+      </tr>
+      <tr>
+        <td>
+          <span class="dcr-pill dcr-pill--danger">
+            <span class="dcr-pill__dot"></span>celery@worker-3.prod
+          </span>
+        </td>
+        <td>gevent</td>
+        <td class="dcr-col--right">50</td>
+        <td class="dcr-col--right">0</td>
+        <td class="dcr-col--right">—</td>
+      </tr>
+    </tbody>
+  </table>
+
 </div>
 
 {# ══════════════════════════════════════════════════════════════════════════════

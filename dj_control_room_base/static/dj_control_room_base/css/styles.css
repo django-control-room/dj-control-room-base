@@ -164,12 +164,6 @@
    2. COMPONENTS
    ============================================================================= */
 
-/* --- Panel wrapper ---------------------------------------------------------- */
-
-.dcr-panel {
-  color: var(--dcr-color-text);
-}
-
 
 /* --- Page Header ------------------------------------------------------------ */
 
@@ -894,21 +888,27 @@
 /* --- Code viewer ------------------------------------------------------------ */
 
 /*
- * Structured code display: a labelled header strip above a dark code body.
- * The body is highlighted by highlight.js (github-dark theme).
- * Used for "RAW VALUE", "SOURCE", import snippets, etc.
+ * Structured code display with its own outer wrapper.
  *
  *   <div class="dcr-code-viewer">
+ *     <!-- Optional title zone (function sig, tags, file path) -->
+ *     <div class="dcr-code-viewer__title"> … </div>
+ *
+ *     <!-- Labelled header strip -->
  *     <div class="dcr-code-viewer__header">
  *       <span class="dcr-code-viewer__label">&lt;&gt; Raw Value</span>
  *       <span class="dcr-code-viewer__meta">412 B</span>
  *     </div>
+ *
+ *     <!-- Dark code body (highlight.js) -->
  *     <pre class="dcr-code-viewer__body"><code class="language-json">…</code></pre>
  *   </div>
  */
+
 .dcr-code-viewer {
+  background: var(--dcr-color-bg);
   border: 1px solid var(--dcr-color-border);
-  border-radius: var(--dcr-radius-lg);
+  border-radius: var(--dcr-radius-xl);
   overflow: hidden;
   margin-bottom: var(--dcr-space-lg);
 }
@@ -935,6 +935,69 @@
   color: var(--dcr-color-text-muted);
 }
 
+/* Optional title bar: white bg, function sig + right-side tags */
+.dcr-code-viewer__title {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: var(--dcr-space-md) var(--dcr-space-lg);
+  border-bottom: 1px solid var(--dcr-color-border);
+  background: var(--dcr-color-bg);
+}
+
+.dcr-code-viewer__title-main {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dcr-code-viewer__title-sig {
+  display: flex;
+  align-items: center;
+  gap: var(--dcr-space-sm);
+}
+
+.dcr-code-viewer__title-lineno {
+  font-size: var(--dcr-font-size-xs);
+  font-weight: 700;
+  background: var(--dcr-color-accent);
+  color: #fff;
+  border-radius: var(--dcr-radius);
+  padding: 1px 7px;
+  font-family: var(--dcr-font-mono);
+  flex-shrink: 0;
+}
+
+.dcr-code-viewer__title-name {
+  font-weight: 700;
+  font-size: var(--dcr-font-size-base);
+  font-family: var(--dcr-font-mono);
+  color: var(--dcr-color-text);
+}
+
+.dcr-code-viewer__title-params {
+  font-size: var(--dcr-font-size-sm);
+  color: var(--dcr-color-text-muted);
+  font-family: var(--dcr-font-mono);
+}
+
+.dcr-code-viewer__title-path {
+  font-size: var(--dcr-font-size-xs);
+  color: var(--dcr-color-text-muted);
+  font-family: var(--dcr-font-mono);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dcr-code-viewer__title-tags {
+  display: flex;
+  gap: var(--dcr-space-xs);
+  flex-shrink: 0;
+  align-items: flex-start;
+  margin-top: 2px;
+}
+
 .dcr-code-viewer__body {
   margin: 0;
   overflow-x: auto;
@@ -946,6 +1009,282 @@
   font-size: 12px !important;
   border-radius: 0 !important;
   line-height: 1.6;
+}
+
+
+/* --- Panel Grid ------------------------------------------------------------- */
+
+/*
+ * Responsive 3-column grid for installed-panel overview pages.
+ *
+ *   <div class="dcr-panel-grid">
+ *     <div class="dcr-panel-card">
+ *       <div class="dcr-panel-card__top">
+ *         <svg class="dcr-panel-card__icon">…</svg>
+ *         <span class="dcr-pill dcr-pill--success"><span class="dcr-pill__dot"></span>Connected</span>
+ *       </div>
+ *       <h3 class="dcr-panel-card__title">Redis Panel</h3>
+ *       <p class="dcr-panel-card__desc">Monitor connections…</p>
+ *       <div class="dcr-panel-card__footer">
+ *         <div>
+ *           <div class="dcr-panel-card__metric">1,284</div>
+ *           <div class="dcr-panel-card__metric-label">Keys</div>
+ *         </div>
+ *         <a href="…" class="dcr-panel-card__link">View panel →</a>
+ *       </div>
+ *     </div>
+ *     <div class="dcr-panel-card dcr-panel-card--placeholder">…</div>
+ *   </div>
+ */
+
+.dcr-panel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--dcr-space-lg);
+  margin-bottom: var(--dcr-space-lg);
+}
+
+.dcr-panel-card {
+  background: var(--dcr-color-bg);
+  border: 1px solid var(--dcr-color-border);
+  border-radius: var(--dcr-radius-xl);
+  padding: var(--dcr-space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--dcr-space-sm);
+}
+
+.dcr-panel-card__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--dcr-space-xs);
+}
+
+.dcr-panel-card__icon {
+  width: 28px;
+  height: 28px;
+  color: var(--dcr-color-accent);
+  flex-shrink: 0;
+}
+
+.dcr-panel-card__title {
+  font-size: var(--dcr-font-size-base);
+  font-weight: 700;
+  color: var(--dcr-color-text);
+  margin: 0 0 2px;
+}
+
+.dcr-panel-card__desc {
+  font-size: var(--dcr-font-size-sm);
+  color: var(--dcr-color-text-muted);
+  line-height: 1.5;
+  margin: 0;
+  flex: 1;
+}
+
+.dcr-panel-card__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: auto;
+  padding-top: var(--dcr-space-md);
+}
+
+.dcr-panel-card__metric {
+  font-size: var(--dcr-font-size-xl);
+  font-weight: 700;
+  color: var(--dcr-color-text);
+  line-height: 1;
+  margin-bottom: 2px;
+}
+
+.dcr-panel-card__metric-label {
+  font-size: var(--dcr-font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--dcr-color-text-muted);
+}
+
+.dcr-panel-card__link {
+  font-size: var(--dcr-font-size-sm);
+  color: var(--dcr-color-accent);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.dcr-panel-card__link:hover {
+  text-decoration: underline;
+}
+
+/* Placeholder card — dashed border, centred call-to-action */
+.dcr-panel-card--placeholder {
+  border-style: dashed;
+  background: var(--dcr-color-bg-subtle);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--dcr-color-text-muted);
+  min-height: 180px;
+  gap: var(--dcr-space-xs);
+}
+
+.dcr-panel-card--placeholder svg {
+  width: 24px;
+  height: 24px;
+  margin-bottom: var(--dcr-space-xs);
+  opacity: 0.45;
+}
+
+
+/* --- Panel (generic) -------------------------------------------------------- */
+
+/*
+ * Generic bordered panel with composable zones.
+ * Use this as the base for info cards, activity feeds, code viewers, and
+ * any other card-like container — instead of creating a bespoke wrapper.
+ *
+ * Structure:
+ *   <div class="dcr-card">
+ *     <div class="dcr-card__header">                  ← flex row, border-bottom
+ *       <h3 class="dcr-card__title">
+ *         <svg class="dcr-card__title-icon">…</svg>   ← 16 × 16 icon
+ *         Title text
+ *       </h3>
+ *       <span class="dcr-card__meta">right meta</span>
+ *     </div>
+ *
+ *     <div class="dcr-card__body">…</div>             ← padded body
+ *     <div class="dcr-card__body dcr-card__body--flush">…</div>   ← no padding
+ *
+ *     <!-- Key/value rows (info-card pattern) -->
+ *     <div class="dcr-card__row">
+ *       <span class="dcr-card__row-label">Django</span>
+ *       <span class="dcr-card__row-value">5.0.6</span>
+ *     </div>
+ *
+ *     <!-- Activity rows (feed pattern) -->
+ *     <div class="dcr-card__row">
+ *       <span class="dcr-card__row-source"><span class="dcr-badge …">TAG</span></span>
+ *       <span class="dcr-card__row-text">Description text</span>
+ *       <span class="dcr-card__row-time">2m ago</span>
+ *     </div>
+ *
+ *     <div class="dcr-card__footer">Footer note.</div>
+ *   </div>
+ *
+ * Modifiers:
+ *   dcr-card__header--subtle   tinted header background
+ */
+
+.dcr-card {
+  background: var(--dcr-color-bg);
+  border: 1px solid var(--dcr-color-border);
+  border-radius: var(--dcr-radius-xl);
+  overflow: hidden;
+  margin-bottom: var(--dcr-space-lg);
+  color: var(--dcr-color-text);
+}
+
+.dcr-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--dcr-space-md) var(--dcr-space-lg);
+  border-bottom: 1px solid var(--dcr-color-border);
+}
+
+.dcr-card__header--subtle {
+  background: var(--dcr-color-bg-subtle);
+}
+
+.dcr-card__title {
+  display: flex;
+  align-items: center;
+  gap: var(--dcr-space-sm);
+  font-size: var(--dcr-font-size-base);
+  font-weight: 600;
+  color: var(--dcr-color-text);
+  margin: 0;
+}
+
+.dcr-card__title-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--dcr-color-text-muted);
+}
+
+.dcr-card__meta {
+  font-size: var(--dcr-font-size-sm);
+  color: var(--dcr-color-text-muted);
+  display: flex;
+  align-items: center;
+  gap: var(--dcr-space-sm);
+}
+
+.dcr-card__body {
+  padding: var(--dcr-space-md) var(--dcr-space-lg);
+}
+
+.dcr-card__body--flush {
+  padding: 0;
+}
+
+/* Key/value row (info-card pattern) */
+.dcr-card__row {
+  display: flex;
+  align-items: center;
+  gap: var(--dcr-space-md);
+  padding: var(--dcr-space-sm) var(--dcr-space-lg);
+  border-bottom: 1px solid var(--dcr-color-border);
+}
+
+.dcr-card__row:last-child {
+  border-bottom: none;
+}
+
+.dcr-card__row-label {
+  font-size: var(--dcr-font-size-sm);
+  color: var(--dcr-color-text);
+}
+
+.dcr-card__row-value {
+  font-size: var(--dcr-font-size-sm);
+  color: var(--dcr-color-text);
+  margin-left: auto;
+  text-align: right;
+}
+
+.dcr-card__row-value--bold {
+  font-weight: 700;
+}
+
+/* Activity-feed row extras */
+.dcr-card__row-source {
+  flex-shrink: 0;
+  min-width: 80px;
+}
+
+.dcr-card__row-text {
+  flex: 1;
+  font-size: var(--dcr-font-size-sm);
+  color: var(--dcr-color-text);
+}
+
+.dcr-card__row-time {
+  font-size: var(--dcr-font-size-sm);
+  color: var(--dcr-color-text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.dcr-card__footer {
+  padding: var(--dcr-space-sm) var(--dcr-space-lg);
+  border-top: 1px solid var(--dcr-color-border);
+  font-size: var(--dcr-font-size-sm);
+  color: var(--dcr-color-text-muted);
 }
 
 
@@ -1120,6 +1459,11 @@ a.dcr-pagination__page:hover {
   border-bottom: 1px solid var(--dcr-color-border);
 }
 
+/* Tinted header: fills the header zone with the subtle bg colour */
+.dcr-data-table__header--subtle {
+  background: var(--dcr-color-bg-subtle);
+}
+
 /* Left column: title (+ optional badge) + optional subtitle */
 .dcr-data-table__header-info {
   display: flex;
@@ -1136,6 +1480,14 @@ a.dcr-pagination__page:hover {
   align-items: center;
   gap: var(--dcr-space-sm);
   flex-wrap: wrap;
+}
+
+/* Optional icon placed before the title text */
+.dcr-data-table__title-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--dcr-color-text-muted);
 }
 
 .dcr-data-table__subtitle {
@@ -1464,14 +1816,12 @@ a.dcr-pagination__page:hover {
   margin-bottom: var(--dcr-space-lg);
 }
 
-.dcr-card {
-  background: var(--dcr-color-bg);
-  border: 1px solid var(--dcr-color-border);
-  border-radius: var(--dcr-radius-xl);
+.dcr-card-grid .dcr-card {
   padding: var(--dcr-space-md);
   display: flex;
   flex-direction: column;
   gap: var(--dcr-space-sm);
+  margin-bottom: 0;
 }
 
 
