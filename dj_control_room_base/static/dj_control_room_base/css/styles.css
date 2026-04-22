@@ -23,7 +23,7 @@
 :root {
   /* Text */
   --dcr-color-text: #111827;
-  --dcr-color-text-muted: #6b7280;
+  --dcr-color-text-muted: #9398a3;
   --dcr-color-text-inverse: #ffffff;
 
   /* Surfaces */
@@ -86,6 +86,7 @@
     --dcr-color-bg-subtle: #252525;
     --dcr-color-border: rgb(46, 46, 46);
 
+    --dcr-color-accent: #79aec8;
     --dcr-color-accent-bg: rgba(65, 118, 144, 0.20);
     --dcr-color-success: #66bb6a;
     --dcr-color-success-bg: rgba(102, 187, 106, 0.12);
@@ -113,6 +114,7 @@
   --dcr-color-bg-subtle: #252525;
   --dcr-color-border: rgb(46, 46, 46);
 
+  --dcr-color-accent: #79aec8;
   --dcr-color-accent-bg: rgba(65, 118, 144, 0.20);
   --dcr-color-success: #66bb6a;
   --dcr-color-success-bg: rgba(102, 187, 106, 0.12);
@@ -804,10 +806,13 @@
  *   </dl>
  */
 .dcr-dl {
+  border: 1px solid var(--dcr-color-border);
   border-radius: var(--dcr-radius-lg);
   overflow: hidden;
   background: var(--dcr-color-bg-subtle);
   margin-bottom: var(--dcr-space-lg);
+  padding-top: var(--dcr-space-sm);
+  padding-bottom: var(--dcr-space-sm);
 }
 
 .dcr-dl__row {
@@ -1135,12 +1140,21 @@ a.dcr-pagination__page:hover {
 
 .dcr-data-table__subtitle {
   margin: 0;
-  font-size: var(--dcr-font-size-sm);
+  font-size: var(--dcr-font-size-md);
   color: var(--dcr-color-text-muted);
 }
 
-/* Right column: "Showing X of Y" + "Updated just now" */
+/* Right column: stacked text info + optional action button */
 .dcr-data-table__meta {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--dcr-space-md);
+  margin-left: var(--dcr-space-lg);
+  flex-shrink: 0;
+}
+
+.dcr-data-table__meta-info {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -1148,8 +1162,6 @@ a.dcr-pagination__page:hover {
   font-size: var(--dcr-font-size-sm);
   color: var(--dcr-color-text-muted);
   white-space: nowrap;
-  margin-left: var(--dcr-space-lg);
-  flex-shrink: 0;
 }
 
 /* Legacy flat header (title + right-aligned action buttons, no subtitle) */
@@ -1183,7 +1195,8 @@ a.dcr-pagination__page:hover {
   letter-spacing: 0.5px;
   color: var(--dcr-color-text-muted);
   text-align: left;
-  border-bottom: none;
+  border-top: 0px solid var(--dcr-color-border);
+  border-bottom: 1px solid var(--dcr-color-border);
 }
 
 .dcr-data-table td {
@@ -1543,7 +1556,7 @@ a.dcr-pagination__page:hover {
  *       <div class="dcr-field dcr-field--grow">
  *         <label class="dcr-field__label" for="q">Search by task name or ID</label>
  *         <div class="dcr-input-group">
- *           <span class="dcr-input-group__icon">⌕</span>
+ *           <svg class="dcr-input-group__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
  *           <input id="q" class="dcr-input-group__input" type="text" placeholder="e.g. send_order_email">
  *         </div>
  *       </div>
@@ -1588,7 +1601,7 @@ a.dcr-pagination__page:hover {
 .dcr-form__label {
   display: block;
   font-size: var(--dcr-font-size-xs);
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: var(--dcr-color-text-muted);
@@ -1617,7 +1630,7 @@ a.dcr-pagination__page:hover {
 
 .dcr-field__label {
   font-size: var(--dcr-font-size-xs);
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.4px;
   color: var(--dcr-color-text-muted);
@@ -1638,7 +1651,7 @@ a.dcr-pagination__page:hover {
 }
 
 .dcr-input::placeholder {
-  color: var(--dcr-color-text-muted);
+  color: var(--dcr-color-text-muted) !important;
 }
 
 .dcr-input:focus {
@@ -1705,8 +1718,8 @@ a.dcr-pagination__page:hover {
   top: 50%;
   transform: translateY(-50%);
   color: var(--dcr-color-text-muted);
-  font-size: 15px;
-  line-height: 1;
+  width: 15px;
+  height: 15px;
   pointer-events: none;
   user-select: none;
 }

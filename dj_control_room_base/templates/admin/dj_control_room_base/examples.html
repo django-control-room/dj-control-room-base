@@ -197,8 +197,14 @@
       <p class="dcr-data-table__subtitle">{% trans "Browse every key across all databases on this Redis instance." %}</p>
     </div>
     <div class="dcr-data-table__meta">
-      <span>{% trans "Showing 12 of 12" %}</span>
-      <span>{% trans "Updated just now" %}</span>
+      <div class="dcr-data-table__meta-info">
+        <span>{% trans "Showing 8 of 12" %}</span>
+        <span>{% trans "Updated just now" %}</span>
+      </div>
+      <button type="button" class="dcr-btn dcr-btn--ghost dcr-btn--sm">
+        <svg class="dcr-btn__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        {% trans "CLEAR" %}
+      </button>
     </div>
   </div>
 
@@ -209,7 +215,7 @@
         <label class="dcr-form__label" for="ex-pattern">{% trans "Search by key" %}</label>
         <div class="dcr-form__row--stretch">
           <div class="dcr-input-group">
-            <span class="dcr-input-group__icon">&#9906;</span>
+            <svg class="dcr-input-group__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
             <input id="ex-pattern" class="dcr-input-group__input" type="text" name="q"
                    value="session:*" placeholder="{% trans 'e.g. user:*, session:*, queue:default' %}">
           </div>
@@ -236,8 +242,6 @@
             <option>db1</option>
           </select>
         </div>
-        <div style="flex:1"></div>
-        <button type="button" class="dcr-btn" style="align-self:flex-end">{% trans "Reset all filters" %}</button>
       </div>
     </form>
   </div>

@@ -653,7 +653,7 @@
         <label class="dcr-form__label" for="sg-form-q">{% trans "Search by task name or ID" %}</label>
         <div class="dcr-form__row--stretch">
           <div class="dcr-input-group">
-            <span class="dcr-input-group__icon">&#9906;</span>
+            <svg class="dcr-input-group__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
             <input id="sg-form-q" class="dcr-input-group__input" type="text"
                    placeholder="{% trans 'e.g. send_order_email, f81d4fae' %}">
           </div>
@@ -675,8 +675,6 @@
             <option>{% trans "All queues" %}</option>
           </select>
         </div>
-        <div style="flex:1"></div>
-        <button type="button" class="dcr-btn" style="align-self:flex-end">{% trans "Reset all filters" %}</button>
       </div>
 
     </form>
@@ -700,7 +698,7 @@
   &lt;label class="dcr-form__label" for="q"&gt;Search by task name or ID&lt;/label&gt;
   &lt;div class="dcr-form__row--stretch"&gt;
     &lt;div class="dcr-input-group"&gt;
-      &lt;span class="dcr-input-group__icon"&gt;&#9906;&lt;/span&gt;
+      &lt;svg class="dcr-input-group__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;circle cx="11" cy="11" r="8"/&gt;&lt;path d="m21 21-4.3-4.3"/&gt;&lt;/svg&gt;
       &lt;input id="q" class="dcr-input-group__input" type="text" placeholder="e.g. send_order_email"&gt;
     &lt;/div&gt;
     &lt;button type="submit" class="dcr-btn dcr-btn--primary"&gt;Search&lt;/button&gt;
@@ -816,8 +814,14 @@
           <p class="dcr-data-table__subtitle">{% trans "Browse every key across all databases on this Redis instance." %}</p>
         </div>
         <div class="dcr-data-table__meta">
-          <span>{% trans "Showing 12 of 12" %}</span>
-          <span>{% trans "Updated just now" %}</span>
+          <div class="dcr-data-table__meta-info">
+            <span>{% trans "Showing 12 of 12" %}</span>
+            <span>{% trans "Updated just now" %}</span>
+          </div>
+          <button type="button" class="dcr-btn dcr-btn--ghost dcr-btn--sm">
+            <svg class="dcr-btn__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            {% trans "CLEAR" %}
+          </button>
         </div>
       </div>
 
@@ -828,7 +832,7 @@
             <label class="dcr-form__label" for="sg-key-q">{% trans "Search by key" %}</label>
             <div class="dcr-form__row--stretch">
               <div class="dcr-input-group">
-                <span class="dcr-input-group__icon">&#9906;</span>
+                <svg class="dcr-input-group__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                 <input id="sg-key-q" class="dcr-input-group__input" type="text"
                        placeholder="{% trans 'e.g. user:*, session:*, queue:default' %}">
               </div>
@@ -844,8 +848,6 @@
               <label class="dcr-field__label" for="sg-db">{% trans "Database" %}</label>
               <select id="sg-db" class="dcr-select"><option>{% trans "All databases" %}</option></select>
             </div>
-            <div style="flex:1"></div>
-            <button type="button" class="dcr-btn" style="align-self:flex-end">{% trans "Reset all filters" %}</button>
           </div>
         </form>
       </div>
@@ -927,8 +929,14 @@
       &lt;p class="dcr-data-table__subtitle"&gt;Browse every key across all databases.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class="dcr-data-table__meta"&gt;
-      &lt;span&gt;Showing 12 of 12&lt;/span&gt;
-      &lt;span&gt;Updated just now&lt;/span&gt;
+      &lt;div class="dcr-data-table__meta-info"&gt;
+        &lt;span&gt;Showing 8 of 12&lt;/span&gt;
+        &lt;span&gt;Updated just now&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;button type="button" class="dcr-btn dcr-btn--ghost dcr-btn--sm"&gt;
+        &lt;svg class="dcr-btn__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M18 6 6 18"/&gt;&lt;path d="m6 6 12 12"/&gt;&lt;/svg&gt;
+        CLEAR
+      &lt;/button&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 
@@ -939,7 +947,7 @@
         &lt;label class="dcr-form__label" for="q"&gt;Search by key&lt;/label&gt;
         &lt;div class="dcr-form__row--stretch"&gt;
           &lt;div class="dcr-input-group"&gt;
-            &lt;span class="dcr-input-group__icon"&gt;&#9906;&lt;/span&gt;
+            &lt;svg class="dcr-input-group__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;circle cx="11" cy="11" r="8"/&gt;&lt;path d="m21 21-4.3-4.3"/&gt;&lt;/svg&gt;
             &lt;input id="q" class="dcr-input-group__input" type="text" placeholder="e.g. user:*, session:*"&gt;
           &lt;/div&gt;
           &lt;button type="submit" class="dcr-btn dcr-btn--primary"&gt;Search&lt;/button&gt;
