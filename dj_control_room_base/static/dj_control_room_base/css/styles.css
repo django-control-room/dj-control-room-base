@@ -13,33 +13,6 @@
    Only used by the base panel's own index template.
    ============================================================================= */
 
-/* Intro hero */
-.dcr-sg-intro {
-  margin-bottom: var(--dcr-space-xl);
-  padding-bottom: var(--dcr-space-lg);
-  border-bottom: 2px solid var(--dcr-color-border);
-}
-
-.dcr-sg-intro__title {
-  font-size: 28px;
-  font-weight: 300;
-  margin: 0 0 var(--dcr-space-sm) 0;
-  color: var(--dcr-color-text);
-  letter-spacing: -0.3px;
-}
-
-.dcr-sg-intro__desc {
-  font-size: var(--dcr-font-size-base);
-  color: var(--dcr-color-text-muted);
-  margin: 0;
-  max-width: 680px;
-  line-height: 1.6;
-}
-
-.dcr-sg-intro__links {
-  margin: var(--dcr-space-md) 0 0 0;
-  font-size: var(--dcr-font-size-base);
-}
 
 /* Horizontal jump-to navigation */
 .dcr-sg-jumpto {
@@ -115,7 +88,7 @@
 
 .dcr-sg-topnav a.active {
   color: var(--dcr-color-accent);
-  background: rgba(59,130,246,0.08);
+  background: rgba(59, 130, 246, 0.08);
   font-weight: 600;
 }
 
@@ -141,7 +114,7 @@
 
 .dcr-sg-section-card:hover {
   border-color: var(--dcr-color-accent);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .dcr-sg-section-card__label {
@@ -231,7 +204,7 @@
 }
 
 .dcr-sg-preview--stack>* {
-  margin-bottom: var(--dcr-space-sm);
+  /* margin-bottom: var(--dcr-space-sm); */
 }
 
 .dcr-sg-preview--stack>*:last-child {
@@ -256,7 +229,6 @@
   color: var(--dcr-color-text-muted);
   background: var(--dcr-color-bg-subtle);
   border: 1px solid var(--dcr-color-border);
-  border-top: none;
   padding: var(--dcr-space-xs) var(--dcr-space-md);
   margin: 0;
 }
@@ -389,5 +361,3 @@
   font-size: var(--dcr-font-size-sm);
   color: var(--dcr-color-text-muted);
 }
-
-
