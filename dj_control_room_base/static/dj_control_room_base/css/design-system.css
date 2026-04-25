@@ -1558,12 +1558,12 @@ a.dcr-btn--muted.dcr-btn--ghost:visited {
  *   <div class="dcr-pagination">
  *     <span class="dcr-pagination__summary">Showing 1–20 of 847</span>
  *     <div class="dcr-pagination__controls">
- *       <a  href="…" class="dcr-pagination__btn" aria-label="Previous">‹</a>
- *       <span  class="dcr-pagination__btn" aria-disabled="true">‹</span>  ← disabled
+ *       <a  href="…" class="dcr-pagination__btn dcr-pagination__btn--prev">Previous</a>
+ *       <span  class="dcr-pagination__btn dcr-pagination__btn--prev" aria-disabled="true">Previous</span>
  *       <a  href="…" class="dcr-pagination__page">1</a>
  *       <span  class="dcr-pagination__page dcr-pagination__page--active">2</span>
  *       <span  class="dcr-pagination__ellipsis">…</span>
- *       <a  href="…" class="dcr-pagination__btn" aria-label="Next">›</a>
+ *       <a  href="…" class="dcr-pagination__btn dcr-pagination__btn--next">Next</a>
  *     </div>
  *   </div>
  *
@@ -1588,10 +1588,16 @@ a.dcr-btn--muted.dcr-btn--ghost:visited {
 }
 
 .dcr-pagination__per-page-select {
+  -webkit-appearance: none;
+  appearance: none;
   border: 1px solid var(--dcr-color-border);
-  border-radius: var(--dcr-radius);
-  padding: 2px 6px;
-  background: var(--dcr-color-bg);
+  border-radius: var(--dcr-radius-lg);
+  padding: 2px 32px 2px 10px;
+  background-color: var(--dcr-color-bg);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 14px;
   color: var(--dcr-color-text);
   font-size: var(--dcr-font-size-sm);
   cursor: pointer;
@@ -1615,14 +1621,33 @@ a.dcr-btn--muted.dcr-btn--ghost:visited {
   justify-content: center;
   min-width: 28px;
   height: 28px;
-  padding: 0 6px;
+  padding: 0 var(--dcr-space-xs);
   border: 1px solid var(--dcr-color-border);
   border-radius: var(--dcr-radius);
   font-size: var(--dcr-font-size-sm);
   color: var(--dcr-color-text);
-  text-decoration: none;
+  background: var(--dcr-color-bg);
+  text-decoration: none !important;
   user-select: none;
   transition: background 0.1s ease, border-color 0.1s ease, color 0.1s ease;
+}
+
+/* Prev arrow injected before the label */
+.dcr-pagination__btn--prev,
+.dcr-pagination__btn--next {
+  padding-left: 14px;
+  padding-right: 14px;
+}
+
+.dcr-pagination__btn--prev::before {
+  content: "‹";
+  margin-right: 4px;
+}
+
+/* Next arrow injected after the label */
+.dcr-pagination__btn--next::after {
+  content: "›";
+  margin-left: 4px;
 }
 
 a.dcr-pagination__btn:hover,
@@ -1630,6 +1655,7 @@ a.dcr-pagination__page:hover {
   background: var(--dcr-color-bg-subtle);
   border-color: var(--dcr-color-accent);
   color: var(--dcr-color-accent);
+  text-decoration: none !important;
 }
 
 /* Active page — filled accent */
@@ -1641,7 +1667,7 @@ a.dcr-pagination__page:hover {
   cursor: default;
 }
 
-/* Disabled prev/next arrow */
+/* Disabled prev/next */
 [aria-disabled="true"].dcr-pagination__btn {
   opacity: 0.38;
   cursor: not-allowed;
