@@ -166,14 +166,59 @@
    ============================================================================= */
 
 
+/* --- Content width ---------------------------------------------------------- */
+/*
+ * Centered, max-width containers for panel content areas.
+ * Apply to the element wrapping dcr-page-header + body content.
+ *
+ *   sm   640px  — forms, simple detail pages
+ *   md   960px  — standard panels
+ *   lg   1280px — data-heavy panels (default for most panels)
+ *   xl   1600px — wide dashboards / analytics
+ *   full         — no width constraint (fills the column)
+ */
+
+.dcr-content {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dcr-content--sm {
+  max-width: 640px;
+}
+
+.dcr-content--md {
+  max-width: 960px;
+}
+
+.dcr-content--lg {
+  max-width: 1280px;
+}
+
+.dcr-content--xl {
+  max-width: 1600px;
+}
+
+.dcr-content--full {
+  max-width: none;
+}
+
+
 /* --- Page Header ------------------------------------------------------------ */
 
 .dcr-page-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  padding-top: var(--dcr-space-xl);
   margin-bottom: var(--dcr-space-lg);
   gap: var(--dcr-space-md);
+}
+
+/* When a back link immediately precedes the header, reduce the top gap */
+.dcr-back-link + .dcr-page-header {
+  padding-top: var(--dcr-space-xs);
 }
 
 .dcr-page-header__title {
@@ -317,12 +362,94 @@
   background: var(--dcr-color-bg-subtle);
   color: var(--dcr-color-text);
   cursor: pointer;
-  text-decoration: none;
+  text-decoration: none !important;
   white-space: nowrap;
   transition: background 0.15s ease, border-color 0.15s ease,
     color 0.15s ease, opacity 0.15s ease;
   user-select: none;
   letter-spacing: 0.1em;
+}
+
+/* Neutralise Django admin's <a> colour overrides when dcr-btn is on a link */
+a.dcr-btn,
+a.dcr-btn:link,
+a.dcr-btn:visited,
+a.dcr-btn:hover,
+a.dcr-btn:active {
+  color: var(--dcr-color-text) !important;
+  text-decoration: none !important;
+}
+
+a.dcr-btn--primary,
+a.dcr-btn--primary:link,
+a.dcr-btn--primary:visited {
+  color: #fff !important;
+}
+
+a.dcr-btn--success,
+a.dcr-btn--success:link,
+a.dcr-btn--success:visited {
+  color: #fff !important;
+}
+
+a.dcr-btn--warning,
+a.dcr-btn--warning:link,
+a.dcr-btn--warning:visited {
+  color: #fff !important;
+}
+
+a.dcr-btn--danger,
+a.dcr-btn--danger:link,
+a.dcr-btn--danger:visited {
+  color: #fff !important;
+}
+
+a.dcr-btn--info,
+a.dcr-btn--info:link,
+a.dcr-btn--info:visited {
+  color: #fff !important;
+}
+
+a.dcr-btn--muted,
+a.dcr-btn--muted:link,
+a.dcr-btn--muted:visited {
+  color: #fff !important;
+}
+
+a.dcr-btn--primary.dcr-btn--ghost,
+a.dcr-btn--primary.dcr-btn--ghost:link,
+a.dcr-btn--primary.dcr-btn--ghost:visited {
+  color: var(--dcr-color-accent) !important;
+}
+
+a.dcr-btn--success.dcr-btn--ghost,
+a.dcr-btn--success.dcr-btn--ghost:link,
+a.dcr-btn--success.dcr-btn--ghost:visited {
+  color: var(--dcr-color-success) !important;
+}
+
+a.dcr-btn--warning.dcr-btn--ghost,
+a.dcr-btn--warning.dcr-btn--ghost:link,
+a.dcr-btn--warning.dcr-btn--ghost:visited {
+  color: var(--dcr-color-warning) !important;
+}
+
+a.dcr-btn--danger.dcr-btn--ghost,
+a.dcr-btn--danger.dcr-btn--ghost:link,
+a.dcr-btn--danger.dcr-btn--ghost:visited {
+  color: var(--dcr-color-danger) !important;
+}
+
+a.dcr-btn--info.dcr-btn--ghost,
+a.dcr-btn--info.dcr-btn--ghost:link,
+a.dcr-btn--info.dcr-btn--ghost:visited {
+  color: var(--dcr-color-info) !important;
+}
+
+a.dcr-btn--muted.dcr-btn--ghost,
+a.dcr-btn--muted.dcr-btn--ghost:link,
+a.dcr-btn--muted.dcr-btn--ghost:visited {
+  color: var(--dcr-color-muted) !important;
 }
 
 .dcr-btn:hover:not(:disabled) {
@@ -797,7 +924,8 @@
   font-size: var(--dcr-font-size-sm);
   color: var(--dcr-color-text-muted);
   text-decoration: none;
-  margin-bottom: var(--dcr-space-md);
+  margin-top: var(--dcr-space-lg);
+  margin-bottom: var(--dcr-space-sm);
 }
 
 .dcr-back-link:hover {
@@ -942,6 +1070,14 @@
 
 .dcr-dl--horizontal .dcr-dl__value {
   font-size: var(--dcr-font-size-base);
+}
+
+.dcr-dl--horizontal .dcr-dl__actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--dcr-space-sm);
+  padding-left: var(--dcr-space-lg);
 }
 
 
@@ -1099,7 +1235,7 @@
 
 .dcr-panel-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(305px, 1fr));
   gap: var(--dcr-space-lg);
   margin-bottom: var(--dcr-space-lg);
 }
@@ -1614,7 +1750,6 @@ a.dcr-pagination__page:hover {
 .dcr-data-table td {
   padding: var(--dcr-space-sm) var(--dcr-space-lg);
   border-bottom: 1px solid var(--dcr-color-border);
-  font-size: var(--dcr-font-size-base);
   color: var(--dcr-color-text);
   vertical-align: middle;
 }
@@ -1623,14 +1758,14 @@ a.dcr-pagination__page:hover {
 .dcr-data-table td a,
 .dcr-data-table__link {
   color: var(--dcr-color-accent);
-  text-decoration: none;
+  text-decoration: none !important;
   font-family: var(--dcr-font-mono);
   font-size: var(--dcr-font-size-sm);
 }
 
 .dcr-data-table td a:hover,
 .dcr-data-table__link:hover {
-  text-decoration: underline;
+  text-decoration: underline !important;
 }
 
 /* Right-align numeric / short value columns */
@@ -1706,7 +1841,7 @@ a.dcr-pagination__page:hover {
   display: table-row;
 }
 
-.dcr-data-table__expand-row > td {
+.dcr-data-table__expand-row>td {
   padding: 0 !important;
   background: var(--dcr-color-bg) !important;
 }
