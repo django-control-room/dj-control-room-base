@@ -1,0 +1,157 @@
+{% load i18n %}
+<div class="dcr-page-header">
+  <div class="dcr-page-header__main">
+    <div class="dcr-page-header__icon" style="background:var(--dcr-color-accent)">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg>
+    </div>
+    <div class="dcr-page-header__body">
+      <div class="dcr-page-header__title-row">
+        <h1 class="dcr-page-header__title">{% trans "Key Browser" %}</h1>
+        <span class="dcr-badge">12 TOTAL</span>
+        <span class="dcr-pill dcr-pill--success"><span class="dcr-pill__dot"></span>Redis · default</span>
+      </div>
+      <p class="dcr-page-header__subtitle">{% trans "Browse every key across all databases on this Redis instance." %}</p>
+    </div>
+  </div>
+</div>
+
+{# Search + results table #}
+<div class="dcr-data-table">
+
+  <div class="dcr-data-table__header">
+    <div class="dcr-data-table__header-info">
+      <h3 class="dcr-data-table__title">
+        {% trans "Key Browser" %}
+        <span class="dcr-badge">12 TOTAL</span>
+      </h3>
+      <p class="dcr-data-table__subtitle">{% trans "Browse every key across all databases on this Redis instance." %}</p>
+    </div>
+    <div class="dcr-data-table__meta">
+      <div class="dcr-data-table__meta-info">
+        <span>{% trans "Showing 8 of 12" %}</span>
+        <span>{% trans "Updated just now" %}</span>
+      </div>
+      <button type="button" class="dcr-btn dcr-btn--ghost dcr-btn--sm">
+        <svg class="dcr-btn__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        {% trans "CLEAR" %}
+      </button>
+    </div>
+  </div>
+
+  <div class="dcr-data-table__controls">
+    <form class="dcr-form" method="get">
+      <div class="dcr-form__group">
+        <label class="dcr-form__label" for="ex-pattern">{% trans "Search by key" %}</label>
+        <div class="dcr-form__row--stretch">
+          <div class="dcr-input-group">
+            <svg class="dcr-input-group__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input id="ex-pattern" class="dcr-input-group__input" type="text" name="q"
+                   value="session:*" placeholder="{% trans 'e.g. user:*, session:*, queue:default' %}">
+          </div>
+          <button type="submit" class="dcr-btn dcr-btn--primary">{% trans "Search" %}</button>
+        </div>
+      </div>
+      <div class="dcr-form__row">
+        <div class="dcr-field">
+          <label class="dcr-field__label" for="ex-type">&#9663; {% trans "Type" %}</label>
+          <select id="ex-type" name="type" class="dcr-select">
+            <option selected>{% trans "All types" %}</option>
+            <option>String</option>
+            <option>Hash</option>
+            <option>List</option>
+            <option>Set</option>
+            <option>ZSet</option>
+          </select>
+        </div>
+        <div class="dcr-field">
+          <label class="dcr-field__label" for="ex-backend">{% trans "Database" %}</label>
+          <select id="ex-backend" name="backend" class="dcr-select">
+            <option selected>{% trans "All databases" %}</option>
+            <option>db0</option>
+            <option>db1</option>
+          </select>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>{% trans "Key" %}</th>
+        <th>{% trans "Type" %}</th>
+        <th>{% trans "DB" %}</th>
+        <th class="dcr-col--right">{% trans "Size" %}</th>
+        <th class="dcr-col--right">{% trans "TTL" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a href="#key_detail" class="dcr-data-table__link">user:42:profile</a></td>
+        <td><span class="dcr-badge dcr-badge--warning">hash</span></td>
+        <td>db0</td>
+        <td class="dcr-col--right">412 B</td>
+        <td class="dcr-col--right">1h</td>
+      </tr>
+      <tr>
+        <td><a href="#key_detail" class="dcr-data-table__link">session:s9k2lq</a></td>
+        <td><span class="dcr-badge dcr-badge--info">string</span></td>
+        <td>db1</td>
+        <td class="dcr-col--right">1.2 KB</td>
+        <td class="dcr-col--right">14d</td>
+      </tr>
+      <tr>
+        <td><a href="#key_detail" class="dcr-data-table__link">queue:default</a></td>
+        <td><span class="dcr-badge dcr-badge--muted">list</span></td>
+        <td>db0</td>
+        <td class="dcr-col--right">8.2 KB</td>
+        <td class="dcr-col--right">never</td>
+      </tr>
+      <tr>
+        <td><a href="#key_detail" class="dcr-data-table__link">leaderboard:weekly</a></td>
+        <td><span class="dcr-badge dcr-badge--danger">zset</span></td>
+        <td>db0</td>
+        <td class="dcr-col--right">24.2 KB</td>
+        <td class="dcr-col--right">7d</td>
+      </tr>
+      <tr>
+        <td><a href="#key_detail" class="dcr-data-table__link">online_users</a></td>
+        <td><span class="dcr-badge dcr-badge--success">set</span></td>
+        <td>db0</td>
+        <td class="dcr-col--right">612 B</td>
+        <td class="dcr-col--right">never</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="dcr-pagination">
+    <div class="dcr-pagination__per-page">
+      <span class="dcr-pagination__summary">{% trans "Showing" %} <strong>1–5</strong> {% trans "of" %} <strong>12</strong></span>
+      <label>{% trans "Per page" %} <select class="dcr-pagination__per-page-select"><option>5</option><option>10</option><option>25</option></select></label>
+    </div>
+    <div class="dcr-pagination__controls">
+      <span class="dcr-pagination__btn dcr-pagination__btn--prev" aria-disabled="true" aria-label="{% trans 'Previous' %}">{% trans "Previous" %}</span>
+      <span class="dcr-pagination__page dcr-pagination__page--active">1</span>
+      <a href="#" class="dcr-pagination__page">2</a>
+      <a href="#" class="dcr-pagination__page">3</a>
+      <a href="#" class="dcr-pagination__btn dcr-pagination__btn--next" aria-label="{% trans 'Next' %}">{% trans "Next" %}</a>
+    </div>
+  </div>
+
+</div>
+
+{# Empty state — shown when a search returns no matches #}
+<div class="dcr-callout dcr-callout--info" style="margin-top:var(--dcr-space-xl)">
+  <p class="dcr-callout__title">{% trans "No results state" %}</p>
+  <p class="dcr-callout__body">{% trans "When a search returns no matching keys, replace the results table with dcr-empty. Combine with a 'Clear search' action link." %}</p>
+</div>
+
+<div class="dcr-data-table">
+  <div class="dcr-data-table__header">
+    <h3 class="dcr-data-table__title">{% trans "Results" %}</h3>
+  </div>
+  <div class="dcr-empty">
+    <h2 class="dcr-empty__title">{% trans "No keys found" %}</h2>
+    <p class="dcr-empty__body">{% trans "No keys matched the pattern cache:missing_* in the Redis default backend. Try a broader pattern or switch backend." %}</p>
+  </div>
+</div>

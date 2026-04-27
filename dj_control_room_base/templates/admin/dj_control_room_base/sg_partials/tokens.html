@@ -1,0 +1,244 @@
+{% load i18n %}
+{# ── TOKENS: Colors ───────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="colors">
+  <p class="dcr-sg-section__pre-label">{% trans "Tokens" %}</p>
+  <h2 class="dcr-sg-section__title">{% trans "Color palette" %}</h2>
+  <div class="dcr-sg-palette">
+
+    <p class="dcr-sg-palette__intro">
+      {% trans "Palette swatches reflect the current mode. All " %}<code class="dcr-code">dcr-*</code>{% trans " components consume only these tokens — override them on " %}<code class="dcr-code">:root</code>{% trans " to theme every component at once." %}
+    </p>
+
+    {# ── Group 1: Surfaces ── #}
+    <div class="dcr-sg-palette__group">
+      <p class="dcr-sg-palette__group-title">{% trans "Surfaces" %}</p>
+      <p class="dcr-sg-palette__group-desc">{% trans "Page, card, and control backgrounds plus border colours." %}</p>
+      <div class="dcr-sg-palette__grid">
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-bg);border-bottom:1px solid var(--dcr-color-border)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">bg</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-bg</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Page and card background" %}</p>
+          </div>
+        </div>
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-bg-subtle)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">bg-subtle</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-bg-subtle</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Table headers, controls zones" %}</p>
+          </div>
+        </div>
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-border)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">border</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-border</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Card borders, row dividers" %}</p>
+          </div>
+        </div>
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-text)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">text</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-text</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Primary body text" %}</p>
+          </div>
+        </div>
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-text-muted)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">text-muted</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-text-muted</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Labels, captions, placeholders" %}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {# ── Group 2: Semantic colours ── #}
+    <div class="dcr-sg-palette__group">
+      <p class="dcr-sg-palette__group-title">{% trans "Semantic" %}</p>
+      <p class="dcr-sg-palette__group-desc">{% trans "Solid colours for buttons, badges, icons, and status indicators." %}</p>
+      <div class="dcr-sg-palette__grid">
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-accent)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">accent</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-accent</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Primary actions, links" %}</p>
+          </div>
+        </div>
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-success)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">success</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-success</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Healthy, active, connected" %}</p>
+          </div>
+        </div>
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-warning)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">warning</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-warning</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Caution, degraded states" %}</p>
+          </div>
+        </div>
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-danger)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">danger</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-danger</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Errors, destructive actions" %}</p>
+          </div>
+        </div>
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-info)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">info</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-info</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Informational, neutral notices" %}</p>
+          </div>
+        </div>
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-muted)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">muted</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-muted</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Disabled, secondary content" %}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {# ── Group 3: Tinted backgrounds ── #}
+    <div class="dcr-sg-palette__group">
+      <p class="dcr-sg-palette__group-title">{% trans "Tinted backgrounds" %}</p>
+      <p class="dcr-sg-palette__group-desc">{% trans "Soft fills paired with each semantic colour — used for tinted badges and hover states." %}</p>
+      <div class="dcr-sg-palette__grid">
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-accent-bg)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">accent-bg</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-accent-bg</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Default badge fill" %}</p>
+          </div>
+        </div>
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-success-bg)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">success-bg</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-success-bg</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Success badge fill" %}</p>
+          </div>
+        </div>
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-warning-bg)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">warning-bg</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-warning-bg</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Warning badge fill" %}</p>
+          </div>
+        </div>
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-danger-bg)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">danger-bg</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-danger-bg</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Danger badge fill" %}</p>
+          </div>
+        </div>
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-info-bg)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">info-bg</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-info-bg</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Info badge fill" %}</p>
+          </div>
+        </div>
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-muted-bg)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">muted-bg</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-muted-bg</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Muted badge fill" %}</p>
+          </div>
+        </div>
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-purple-bg)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">purple-bg</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-purple-bg</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Purple badge fill" %}</p>
+          </div>
+        </div>
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-indigo-bg)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">indigo-bg</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-indigo-bg</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Indigo badge fill" %}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {# ── Group 4: Extended semantic ── #}
+    <div class="dcr-sg-palette__group">
+      <p class="dcr-sg-palette__group-title">{% trans "Extended semantic" %}</p>
+      <p class="dcr-sg-palette__group-desc">{% trans "Additional colours for task states, log levels, and signal kinds." %}</p>
+      <div class="dcr-sg-palette__grid">
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-purple)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">purple</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-purple</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Pending, scheduled states" %}</p>
+          </div>
+        </div>
+        <div class="dcr-sg-swatch">
+          <div class="dcr-sg-swatch__color" style="background:var(--dcr-color-indigo)"></div>
+          <div class="dcr-sg-swatch__info">
+            <p class="dcr-sg-swatch__name">indigo</p>
+            <p class="dcr-sg-swatch__hex">--dcr-color-indigo</p>
+            <p class="dcr-sg-swatch__desc">{% trans "Custom signals, built-in tags" %}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{# ── TOKENS: Spacing ──────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="spacing">
+  <p class="dcr-sg-section__pre-label">{% trans "Tokens" %}</p>
+  <h2 class="dcr-sg-section__title">{% trans "Spacing" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "Five-step scale used for padding, margin, and gap throughout the design system. Always reference a token — never hardcode pixel values." %}</p>
+  <div class="dcr-sg-space-row">
+    <div class="dcr-sg-space-item"><div class="dcr-sg-space-item__bar" style="width:4px"></div><span class="dcr-sg-space-item__label">--dcr-space-xs &nbsp;·&nbsp; 4px</span></div>
+    <div class="dcr-sg-space-item"><div class="dcr-sg-space-item__bar" style="width:8px"></div><span class="dcr-sg-space-item__label">--dcr-space-sm &nbsp;·&nbsp; 8px</span></div>
+    <div class="dcr-sg-space-item"><div class="dcr-sg-space-item__bar" style="width:16px"></div><span class="dcr-sg-space-item__label">--dcr-space-md &nbsp;·&nbsp; 16px</span></div>
+    <div class="dcr-sg-space-item"><div class="dcr-sg-space-item__bar" style="width:24px"></div><span class="dcr-sg-space-item__label">--dcr-space-lg &nbsp;·&nbsp; 24px</span></div>
+    <div class="dcr-sg-space-item"><div class="dcr-sg-space-item__bar" style="width:48px"></div><span class="dcr-sg-space-item__label">--dcr-space-xl &nbsp;·&nbsp; 48px</span></div>
+  </div>
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;!-- padding --&gt;
+&lt;div style="padding: var(--dcr-space-md)"&gt;...&lt;/div&gt;
+
+&lt;!-- margin --&gt;
+&lt;p style="margin-bottom: var(--dcr-space-lg)"&gt;...&lt;/p&gt;
+
+&lt;!-- gap in a flex/grid container --&gt;
+&lt;div style="display:flex; gap: var(--dcr-space-sm)"&gt;...&lt;/div&gt;</code></pre>
+  <p class="dcr-sg-code-label">{% trans "In CSS" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;style&gt;
+.my-card {
+  padding: var(--dcr-space-md) var(--dcr-space-lg);
+  margin-bottom: var(--dcr-space-xl);
+  gap: var(--dcr-space-sm);
+}
+&lt;/style&gt;</code></pre>
+</section>

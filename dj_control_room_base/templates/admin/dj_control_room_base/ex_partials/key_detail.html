@@ -1,0 +1,77 @@
+{% load i18n %}
+<a href="#keys" class="dcr-back-link" data-sg-tab="keys">{% trans "Back to all keys" %}</a>
+<div class="dcr-page-header">
+  <div class="dcr-page-header__main">
+    <div class="dcr-page-header__icon" style="background:var(--dcr-color-accent)">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg>
+    </div>
+    <div class="dcr-page-header__body">
+      <div class="dcr-page-header__title-row">
+        <h1 class="dcr-page-header__title" style="font-family:var(--dcr-font-mono)">user:42:profile</h1>
+        <span class="dcr-badge dcr-badge--warning">HASH</span>
+        <span class="dcr-badge dcr-badge--muted">db0</span>
+      </div>
+    </div>
+  </div>
+  <div class="dcr-page-header__actions">
+    <button class="dcr-btn">{% trans "Copy value" %}</button>
+    <button class="dcr-btn dcr-btn--danger">{% trans "Delete key" %}</button>
+  </div>
+</div>
+
+<div class="dcr-section-header">
+  <h2 class="dcr-section-header__title">{% trans "Key Information" %}</h2>
+</div>
+
+<dl class="dcr-dl">
+  <div class="dcr-dl__row">
+    <dt class="dcr-dl__label">{% trans "Key" %}</dt>
+    <dd class="dcr-dl__value dcr-dl__value--mono">user:42:profile</dd>
+  </div>
+  <div class="dcr-dl__row">
+    <dt class="dcr-dl__label">{% trans "Type" %}</dt>
+    <dd class="dcr-dl__value"><span class="dcr-badge dcr-badge--warning">HASH</span></dd>
+  </div>
+  <div class="dcr-dl__row">
+    <dt class="dcr-dl__label">{% trans "Database" %}</dt>
+    <dd class="dcr-dl__value">db0</dd>
+  </div>
+  <div class="dcr-dl__row">
+    <dt class="dcr-dl__label">{% trans "Encoding" %}</dt>
+    <dd class="dcr-dl__value">listpack</dd>
+  </div>
+  <div class="dcr-dl__row">
+    <dt class="dcr-dl__label">{% trans "Size" %}</dt>
+    <dd class="dcr-dl__value">412 B</dd>
+  </div>
+  <div class="dcr-dl__row">
+    <dt class="dcr-dl__label">{% trans "TTL" %}</dt>
+    <dd class="dcr-dl__value">1h <span class="dcr-dl__secondary">(31m {% trans "remaining" %})</span></dd>
+  </div>
+  <div class="dcr-dl__row">
+    <dt class="dcr-dl__label">{% trans "Idle time" %}</dt>
+    <dd class="dcr-dl__value">12s</dd>
+  </div>
+</dl>
+
+<div class="dcr-section-header" style="margin-top:var(--dcr-space-lg)">
+  <h2 class="dcr-section-header__title">{% trans "Stored Value" %}</h2>
+  <span class="dcr-badge dcr-badge--warning">HASH</span>
+</div>
+
+<div class="dcr-code-viewer">
+  <div class="dcr-code-viewer__header">
+    <span class="dcr-code-viewer__label">&lt;&gt; {% trans "Raw Value" %}</span>
+    <span class="dcr-code-viewer__meta">412 B</span>
+  </div>
+  <pre class="dcr-code-viewer__body"><code class="language-json">{
+  "id": "42",
+  "username": "ada",
+  "email": "ada@example.com",
+  "joined": "2023-04-12T09:14:00Z",
+  "is_staff": "1",
+  "theme": "dark",
+  "timezone": "UTC",
+  "last_login": "2024-04-17T08:51:14Z"
+}</code></pre>
+</div>

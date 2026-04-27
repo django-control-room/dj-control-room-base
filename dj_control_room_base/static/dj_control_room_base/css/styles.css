@@ -63,7 +63,12 @@
 
 /* Cross-page section navigation — uses dcr-tabs from design-system.css */
 .dcr-sg-topnav {
-  margin-bottom: var(--dcr-space-xl);
+  margin-bottom: 0;
+}
+
+/* Tab pane content areas */
+.dcr-sg-tab-pane {
+  padding-top: var(--dcr-space-lg);
 }
 
 /* Landing-page section grid */

@@ -1,0 +1,212 @@
+{% load i18n %}
+<div class="dcr-page-header">
+  <div class="dcr-page-header__main">
+    <div class="dcr-page-header__icon" style="background:var(--dcr-color-danger)">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+    </div>
+    <div class="dcr-page-header__body">
+      <div class="dcr-page-header__title-row">
+        <h1 class="dcr-page-header__title">{% trans "Error Groups" %}</h1>
+        <span class="dcr-pill dcr-pill--danger"><span class="dcr-pill__dot"></span>{% trans "19 UNRESOLVED" %}</span>
+      </div>
+      <p class="dcr-page-header__subtitle">{% trans "Deduplicated view of unhandled exceptions. Each row aggregates events sharing the same exception type and origin." %}</p>
+    </div>
+  </div>
+  <div class="dcr-page-header__actions">
+    <a href="#" class="dcr-btn dcr-btn--ghost dcr-btn--sm">{% trans "Switch to event view" %}</a>
+  </div>
+</div>
+
+<div class="dcr-data-table">
+
+  <div class="dcr-data-table__header">
+    <div class="dcr-data-table__header-info">
+      <h3 class="dcr-data-table__title">{% trans "Issues" %} <span class="dcr-badge">9 GROUPS</span></h3>
+      <p class="dcr-data-table__subtitle">{% trans "Grouped by exception type, location, and message fingerprint." %}</p>
+    </div>
+    <div class="dcr-data-table__meta">
+      <div class="dcr-data-table__meta-info">
+        <span>{% trans "Showing 1–5 of 7" %}</span>
+      </div>
+      <button type="button" class="dcr-btn dcr-btn--ghost dcr-btn--sm">
+        <svg class="dcr-btn__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        {% trans "CLEAR" %}
+      </button>
+    </div>
+  </div>
+
+  <div class="dcr-data-table__controls">
+    <form class="dcr-form">
+      <div class="dcr-form__group">
+        <label class="dcr-form__label" for="eg-q">{% trans "Search by exception, message, or location" %}</label>
+        <div class="dcr-form__row--stretch">
+          <div class="dcr-input-group">
+            <svg class="dcr-input-group__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input id="eg-q" class="dcr-input-group__input" type="text" placeholder="{% trans 'e.g. KeyError, billing/services.py' %}">
+          </div>
+          <button type="submit" class="dcr-btn dcr-btn--primary">{% trans "SEARCH" %}</button>
+        </div>
+      </div>
+      <div class="dcr-form__row">
+        <div class="dcr-field">
+          <label class="dcr-field__label" for="eg-status">&#9663; {% trans "Status" %}</label>
+          <select id="eg-status" class="dcr-select">
+            <option selected>{% trans "Unresolved" %}</option>
+            <option>{% trans "Resolved" %}</option>
+            <option>{% trans "Ignored" %}</option>
+            <option>{% trans "All" %}</option>
+          </select>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>{% trans "Issue" %}</th>
+        <th>{% trans "Status" %}</th>
+        <th>{% trans "Trend (24h)" %}</th>
+        <th class="dcr-col--right">{% trans "Events" %}</th>
+        <th class="dcr-col--right">{% trans "Users" %}</th>
+        <th class="dcr-col--right">{% trans "Last Seen" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr>
+        <td>
+          <div style="display:flex;align-items:center;gap:var(--dcr-space-xs);margin-bottom:4px;">
+            <span class="dcr-badge dcr-badge--danger">ERROR</span>
+            <a href="#" class="dcr-data-table__link">IntegrityError</a>
+          </div>
+          <div style="font-size:var(--dcr-font-size-sm);margin-bottom:2px;">{% trans "duplicate key value violates unique constraint \"users_email_key\"" %}</div>
+          <div style="font-size:var(--dcr-font-size-xs);color:var(--dcr-color-text-muted);font-family:var(--dcr-font-mono);">accounts/views.py:142</div>
+        </td>
+        <td><span class="dcr-pill dcr-pill--danger">UNRESOLVED</span></td>
+        <td>
+          <svg width="60" height="24" viewBox="0 0 60 24" fill="none">
+            <polyline points="2,18 12,16 22,14 32,11 42,8 52,6 58,4" stroke="var(--dcr-color-danger)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </td>
+        <td class="dcr-col--right"><strong>87</strong></td>
+        <td class="dcr-col--right">41</td>
+        <td class="dcr-col--right">
+          <div>12s {% trans "ago" %}</div>
+          <div style="font-size:var(--dcr-font-size-xs);color:var(--dcr-color-text-muted);">{% trans "first 3d ago" %}</div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <div style="display:flex;align-items:center;gap:var(--dcr-space-xs);margin-bottom:4px;">
+            <span class="dcr-badge dcr-badge--danger">CRITICAL</span>
+            <a href="#" class="dcr-data-table__link">OperationalError</a>
+          </div>
+          <div style="font-size:var(--dcr-font-size-sm);margin-bottom:2px;">{% trans "could not connect to server: Connection refused" %}</div>
+          <div style="font-size:var(--dcr-font-size-xs);color:var(--dcr-color-text-muted);font-family:var(--dcr-font-mono);">core/db.py:38</div>
+        </td>
+        <td><span class="dcr-pill dcr-pill--danger">UNRESOLVED</span></td>
+        <td>
+          <svg width="60" height="24" viewBox="0 0 60 24" fill="none">
+            <polyline points="2,16 12,10 24,8 36,11 48,9 58,16" stroke="var(--dcr-color-danger)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </td>
+        <td class="dcr-col--right"><strong>24</strong></td>
+        <td class="dcr-col--right">24</td>
+        <td class="dcr-col--right">
+          <div>2m {% trans "ago" %}</div>
+          <div style="font-size:var(--dcr-font-size-xs);color:var(--dcr-color-text-muted);">{% trans "first 5h ago" %}</div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <div style="display:flex;align-items:center;gap:var(--dcr-space-xs);margin-bottom:4px;">
+            <span class="dcr-badge dcr-badge--danger">ERROR</span>
+            <a href="#" class="dcr-data-table__link">KeyError</a>
+          </div>
+          <div style="font-size:var(--dcr-font-size-sm);margin-bottom:2px;">{% trans "'stripe_customer_id'" %}</div>
+          <div style="font-size:var(--dcr-font-size-xs);color:var(--dcr-color-text-muted);font-family:var(--dcr-font-mono);">billing/services.py:212</div>
+        </td>
+        <td><span class="dcr-pill dcr-pill--danger">UNRESOLVED</span></td>
+        <td>
+          <svg width="60" height="24" viewBox="0 0 60 24" fill="none">
+            <polyline points="2,14 10,16 18,12 26,14 34,11 42,13 50,10 58,12" stroke="var(--dcr-color-danger)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </td>
+        <td class="dcr-col--right"><strong>142</strong></td>
+        <td class="dcr-col--right">88</td>
+        <td class="dcr-col--right">
+          <div>4m {% trans "ago" %}</div>
+          <div style="font-size:var(--dcr-font-size-xs);color:var(--dcr-color-text-muted);">{% trans "first 1m ago" %}</div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <div style="display:flex;align-items:center;gap:var(--dcr-space-xs);margin-bottom:4px;">
+            <span class="dcr-badge dcr-badge--warning">ERROR</span>
+            <a href="#" class="dcr-data-table__link">TimeoutError</a>
+          </div>
+          <div style="font-size:var(--dcr-font-size-sm);margin-bottom:2px;">{% trans "Request to upstream API timed out after 30s" %}</div>
+          <div style="font-size:var(--dcr-font-size-xs);color:var(--dcr-color-text-muted);font-family:var(--dcr-font-mono);">integrations/zendesk.py:88</div>
+        </td>
+        <td><span class="dcr-pill dcr-pill--danger">UNRESOLVED</span></td>
+        <td>
+          <svg width="60" height="24" viewBox="0 0 60 24" fill="none">
+            <polyline points="2,12 8,7 15,14 22,8 30,15 37,9 45,16 52,10 58,14" stroke="var(--dcr-color-warning)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </td>
+        <td class="dcr-col--right"><strong>33</strong></td>
+        <td class="dcr-col--right">12</td>
+        <td class="dcr-col--right">
+          <div>11m {% trans "ago" %}</div>
+          <div style="font-size:var(--dcr-font-size-xs);color:var(--dcr-color-text-muted);">{% trans "first 2d ago" %}</div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <div style="display:flex;align-items:center;gap:var(--dcr-space-xs);margin-bottom:4px;">
+            <span class="dcr-badge dcr-badge--muted">ERROR</span>
+            <a href="#" class="dcr-data-table__link">ValueError</a>
+          </div>
+          <div style="font-size:var(--dcr-font-size-sm);margin-bottom:2px;">{% trans "invalid literal for int() with base 10: 'NaN'" %}</div>
+          <div style="font-size:var(--dcr-font-size-xs);color:var(--dcr-color-text-muted);font-family:var(--dcr-font-mono);">exports/csv.py:54</div>
+        </td>
+        <td><span class="dcr-pill dcr-pill--danger">UNRESOLVED</span></td>
+        <td>
+          <svg width="60" height="24" viewBox="0 0 60 24" fill="none">
+            <polyline points="2,6 10,8 18,11 26,10 34,14 42,15 50,17 58,19" stroke="var(--dcr-color-text-muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </td>
+        <td class="dcr-col--right"><strong>12</strong></td>
+        <td class="dcr-col--right">7</td>
+        <td class="dcr-col--right">
+          <div>26m {% trans "ago" %}</div>
+          <div style="font-size:var(--dcr-font-size-xs);color:var(--dcr-color-text-muted);">{% trans "first 4h ago" %}</div>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <div class="dcr-pagination">
+    <div class="dcr-pagination__per-page">
+      {% trans "Showing 1–5 of 7 · Per page" %}
+      <select class="dcr-pagination__per-page-select">
+        <option selected>5</option>
+        <option>10</option>
+        <option>25</option>
+      </select>
+    </div>
+    <div class="dcr-pagination__controls">
+      <span class="dcr-pagination__btn dcr-pagination__btn--prev" aria-disabled="true">{% trans "Previous" %}</span>
+      <span class="dcr-pagination__page dcr-pagination__page--active">1</span>
+      <a href="#" class="dcr-pagination__page">2</a>
+      <a href="#" class="dcr-pagination__btn dcr-pagination__btn--next">{% trans "Next" %}</a>
+    </div>
+  </div>
+
+</div>

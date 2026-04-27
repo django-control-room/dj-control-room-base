@@ -1,0 +1,197 @@
+{% load i18n %}
+<div class="dcr-page-header">
+  <div class="dcr-page-header__main">
+    <div class="dcr-page-header__icon" style="background:var(--dcr-color-success)">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
+    </div>
+    <div class="dcr-page-header__body">
+      <div class="dcr-page-header__title-row">
+        <h1 class="dcr-page-header__title">{% trans "Worker Dashboard" %}</h1>
+        <span class="dcr-pill dcr-pill--success"><span class="dcr-pill__dot"></span>{% trans "3 ACTIVE" %}</span>
+      </div>
+      <p class="dcr-page-header__subtitle">{% trans "Live status of every Celery worker connected to this broker." %}</p>
+    </div>
+  </div>
+  <div class="dcr-page-header__actions">
+    <button class="dcr-btn">{% trans "Refresh" %}</button>
+  </div>
+</div>
+
+{# Worker cards #}
+<div class="dcr-card-grid">
+  <div class="dcr-card">
+    <span class="dcr-pill dcr-pill--success"><span class="dcr-pill__dot"></span>worker-1</span>
+    <div class="dcr-card__bottom">
+      <span class="dcr-card__meta">142 {% trans "tasks" %}</span>
+      <span class="dcr-card__meta">CPU 23%</span>
+    </div>
+  </div>
+  <div class="dcr-card">
+    <span class="dcr-pill dcr-pill--success"><span class="dcr-pill__dot"></span>worker-2</span>
+    <div class="dcr-card__bottom">
+      <span class="dcr-card__meta">89 {% trans "tasks" %}</span>
+      <span class="dcr-card__meta">CPU 18%</span>
+    </div>
+  </div>
+  <div class="dcr-card">
+    <span class="dcr-pill dcr-pill--warning"><span class="dcr-pill__dot"></span>worker-3</span>
+    <div class="dcr-card__bottom">
+      <span class="dcr-card__meta">231 {% trans "tasks" %}</span>
+      <span class="dcr-card__meta">CPU 67%</span>
+    </div>
+  </div>
+</div>
+
+{# Queue depth chart #}
+<div class="dcr-data-table" style="margin-bottom:var(--dcr-space-lg)">
+  <div class="dcr-data-table__header">
+    <h3 class="dcr-data-table__title">{% trans "Queue Depth" %}</h3>
+    <span style="font-size:var(--dcr-font-size-sm);color:var(--dcr-color-text-muted)">{% trans "Last 60 min" %}</span>
+  </div>
+  <div class="dcr-bar-chart">
+    <div class="dcr-bar-chart__inner" aria-hidden="true">
+      <div class="dcr-bar-chart__bar" style="height:21%"></div>
+      <div class="dcr-bar-chart__bar" style="height:31%"></div>
+      <div class="dcr-bar-chart__bar" style="height:26%"></div>
+      <div class="dcr-bar-chart__bar" style="height:43%"></div>
+      <div class="dcr-bar-chart__bar" style="height:29%"></div>
+      <div class="dcr-bar-chart__bar" style="height:36%"></div>
+      <div class="dcr-bar-chart__bar" style="height:21%"></div>
+      <div class="dcr-bar-chart__bar" style="height:50%"></div>
+      <div class="dcr-bar-chart__bar" style="height:40%"></div>
+      <div class="dcr-bar-chart__bar" style="height:29%"></div>
+      <div class="dcr-bar-chart__bar" style="height:57%"></div>
+      <div class="dcr-bar-chart__bar" style="height:43%"></div>
+      <div class="dcr-bar-chart__bar" style="height:31%"></div>
+      <div class="dcr-bar-chart__bar" style="height:79%"></div>
+      <div class="dcr-bar-chart__bar" style="height:57%"></div>
+      <div class="dcr-bar-chart__bar" style="height:69%"></div>
+      <div class="dcr-bar-chart__bar" style="height:50%"></div>
+      <div class="dcr-bar-chart__bar" style="height:89%"></div>
+      <div class="dcr-bar-chart__bar" style="height:71%"></div>
+      <div class="dcr-bar-chart__bar" style="height:64%"></div>
+      <div class="dcr-bar-chart__bar" style="height:100%"></div>
+      <div class="dcr-bar-chart__bar" style="height:83%"></div>
+      <div class="dcr-bar-chart__bar" style="height:69%"></div>
+      <div class="dcr-bar-chart__bar" style="height:93%"></div>
+      <div class="dcr-bar-chart__bar" style="height:74%"></div>
+      <div class="dcr-bar-chart__bar" style="height:64%"></div>
+      <div class="dcr-bar-chart__bar" style="height:83%"></div>
+      <div class="dcr-bar-chart__bar" style="height:69%"></div>
+      <div class="dcr-bar-chart__bar" style="height:57%"></div>
+      <div class="dcr-bar-chart__bar" style="height:74%"></div>
+      <div class="dcr-bar-chart__bar" style="height:60%"></div>
+      <div class="dcr-bar-chart__bar" style="height:50%"></div>
+      <div class="dcr-bar-chart__bar" style="height:69%"></div>
+      <div class="dcr-bar-chart__bar" style="height:54%"></div>
+      <div class="dcr-bar-chart__bar" style="height:60%"></div>
+      <div class="dcr-bar-chart__bar" style="height:50%"></div>
+      <div class="dcr-bar-chart__bar" style="height:57%"></div>
+      <div class="dcr-bar-chart__bar" style="height:64%"></div>
+      <div class="dcr-bar-chart__bar" style="height:54%"></div>
+      <div class="dcr-bar-chart__bar" style="height:60%"></div>
+    </div>
+  </div>
+</div>
+
+{# Recent tasks table #}
+<div class="dcr-data-table">
+  <div class="dcr-data-table__header">
+    <h3 class="dcr-data-table__title">{% trans "Recent Tasks" %}</h3>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>{% trans "Task" %}</th>
+        <th>{% trans "Status" %}</th>
+        <th>{% trans "Duration" %}</th>
+        <th style="text-align:right">{% trans "When" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code class="dcr-code">send_welcome_email</code></td>
+        <td><span class="dcr-status-text dcr-status-text--success">✓ {% trans "Success" %}</span></td>
+        <td><code class="dcr-code">0.4s</code></td>
+        <td style="text-align:right;color:var(--dcr-color-text-muted)">{% trans "2m ago" %}</td>
+      </tr>
+      <tr>
+        <td><code class="dcr-code">process_payment</code></td>
+        <td><span class="dcr-status-text dcr-status-text--success">✓ {% trans "Success" %}</span></td>
+        <td><code class="dcr-code">1.2s</code></td>
+        <td style="text-align:right;color:var(--dcr-color-text-muted)">{% trans "4m ago" %}</td>
+      </tr>
+      <tr>
+        <td><code class="dcr-code">generate_report</code></td>
+        <td><span class="dcr-status-text dcr-status-text--warning">◷ {% trans "Running" %}</span></td>
+        <td><code class="dcr-code">—</code></td>
+        <td style="text-align:right;color:var(--dcr-color-text-muted)">{% trans "now" %}</td>
+      </tr>
+      <tr>
+        <td><code class="dcr-code">sync_inventory</code></td>
+        <td><span class="dcr-status-text dcr-status-text--danger">✕ {% trans "Failed" %}</span></td>
+        <td><code class="dcr-code">8.1s</code></td>
+        <td style="text-align:right;color:var(--dcr-color-text-muted)">{% trans "6m ago" %}</td>
+      </tr>
+      <tr>
+        <td><code class="dcr-code">resize_image</code></td>
+        <td><span class="dcr-status-text dcr-status-text--muted">↺ {% trans "Retry" %}</span></td>
+        <td><code class="dcr-code">—</code></td>
+        <td style="text-align:right;color:var(--dcr-color-text-muted)">{% trans "7m ago" %}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+{# Failed task callout #}
+<div class="dcr-callout dcr-callout--danger" style="margin-top:var(--dcr-space-lg)">
+  <p class="dcr-callout__title">sync_inventory {% trans "failed" %}</p>
+  <p class="dcr-callout__body">ConnectionRefusedError: {% trans "Could not connect to inventory service at 10.0.1.42:5432. The task will not be retried automatically — check service health and requeue manually." %}</p>
+</div>
+
+{# Workers compact table with subtle header #}
+<div class="dcr-data-table" style="margin-top:var(--dcr-space-lg)">
+  <div class="dcr-data-table__header dcr-data-table__header--subtle">
+    <div class="dcr-data-table__header-info">
+      <h3 class="dcr-data-table__title">
+        <svg class="dcr-data-table__title-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+        {% trans "Workers" %}
+        <span class="dcr-badge dcr-badge--success">2 ONLINE</span>
+      </h3>
+    </div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>{% trans "Hostname" %}</th>
+        <th>{% trans "Pool" %}</th>
+        <th class="dcr-col--right">{% trans "Conc." %}</th>
+        <th class="dcr-col--right">{% trans "Active" %}</th>
+        <th class="dcr-col--right">{% trans "Uptime" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="dcr-pill dcr-pill--success"><span class="dcr-pill__dot"></span>celery@worker-1.prod</span></td>
+        <td>prefork</td>
+        <td class="dcr-col--right">8</td>
+        <td class="dcr-col--right">3</td>
+        <td class="dcr-col--right">12d 4h</td>
+      </tr>
+      <tr>
+        <td><span class="dcr-pill dcr-pill--success"><span class="dcr-pill__dot"></span>celery@worker-2.prod</span></td>
+        <td>prefork</td>
+        <td class="dcr-col--right">8</td>
+        <td class="dcr-col--right">1</td>
+        <td class="dcr-col--right">12d 4h</td>
+      </tr>
+      <tr>
+        <td><span class="dcr-pill dcr-pill--danger"><span class="dcr-pill__dot"></span>celery@worker-3.prod</span></td>
+        <td>gevent</td>
+        <td class="dcr-col--right">50</td>
+        <td class="dcr-col--right">0</td>
+        <td class="dcr-col--right">—</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

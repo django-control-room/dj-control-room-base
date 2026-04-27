@@ -2222,7 +2222,7 @@ a.dcr-pagination__page:hover {
 
 .dcr-card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: var(--dcr-space-md);
   margin-bottom: var(--dcr-space-lg);
 }
@@ -2233,6 +2233,12 @@ a.dcr-pagination__page:hover {
   flex-direction: column;
   gap: var(--dcr-space-sm);
   margin-bottom: 0;
+}
+
+/* Prevent inline elements (pills, badges) from stretching in column-flex cards */
+.dcr-card-grid .dcr-card > .dcr-pill,
+.dcr-card-grid .dcr-card > .dcr-badge {
+  align-self: flex-start;
 }
 
 
