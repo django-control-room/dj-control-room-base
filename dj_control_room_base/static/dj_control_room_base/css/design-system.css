@@ -67,6 +67,7 @@
   --dcr-font-mono: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
   --dcr-font-size-xs: 10px;
   --dcr-font-size-sm: 11px;
+  --dcr-font-size-md: 12px;
   --dcr-font-size-base: 14px;
   --dcr-font-size-lg: 18px;
   --dcr-font-size-xl: 22px;
@@ -998,6 +999,55 @@ a.dcr-btn--muted.dcr-btn--ghost:visited {
 .dcr-back-link:hover {
   color: var(--dcr-color-accent);
   text-decoration: underline !important;
+}
+
+
+/* --- Tabs ------------------------------------------------------------------- */
+
+/*
+ * Horizontal tab bar for switching between related sections or views.
+ *
+ *   <nav class="dcr-tabs">
+ *     <a href="…" class="dcr-tabs__tab active" aria-current="page">Overview</a>
+ *     <a href="…" class="dcr-tabs__tab">Settings</a>
+ *     <button class="dcr-tabs__tab" aria-selected="true">Details</button>
+ *   </nav>
+ */
+
+.dcr-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--dcr-color-border);
+}
+
+.dcr-tabs__tab {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px var(--dcr-space-md);
+  font-size: var(--dcr-font-size-md);
+  font-weight: 400;
+  color: var(--dcr-color-text-muted) !important;
+  text-decoration: none !important;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  background: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.dcr-tabs__tab:hover {
+  color: var(--dcr-color-text) !important;
+  text-decoration: none !important;
+}
+
+.dcr-tabs__tab.active,
+.dcr-tabs__tab[aria-current="page"],
+.dcr-tabs__tab[aria-selected="true"] {
+  color: var(--dcr-color-accent) !important;
+  border-bottom-color: var(--dcr-color-accent);
+  font-weight: 500;
 }
 
 

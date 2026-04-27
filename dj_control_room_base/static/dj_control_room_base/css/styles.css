@@ -61,35 +61,9 @@
   border-color: var(--dcr-color-accent);
 }
 
-/* Cross-page section navigation */
+/* Cross-page section navigation — uses dcr-tabs from design-system.css */
 .dcr-sg-topnav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2px;
-  padding-bottom: var(--dcr-space-md);
-  border-bottom: 1px solid var(--dcr-color-border);
   margin-bottom: var(--dcr-space-xl);
-}
-
-.dcr-sg-topnav a {
-  font-size: var(--dcr-font-size-sm);
-  font-weight: 500;
-  color: var(--dcr-color-text-muted);
-  text-decoration: none;
-  padding: 5px var(--dcr-space-sm);
-  border-radius: var(--dcr-radius-md);
-  transition: color 0.1s, background 0.1s;
-}
-
-.dcr-sg-topnav a:hover {
-  color: var(--dcr-color-text);
-  background: var(--dcr-color-bg-subtle);
-}
-
-.dcr-sg-topnav a.active {
-  color: var(--dcr-color-accent);
-  background: rgba(59, 130, 246, 0.08);
-  font-weight: 600;
 }
 
 /* Landing-page section grid */
