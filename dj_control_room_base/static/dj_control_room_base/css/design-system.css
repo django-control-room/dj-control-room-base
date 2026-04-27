@@ -24,7 +24,7 @@
 :root {
   /* Text */
   --dcr-color-text: #111827;
-  --dcr-color-text-muted: #9398a3;
+  --dcr-color-text-muted: #888888;
   --dcr-color-text-inverse: #ffffff;
 
   /* Surfaces */
@@ -136,7 +136,7 @@
 /* Explicit light toggle — always force light tokens even on a dark-OS system */
 :root[data-theme="light"] {
   --dcr-color-text: #111827;
-  --dcr-color-text-muted: #6b7280;
+  --dcr-color-text-muted: #888888;
   --dcr-color-text-inverse: #ffffff;
   --dcr-color-bg: #ffffff;
   --dcr-color-bg-subtle: #f9fafb;
@@ -240,14 +240,21 @@
 
 .dcr-page-header {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: flex-start;
-  padding-top: var(--dcr-space-xl);
+  padding-top: var(--dcr-space-sm);
   margin-bottom: var(--dcr-space-lg);
   gap: var(--dcr-space-md);
 }
 
-/* When a back link immediately precedes the header, reduce the top gap */
+/* Back link as first child of the header — occupies its own full-width row */
+.dcr-page-header>.dcr-back-link {
+  flex: 0 0 100%;
+  margin: 0;
+}
+
+/* When a back link immediately precedes the header (outside), reduce the top gap */
 .dcr-back-link+.dcr-page-header {
   padding-top: var(--dcr-space-xs);
 }
@@ -255,7 +262,7 @@
 .dcr-page-header__title {
   margin: 0;
   font-size: var(--dcr-font-size-xl);
-  font-weight: 300;
+  font-weight: 600;
   color: var(--dcr-color-text);
   flex: 1;
 }
@@ -279,8 +286,8 @@
 }
 
 .dcr-page-header__icon {
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   border-radius: var(--dcr-radius-lg);
   display: flex;
   align-items: center;
@@ -290,8 +297,8 @@
 }
 
 .dcr-page-header__icon svg {
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
 }
 
 .dcr-page-header__body {
@@ -317,6 +324,7 @@
   font-size: var(--dcr-font-size-md);
   color: var(--dcr-color-text-muted);
   margin: 0;
+  margin-top: var(--dcr-space-xs);
   line-height: 1.5;
 }
 
