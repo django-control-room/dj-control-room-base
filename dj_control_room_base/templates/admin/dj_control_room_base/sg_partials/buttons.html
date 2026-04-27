@@ -1,0 +1,212 @@
+{% load i18n %}
+{# ── Badge ────────────────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="badge">
+  <h2 class="dcr-sg-section__title">{% trans "Badge" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "Rectangular label for type tags, counts, and category markers. Always uppercase. Use in tables, KV rows, and anywhere data needs a compact inline label." %}</p>
+
+  <div class="dcr-sg-preview dcr-sg-preview--stack">
+    <span class="dcr-sg-row-label">{% trans "Tinted" %}</span>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:var(--dcr-space-sm);margin-bottom:var(--dcr-space-lg)">
+      <span class="dcr-badge">default</span>
+      <span class="dcr-badge dcr-badge--success">success</span>
+      <span class="dcr-badge dcr-badge--warning">warning</span>
+      <span class="dcr-badge dcr-badge--danger">danger</span>
+      <span class="dcr-badge dcr-badge--info">info</span>
+      <span class="dcr-badge dcr-badge--muted">muted</span>
+      <span class="dcr-badge dcr-badge--purple">purple</span>
+      <span class="dcr-badge dcr-badge--indigo">indigo</span>
+    </div>
+    <span class="dcr-sg-row-label">{% trans "Solid" %}</span>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:var(--dcr-space-sm)">
+      <span class="dcr-badge dcr-badge--solid">default</span>
+      <span class="dcr-badge dcr-badge--solid dcr-badge--success">success</span>
+      <span class="dcr-badge dcr-badge--solid dcr-badge--warning">warning</span>
+      <span class="dcr-badge dcr-badge--solid dcr-badge--danger">danger</span>
+      <span class="dcr-badge dcr-badge--solid dcr-badge--info">info</span>
+      <span class="dcr-badge dcr-badge--solid dcr-badge--muted">muted</span>
+      <span class="dcr-badge dcr-badge--solid dcr-badge--purple">purple</span>
+      <span class="dcr-badge dcr-badge--solid dcr-badge--indigo">indigo</span>
+    </div>
+  </div>
+
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;!-- Tinted (default) --&gt;
+&lt;span class="dcr-badge dcr-badge--warning"&gt;hash&lt;/span&gt;
+
+&lt;!-- Solid --&gt;
+&lt;span class="dcr-badge dcr-badge--solid dcr-badge--danger"&gt;culprit&lt;/span&gt;
+
+&lt;!-- Variants: (none) · success · warning · danger · info · muted · purple · indigo --&gt;</code></pre>
+</section>
+
+{# ── Pill ─────────────────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="pill">
+  <h2 class="dcr-sg-section__title">{% trans "Pill" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "Fully-rounded chip for live status and state indicators. Sentence-case — write naturally, not in ALL CAPS. Add " %}<code class="dcr-code">__dot</code>{% trans " for a coloured dot that always matches the pill's current colour." %}</p>
+
+  <div class="dcr-sg-preview dcr-sg-preview--stack">
+    <span class="dcr-sg-row-label">{% trans "Tinted · with dot" %}</span>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:var(--dcr-space-sm);margin-bottom:var(--dcr-space-lg)">
+      <span class="dcr-pill dcr-pill--success"><span class="dcr-pill__dot"></span>{% trans "Connected" %}</span>
+      <span class="dcr-pill dcr-pill--warning"><span class="dcr-pill__dot"></span>{% trans "Degraded" %}</span>
+      <span class="dcr-pill dcr-pill--danger"><span class="dcr-pill__dot"></span>{% trans "Error" %}</span>
+      <span class="dcr-pill dcr-pill--info"><span class="dcr-pill__dot"></span>{% trans "Syncing" %}</span>
+      <span class="dcr-pill dcr-pill--muted"><span class="dcr-pill__dot"></span>{% trans "Idle" %}</span>
+      <span class="dcr-pill dcr-pill--purple"><span class="dcr-pill__dot"></span>{% trans "Queued" %}</span>
+      <span class="dcr-pill dcr-pill--indigo"><span class="dcr-pill__dot"></span>{% trans "Scheduled" %}</span>
+    </div>
+    <span class="dcr-sg-row-label">{% trans "Solid" %}</span>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:var(--dcr-space-sm)">
+      <span class="dcr-pill dcr-pill--solid dcr-pill--success">{% trans "Active" %}</span>
+      <span class="dcr-pill dcr-pill--solid dcr-pill--warning">{% trans "Retrying" %}</span>
+      <span class="dcr-pill dcr-pill--solid dcr-pill--danger">{% trans "Critical" %}</span>
+      <span class="dcr-pill dcr-pill--solid dcr-pill--info">{% trans "Running" %}</span>
+      <span class="dcr-pill dcr-pill--solid dcr-pill--purple">{% trans "Pending" %}</span>
+      <span class="dcr-pill dcr-pill--solid dcr-pill--muted">{% trans "Disabled" %}</span>
+    </div>
+  </div>
+
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;!-- Tinted with dot --&gt;
+&lt;span class="dcr-pill dcr-pill--success"&gt;
+  &lt;span class="dcr-pill__dot"&gt;&lt;/span&gt;Connected
+&lt;/span&gt;
+
+&lt;!-- Tinted without dot --&gt;
+&lt;span class="dcr-pill dcr-pill--warning"&gt;Degraded&lt;/span&gt;
+
+&lt;!-- Solid --&gt;
+&lt;span class="dcr-pill dcr-pill--solid dcr-pill--success"&gt;Active&lt;/span&gt;
+
+&lt;!-- Variants: (none) · success · warning · danger · info · muted · purple · indigo --&gt;</code></pre>
+</section>
+
+{# ── Button ───────────────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="button">
+  <h2 class="dcr-sg-section__title">{% trans "Button" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "Solid fill by default. Add " %}<code class="dcr-code">--ghost</code>{% trans " for transparent background + coloured border. Place any " %}<code class="dcr-code">&lt;svg class=\"dcr-btn__icon\"&gt;</code>{% trans " as a direct child — flex gap handles spacing automatically." %}</p>
+
+  <p class="dcr-sg-pre-label">{% trans "Solid (default)" %}</p>
+  <div class="dcr-sg-preview" style="gap:var(--dcr-space-sm);flex-wrap:wrap;align-items:center">
+    <button class="dcr-btn">{% trans "Default" %}</button>
+    <button class="dcr-btn dcr-btn--primary">{% trans "Primary" %}</button>
+    <button class="dcr-btn dcr-btn--success">{% trans "Success" %}</button>
+    <button class="dcr-btn dcr-btn--warning">{% trans "Warning" %}</button>
+    <button class="dcr-btn dcr-btn--danger">{% trans "Danger" %}</button>
+    <button class="dcr-btn dcr-btn--info">{% trans "Info" %}</button>
+    <button class="dcr-btn dcr-btn--muted">{% trans "Muted" %}</button>
+  </div>
+
+  <p class="dcr-sg-pre-label" style="margin-top:var(--dcr-space-lg)">{% trans "Ghost (--ghost)" %}</p>
+  <div class="dcr-sg-preview" style="gap:var(--dcr-space-sm);flex-wrap:wrap;align-items:center">
+    <button class="dcr-btn dcr-btn--ghost">{% trans "Default" %}</button>
+    <button class="dcr-btn dcr-btn--primary dcr-btn--ghost">{% trans "Primary" %}</button>
+    <button class="dcr-btn dcr-btn--success dcr-btn--ghost">{% trans "Success" %}</button>
+    <button class="dcr-btn dcr-btn--warning dcr-btn--ghost">{% trans "Warning" %}</button>
+    <button class="dcr-btn dcr-btn--danger dcr-btn--ghost">{% trans "Danger" %}</button>
+    <button class="dcr-btn dcr-btn--info dcr-btn--ghost">{% trans "Info" %}</button>
+    <button class="dcr-btn dcr-btn--muted dcr-btn--ghost">{% trans "Muted" %}</button>
+  </div>
+
+  <p class="dcr-sg-pre-label" style="margin-top:var(--dcr-space-lg)">{% trans "Sizes, icons, disabled" %}</p>
+  <div class="dcr-sg-preview" style="gap:var(--dcr-space-sm);flex-wrap:wrap;align-items:center">
+    <button class="dcr-btn dcr-btn--primary dcr-btn--sm">{% trans "Small" %}</button>
+    <button class="dcr-btn dcr-btn--primary">{% trans "Default size" %}</button>
+    <button class="dcr-btn dcr-btn--primary">
+      <svg class="dcr-btn__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      {% trans "SEARCH" %}
+    </button>
+    <button class="dcr-btn dcr-btn--ghost dcr-btn--icon-only" aria-label="{% trans 'Refresh' %}">
+      <svg class="dcr-btn__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+    </button>
+    <button class="dcr-btn dcr-btn--danger" disabled>{% trans "Disabled" %}</button>
+  </div>
+
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;!-- Solid (default) --&gt;
+&lt;button class="dcr-btn dcr-btn--primary"&gt;Search&lt;/button&gt;
+&lt;button class="dcr-btn dcr-btn--danger"&gt;Delete&lt;/button&gt;
+
+&lt;!-- Ghost / outlined --&gt;
+&lt;button class="dcr-btn dcr-btn--primary dcr-btn--ghost"&gt;Cancel&lt;/button&gt;
+&lt;button class="dcr-btn dcr-btn--ghost"&gt;Reset all filters&lt;/button&gt;
+
+&lt;!-- With icon --&gt;
+&lt;button class="dcr-btn dcr-btn--primary"&gt;
+  &lt;svg class="dcr-btn__icon" …&gt;&lt;/svg&gt; Search
+&lt;/button&gt;
+
+&lt;!-- Icon-only --&gt;
+&lt;button class="dcr-btn dcr-btn--ghost dcr-btn--icon-only" aria-label="Refresh"&gt;
+  &lt;svg class="dcr-btn__icon" …&gt;&lt;/svg&gt;
+&lt;/button&gt;
+
+&lt;!-- Small --&gt;
+&lt;button class="dcr-btn dcr-btn--primary dcr-btn--sm"&gt;Save&lt;/button&gt;</code></pre>
+</section>
+
+{# ── Button — as link ──────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="button-link">
+  <h2 class="dcr-sg-section__title">{% trans "Button — as link" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "All " %}<code class="dcr-code">dcr-btn</code>{% trans " classes work on " %}<code class="dcr-code">&lt;a&gt;</code>{% trans " elements unchanged. Use this when the action navigates to a new page (export, open detail, download)." %}</p>
+
+  <p class="dcr-sg-pre-label">{% trans "Solid" %}</p>
+  <div class="dcr-sg-preview" style="gap:var(--dcr-space-sm);flex-wrap:wrap;align-items:center">
+    <a href="#" class="dcr-btn">{% trans "Default" %}</a>
+    <a href="#" class="dcr-btn dcr-btn--primary">{% trans "Primary" %}</a>
+    <a href="#" class="dcr-btn dcr-btn--success">{% trans "Success" %}</a>
+    <a href="#" class="dcr-btn dcr-btn--warning">{% trans "Warning" %}</a>
+    <a href="#" class="dcr-btn dcr-btn--danger">{% trans "Danger" %}</a>
+    <a href="#" class="dcr-btn dcr-btn--info">{% trans "Info" %}</a>
+    <a href="#" class="dcr-btn dcr-btn--muted">{% trans "Muted" %}</a>
+  </div>
+
+  <p class="dcr-sg-pre-label" style="margin-top:var(--dcr-space-lg)">{% trans "Ghost (--ghost)" %}</p>
+  <div class="dcr-sg-preview" style="gap:var(--dcr-space-sm);flex-wrap:wrap;align-items:center">
+    <a href="#" class="dcr-btn dcr-btn--ghost">{% trans "Default" %}</a>
+    <a href="#" class="dcr-btn dcr-btn--primary dcr-btn--ghost">{% trans "Primary" %}</a>
+    <a href="#" class="dcr-btn dcr-btn--success dcr-btn--ghost">{% trans "Success" %}</a>
+    <a href="#" class="dcr-btn dcr-btn--warning dcr-btn--ghost">{% trans "Warning" %}</a>
+    <a href="#" class="dcr-btn dcr-btn--danger dcr-btn--ghost">{% trans "Danger" %}</a>
+    <a href="#" class="dcr-btn dcr-btn--info dcr-btn--ghost">{% trans "Info" %}</a>
+    <a href="#" class="dcr-btn dcr-btn--muted dcr-btn--ghost">{% trans "Muted" %}</a>
+  </div>
+
+  <p class="dcr-sg-pre-label" style="margin-top:var(--dcr-space-lg)">{% trans "With icon · small · icon-only" %}</p>
+  <div class="dcr-sg-preview" style="gap:var(--dcr-space-sm);flex-wrap:wrap;align-items:center">
+    <a href="#" class="dcr-btn dcr-btn--primary dcr-btn--sm">{% trans "Small" %}</a>
+    <a href="#" class="dcr-btn dcr-btn--primary">
+      <svg class="dcr-btn__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      {% trans "Export CSV" %}
+    </a>
+    <a href="#" class="dcr-btn dcr-btn--ghost dcr-btn--icon-only" aria-label="{% trans 'Open' %}">
+      <svg class="dcr-btn__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+    </a>
+  </div>
+
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;!-- Any dcr-btn class works on &lt;a&gt; --&gt;
+&lt;a href="/reports/export/" class="dcr-btn dcr-btn--primary"&gt;Export CSV&lt;/a&gt;
+&lt;a href="/workers/" class="dcr-btn dcr-btn--ghost"&gt;View all&lt;/a&gt;
+
+&lt;!-- With icon --&gt;
+&lt;a href="/reports/export/" class="dcr-btn dcr-btn--primary"&gt;
+  &lt;svg class="dcr-btn__icon" …&gt;&lt;/svg&gt; Export CSV
+&lt;/a&gt;
+
+&lt;!-- Icon-only --&gt;
+&lt;a href="/signals/post_save/" class="dcr-btn dcr-btn--ghost dcr-btn--icon-only" aria-label="Open"&gt;
+  &lt;svg class="dcr-btn__icon" …&gt;&lt;/svg&gt;
+&lt;/a&gt;</code></pre>
+</section>
+
+{# ── Back Link ────────────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="back-link">
+  <h2 class="dcr-sg-section__title">{% trans "Back Link" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "Navigation link placed above the page header on detail views." %}</p>
+  <div class="dcr-sg-preview">
+    <a href="#" class="dcr-back-link">{% trans "Back to all keys" %}</a>
+  </div>
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;a href="/cache/keys/" class="dcr-back-link"&gt;Back to all keys&lt;/a&gt;</code></pre>
+</section>

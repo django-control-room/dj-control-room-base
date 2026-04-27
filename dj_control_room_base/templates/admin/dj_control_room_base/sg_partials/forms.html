@@ -1,0 +1,124 @@
+{% load i18n %}
+{# ── Forms ────────────────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="forms">
+  <h2 class="dcr-sg-section__title">{% trans "Forms" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "Composable form primitives. Combine " %}<code class="dcr-code">dcr-form</code>{% trans ", " %}<code class="dcr-code">dcr-form__row</code>{% trans ", " %}<code class="dcr-code">dcr-field</code>{% trans ", " %}<code class="dcr-code">dcr-input</code>{% trans " / " %}<code class="dcr-code">dcr-select</code>{% trans ", and " %}<code class="dcr-code">dcr-input-group</code>{% trans " to build any panel form." %}</p>
+
+  <p class="dcr-sg-pre-label">{% trans "Plain input and select" %}</p>
+  <div class="dcr-sg-preview">
+    <div style="display:flex;gap:var(--dcr-space-md);flex-wrap:wrap;width:100%">
+      <div class="dcr-field dcr-field--grow">
+        <label class="dcr-field__label" for="sg-plain-input">{% trans "Queue name" %}</label>
+        <input id="sg-plain-input" class="dcr-input" type="text" placeholder="{% trans 'e.g. celery, default' %}">
+      </div>
+      <div class="dcr-field">
+        <label class="dcr-field__label" for="sg-plain-select">{% trans "State" %}</label>
+        <select id="sg-plain-select" class="dcr-select">
+          <option>{% trans "All states" %}</option>
+          <option>SUCCESS</option>
+          <option>FAILURE</option>
+          <option>STARTED</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <p class="dcr-sg-pre-label" style="margin-top:var(--dcr-space-lg)">{% trans "Search + filter form" %}</p>
+  <div class="dcr-sg-preview dcr-sg-preview--stack">
+    <form class="dcr-form" style="background:var(--dcr-color-bg-subtle);border-radius:var(--dcr-radius);">
+
+      <div class="dcr-form__group">
+        <label class="dcr-form__label" for="sg-form-q">{% trans "Search by task name or ID" %}</label>
+        <div class="dcr-form__row--stretch">
+          <div class="dcr-input-group">
+            <svg class="dcr-input-group__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input id="sg-form-q" class="dcr-input-group__input" type="text"
+                   placeholder="{% trans 'e.g. send_order_email, f81d4fae' %}">
+          </div>
+          <button type="submit" class="dcr-btn dcr-btn--primary">{% trans "SEARCH" %}</button>
+        </div>
+      </div>
+
+      <div class="dcr-form__row">
+        <div class="dcr-field">
+          <label class="dcr-field__label" for="sg-form-state">&#9663; {% trans "State" %}</label>
+          <select id="sg-form-state" class="dcr-select">
+            <option>{% trans "All states" %}</option>
+          </select>
+        </div>
+        <div class="dcr-field">
+          <label class="dcr-field__label" for="sg-form-queue">{% trans "Queue" %}</label>
+          <select id="sg-form-queue" class="dcr-select">
+            <option>{% trans "All queues" %}</option>
+          </select>
+        </div>
+      </div>
+
+    </form>
+  </div>
+
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;!-- Plain input --&gt;
+&lt;div class="dcr-field"&gt;
+  &lt;label class="dcr-field__label" for="name"&gt;Queue name&lt;/label&gt;
+  &lt;input id="name" class="dcr-input" type="text" placeholder="e.g. celery"&gt;
+&lt;/div&gt;
+
+&lt;!-- Select --&gt;
+&lt;div class="dcr-field"&gt;
+  &lt;label class="dcr-field__label" for="state"&gt;State&lt;/label&gt;
+  &lt;select id="state" class="dcr-select"&gt;&lt;option&gt;All states&lt;/option&gt;&lt;/select&gt;
+&lt;/div&gt;
+
+&lt;!-- Search + button (input group) --&gt;
+&lt;div class="dcr-form__group"&gt;
+  &lt;label class="dcr-form__label" for="q"&gt;Search by task name or ID&lt;/label&gt;
+  &lt;div class="dcr-form__row--stretch"&gt;
+    &lt;div class="dcr-input-group"&gt;
+      &lt;svg class="dcr-input-group__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;circle cx="11" cy="11" r="8"/&gt;&lt;path d="m21 21-4.3-4.3"/&gt;&lt;/svg&gt;
+      &lt;input id="q" class="dcr-input-group__input" type="text" placeholder="e.g. send_order_email"&gt;
+    &lt;/div&gt;
+    &lt;button type="submit" class="dcr-btn dcr-btn--primary"&gt;Search&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Full search + filter form --&gt;
+&lt;form class="dcr-form"&gt;
+  &lt;div class="dcr-form__group"&gt;
+    &lt;label class="dcr-form__label" for="q"&gt;Search by task name or ID&lt;/label&gt;
+    &lt;div class="dcr-form__row--stretch"&gt;
+      &lt;div class="dcr-input-group"&gt;…&lt;/div&gt;
+      &lt;button class="dcr-btn dcr-btn--primary"&gt;Search&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="dcr-form__row"&gt;
+    &lt;div class="dcr-field"&gt;
+      &lt;label class="dcr-field__label" for="state"&gt;&#9663; State&lt;/label&gt;
+      &lt;select id="state" class="dcr-select"&gt;&lt;option&gt;All states&lt;/option&gt;&lt;/select&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/form&gt;</code></pre>
+</section>
+
+{# ── Inline Edit ──────────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="inline-edit">
+  <h2 class="dcr-sg-section__title">{% trans "Inline Edit" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "Edit a single value in place without navigating to a full change form. Useful for TTLs, retry counts, or short string values." %}</p>
+  <div class="dcr-sg-preview">
+    <span class="dcr-inline-edit">
+      <input class="dcr-inline-edit__input" type="text" value="3600" aria-label="{% trans 'TTL' %}">
+      <button class="dcr-inline-edit__btn" title="{% trans 'Save' %}">✓</button>
+      <button class="dcr-inline-edit__btn dcr-inline-edit__btn--danger" title="{% trans 'Delete' %}">✕</button>
+    </span>
+    <span class="dcr-inline-edit" style="margin-left:var(--dcr-space-md)">
+      <input class="dcr-inline-edit__input" type="text" value="disabled" disabled aria-label="{% trans 'Disabled example' %}">
+      <button class="dcr-inline-edit__btn" disabled>✓</button>
+    </span>
+  </div>
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;span class="dcr-inline-edit"&gt;
+  &lt;input class="dcr-inline-edit__input" type="text" value="3600"&gt;
+  &lt;button class="dcr-inline-edit__btn"&gt;✓&lt;/button&gt;
+  &lt;button class="dcr-inline-edit__btn dcr-inline-edit__btn--danger"&gt;✕&lt;/button&gt;
+&lt;/span&gt;</code></pre>
+</section>

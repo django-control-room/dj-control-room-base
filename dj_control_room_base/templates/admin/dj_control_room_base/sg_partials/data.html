@@ -1,0 +1,531 @@
+{% load i18n %}
+{# ── Data Table ───────────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="data-table">
+  <h2 class="dcr-sg-section__title">{% trans "Data Table" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "Card-wrapped table with four named zones: " %}<strong>{% trans "header" %}</strong>{% trans " (title + badge + subtitle + right meta), " %}<strong>{% trans "controls" %}</strong>{% trans " (search + filters, subtle bg), " %}<strong>{% trans "table body" %}</strong>{% trans ", and " %}<strong>{% trans "pagination" %}</strong>{% trans ". All zones are optional — use only what you need. Add " %}<code class="dcr-code">dcr-data-table__header--subtle</code>{% trans " to tint the header, and " %}<code class="dcr-code">dcr-data-table__title-icon</code>{% trans " on an SVG to place an icon before the title text." %}</p>
+
+  {# Variant 1 — subtle tinted header with icon #}
+  <div class="dcr-sg-preview">
+    <div class="dcr-data-table" style="width:100%">
+      <div class="dcr-data-table__header dcr-data-table__header--subtle">
+        <div class="dcr-data-table__header-info">
+          <h3 class="dcr-data-table__title">
+            <svg class="dcr-data-table__title-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+            {% trans "Workers" %}
+            <span class="dcr-badge dcr-badge--success">2 ONLINE</span>
+          </h3>
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>{% trans "Hostname" %}</th>
+            <th>{% trans "Pool" %}</th>
+            <th class="dcr-col--right">{% trans "Conc." %}</th>
+            <th class="dcr-col--right">{% trans "Active" %}</th>
+            <th class="dcr-col--right">{% trans "Uptime" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="dcr-pill dcr-pill--success"><span class="dcr-pill__dot"></span>celery@worker-1.prod</span></td>
+            <td>prefork</td>
+            <td class="dcr-col--right">8</td>
+            <td class="dcr-col--right">3</td>
+            <td class="dcr-col--right">12d 4h</td>
+          </tr>
+          <tr>
+            <td><span class="dcr-pill dcr-pill--danger"><span class="dcr-pill__dot"></span>celery@worker-3.prod</span></td>
+            <td>gevent</td>
+            <td class="dcr-col--right">50</td>
+            <td class="dcr-col--right">0</td>
+            <td class="dcr-col--right">—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;div class="dcr-data-table"&gt;
+  &lt;div class="dcr-data-table__header dcr-data-table__header--subtle"&gt;
+    &lt;div class="dcr-data-table__header-info"&gt;
+      &lt;h3 class="dcr-data-table__title"&gt;
+        &lt;svg class="dcr-data-table__title-icon" ...&gt;&lt;/svg&gt;
+        Workers &lt;span class="dcr-badge dcr-badge--success"&gt;2 ONLINE&lt;/span&gt;
+      &lt;/h3&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;table&gt;…&lt;/table&gt;
+&lt;/div&gt;</code></pre>
+
+  {# Variant 2 — simple table, no-stripe #}
+  <div class="dcr-sg-preview">
+    <div class="dcr-data-table dcr-data-table--no-stripe" style="width:100%">
+      <table>
+        <thead>
+          <tr>
+            <th>{% trans "App" %}</th>
+            <th>{% trans "Label" %}</th>
+            <th>{% trans "Models" %}</th>
+            <th class="dcr-col--right">{% trans "Migrations" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="#" class="dcr-data-table__link">django.contrib.auth</a></td>
+            <td>auth</td>
+            <td>4</td>
+            <td class="dcr-col--right"><span class="dcr-badge dcr-badge--success">up to date</span></td>
+          </tr>
+          <tr>
+            <td><a href="#" class="dcr-data-table__link">django.contrib.contenttypes</a></td>
+            <td>contenttypes</td>
+            <td>1</td>
+            <td class="dcr-col--right"><span class="dcr-badge dcr-badge--success">up to date</span></td>
+          </tr>
+          <tr>
+            <td><a href="#" class="dcr-data-table__link">myapp.billing</a></td>
+            <td>billing</td>
+            <td>6</td>
+            <td class="dcr-col--right"><span class="dcr-badge dcr-badge--warning">1 pending</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;!-- No-stripe modifier removes alternating row color --&gt;
+&lt;div class="dcr-data-table dcr-data-table--no-stripe"&gt;
+  &lt;table&gt;…&lt;/table&gt;
+&lt;/div&gt;</code></pre>
+
+  {# Variant 3 — full four-zone table (header + controls + body + pagination) #}
+  <div class="dcr-sg-preview dcr-sg-preview--stack">
+    <div class="dcr-data-table" style="width:100%">
+
+      <div class="dcr-data-table__header">
+        <div class="dcr-data-table__header-info">
+          <h3 class="dcr-data-table__title">
+            {% trans "Key Browser" %}
+            <span class="dcr-badge">12 TOTAL</span>
+          </h3>
+          <p class="dcr-data-table__subtitle">{% trans "Browse every key across all databases on this Redis instance." %}</p>
+        </div>
+        <div class="dcr-data-table__meta">
+          <div class="dcr-data-table__meta-info">
+            <span>{% trans "Showing 12 of 12" %}</span>
+            <span>{% trans "Updated just now" %}</span>
+          </div>
+          <button type="button" class="dcr-btn dcr-btn--ghost dcr-btn--sm">
+            <svg class="dcr-btn__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            {% trans "CLEAR" %}
+          </button>
+        </div>
+      </div>
+
+      <div class="dcr-data-table__controls">
+        <form class="dcr-form">
+          <div class="dcr-form__group">
+            <label class="dcr-form__label" for="sg-key-q">{% trans "Search by key" %}</label>
+            <div class="dcr-form__row--stretch">
+              <div class="dcr-input-group">
+                <svg class="dcr-input-group__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                <input id="sg-key-q" class="dcr-input-group__input" type="text"
+                       placeholder="{% trans 'e.g. user:*, session:*, queue:default' %}">
+              </div>
+              <button type="submit" class="dcr-btn dcr-btn--primary">{% trans "SEARCH" %}</button>
+            </div>
+          </div>
+          <div class="dcr-form__row">
+            <div class="dcr-field">
+              <label class="dcr-field__label" for="sg-type">&#9663; {% trans "Type" %}</label>
+              <select id="sg-type" class="dcr-select"><option>{% trans "All types" %}</option></select>
+            </div>
+            <div class="dcr-field">
+              <label class="dcr-field__label" for="sg-db">{% trans "Database" %}</label>
+              <select id="sg-db" class="dcr-select"><option>{% trans "All databases" %}</option></select>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>{% trans "Key" %}</th>
+            <th>{% trans "Type" %}</th>
+            <th>{% trans "DB" %}</th>
+            <th class="dcr-col--right">{% trans "Size" %}</th>
+            <th class="dcr-col--right">{% trans "TTL" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="#" class="dcr-data-table__link">user:42:profile</a></td>
+            <td><span class="dcr-badge dcr-badge--warning">hash</span></td>
+            <td>db0</td>
+            <td class="dcr-col--right">412 B</td>
+            <td class="dcr-col--right">1h</td>
+          </tr>
+          <tr>
+            <td><a href="#" class="dcr-data-table__link">session:s9k2lq</a></td>
+            <td><span class="dcr-badge dcr-badge--info">string</span></td>
+            <td>db1</td>
+            <td class="dcr-col--right">1.2 KB</td>
+            <td class="dcr-col--right">14d</td>
+          </tr>
+          <tr>
+            <td><a href="#" class="dcr-data-table__link">queue:default</a></td>
+            <td><span class="dcr-badge dcr-badge--muted">list</span></td>
+            <td>db0</td>
+            <td class="dcr-col--right">8.2 KB</td>
+            <td class="dcr-col--right">never</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="dcr-pagination">
+        <div class="dcr-pagination__per-page">
+          <span class="dcr-pagination__summary">{% trans "Showing" %} <strong>1–3</strong> {% trans "of" %} <strong>12</strong></span>
+          <label>{% trans "Per page" %} <select class="dcr-pagination__per-page-select"><option>5</option><option>10</option><option>25</option></select></label>
+        </div>
+        <div class="dcr-pagination__controls">
+          <span class="dcr-pagination__btn dcr-pagination__btn--prev" aria-disabled="true" aria-label="{% trans 'Previous' %}">{% trans "Previous" %}</span>
+          <span class="dcr-pagination__page dcr-pagination__page--active">1</span>
+          <a href="#" class="dcr-pagination__page">2</a>
+          <a href="#" class="dcr-pagination__page">3</a>
+          <a href="#" class="dcr-pagination__btn dcr-pagination__btn--next" aria-label="{% trans 'Next' %}">{% trans "Next" %}</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;div class="dcr-data-table"&gt;
+
+  &lt;!-- Zone 1: header --&gt;
+  &lt;div class="dcr-data-table__header"&gt;
+    &lt;div class="dcr-data-table__header-info"&gt;
+      &lt;h3 class="dcr-data-table__title"&gt;Key Browser &lt;span class="dcr-badge"&gt;12 TOTAL&lt;/span&gt;&lt;/h3&gt;
+      &lt;p class="dcr-data-table__subtitle"&gt;Browse every key across all databases.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="dcr-data-table__meta"&gt;
+      &lt;div class="dcr-data-table__meta-info"&gt;
+        &lt;span&gt;Showing 8 of 12&lt;/span&gt;
+        &lt;span&gt;Updated just now&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;button type="button" class="dcr-btn dcr-btn--ghost dcr-btn--sm"&gt;
+        &lt;svg class="dcr-btn__icon" …&gt;&lt;/svg&gt; CLEAR
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Zone 2: controls (optional) --&gt;
+  &lt;div class="dcr-data-table__controls"&gt;
+    &lt;form class="dcr-form"&gt;…&lt;/form&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Zone 3: table body --&gt;
+  &lt;table&gt;…&lt;/table&gt;
+
+  &lt;!-- Zone 4: pagination (optional) --&gt;
+  &lt;div class="dcr-pagination"&gt;…&lt;/div&gt;
+
+&lt;/div&gt;</code></pre>
+</section>
+
+{# ── Expandable Rows ──────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="expandable-rows">
+  <h2 class="dcr-sg-section__title">{% trans "Expandable Rows" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "Add a " %}<code class="dcr-code">dcr-col--expand</code>{% trans " column with a " %}<code class="dcr-code">dcr-data-table__expand-btn</code>{% trans " toggle. Each row pairs with a hidden " %}<code class="dcr-code">dcr-data-table__expand-row</code>{% trans " sibling. Toggle " %}<code class="dcr-code">is-open</code>{% trans " and " %}<code class="dcr-code">aria-expanded</code>{% trans " via JS." %}</p>
+  <div class="dcr-sg-preview dcr-sg-preview--stack">
+    <div class="dcr-data-table dcr-data-table--no-stripe" style="width:100%">
+      <table>
+        <thead>
+          <tr>
+            <th class="dcr-col--expand"></th>
+            <th>{% trans "Receiver" %}</th>
+            <th>{% trans "Sender" %}</th>
+            <th>{% trans "Module" %}</th>
+            <th class="dcr-col--right">{% trans "Flags" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="dcr-col--expand">
+              <button class="dcr-data-table__expand-btn" aria-expanded="false" aria-controls="sg-expand-1">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </button>
+            </td>
+            <td><code class="dcr-code">create_profile</code></td>
+            <td>auth.User</td>
+            <td>profiles.signals</td>
+            <td class="dcr-col--right"><span class="dcr-badge dcr-badge--indigo">uid</span></td>
+          </tr>
+          <tr class="dcr-data-table__expand-row" id="sg-expand-1">
+            <td colspan="5">
+              <div class="dcr-code-viewer">
+                <div class="dcr-code-viewer__header">
+                  <span class="dcr-code-viewer__label">{% trans "SOURCE" %}</span>
+                  <span class="dcr-code-viewer__meta">profiles/signals.py:14</span>
+                </div>
+                <pre class="dcr-code-viewer__body"><code class="language-python">@receiver(post_save, sender=User)
+def create_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)</code></pre>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="dcr-col--expand">
+              <button class="dcr-data-table__expand-btn" aria-expanded="false" aria-controls="sg-expand-2">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </button>
+            </td>
+            <td><code class="dcr-code">send_order_email</code></td>
+            <td>orders.Order</td>
+            <td>notifications.signals</td>
+            <td class="dcr-col--right"><span class="dcr-badge dcr-badge--warning">weak</span></td>
+          </tr>
+          <tr class="dcr-data-table__expand-row" id="sg-expand-2">
+            <td colspan="5">
+              <div class="dcr-code-viewer">
+                <div class="dcr-code-viewer__header">
+                  <span class="dcr-code-viewer__label">{% trans "SOURCE" %}</span>
+                  <span class="dcr-code-viewer__meta">notifications/signals.py:22</span>
+                </div>
+                <pre class="dcr-code-viewer__body"><code class="language-python">@receiver(post_save, sender=Order, weak=False)
+def send_order_email(sender, instance, created, **kwargs):
+    if created:
+        send_confirmation.delay(instance.pk)</code></pre>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="dcr-col--expand">
+              <button class="dcr-data-table__expand-btn" aria-expanded="false" aria-controls="sg-expand-3">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </button>
+            </td>
+            <td><code class="dcr-code">reindex_post</code></td>
+            <td>blog.Post</td>
+            <td>search.signals</td>
+            <td class="dcr-col--right"><span class="dcr-badge dcr-badge--indigo">uid</span></td>
+          </tr>
+          <tr class="dcr-data-table__expand-row" id="sg-expand-3">
+            <td colspan="5">
+              <div class="dcr-code-viewer">
+                <div class="dcr-code-viewer__header">
+                  <span class="dcr-code-viewer__label">{% trans "SOURCE" %}</span>
+                  <span class="dcr-code-viewer__meta">search/signals.py:9</span>
+                </div>
+                <pre class="dcr-code-viewer__body"><code class="language-python">@receiver(post_save, sender=Post, dispatch_uid="search.reindex_post")
+def reindex_post(sender, instance, created, **kwargs):
+    reindex(instance)</code></pre>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;div class="dcr-data-table dcr-data-table--no-stripe"&gt;
+  &lt;table&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th class="dcr-col--expand"&gt;&lt;/th&gt;
+        &lt;th&gt;Receiver&lt;/th&gt;
+        ...
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;!-- data row --&gt;
+      &lt;tr&gt;
+        &lt;td class="dcr-col--expand"&gt;
+          &lt;button class="dcr-data-table__expand-btn"
+                  aria-expanded="false"
+                  aria-controls="row-1"&gt;
+            &lt;svg ...&gt;&lt;/svg&gt;
+          &lt;/button&gt;
+        &lt;/td&gt;
+        &lt;td&gt;create_profile&lt;/td&gt;
+        ...
+      &lt;/tr&gt;
+      &lt;!-- expand content row (hidden until toggled) --&gt;
+      &lt;tr class="dcr-data-table__expand-row" id="row-1"&gt;
+        &lt;td colspan="5"&gt;
+          &lt;div class="dcr-code-viewer"&gt;…&lt;/div&gt;
+        &lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+document.querySelectorAll('.dcr-data-table__expand-btn').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var row = document.getElementById(btn.getAttribute('aria-controls'));
+    var open = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', !open);
+    row.classList.toggle('is-open', !open);
+  });
+});
+&lt;/script&gt;</code></pre>
+</section>
+
+<script>
+document.querySelectorAll('.dcr-data-table__expand-btn').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var row = document.getElementById(btn.getAttribute('aria-controls'));
+    var open = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', !open);
+    row.classList.toggle('is-open', !open);
+  });
+});
+</script>
+
+{# ── Pagination ───────────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="pagination">
+  <h2 class="dcr-sg-section__title">{% trans "Pagination" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "Placed inside a " %}<code class="dcr-code">dcr-data-table</code>{% trans " card, after the " %}<code class="dcr-code">&lt;table&gt;</code>{% trans ". Supports numbered pages and cursor-only (prev / next) modes. Use " %}<code class="dcr-code">&lt;a&gt;</code>{% trans " for active controls, " %}<code class="dcr-code">&lt;span aria-disabled&gt;</code>{% trans " for disabled ones." %}</p>
+
+  {# Page-based pagination #}
+  <div class="dcr-sg-preview dcr-sg-preview--stack">
+    <div class="dcr-data-table">
+      <div class="dcr-data-table__header">
+        <h3 class="dcr-data-table__title">{% trans "Results" %}</h3>
+        <span class="dcr-badge dcr-badge--muted">847 keys</span>
+      </div>
+      <table>
+        <thead><tr><th>{% trans "Key" %}</th><th>{% trans "TTL" %}</th><th>{% trans "Size" %}</th></tr></thead>
+        <tbody>
+          <tr><td><code class="dcr-code">views.homepage</code></td><td>300s</td><td>1.2 KB</td></tr>
+          <tr><td><code class="dcr-code">views.product_42</code></td><td>600s</td><td>4.7 KB</td></tr>
+        </tbody>
+      </table>
+      <div class="dcr-pagination">
+        <div class="dcr-pagination__per-page">
+          <span class="dcr-pagination__summary">{% trans "Showing" %} <strong>1–20</strong> {% trans "of" %} <strong>847</strong></span>
+          <label>{% trans "Per page" %} <select class="dcr-pagination__per-page-select"><option>20</option><option>50</option></select></label>
+        </div>
+        <div class="dcr-pagination__controls">
+          <span class="dcr-pagination__btn dcr-pagination__btn--prev" aria-disabled="true" aria-label="{% trans 'Previous' %}">{% trans "Previous" %}</span>
+          <span class="dcr-pagination__page dcr-pagination__page--active">1</span>
+          <a href="#" class="dcr-pagination__page">2</a>
+          <a href="#" class="dcr-pagination__page">3</a>
+          <span class="dcr-pagination__ellipsis">…</span>
+          <a href="#" class="dcr-pagination__page">43</a>
+          <a href="#" class="dcr-pagination__btn dcr-pagination__btn--next" aria-label="{% trans 'Next' %}">{% trans "Next" %}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;div class="dcr-pagination"&gt;
+  &lt;div class="dcr-pagination__per-page"&gt;
+    &lt;span class="dcr-pagination__summary"&gt;Showing &lt;strong&gt;1–20&lt;/strong&gt; of &lt;strong&gt;847&lt;/strong&gt;&lt;/span&gt;
+    &lt;label&gt;Per page &lt;select class="dcr-pagination__per-page-select"&gt;…&lt;/select&gt;&lt;/label&gt;
+  &lt;/div&gt;
+  &lt;div class="dcr-pagination__controls"&gt;
+    &lt;span class="dcr-pagination__btn dcr-pagination__btn--prev" aria-disabled="true"&gt;Previous&lt;/span&gt;
+    &lt;span class="dcr-pagination__page dcr-pagination__page--active"&gt;1&lt;/span&gt;
+    &lt;a href="?page=2" class="dcr-pagination__page"&gt;2&lt;/a&gt;
+    &lt;span class="dcr-pagination__ellipsis"&gt;…&lt;/span&gt;
+    &lt;a href="?page=43" class="dcr-pagination__page"&gt;43&lt;/a&gt;
+    &lt;a href="?page=2" class="dcr-pagination__btn dcr-pagination__btn--next"&gt;Next&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+  {# Cursor-based pagination #}
+  <div class="dcr-sg-preview dcr-sg-preview--stack">
+    <div class="dcr-data-table">
+      <div class="dcr-data-table__header">
+        <div class="dcr-data-table__header-info">
+          <h3 class="dcr-data-table__title">{% trans "Keys" %}</h3>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>{% trans "Key" %}</th><th>{% trans "Type" %}</th></tr></thead>
+        <tbody>
+          <tr><td><a href="#" class="dcr-data-table__link">session:user_4821</a></td><td><span class="dcr-badge dcr-badge--info">string</span></td></tr>
+          <tr><td><a href="#" class="dcr-data-table__link">session:cart_5518</a></td><td><span class="dcr-badge dcr-badge--warning">hash</span></td></tr>
+        </tbody>
+      </table>
+      <div class="dcr-pagination">
+        <span class="dcr-pagination__summary">{% trans "Cursor scan — page 2" %}</span>
+        <div class="dcr-pagination__controls">
+          <a href="#" class="dcr-pagination__btn dcr-pagination__btn--prev" aria-label="{% trans 'Previous' %}">{% trans "Previous" %}</a>
+          <a href="#" class="dcr-pagination__btn dcr-pagination__btn--next" aria-label="{% trans 'Next' %}">{% trans "Next" %}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;!-- Cursor-based: no page numbers, just prev/next --&gt;
+&lt;div class="dcr-pagination"&gt;
+  &lt;span class="dcr-pagination__summary"&gt;Cursor scan — page 2&lt;/span&gt;
+  &lt;div class="dcr-pagination__controls"&gt;
+    &lt;a href="?cursor=prev" class="dcr-pagination__btn dcr-pagination__btn--prev"&gt;Previous&lt;/a&gt;
+    &lt;a href="?cursor=next" class="dcr-pagination__btn dcr-pagination__btn--next"&gt;Next&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+</section>
+
+{# ── Ability Matrix ───────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="ability-matrix">
+  <h2 class="dcr-sg-section__title">{% trans "Ability Matrix" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "Tabular display of what a backend supports. Use on overview pages that manage multiple backends." %}</p>
+  <div class="dcr-sg-preview">
+    <div class="dcr-data-table" style="width:100%">
+      <div class="dcr-data-table__header">
+        <h3 class="dcr-data-table__title">{% trans "Backend Capabilities" %}</h3>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>{% trans "Backend" %}</th>
+            <th>{% trans "Key listing" %}</th>
+            <th>{% trans "TTL support" %}</th>
+            <th>{% trans "Flush" %}</th>
+            <th>{% trans "Inline edit" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code class="dcr-code">LocMemCache</code></td>
+            <td><span class="dcr-ability-indicator dcr-ability-indicator--yes" aria-label="{% trans 'Supported' %}">✓</span></td>
+            <td><span class="dcr-ability-indicator dcr-ability-indicator--no"  aria-label="{% trans 'Not supported' %}">–</span></td>
+            <td><span class="dcr-ability-indicator dcr-ability-indicator--yes" aria-label="{% trans 'Supported' %}">✓</span></td>
+            <td><span class="dcr-ability-indicator dcr-ability-indicator--no"  aria-label="{% trans 'Not supported' %}">–</span></td>
+          </tr>
+          <tr>
+            <td><code class="dcr-code">RedisCache</code></td>
+            <td><span class="dcr-ability-indicator dcr-ability-indicator--yes" aria-label="{% trans 'Supported' %}">✓</span></td>
+            <td><span class="dcr-ability-indicator dcr-ability-indicator--yes" aria-label="{% trans 'Supported' %}">✓</span></td>
+            <td><span class="dcr-ability-indicator dcr-ability-indicator--yes" aria-label="{% trans 'Supported' %}">✓</span></td>
+            <td><span class="dcr-ability-indicator dcr-ability-indicator--yes" aria-label="{% trans 'Supported' %}">✓</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;div class="dcr-data-table"&gt;
+  &lt;div class="dcr-data-table__header"&gt;
+    &lt;h3 class="dcr-data-table__title"&gt;Backend Capabilities&lt;/h3&gt;
+  &lt;/div&gt;
+  &lt;table&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;&lt;th&gt;Backend&lt;/th&gt;&lt;th&gt;Key listing&lt;/th&gt;&lt;th&gt;TTL support&lt;/th&gt;&lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;td&gt;&lt;code class="dcr-code"&gt;RedisCache&lt;/code&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;span class="dcr-ability-indicator dcr-ability-indicator--yes"&gt;✓&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;span class="dcr-ability-indicator dcr-ability-indicator--no"&gt;–&lt;/span&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;</code></pre>
+</section>
