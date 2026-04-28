@@ -267,24 +267,3 @@
 {# Block #}
 &lt;code class="dcr-code dcr-code--block"&gt;{"status": "ok"}&lt;/code&gt;</code></pre>
 </section>
-
-{# ── Empty State ──────────────────────────────────────────────────────────── #}
-<section class="dcr-sg-section" id="empty-state">
-  <h2 class="dcr-sg-section__title">{% trans "Empty State" %}</h2>
-  <p class="dcr-sg-section__desc">{% trans "Full-page placeholder when a panel has no data, or as a welcome screen before configuration." %}</p>
-  <div class="dcr-sg-preview">
-    <div class="dcr-empty">
-      <h2 class="dcr-empty__title">{% trans "No tasks found" %}</h2>
-      <p class="dcr-empty__body">{% trans "There are no tasks matching your current filters. Try broadening your search or check that workers are running." %}</p>
-    </div>
-  </div>
-  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
-<pre class="dcr-sg-code"><code class="language-html">&lt;div class="dcr-empty"&gt;
-  &lt;h2 class="dcr-empty__title"&gt;No tasks found&lt;/h2&gt;
-  &lt;p class="dcr-empty__body"&gt;There are no tasks matching your current filters.&lt;/p&gt;
-  &lt;!-- optional links list --&gt;
-  &lt;ul class="dcr-empty__links"&gt;
-    &lt;li&gt;&lt;a href="/..."&gt;View all tasks&lt;/a&gt;&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/div&gt;</code></pre>
-</section>

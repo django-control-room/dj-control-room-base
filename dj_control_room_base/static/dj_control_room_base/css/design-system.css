@@ -322,7 +322,7 @@
 }
 
 .dcr-page-header__subtitle {
-  font-size: var(--dcr-font-size-md);
+  font-size: var(--dcr-font-size-base);
   color: var(--dcr-color-text-muted);
   margin: 0;
   margin-top: var(--dcr-space-xs);
@@ -2203,6 +2203,27 @@ a.dcr-pagination__page:hover {
   background: var(--dcr-color-danger);
 }
 
+/* Optional icon inside the input — wrap input + icon in dcr-inline-edit__field */
+.dcr-inline-edit__field {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.dcr-inline-edit__icon {
+  position: absolute;
+  left: 6px;
+  width: 12px;
+  height: 12px;
+  color: var(--dcr-color-text-muted);
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+.dcr-inline-edit__field .dcr-inline-edit__input {
+  padding-left: 24px;
+}
+
 
 /* --- Card ------------------------------------------------------------------- */
 
@@ -2236,8 +2257,8 @@ a.dcr-pagination__page:hover {
 }
 
 /* Prevent inline elements (pills, badges) from stretching in column-flex cards */
-.dcr-card-grid .dcr-card > .dcr-pill,
-.dcr-card-grid .dcr-card > .dcr-badge {
+.dcr-card-grid .dcr-card>.dcr-pill,
+.dcr-card-grid .dcr-card>.dcr-badge {
   align-self: flex-start;
 }
 

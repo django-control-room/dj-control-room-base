@@ -139,20 +139,11 @@
   scroll-margin-top: 48px;
 }
 
-/* Small eyebrow label above a section heading (e.g. "TOKENS") */
-.dcr-sg-section__pre-label {
-  font-size: var(--dcr-font-size-xs);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  color: var(--dcr-color-text-muted);
-  margin: 0 0 4px 0;
-}
 
 .dcr-sg-section__title {
   font-size: 20px;
   font-weight: 500;
-  margin: 0 0 var(--dcr-space-xs) 0;
+  margin: 0 0 var(--dcr-space-sm) 0;
   color: var(--dcr-color-text);
 }
 
@@ -241,12 +232,6 @@
   margin-bottom: var(--dcr-space-lg);
 }
 
-.dcr-sg-palette__intro {
-  padding: var(--dcr-space-md) var(--dcr-space-lg);
-  font-size: var(--dcr-font-size-sm);
-  color: var(--dcr-color-text-muted);
-  border-bottom: 1px solid var(--dcr-color-border);
-}
 
 .dcr-sg-palette__group {
   padding: var(--dcr-space-md) var(--dcr-space-lg);

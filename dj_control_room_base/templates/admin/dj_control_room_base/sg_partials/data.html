@@ -472,6 +472,72 @@ document.querySelectorAll('.dcr-data-table__expand-btn').forEach(function (btn) 
 &lt;/div&gt;</code></pre>
 </section>
 
+{# ── Empty Results ────────────────────────────────────────────────────────── #}
+<section class="dcr-sg-section" id="empty-results">
+  <h2 class="dcr-sg-section__title">{% trans "Empty Results" %}</h2>
+  <p class="dcr-sg-section__desc">{% trans "Place " %}<code class="dcr-code">dcr-empty</code>{% trans " inside a " %}<code class="dcr-code">&lt;tbody&gt;</code>{% trans " cell spanning all columns so the table headers remain visible. Two patterns: no data at all, and no results matching active filters." %}</p>
+
+  {# Variant 1 — no data #}
+  <div class="dcr-sg-preview">
+    <div class="dcr-data-table" style="width:100%">
+      <div class="dcr-data-table__header">
+        <h3 class="dcr-data-table__title">{% trans "Error Groups" %}</h3>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>{% trans "Title" %}</th>
+            <th>{% trans "Occurrences" %}</th>
+            <th>{% trans "Last seen" %}</th>
+            <th>{% trans "Status" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="4">
+              <div class="dcr-empty">
+                <div class="dcr-empty__icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+                </div>
+                <p class="dcr-empty__title">{% trans "No errors recorded" %}</p>
+                <p class="dcr-empty__body">{% trans "Errors captured from your views, middleware, and Celery tasks will appear here." %}</p>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;div class="dcr-data-table"&gt;
+  &lt;div class="dcr-data-table__header"&gt;
+    &lt;h3 class="dcr-data-table__title"&gt;Error Groups&lt;/h3&gt;
+  &lt;/div&gt;
+  &lt;table&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th&gt;Title&lt;/th&gt;
+        &lt;th&gt;Occurrences&lt;/th&gt;
+        &lt;th&gt;Last seen&lt;/th&gt;
+        &lt;th&gt;Status&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;td colspan="4"&gt;
+          &lt;div class="dcr-empty"&gt;
+            &lt;div class="dcr-empty__icon"&gt;...&lt;/div&gt;
+            &lt;p class="dcr-empty__title"&gt;No errors recorded&lt;/p&gt;
+            &lt;p class="dcr-empty__body"&gt;Errors captured from your views, middleware, and Celery tasks will appear here.&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;</code></pre>
+
+</section>
+
 {# ── Ability Matrix ───────────────────────────────────────────────────────── #}
 <section class="dcr-sg-section" id="ability-matrix">
   <h2 class="dcr-sg-section__title">{% trans "Ability Matrix" %}</h2>

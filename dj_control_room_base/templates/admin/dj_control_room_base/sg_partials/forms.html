@@ -103,21 +103,33 @@
 {# ── Inline Edit ──────────────────────────────────────────────────────────── #}
 <section class="dcr-sg-section" id="inline-edit">
   <h2 class="dcr-sg-section__title">{% trans "Inline Edit" %}</h2>
-  <p class="dcr-sg-section__desc">{% trans "Edit a single value in place without navigating to a full change form. Useful for TTLs, retry counts, or short string values." %}</p>
+  <p class="dcr-sg-section__desc">{% trans "Edit a single value in place without navigating to a full change form. Useful for TTLs, retry counts, or short string values. Wrap the input in " %}<code class="dcr-code">dcr-inline-edit__field</code>{% trans " to add a left-side icon." %}</p>
+
+  {# With left icon #}
   <div class="dcr-sg-preview">
     <span class="dcr-inline-edit">
-      <input class="dcr-inline-edit__input" type="text" value="3600" aria-label="{% trans 'TTL' %}">
+      <span class="dcr-inline-edit__field">
+        <svg class="dcr-inline-edit__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <input class="dcr-inline-edit__input" type="text" value="86400" aria-label="{% trans 'TTL in seconds' %}">
+      </span>
       <button class="dcr-inline-edit__btn" title="{% trans 'Save' %}">✓</button>
       <button class="dcr-inline-edit__btn dcr-inline-edit__btn--danger" title="{% trans 'Delete' %}">✕</button>
     </span>
     <span class="dcr-inline-edit" style="margin-left:var(--dcr-space-md)">
-      <input class="dcr-inline-edit__input" type="text" value="disabled" disabled aria-label="{% trans 'Disabled example' %}">
-      <button class="dcr-inline-edit__btn" disabled>✓</button>
+      <span class="dcr-inline-edit__field">
+        <svg class="dcr-inline-edit__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        <input class="dcr-inline-edit__input" type="text" value="user:42:profile" aria-label="{% trans 'Cache key' %}">
+      </span>
+      <button class="dcr-inline-edit__btn" title="{% trans 'Save' %}">✓</button>
     </span>
   </div>
   <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
-<pre class="dcr-sg-code"><code class="language-html">&lt;span class="dcr-inline-edit"&gt;
-  &lt;input class="dcr-inline-edit__input" type="text" value="3600"&gt;
+<pre class="dcr-sg-code"><code class="language-html">&lt;!-- Wrap input + icon in dcr-inline-edit__field --&gt;
+&lt;span class="dcr-inline-edit"&gt;
+  &lt;span class="dcr-inline-edit__field"&gt;
+    &lt;svg class="dcr-inline-edit__icon" ...&gt;...&lt;/svg&gt;
+    &lt;input class="dcr-inline-edit__input" type="text" value="86400"&gt;
+  &lt;/span&gt;
   &lt;button class="dcr-inline-edit__btn"&gt;✓&lt;/button&gt;
   &lt;button class="dcr-inline-edit__btn dcr-inline-edit__btn--danger"&gt;✕&lt;/button&gt;
 &lt;/span&gt;</code></pre>
