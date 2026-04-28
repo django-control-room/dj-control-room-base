@@ -947,7 +947,7 @@ a.dcr-btn--muted.dcr-btn--ghost:visited {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: var(--dcr-color-text-muted);
-  margin-bottom: var(--dcr-space-xs);
+  margin-bottom: var(--dcr-space-sm);
 }
 
 .dcr-metric__value {
@@ -956,6 +956,7 @@ a.dcr-btn--muted.dcr-btn--ghost:visited {
   font-weight: 700;
   color: var(--dcr-color-text);
   line-height: 1.2;
+  margin-top: var(--dcr-space-sm);
 }
 
 .dcr-metric__value--success {
