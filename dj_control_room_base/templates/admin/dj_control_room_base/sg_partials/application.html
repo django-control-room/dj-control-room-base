@@ -1,6 +1,8 @@
 {% load i18n %}
 <section class="dcr-sg-section" id="page-header">
-  <h2 class="dcr-sg-section__title">{% trans "Page Header" %}</h2>
+  <div class="dcr-section-header">
+    <h2 class="dcr-section-header__title">{% trans "Page Header" %}</h2>
+  </div>
   <p class="dcr-sg-section__desc">{% trans "The page header sits at the top of every panel view. It supports four compositions: plain title, panel overview (icon + title + status pill + subtitle), detail page (back link + icon + title + badge(s) + meta + actions), and minimal with actions." %}</p>
 
   <div class="dcr-sg-preview dcr-sg-preview--stack">
@@ -152,7 +154,9 @@
 </section>
 
 <section class="dcr-sg-section" id="content-width">
-  <h2 class="dcr-sg-section__title">{% trans "Content Width" %}</h2>
+  <div class="dcr-section-header">
+    <h2 class="dcr-section-header__title">{% trans "Content Width" %}</h2>
+  </div>
   <p class="dcr-sg-section__desc">{% trans "Centered, max-width wrappers for panel content. Wrap your " %}<code class="dcr-code">dcr-page-header</code>{% trans " and body content in " %}<code class="dcr-code">dcr-content</code>{% trans " with a size modifier. Most panels should use " %}<code class="dcr-code">--lg</code>{% trans "." %}</p>
   <div class="dcr-sg-preview dcr-sg-preview--stack">
     {% for width, maxw in widths %}{% endfor %}
@@ -180,7 +184,9 @@
 </section>
 
 <section class="dcr-sg-section" id="section-header">
-  <h2 class="dcr-sg-section__title">{% trans "Section Header" %}</h2>
+  <div class="dcr-section-header">
+    <h2 class="dcr-section-header__title">{% trans "Section Header" %}</h2>
+  </div>
   <p class="dcr-sg-section__desc">{% trans "Uppercase label + bottom rule to head sub-sections on a panel page. Optionally followed by a badge." %}</p>
   <div class="dcr-sg-preview dcr-sg-preview--stack">
     <div style="width:100%">
@@ -208,7 +214,9 @@
 </section>
 
 <section class="dcr-sg-section" id="callout">
-  <h2 class="dcr-sg-section__title">{% trans "Callout" %}</h2>
+  <div class="dcr-section-header">
+    <h2 class="dcr-section-header__title">{% trans "Callout" %}</h2>
+  </div>
   <p class="dcr-sg-section__desc">{% trans "Static informational panel with a left-border accent. For persistent guidance, not flash messages." %}</p>
   <div class="dcr-sg-preview dcr-sg-preview--stack">
     <div class="dcr-callout"><p class="dcr-callout__body">Default callout with no modifier.</p></div>
@@ -226,7 +234,9 @@
 </section>
 
 <section class="dcr-sg-section" id="danger-zone">
-  <h2 class="dcr-sg-section__title">{% trans "Danger Zone" %}</h2>
+  <div class="dcr-section-header">
+    <h2 class="dcr-section-header__title">{% trans "Danger Zone" %}</h2>
+  </div>
   <p class="dcr-sg-section__desc">{% trans "Visually isolated section for irreversible operations. Always pair with a confirmation mechanism." %}</p>
   <div class="dcr-sg-preview">
     <div class="dcr-danger-zone" style="width:100%">
@@ -244,7 +254,9 @@
 </section>
 
 <section class="dcr-sg-section" id="code">
-  <h2 class="dcr-sg-section__title">{% trans "Code" %}</h2>
+  <div class="dcr-section-header">
+    <h2 class="dcr-section-header__title">{% trans "Code" %}</h2>
+  </div>
   <p class="dcr-sg-section__desc">{% trans "Monospace display for keys, values, payloads, or any machine-readable content. Inline and block variants." %}</p>
   <div class="dcr-sg-preview dcr-sg-preview--stack">
     <p>{% trans "Cache key:" %} <code class="dcr-code">sessions:abc123def456</code></p>

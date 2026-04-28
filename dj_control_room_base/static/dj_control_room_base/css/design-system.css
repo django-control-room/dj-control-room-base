@@ -1072,18 +1072,23 @@ a.dcr-btn--muted.dcr-btn--ghost:visited {
   display: flex;
   align-items: center;
   gap: var(--dcr-space-sm);
-  padding-bottom: var(--dcr-space-sm);
   margin-bottom: var(--dcr-space-md);
-  border-bottom: 1px solid var(--dcr-color-border);
+}
+
+.dcr-section-header::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--dcr-color-border);
 }
 
 .dcr-section-header__title {
   margin: 0;
-  font-size: var(--dcr-font-size-xs);
+  font-size: var(--dcr-font-size-md);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.6px;
-  color: var(--dcr-color-text-muted);
+  white-space: nowrap;
 }
 
 
