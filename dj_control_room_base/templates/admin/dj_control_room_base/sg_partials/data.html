@@ -1,10 +1,8 @@
 {% load i18n %}
-{# ── Data Table ───────────────────────────────────────────────────────────── #}
 <section class="dcr-sg-section" id="data-table">
   <h2 class="dcr-sg-section__title">{% trans "Data Table" %}</h2>
   <p class="dcr-sg-section__desc">{% trans "Card-wrapped table with four named zones: " %}<strong>{% trans "header" %}</strong>{% trans " (title + badge + subtitle + right meta), " %}<strong>{% trans "controls" %}</strong>{% trans " (search + filters, subtle bg), " %}<strong>{% trans "table body" %}</strong>{% trans ", and " %}<strong>{% trans "pagination" %}</strong>{% trans ". All zones are optional — use only what you need. Add " %}<code class="dcr-code">dcr-data-table__header--subtle</code>{% trans " to tint the header, and " %}<code class="dcr-code">dcr-data-table__title-icon</code>{% trans " on an SVG to place an icon before the title text." %}</p>
 
-  {# Variant 1 — subtle tinted header with icon #}
   <div class="dcr-sg-preview">
     <div class="dcr-data-table" style="width:100%">
       <div class="dcr-data-table__header dcr-data-table__header--subtle">
@@ -58,7 +56,6 @@
   &lt;table&gt;…&lt;/table&gt;
 &lt;/div&gt;</code></pre>
 
-  {# Variant 2 — simple table, no-stripe #}
   <div class="dcr-sg-preview">
     <div class="dcr-data-table dcr-data-table--no-stripe" style="width:100%">
       <table>
@@ -99,7 +96,6 @@
   &lt;table&gt;…&lt;/table&gt;
 &lt;/div&gt;</code></pre>
 
-  {# Variant 3 — full four-zone table (header + controls + body + pagination) #}
   <div class="dcr-sg-preview dcr-sg-preview--stack">
     <div class="dcr-data-table" style="width:100%">
 
@@ -234,7 +230,6 @@
 &lt;/div&gt;</code></pre>
 </section>
 
-{# ── Expandable Rows ──────────────────────────────────────────────────────── #}
 <section class="dcr-sg-section" id="expandable-rows">
   <h2 class="dcr-sg-section__title">{% trans "Expandable Rows" %}</h2>
   <p class="dcr-sg-section__desc">{% trans "Add a " %}<code class="dcr-code">dcr-col--expand</code>{% trans " column with a " %}<code class="dcr-code">dcr-data-table__expand-btn</code>{% trans " toggle. Each row pairs with a hidden " %}<code class="dcr-code">dcr-data-table__expand-row</code>{% trans " sibling. Toggle " %}<code class="dcr-code">is-open</code>{% trans " and " %}<code class="dcr-code">aria-expanded</code>{% trans " via JS." %}</p>
@@ -385,7 +380,6 @@ document.querySelectorAll('.dcr-data-table__expand-btn').forEach(function (btn) 
 });
 </script>
 
-{# ── Pagination ───────────────────────────────────────────────────────────── #}
 <section class="dcr-sg-section" id="pagination">
   <h2 class="dcr-sg-section__title">{% trans "Pagination" %}</h2>
   <p class="dcr-sg-section__desc">{% trans "Placed inside a " %}<code class="dcr-code">dcr-data-table</code>{% trans " card, after the " %}<code class="dcr-code">&lt;table&gt;</code>{% trans ". Supports numbered pages and cursor-only (prev / next) modes. Use " %}<code class="dcr-code">&lt;a&gt;</code>{% trans " for active controls, " %}<code class="dcr-code">&lt;span aria-disabled&gt;</code>{% trans " for disabled ones." %}</p>
@@ -472,12 +466,10 @@ document.querySelectorAll('.dcr-data-table__expand-btn').forEach(function (btn) 
 &lt;/div&gt;</code></pre>
 </section>
 
-{# ── Empty Results ────────────────────────────────────────────────────────── #}
 <section class="dcr-sg-section" id="empty-results">
   <h2 class="dcr-sg-section__title">{% trans "Empty Results" %}</h2>
   <p class="dcr-sg-section__desc">{% trans "Place " %}<code class="dcr-code">dcr-empty</code>{% trans " inside a " %}<code class="dcr-code">&lt;tbody&gt;</code>{% trans " cell spanning all columns so the table headers remain visible. Two patterns: no data at all, and no results matching active filters." %}</p>
 
-  {# Variant 1 — no data #}
   <div class="dcr-sg-preview">
     <div class="dcr-data-table" style="width:100%">
       <div class="dcr-data-table__header">
@@ -538,7 +530,6 @@ document.querySelectorAll('.dcr-data-table__expand-btn').forEach(function (btn) 
 
 </section>
 
-{# ── Ability Matrix ───────────────────────────────────────────────────────── #}
 <section class="dcr-sg-section" id="ability-matrix">
   <h2 class="dcr-sg-section__title">{% trans "Ability Matrix" %}</h2>
   <p class="dcr-sg-section__desc">{% trans "Tabular display of what a backend supports. Use on overview pages that manage multiple backends." %}</p>

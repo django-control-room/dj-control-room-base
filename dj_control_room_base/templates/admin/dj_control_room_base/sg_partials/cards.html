@@ -1,5 +1,4 @@
 {% load i18n %}
-{# ── Metric ───────────────────────────────────────────────────────────────── #}
 <section class="dcr-sg-section" id="metric">
   <h2 class="dcr-sg-section__title">{% trans "Metric" %}</h2>
   <p class="dcr-sg-section__desc">{% trans "KPI tiles for at-a-glance numeric summaries. Wrap tiles in " %}<code class="dcr-code">dcr-metric-grid</code>{% trans " for automatic responsive columns." %}</p>
@@ -22,7 +21,6 @@
 &lt;/div&gt;</code></pre>
 </section>
 
-{# ── Definition List ──────────────────────────────────────────────────────── #}
 <section class="dcr-sg-section" id="definition-list">
   <h2 class="dcr-sg-section__title">{% trans "Definition List" %}</h2>
   <p class="dcr-sg-section__desc">{% trans "Label / value pairs on a subtle background. Two layouts: " %}<strong>{% trans "vertical" %}</strong>{% trans " (stacked rows, default) and " %}<strong>{% trans "horizontal" %}</strong>{% trans " (inline info bar, add " %}<code class="dcr-code">--horizontal</code>{% trans ")." %}</p>
@@ -141,7 +139,6 @@
 &lt;/dl&gt;</code></pre>
 </section>
 
-{# ── Panel Grid ───────────────────────────────────────────────────────────── #}
 <section class="dcr-sg-section" id="panel-grid">
   <h2 class="dcr-sg-section__title">{% trans "Panel Grid" %}</h2>
   <p class="dcr-sg-section__desc">{% trans "Responsive 3-column grid of panel cards. Use " %}<code class="dcr-code">dcr-panel-grid</code>{% trans " as the container and " %}<code class="dcr-code">dcr-panel-card</code>{% trans " for each item. Add " %}<code class="dcr-code">dcr-panel-card--placeholder</code>{% trans " for the dashed call-to-action slot." %}</p>
@@ -210,9 +207,8 @@
 &lt;/div&gt;</code></pre>
 </section>
 
-{# ── Activity Feed (dcr-card) ─────────────────────────────────────────────── #}
 <section class="dcr-sg-section" id="activity-feed">
-  <h2 class="dcr-sg-section__title">{% trans "Card — Activity Feed" %}</h2>
+  <h2 class="dcr-sg-section__title">{% trans "Card: Activity Feed" %}</h2>
   <p class="dcr-sg-section__desc">{% trans "Use " %}<code class="dcr-code">dcr-card</code>{% trans " with " %}<code class="dcr-code">dcr-card__row</code>{% trans " items. Each row uses " %}<code class="dcr-code">dcr-card__row-source</code>{% trans " (badge), " %}<code class="dcr-code">dcr-card__row-text</code>{% trans ", and " %}<code class="dcr-code">dcr-card__row-time</code>{% trans "." %}</p>
   <div class="dcr-sg-preview">
     <div class="dcr-card" style="width:100%">
@@ -257,9 +253,8 @@
 &lt;/div&gt;</code></pre>
 </section>
 
-{# ── Key/Value Card (dcr-card) ────────────────────────────────────────────── #}
 <section class="dcr-sg-section" id="info-card">
-  <h2 class="dcr-sg-section__title">{% trans "Card — Key/Value" %}</h2>
+  <h2 class="dcr-sg-section__title">{% trans "Card: Key/Value" %}</h2>
   <p class="dcr-sg-section__desc">{% trans "Use " %}<code class="dcr-code">dcr-card</code>{% trans " with " %}<code class="dcr-code">dcr-card__row</code>{% trans " items. Each row uses " %}<code class="dcr-code">dcr-card__row-label</code>{% trans " and " %}<code class="dcr-code">dcr-card__row-value</code>{% trans " (add " %}<code class="dcr-code">--bold</code>{% trans " for emphasis). " %}<code class="dcr-code">dcr-card__footer</code>{% trans " adds a muted note below the rows." %}</p>
   <div class="dcr-sg-preview">
     <div class="dcr-card" style="max-width:360px">
@@ -305,7 +300,6 @@
 &lt;/div&gt;</code></pre>
 </section>
 
-{# ── Code Viewer ──────────────────────────────────────────────────────────── #}
 <section class="dcr-sg-section" id="code-viewer">
   <h2 class="dcr-sg-section__title">{% trans "Code Viewer" %}</h2>
   <p class="dcr-sg-section__desc">{% trans "Use " %}<code class="dcr-code">dcr-code-viewer</code>{% trans " as the outer wrapper. " %}<code class="dcr-code">dcr-code-viewer__header</code>{% trans " / " %}<code class="dcr-code">__label</code>{% trans " / " %}<code class="dcr-code">__meta</code>{% trans " style the labelled header strip. " %}<code class="dcr-code">dcr-code-viewer__body</code>{% trans " holds the highlight.js code block. Optionally add a " %}<code class="dcr-code">dcr-code-viewer__title</code>{% trans " zone for function signatures." %}</p>

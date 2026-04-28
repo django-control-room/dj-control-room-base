@@ -1,10 +1,8 @@
 {% load i18n %}
-{# ── Page Header ──────────────────────────────────────────────────────────── #}
 <section class="dcr-sg-section" id="page-header">
   <h2 class="dcr-sg-section__title">{% trans "Page Header" %}</h2>
   <p class="dcr-sg-section__desc">{% trans "The page header sits at the top of every panel view. It supports four compositions: plain title, panel overview (icon + title + status pill + subtitle), detail page (back link + icon + title + badge(s) + meta + actions), and minimal with actions." %}</p>
 
-  {# Variant 1 — plain title + actions #}
   <div class="dcr-sg-preview dcr-sg-preview--stack">
     <div class="dcr-page-header">
       <h1 class="dcr-page-header__title">{% trans "Cache Keys" %}</h1>
@@ -21,7 +19,6 @@
   &lt;/div&gt;
 &lt;/div&gt;</code></pre>
 
-  {# Variant 2 — panel overview: icon + title + pill + subtitle #}
   <div class="dcr-sg-preview dcr-sg-preview--stack">
     <div class="dcr-page-header">
       <div class="dcr-page-header__main">
@@ -68,7 +65,6 @@
   &lt;/div&gt;
 &lt;/div&gt;</code></pre>
 
-  {# Variant 3 — detail page: back link + icon + title + badge + subtitle + meta + actions #}
   <div class="dcr-sg-preview dcr-sg-preview--stack">
     <a href="#" class="dcr-back-link">{% trans "Back to all errors" %}</a>
     <div class="dcr-page-header">
@@ -116,7 +112,6 @@
   &lt;/div&gt;
 &lt;/div&gt;</code></pre>
 
-  {# Variant 4 — detail page: back link + icon + multiple labels (badge + pill) + subtitle #}
   <div class="dcr-sg-preview dcr-sg-preview--stack">
     <a href="#" class="dcr-back-link">{% trans "Back to all signals" %}</a>
     <div class="dcr-page-header">
@@ -156,7 +151,6 @@
 
 </section>
 
-{# ── Content Width ────────────────────────────────────────────────────────── #}
 <section class="dcr-sg-section" id="content-width">
   <h2 class="dcr-sg-section__title">{% trans "Content Width" %}</h2>
   <p class="dcr-sg-section__desc">{% trans "Centered, max-width wrappers for panel content. Wrap your " %}<code class="dcr-code">dcr-page-header</code>{% trans " and body content in " %}<code class="dcr-code">dcr-content</code>{% trans " with a size modifier. Most panels should use " %}<code class="dcr-code">--lg</code>{% trans "." %}</p>
@@ -185,7 +179,6 @@
 &lt;/div&gt;</code></pre>
 </section>
 
-{# ── Section Header ───────────────────────────────────────────────────────── #}
 <section class="dcr-sg-section" id="section-header">
   <h2 class="dcr-sg-section__title">{% trans "Section Header" %}</h2>
   <p class="dcr-sg-section__desc">{% trans "Uppercase label + bottom rule to head sub-sections on a panel page. Optionally followed by a badge." %}</p>
@@ -214,7 +207,6 @@
 &lt;/div&gt;</code></pre>
 </section>
 
-{# ── Callout ──────────────────────────────────────────────────────────────── #}
 <section class="dcr-sg-section" id="callout">
   <h2 class="dcr-sg-section__title">{% trans "Callout" %}</h2>
   <p class="dcr-sg-section__desc">{% trans "Static informational panel with a left-border accent. For persistent guidance, not flash messages." %}</p>
@@ -233,7 +225,6 @@
 &lt;/div&gt;</code></pre>
 </section>
 
-{# ── Danger Zone ──────────────────────────────────────────────────────────── #}
 <section class="dcr-sg-section" id="danger-zone">
   <h2 class="dcr-sg-section__title">{% trans "Danger Zone" %}</h2>
   <p class="dcr-sg-section__desc">{% trans "Visually isolated section for irreversible operations. Always pair with a confirmation mechanism." %}</p>
@@ -252,7 +243,6 @@
 &lt;/div&gt;</code></pre>
 </section>
 
-{# ── Code (inline / block) ────────────────────────────────────────────────── #}
 <section class="dcr-sg-section" id="code">
   <h2 class="dcr-sg-section__title">{% trans "Code" %}</h2>
   <p class="dcr-sg-section__desc">{% trans "Monospace display for keys, values, payloads, or any machine-readable content. Inline and block variants." %}</p>

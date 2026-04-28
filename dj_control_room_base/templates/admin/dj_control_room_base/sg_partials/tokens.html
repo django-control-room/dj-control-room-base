@@ -1,11 +1,9 @@
 {% load i18n %}
-{# ── TOKENS: Colors ───────────────────────────────────────────────────────── #}
 <section class="dcr-sg-section" id="colors">
   <h2 class="dcr-sg-section__title">{% trans "Color palette" %}</h2>
   <p class="dcr-sg-section__desc">{% trans "Palette swatches reflect the current mode. All " %}<code class="dcr-code">dcr-*</code>{% trans " components consume only these tokens — override them on " %}<code class="dcr-code">:root</code>{% trans " to theme every component at once." %}</p>
   <div class="dcr-sg-palette">
 
-    {# ── Group 1: Surfaces ── #}
     <div class="dcr-sg-palette__group">
       <p class="dcr-sg-palette__group-title">{% trans "Surfaces" %}</p>
       <p class="dcr-sg-palette__group-desc">{% trans "Page, card, and control backgrounds plus border colours." %}</p>
@@ -53,7 +51,6 @@
       </div>
     </div>
 
-    {# ── Group 2: Semantic colours ── #}
     <div class="dcr-sg-palette__group">
       <p class="dcr-sg-palette__group-title">{% trans "Semantic" %}</p>
       <p class="dcr-sg-palette__group-desc">{% trans "Solid colours for buttons, badges, icons, and status indicators." %}</p>
@@ -109,7 +106,6 @@
       </div>
     </div>
 
-    {# ── Group 3: Tinted backgrounds ── #}
     <div class="dcr-sg-palette__group">
       <p class="dcr-sg-palette__group-title">{% trans "Tinted backgrounds" %}</p>
       <p class="dcr-sg-palette__group-desc">{% trans "Soft fills paired with each semantic colour — used for tinted badges and hover states." %}</p>
@@ -181,7 +177,6 @@
       </div>
     </div>
 
-    {# ── Group 4: Extended semantic ── #}
     <div class="dcr-sg-palette__group">
       <p class="dcr-sg-palette__group-title">{% trans "Extended semantic" %}</p>
       <p class="dcr-sg-palette__group-desc">{% trans "Additional colours for task states, log levels, and signal kinds." %}</p>
@@ -208,7 +203,6 @@
   </div>
 </section>
 
-{# ── TOKENS: Spacing ──────────────────────────────────────────────────────── #}
 <section class="dcr-sg-section" id="spacing">
   <h2 class="dcr-sg-section__title">{% trans "Spacing" %}</h2>
   <p class="dcr-sg-section__desc">{% trans "Five-step scale used for padding, margin, and gap throughout the design system. Always reference a token — never hardcode pixel values." %}</p>
