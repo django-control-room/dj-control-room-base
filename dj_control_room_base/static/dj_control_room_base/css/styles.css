@@ -68,7 +68,7 @@
 
 /* Tab pane content areas */
 .dcr-sg-tab-pane {
-  padding-top: var(--dcr-space-lg);
+  padding-top: var(--dcr-space-xl);
 }
 
 /* Landing-page section grid */
@@ -135,7 +135,7 @@
 
 /* Sections */
 .dcr-sg-section {
-  margin-bottom: var(--dcr-space-xl);
+  margin-bottom: 72px;
   scroll-margin-top: 48px;
 }
 

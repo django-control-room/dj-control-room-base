@@ -197,6 +197,70 @@
   font-family: var(--dcr-font-mono) !important;
 }
 
+.dcr-font-normal {
+  font-weight: 400 !important;
+}
+
+.dcr-font-medium {
+  font-weight: 500 !important;
+}
+
+.dcr-font-bold {
+  font-weight: 700 !important;
+}
+
+/* Text colour utilities — one per semantic token */
+.dcr-text-default {
+  color: var(--dcr-color-text) !important;
+}
+
+.dcr-text-muted {
+  color: var(--dcr-color-text-muted) !important;
+}
+
+.dcr-text-inverse {
+  color: var(--dcr-color-text-inverse) !important;
+}
+
+.dcr-text-accent {
+  color: var(--dcr-color-accent) !important;
+}
+
+.dcr-text-success {
+  color: var(--dcr-color-success) !important;
+}
+
+.dcr-text-warning {
+  color: var(--dcr-color-warning) !important;
+}
+
+.dcr-text-danger {
+  color: var(--dcr-color-danger) !important;
+}
+
+.dcr-text-info {
+  color: var(--dcr-color-info) !important;
+}
+
+.dcr-text-purple {
+  color: var(--dcr-color-purple) !important;
+}
+
+.dcr-text-indigo {
+  color: var(--dcr-color-indigo) !important;
+}
+
+.dcr-text-uppercase {
+  text-transform: uppercase !important;
+}
+
+.dcr-text-lowercase {
+  text-transform: lowercase !important;
+}
+
+.dcr-text-capitalize {
+  text-transform: capitalize !important;
+}
 
 /* --- Content width ---------------------------------------------------------- */
 /*
@@ -1084,7 +1148,7 @@ a.dcr-btn--muted.dcr-btn--ghost:visited {
 
 .dcr-section-header__title {
   margin: 0;
-  font-size: var(--dcr-font-size-md);
+  font-size: var(--dcr-font-size-base);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.6px;
