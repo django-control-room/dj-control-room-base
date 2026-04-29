@@ -1,6 +1,6 @@
 {% load i18n %}
 <section class="dcr-sg-section" id="page-header">
-  <div class="dcr-section-header">
+  <div class="dcr-section-header dcr-section-header--plain">
     <h2 class="dcr-section-header__title">{% trans "Page Header" %}</h2>
   </div>
   <p class="dcr-sg-section__desc">{% trans "The page header sits at the top of every panel view. It supports four compositions: plain title, panel overview (icon + title + status pill + subtitle), detail page (back link + icon + title + badge(s) + meta + actions), and minimal with actions." %}</p>
@@ -154,7 +154,7 @@
 </section>
 
 <section class="dcr-sg-section" id="content-width">
-  <div class="dcr-section-header">
+  <div class="dcr-section-header dcr-section-header--plain">
     <h2 class="dcr-section-header__title">{% trans "Content Width" %}</h2>
   </div>
   <p class="dcr-sg-section__desc">{% trans "Centered, max-width wrappers for panel content. Wrap your " %}<code class="dcr-code">dcr-page-header</code>{% trans " and body content in " %}<code class="dcr-code">dcr-content</code>{% trans " with a size modifier. Most panels should use " %}<code class="dcr-code">--lg</code>{% trans "." %}</p>
@@ -184,10 +184,10 @@
 </section>
 
 <section class="dcr-sg-section" id="section-header">
-  <div class="dcr-section-header">
+  <div class="dcr-section-header dcr-section-header--plain">
     <h2 class="dcr-section-header__title">{% trans "Section Header" %}</h2>
   </div>
-  <p class="dcr-sg-section__desc">{% trans "Uppercase label + bottom rule to head sub-sections on a panel page. Optionally followed by a badge." %}</p>
+  <p class="dcr-sg-section__desc">{% trans "Uppercase label used to head sub-sections on a panel page. Default variant extends a midline rule to full width. Add " %}<code class="dcr-code">--plain</code>{% trans " to suppress the rule. Optionally place a badge inline." %}</p>
   <div class="dcr-sg-preview dcr-sg-preview--stack">
     <div style="width:100%">
       <div class="dcr-section-header">
@@ -200,9 +200,21 @@
         <span class="dcr-badge dcr-badge--warning">HASH</span>
       </div>
     </div>
+    <div style="width:100%">
+      <div class="dcr-section-header dcr-section-header--plain">
+        <h2 class="dcr-section-header__title">{% trans "Overview" %}</h2>
+      </div>
+    </div>
+    <div style="width:100%">
+      <div class="dcr-section-header dcr-section-header--plain">
+        <h2 class="dcr-section-header__title">{% trans "Recent Events" %}</h2>
+        <span class="dcr-badge">12</span>
+      </div>
+    </div>
   </div>
   <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
-<pre class="dcr-sg-code"><code class="language-html">&lt;div class="dcr-section-header"&gt;
+<pre class="dcr-sg-code"><code class="language-html">&lt;!-- default: midline rule --&gt;
+&lt;div class="dcr-section-header"&gt;
   &lt;h2 class="dcr-section-header__title"&gt;Key Information&lt;/h2&gt;
 &lt;/div&gt;
 
@@ -210,11 +222,16 @@
 &lt;div class="dcr-section-header"&gt;
   &lt;h2 class="dcr-section-header__title"&gt;Stored Value&lt;/h2&gt;
   &lt;span class="dcr-badge dcr-badge--warning"&gt;HASH&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;!-- plain: no rule --&gt;
+&lt;div class="dcr-section-header dcr-section-header--plain"&gt;
+  &lt;h2 class="dcr-section-header__title"&gt;Overview&lt;/h2&gt;
 &lt;/div&gt;</code></pre>
 </section>
 
 <section class="dcr-sg-section" id="callout">
-  <div class="dcr-section-header">
+  <div class="dcr-section-header dcr-section-header--plain">
     <h2 class="dcr-section-header__title">{% trans "Callout" %}</h2>
   </div>
   <p class="dcr-sg-section__desc">{% trans "Static informational panel with a left-border accent. For persistent guidance, not flash messages." %}</p>
@@ -234,7 +251,7 @@
 </section>
 
 <section class="dcr-sg-section" id="danger-zone">
-  <div class="dcr-section-header">
+  <div class="dcr-section-header dcr-section-header--plain">
     <h2 class="dcr-section-header__title">{% trans "Danger Zone" %}</h2>
   </div>
   <p class="dcr-sg-section__desc">{% trans "Visually isolated section for irreversible operations. Always pair with a confirmation mechanism." %}</p>
@@ -254,7 +271,7 @@
 </section>
 
 <section class="dcr-sg-section" id="code">
-  <div class="dcr-section-header">
+  <div class="dcr-section-header dcr-section-header--plain">
     <h2 class="dcr-section-header__title">{% trans "Code" %}</h2>
   </div>
   <p class="dcr-sg-section__desc">{% trans "Monospace display for keys, values, payloads, or any machine-readable content. Inline and block variants." %}</p>

@@ -1,6 +1,6 @@
 {% load i18n %}
 <section class="dcr-sg-section" id="data-table">
-  <div class="dcr-section-header">
+  <div class="dcr-section-header dcr-section-header--plain">
     <h2 class="dcr-section-header__title">{% trans "Data Table" %}</h2>
   </div>
   <p class="dcr-sg-section__desc">{% trans "Card-wrapped table with four named zones: " %}<strong>{% trans "header" %}</strong>{% trans " (title + badge + subtitle + right meta), " %}<strong>{% trans "controls" %}</strong>{% trans " (search + filters, subtle bg), " %}<strong>{% trans "table body" %}</strong>{% trans ", and " %}<strong>{% trans "pagination" %}</strong>{% trans ". All zones are optional — use only what you need. Add " %}<code class="dcr-code">dcr-data-table__header--subtle</code>{% trans " to tint the header, and " %}<code class="dcr-code">dcr-data-table__title-icon</code>{% trans " on an SVG to place an icon before the title text." %}</p>
@@ -233,7 +233,7 @@
 </section>
 
 <section class="dcr-sg-section" id="expandable-rows">
-  <div class="dcr-section-header">
+  <div class="dcr-section-header dcr-section-header--plain">
     <h2 class="dcr-section-header__title">{% trans "Expandable Rows" %}</h2>
   </div>
   <p class="dcr-sg-section__desc">{% trans "Add a " %}<code class="dcr-code">dcr-col--expand</code>{% trans " column with a " %}<code class="dcr-code">dcr-data-table__expand-btn</code>{% trans " toggle. Each row pairs with a hidden " %}<code class="dcr-code">dcr-data-table__expand-row</code>{% trans " sibling. Toggle " %}<code class="dcr-code">is-open</code>{% trans " and " %}<code class="dcr-code">aria-expanded</code>{% trans " via JS." %}</p>
@@ -385,7 +385,7 @@ document.querySelectorAll('.dcr-data-table__expand-btn').forEach(function (btn) 
 </script>
 
 <section class="dcr-sg-section" id="pagination">
-  <div class="dcr-section-header">
+  <div class="dcr-section-header dcr-section-header--plain">
     <h2 class="dcr-section-header__title">{% trans "Pagination" %}</h2>
   </div>
   <p class="dcr-sg-section__desc">{% trans "Placed inside a " %}<code class="dcr-code">dcr-data-table</code>{% trans " card, after the " %}<code class="dcr-code">&lt;table&gt;</code>{% trans ". Supports numbered pages and cursor-only (prev / next) modes. Use " %}<code class="dcr-code">&lt;a&gt;</code>{% trans " for active controls, " %}<code class="dcr-code">&lt;span aria-disabled&gt;</code>{% trans " for disabled ones." %}</p>
@@ -473,7 +473,7 @@ document.querySelectorAll('.dcr-data-table__expand-btn').forEach(function (btn) 
 </section>
 
 <section class="dcr-sg-section" id="empty-results">
-  <div class="dcr-section-header">
+  <div class="dcr-section-header dcr-section-header--plain">
     <h2 class="dcr-section-header__title">{% trans "Empty Results" %}</h2>
   </div>
   <p class="dcr-sg-section__desc">{% trans "Place " %}<code class="dcr-code">dcr-empty</code>{% trans " inside a " %}<code class="dcr-code">&lt;tbody&gt;</code>{% trans " cell spanning all columns so the table headers remain visible. Two patterns: no data at all, and no results matching active filters." %}</p>
@@ -539,7 +539,7 @@ document.querySelectorAll('.dcr-data-table__expand-btn').forEach(function (btn) 
 </section>
 
 <section class="dcr-sg-section" id="ability-matrix">
-  <div class="dcr-section-header">
+  <div class="dcr-section-header dcr-section-header--plain">
     <h2 class="dcr-section-header__title">{% trans "Ability Matrix" %}</h2>
   </div>
   <p class="dcr-sg-section__desc">{% trans "Tabular display of what a backend supports. Use on overview pages that manage multiple backends." %}</p>

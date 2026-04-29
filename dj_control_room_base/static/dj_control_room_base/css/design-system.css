@@ -1119,9 +1119,10 @@ a.dcr-btn--muted.dcr-btn--ghost:visited {
 /* --- Section header --------------------------------------------------------- */
 
 /*
- * Uppercase label + optional inline badge + bottom rule.
- * Used to head sub-sections inside a panel page (KEY INFORMATION, etc.).
+ * Uppercase label + optional inline badge + mid-line rule.
+ * Used to head sub-sections inside a panel page.
  *
+ *   <!-- default: label with extending rule through the midline -->
  *   <div class="dcr-section-header">
  *     <h2 class="dcr-section-header__title">Key Information</h2>
  *   </div>
@@ -1130,6 +1131,11 @@ a.dcr-btn--muted.dcr-btn--ghost:visited {
  *   <div class="dcr-section-header">
  *     <h2 class="dcr-section-header__title">Stored Value</h2>
  *     <span class="dcr-badge dcr-badge--warning">HASH</span>
+ *   </div>
+ *
+ *   <!-- plain: label only, no rule -->
+ *   <div class="dcr-section-header dcr-section-header--plain">
+ *     <h2 class="dcr-section-header__title">Overview</h2>
  *   </div>
  */
 .dcr-section-header {
@@ -1146,12 +1152,15 @@ a.dcr-btn--muted.dcr-btn--ghost:visited {
   background: var(--dcr-color-border);
 }
 
+.dcr-section-header--plain::after {
+  display: none;
+}
+
 .dcr-section-header__title {
   margin: 0;
   font-size: var(--dcr-font-size-base);
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.6px;
   white-space: nowrap;
 }
 
