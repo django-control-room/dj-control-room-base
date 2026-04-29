@@ -147,69 +147,164 @@
   <div class="dcr-section-header dcr-section-header--plain">
     <h2 class="dcr-section-header__title">{% trans "Panel Grid" %}</h2>
   </div>
-  <p class="dcr-sg-section__desc">{% trans "Responsive 3-column grid of panel cards. Use " %}<code class="dcr-code">dcr-panel-grid</code>{% trans " as the container and " %}<code class="dcr-code">dcr-panel-card</code>{% trans " for each item. Add " %}<code class="dcr-code">dcr-panel-card--placeholder</code>{% trans " for the dashed call-to-action slot." %}</p>
-  <div class="dcr-sg-preview">
+  <p class="dcr-sg-section__desc">{% trans "Responsive grid for the panel index page. Use " %}<code class="dcr-code">dcr-panel-grid</code>{% trans " as the container and " %}<code class="dcr-code">dcr-panel-card</code>{% trans " for each item. Wrap the icon in " %}<code class="dcr-code">dcr-panel-card__icon-wrap</code>{% trans ". Use " %}<code class="dcr-code">dcr-badge</code>{% trans " variants for install status. Add " %}<code class="dcr-code">dcr-panel-grid--2</code>{% trans " for the 2-column wide-card row at the bottom. Add " %}<code class="dcr-code">dcr-panel-card--coming-soon</code>{% trans " to dim unavailable panels." %}</p>
+  <div class="dcr-sg-preview dcr-sg-preview--stack">
+
+    <div class="dcr-section-header" style="width:100%">
+      <h3 class="dcr-section-header__title">{% trans "Featured Panels" %}</h3>
+    </div>
     <div class="dcr-panel-grid" style="width:100%">
+
       <div class="dcr-panel-card">
         <div class="dcr-panel-card__top">
-          <svg class="dcr-panel-card__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg>
-          <span class="dcr-pill dcr-pill--success"><span class="dcr-pill__dot"></span>{% trans "Connected" %}</span>
+          <div class="dcr-panel-card__icon-wrap dcr-panel-card__icon-wrap--accent">
+            <svg class="dcr-panel-card__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg>
+          </div>
+          <span class="dcr-badge dcr-badge--muted">{% trans "NOT INSTALLED" %}</span>
         </div>
         <h3 class="dcr-panel-card__title">{% trans "Redis Panel" %}</h3>
-        <p class="dcr-panel-card__desc">{% trans "Monitor connections, memory, keys, and throughput across every configured Redis instance." %}</p>
+        <p class="dcr-panel-card__desc">{% trans "Monitor connections, memory, keys, and throughput." %}</p>
         <div class="dcr-panel-card__footer">
-          <div>
-            <div class="dcr-panel-card__metric">1,284</div>
-            <div class="dcr-panel-card__metric-label">{% trans "Keys" %}</div>
-          </div>
-          <a href="#" class="dcr-panel-card__link">{% trans "View panel" %} →</a>
+          <a href="#" class="dcr-panel-card__link">{% trans "Install panel" %}</a>
         </div>
       </div>
+
       <div class="dcr-panel-card">
         <div class="dcr-panel-card__top">
-          <svg class="dcr-panel-card__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
-          <span class="dcr-pill dcr-pill--warning"><span class="dcr-pill__dot"></span>{% trans "Degraded" %}</span>
-        </div>
-        <h3 class="dcr-panel-card__title">{% trans "Errors Panel" %}</h3>
-        <p class="dcr-panel-card__desc">{% trans "Track recent exceptions, group similar tracebacks, and triage unresolved errors." %}</p>
-        <div class="dcr-panel-card__footer">
-          <div>
-            <div class="dcr-panel-card__metric">3</div>
-            <div class="dcr-panel-card__metric-label">{% trans "Open Groups" %}</div>
+          <div class="dcr-panel-card__icon-wrap dcr-panel-card__icon-wrap--success">
+            <svg class="dcr-panel-card__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
           </div>
-          <a href="#" class="dcr-panel-card__link">{% trans "View panel" %} →</a>
+          <span class="dcr-badge dcr-badge--success">{% trans "INSTALLED" %}</span>
+        </div>
+        <h3 class="dcr-panel-card__title">{% trans "Cache Panel" %}</h3>
+        <p class="dcr-panel-card__desc">{% trans "Inspect cached entries, hit/miss ratios." %}</p>
+        <div class="dcr-panel-card__footer">
+          <a href="#" class="dcr-panel-card__link">{% trans "View panel" %}</a>
         </div>
       </div>
-      <div class="dcr-panel-card dcr-panel-card--placeholder">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        <p style="font-weight:600;margin:0;">{% trans "Build your own panel" %}</p>
-        <p style="font-size:var(--dcr-font-size-sm);margin:0;">{% trans "Scaffold a custom panel with the cookiecutter template." %}</p>
+
+      <div class="dcr-panel-card dcr-panel-card--coming-soon">
+        <div class="dcr-panel-card__top">
+          <div class="dcr-panel-card__icon-wrap dcr-panel-card__icon-wrap--danger">
+            <svg class="dcr-panel-card__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <span class="dcr-badge dcr-badge--warning">{% trans "COMING SOON" %}</span>
+        </div>
+        <h3 class="dcr-panel-card__title">{% trans "Error Panel" %}</h3>
+        <p class="dcr-panel-card__desc">{% trans "Monitor errors, stack traces, and exceptions." %}</p>
+        <div class="dcr-panel-card__footer">
+          <span class="dcr-panel-card__link dcr-panel-card__link--muted">{% trans "Coming soon" %}</span>
+        </div>
       </div>
+
     </div>
+
+    <div class="dcr-section-header" style="width:100%;margin-top:var(--dcr-space-md)">
+      <h3 class="dcr-section-header__title">{% trans "Community Panels" %}</h3>
+    </div>
+    <div class="dcr-panel-grid" style="width:100%">
+
+      <div class="dcr-panel-card">
+        <div class="dcr-panel-card__top">
+          <div class="dcr-panel-card__icon-wrap dcr-panel-card__icon-wrap--purple">
+            <svg class="dcr-panel-card__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg>
+          </div>
+          <span class="dcr-badge dcr-badge--success">{% trans "INSTALLED" %}</span>
+        </div>
+        <h3 class="dcr-panel-card__title">{% trans "DJ Control Room Base" %}</h3>
+        <p class="dcr-panel-card__desc">{% trans "Core framework for Django Control Room panels." %}</p>
+        <div class="dcr-panel-card__footer">
+          <a href="#" class="dcr-panel-card__link">{% trans "View panel" %}</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="dcr-panel-grid dcr-panel-grid--2" style="width:100%;margin-top:var(--dcr-space-md)">
+
+      <div class="dcr-panel-card">
+        <div class="dcr-panel-card__top">
+          <div class="dcr-panel-card__icon-wrap dcr-panel-card__icon-wrap--info">
+            <svg class="dcr-panel-card__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+        </div>
+        <h3 class="dcr-panel-card__title">{% trans "More panels on the way" %}</h3>
+        <p class="dcr-panel-card__desc">{% trans "We're building more tools to bring full observability to your Django admin. Follow our progress on GitHub." %}</p>
+        <div class="dcr-panel-card__footer">
+          <a href="#" class="dcr-panel-card__link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            {% trans "GitHub" %}
+          </a>
+        </div>
+      </div>
+
+      <div class="dcr-panel-card">
+        <div class="dcr-panel-card__top">
+          <div class="dcr-panel-card__icon-wrap dcr-panel-card__icon-wrap--indigo">
+            <svg class="dcr-panel-card__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+          </div>
+        </div>
+        <h3 class="dcr-panel-card__title">{% trans "Build your own panel" %}</h3>
+        <p class="dcr-panel-card__desc">{% trans "Django Control Room is built to be extended. Use our cookiecutter template to scaffold a fully structured panel plugin in seconds." %}</p>
+        <div class="dcr-panel-card__footer">
+          <a href="#" class="dcr-panel-card__link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            {% trans "cookiecutter-django-admin-panel" %}
+          </a>
+        </div>
+      </div>
+
+    </div>
+
   </div>
   <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
-<pre class="dcr-sg-code"><code class="language-html">&lt;div class="dcr-panel-grid"&gt;
+<pre class="dcr-sg-code"><code class="language-html">&lt;!-- section label --&gt;
+&lt;div class="dcr-section-header"&gt;
+  &lt;h3 class="dcr-section-header__title"&gt;Featured Panels&lt;/h3&gt;
+&lt;/div&gt;
+
+&lt;div class="dcr-panel-grid"&gt;
+
+  &lt;!-- installed — accent icon wrap --&gt;
   &lt;div class="dcr-panel-card"&gt;
     &lt;div class="dcr-panel-card__top"&gt;
-      &lt;svg class="dcr-panel-card__icon" …&gt;&lt;/svg&gt;
-      &lt;span class="dcr-pill dcr-pill--success"&gt;&lt;span class="dcr-pill__dot"&gt;&lt;/span&gt;Connected&lt;/span&gt;
+      &lt;div class="dcr-panel-card__icon-wrap dcr-panel-card__icon-wrap--accent"&gt;
+        &lt;svg class="dcr-panel-card__icon" …&gt;&lt;/svg&gt;
+      &lt;/div&gt;
+      &lt;span class="dcr-badge dcr-badge--success"&gt;INSTALLED&lt;/span&gt;
     &lt;/div&gt;
     &lt;h3 class="dcr-panel-card__title"&gt;Redis Panel&lt;/h3&gt;
-    &lt;p class="dcr-panel-card__desc"&gt;Monitor connections, memory, keys…&lt;/p&gt;
+    &lt;p class="dcr-panel-card__desc"&gt;Monitor connections…&lt;/p&gt;
     &lt;div class="dcr-panel-card__footer"&gt;
-      &lt;div&gt;
-        &lt;div class="dcr-panel-card__metric"&gt;1,284&lt;/div&gt;
-        &lt;div class="dcr-panel-card__metric-label"&gt;Keys&lt;/div&gt;
-      &lt;/div&gt;
-      &lt;a href="/redis/" class="dcr-panel-card__link"&gt;View panel →&lt;/a&gt;
+      &lt;a href="/redis/" class="dcr-panel-card__link"&gt;View panel&lt;/a&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 
-  &lt;!-- Placeholder slot --&gt;
-  &lt;div class="dcr-panel-card dcr-panel-card--placeholder"&gt;
-    &lt;svg …&gt;&lt;/svg&gt;
-    &lt;p&gt;Build your own panel&lt;/p&gt;
+  &lt;!-- icon wrap colour variants --&gt;
+  &lt;!-- (none) · accent · success · warning · danger · info · muted · purple · indigo --&gt;
+
+  &lt;!-- not installed --&gt;
+  &lt;div class="dcr-panel-card"&gt;
+    …
+    &lt;span class="dcr-badge dcr-badge--muted"&gt;NOT INSTALLED&lt;/span&gt;
+    …
+    &lt;a href="#" class="dcr-panel-card__link"&gt;Install panel&lt;/a&gt;
   &lt;/div&gt;
+
+  &lt;!-- coming soon --&gt;
+  &lt;div class="dcr-panel-card dcr-panel-card--coming-soon"&gt;
+    …
+    &lt;span class="dcr-badge dcr-badge--warning"&gt;COMING SOON&lt;/span&gt;
+    …
+    &lt;span class="dcr-panel-card__link dcr-panel-card__link--muted"&gt;Coming soon&lt;/span&gt;
+  &lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;!-- 2-column wide cards --&gt;
+&lt;div class="dcr-panel-grid dcr-panel-grid--2"&gt;
+  &lt;div class="dcr-panel-card"&gt;…&lt;/div&gt;
+  &lt;div class="dcr-panel-card"&gt;…&lt;/div&gt;
 &lt;/div&gt;</code></pre>
 </section>
 
