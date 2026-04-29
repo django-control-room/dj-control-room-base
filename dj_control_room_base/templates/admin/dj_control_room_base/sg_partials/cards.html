@@ -213,6 +213,97 @@
 &lt;/div&gt;</code></pre>
 </section>
 
+<section class="dcr-sg-section" id="card">
+  <div class="dcr-section-header dcr-section-header--plain">
+    <h2 class="dcr-section-header__title">{% trans "Card" %}</h2>
+  </div>
+  <p class="dcr-sg-section__desc">{% trans "Generic bordered container for building any card-like panel UI. Compose " %}<code class="dcr-code">dcr-card__header</code>{% trans ", " %}<code class="dcr-code">dcr-card__body</code>{% trans ", " %}<code class="dcr-code">dcr-card__row</code>{% trans ", and " %}<code class="dcr-code">dcr-card__footer</code>{% trans " as needed. Add " %}<code class="dcr-code">dcr-card__header--subtle</code>{% trans " to tint the header. Use " %}<code class="dcr-code">dcr-card__body--flush</code>{% trans " to remove padding from the body (e.g. when the body contains a table or list)." %}</p>
+  <div class="dcr-sg-preview dcr-sg-preview--stack">
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--dcr-space-md);width:100%">
+
+      <div>
+        <span class="dcr-sg-row-label">{% trans "Header + body" %}</span>
+        <div class="dcr-card">
+          <div class="dcr-card__header">
+            <h3 class="dcr-card__title">
+              <svg class="dcr-card__title-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+              {% trans "Card title" %}
+            </h3>
+            <span class="dcr-card__meta">{% trans "meta" %}</span>
+          </div>
+          <div class="dcr-card__body">
+            <p class="dcr-text-sm dcr-text-muted dcr-m-0">{% trans "Body content goes here. Use " %}<code class="dcr-code">dcr-card__body</code>{% trans " for padded content." %}</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <span class="dcr-sg-row-label">{% trans "Subtle header + body + footer" %}</span>
+        <div class="dcr-card">
+          <div class="dcr-card__header dcr-card__header--subtle">
+            <h3 class="dcr-card__title">{% trans "Subtle header" %}</h3>
+            <span class="dcr-card__meta"><span class="dcr-pill dcr-pill--success"><span class="dcr-pill__dot"></span>{% trans "Live" %}</span></span>
+          </div>
+          <div class="dcr-card__body">
+            <p class="dcr-text-sm dcr-text-muted dcr-m-0">{% trans "Use " %}<code class="dcr-code">dcr-card__header--subtle</code>{% trans " for a tinted header row." %}</p>
+          </div>
+          <div class="dcr-card__footer">{% trans "Last updated 2 min ago" %}</div>
+        </div>
+      </div>
+
+      <div>
+        <span class="dcr-sg-row-label">{% trans "Flush body (table / list)" %}</span>
+        <div class="dcr-card">
+          <div class="dcr-card__header">
+            <h3 class="dcr-card__title">{% trans "Flush body" %}</h3>
+          </div>
+          <div class="dcr-card__body dcr-card__body--flush">
+            <div style="padding:10px 20px;border-bottom:1px solid var(--dcr-color-border)" class="dcr-text-sm">{% trans "Row one" %}</div>
+            <div style="padding:10px 20px;border-bottom:1px solid var(--dcr-color-border)" class="dcr-text-sm">{% trans "Row two" %}</div>
+            <div style="padding:10px 20px" class="dcr-text-sm">{% trans "Row three" %}</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <span class="dcr-sg-row-label">{% trans "Body only (no header)" %}</span>
+        <div class="dcr-card">
+          <div class="dcr-card__body">
+            <p class="dcr-text-sm dcr-text-muted dcr-m-0">{% trans "Cards don't require a header. Drop any zone you don't need." %}</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;!-- header + body --&gt;
+&lt;div class="dcr-card"&gt;
+  &lt;div class="dcr-card__header"&gt;
+    &lt;h3 class="dcr-card__title"&gt;
+      &lt;svg class="dcr-card__title-icon" …&gt;&lt;/svg&gt;
+      Card title
+    &lt;/h3&gt;
+    &lt;span class="dcr-card__meta"&gt;meta&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="dcr-card__body"&gt;…&lt;/div&gt;
+  &lt;div class="dcr-card__footer"&gt;Footer note&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- subtle (tinted) header --&gt;
+&lt;div class="dcr-card"&gt;
+  &lt;div class="dcr-card__header dcr-card__header--subtle"&gt;…&lt;/div&gt;
+  …
+&lt;/div&gt;
+
+&lt;!-- flush body (no padding — use for tables, lists) --&gt;
+&lt;div class="dcr-card"&gt;
+  &lt;div class="dcr-card__header"&gt;…&lt;/div&gt;
+  &lt;div class="dcr-card__body dcr-card__body--flush"&gt;…&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+</section>
+
 <section class="dcr-sg-section" id="activity-feed">
   <div class="dcr-section-header dcr-section-header--plain">
     <h2 class="dcr-section-header__title">{% trans "Card: Activity Feed" %}</h2>
