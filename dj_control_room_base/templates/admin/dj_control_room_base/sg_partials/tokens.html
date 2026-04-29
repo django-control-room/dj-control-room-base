@@ -235,3 +235,75 @@
 }
 &lt;/style&gt;</code></pre>
 </section>
+
+<section class="dcr-sg-section" id="utilities">
+  <div class="dcr-section-header dcr-section-header--plain">
+    <h2 class="dcr-section-header__title">{% trans "Utilities" %}</h2>
+  </div>
+  <p class="dcr-sg-section__desc">{% trans "Single-purpose helper classes for composing layouts inline. All utilities use " %}<code class="dcr-code">!important</code>{% trans " so they always override component defaults." %}</p>
+
+  <div class="dcr-sg-preview dcr-sg-preview--stack">
+    <div>
+      <span class="dcr-sg-row-label">{% trans "Typography" %}</span>
+      <p class="dcr-text-xs dcr-text-muted">dcr-text-xs dcr-text-muted</p>
+      <p class="dcr-text-sm dcr-text-default">dcr-text-sm dcr-text-default</p>
+      <p class="dcr-text-base dcr-font-bold dcr-text-success">dcr-text-base dcr-font-bold dcr-text-success</p>
+      <p class="dcr-text-lg dcr-font-mono dcr-text-accent">dcr-text-lg dcr-font-mono dcr-text-accent</p>
+      <p class="dcr-text-base dcr-text-danger">dcr-text-danger</p>
+      <p class="dcr-text-base dcr-text-warning">dcr-text-warning</p>
+      <p class="dcr-text-base dcr-text-info">dcr-text-info</p>
+      <p class="dcr-text-base dcr-text-purple">dcr-text-purple</p>
+      <p class="dcr-text-base dcr-text-indigo">dcr-text-indigo</p>
+    </div>
+    <div>
+      <span class="dcr-sg-row-label">{% trans "Layout" %}</span>
+      <div class="dcr-d-flex dcr-items-center dcr-justify-between dcr-gap-sm dcr-mb-sm" style="background:var(--dcr-color-bg-subtle);padding:8px;border-radius:4px">
+        <span class="dcr-text-sm dcr-text-muted">dcr-d-flex dcr-items-center dcr-justify-between dcr-gap-sm</span>
+        <span class="dcr-badge">right</span>
+      </div>
+      <div class="dcr-d-flex dcr-flex-col dcr-gap-xs" style="background:var(--dcr-color-bg-subtle);padding:8px;border-radius:4px">
+        <span class="dcr-text-sm dcr-text-muted">dcr-d-flex dcr-flex-col dcr-gap-xs</span>
+        <span class="dcr-text-sm dcr-text-muted">second row</span>
+        <span class="dcr-text-sm dcr-text-muted">third row</span>
+      </div>
+    </div>
+    <div>
+      <span class="dcr-sg-row-label">{% trans "Spacing" %}</span>
+      <div class="dcr-d-flex dcr-gap-sm dcr-flex-wrap">
+        <span class="dcr-badge dcr-mt-md">dcr-mt-md</span>
+        <span class="dcr-badge dcr-mb-lg">dcr-mb-lg</span>
+        <span class="dcr-badge dcr-px-lg">dcr-px-lg</span>
+        <span class="dcr-badge dcr-py-sm">dcr-py-sm</span>
+        <span class="dcr-badge dcr-ml-auto">dcr-ml-auto</span>
+      </div>
+    </div>
+    <div>
+      <span class="dcr-sg-row-label">{% trans "Sizing & overflow" %}</span>
+      <div class="dcr-d-flex dcr-gap-sm dcr-flex-col">
+        <div class="dcr-w-full" style="background:var(--dcr-color-bg-subtle);padding:4px 8px;border-radius:4px"><span class="dcr-text-sm">dcr-w-full</span></div>
+        <div style="width:140px;overflow:hidden"><p class="dcr-truncate dcr-text-sm">dcr-truncate — this text is very long and will be clipped with an ellipsis</p></div>
+      </div>
+    </div>
+  </div>
+
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;!-- typography --&gt;
+&lt;p class="dcr-text-sm dcr-text-muted"&gt;Hint text&lt;/p&gt;
+&lt;span class="dcr-font-bold dcr-text-danger"&gt;Error&lt;/span&gt;
+&lt;code class="dcr-font-mono dcr-text-xs"&gt;cache:key:42&lt;/code&gt;
+
+&lt;!-- layout --&gt;
+&lt;div class="dcr-d-flex dcr-items-center dcr-justify-between dcr-gap-sm"&gt;
+  &lt;h2&gt;Title&lt;/h2&gt;
+  &lt;button class="dcr-btn"&gt;Action&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;!-- spacing --&gt;
+&lt;div class="dcr-mb-lg dcr-px-md"&gt;…&lt;/div&gt;
+
+&lt;!-- overflow --&gt;
+&lt;p class="dcr-truncate"&gt;Very long value that should clip…&lt;/p&gt;
+
+&lt;!-- screen-reader label --&gt;
+&lt;span class="dcr-sr-only"&gt;Loading…&lt;/span&gt;</code></pre>
+</section>

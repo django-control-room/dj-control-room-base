@@ -262,6 +262,114 @@
   text-transform: capitalize !important;
 }
 
+
+/* --- Layout utilities ------------------------------------------------------- */
+
+/* Display */
+.dcr-d-flex         { display: flex         !important; }
+.dcr-d-inline-flex  { display: inline-flex  !important; }
+.dcr-d-block        { display: block        !important; }
+.dcr-d-inline       { display: inline       !important; }
+.dcr-d-none         { display: none         !important; }
+
+/* Flex direction */
+.dcr-flex-col       { flex-direction: column      !important; }
+.dcr-flex-row       { flex-direction: row         !important; }
+.dcr-flex-wrap      { flex-wrap: wrap             !important; }
+.dcr-flex-nowrap    { flex-wrap: nowrap           !important; }
+.dcr-flex-1         { flex: 1                     !important; }
+.dcr-flex-none      { flex: none                  !important; }
+
+/* Align & justify */
+.dcr-items-start    { align-items: flex-start        !important; }
+.dcr-items-center   { align-items: center            !important; }
+.dcr-items-end      { align-items: flex-end          !important; }
+.dcr-items-stretch  { align-items: stretch           !important; }
+.dcr-justify-start  { justify-content: flex-start    !important; }
+.dcr-justify-center { justify-content: center        !important; }
+.dcr-justify-end    { justify-content: flex-end      !important; }
+.dcr-justify-between{ justify-content: space-between !important; }
+
+/* Gap */
+.dcr-gap-xs  { gap: var(--dcr-space-xs) !important; }
+.dcr-gap-sm  { gap: var(--dcr-space-sm) !important; }
+.dcr-gap-md  { gap: var(--dcr-space-md) !important; }
+.dcr-gap-lg  { gap: var(--dcr-space-lg) !important; }
+.dcr-gap-xl  { gap: var(--dcr-space-xl) !important; }
+
+
+/* --- Spacing utilities ------------------------------------------------------ */
+
+/* Margin */
+.dcr-m-0     { margin:        0                   !important; }
+.dcr-mt-xs   { margin-top:    var(--dcr-space-xs) !important; }
+.dcr-mt-sm   { margin-top:    var(--dcr-space-sm) !important; }
+.dcr-mt-md   { margin-top:    var(--dcr-space-md) !important; }
+.dcr-mt-lg   { margin-top:    var(--dcr-space-lg) !important; }
+.dcr-mt-xl   { margin-top:    var(--dcr-space-xl) !important; }
+.dcr-mb-xs   { margin-bottom: var(--dcr-space-xs) !important; }
+.dcr-mb-sm   { margin-bottom: var(--dcr-space-sm) !important; }
+.dcr-mb-md   { margin-bottom: var(--dcr-space-md) !important; }
+.dcr-mb-lg   { margin-bottom: var(--dcr-space-lg) !important; }
+.dcr-mb-xl   { margin-bottom: var(--dcr-space-xl) !important; }
+.dcr-ml-xs   { margin-left:   var(--dcr-space-xs) !important; }
+.dcr-ml-sm   { margin-left:   var(--dcr-space-sm) !important; }
+.dcr-ml-md   { margin-left:   var(--dcr-space-md) !important; }
+.dcr-ml-lg   { margin-left:   var(--dcr-space-lg) !important; }
+.dcr-ml-auto { margin-left:   auto                !important; }
+.dcr-mr-xs   { margin-right:  var(--dcr-space-xs) !important; }
+.dcr-mr-sm   { margin-right:  var(--dcr-space-sm) !important; }
+.dcr-mr-md   { margin-right:  var(--dcr-space-md) !important; }
+.dcr-mr-lg   { margin-right:  var(--dcr-space-lg) !important; }
+.dcr-mr-auto { margin-right:  auto                !important; }
+
+/* Padding */
+.dcr-p-0     { padding:        0                   !important; }
+.dcr-p-xs    { padding:        var(--dcr-space-xs) !important; }
+.dcr-p-sm    { padding:        var(--dcr-space-sm) !important; }
+.dcr-p-md    { padding:        var(--dcr-space-md) !important; }
+.dcr-p-lg    { padding:        var(--dcr-space-lg) !important; }
+.dcr-px-xs   { padding-left: var(--dcr-space-xs) !important; padding-right:  var(--dcr-space-xs) !important; }
+.dcr-px-sm   { padding-left: var(--dcr-space-sm) !important; padding-right:  var(--dcr-space-sm) !important; }
+.dcr-px-md   { padding-left: var(--dcr-space-md) !important; padding-right:  var(--dcr-space-md) !important; }
+.dcr-px-lg   { padding-left: var(--dcr-space-lg) !important; padding-right:  var(--dcr-space-lg) !important; }
+.dcr-py-xs   { padding-top: var(--dcr-space-xs) !important; padding-bottom: var(--dcr-space-xs) !important; }
+.dcr-py-sm   { padding-top: var(--dcr-space-sm) !important; padding-bottom: var(--dcr-space-sm) !important; }
+.dcr-py-md   { padding-top: var(--dcr-space-md) !important; padding-bottom: var(--dcr-space-md) !important; }
+.dcr-py-lg   { padding-top: var(--dcr-space-lg) !important; padding-bottom: var(--dcr-space-lg) !important; }
+
+
+/* --- Sizing & overflow utilities -------------------------------------------- */
+
+.dcr-w-full   { width: 100%  !important; }
+.dcr-w-auto   { width: auto  !important; }
+.dcr-min-w-0  { min-width: 0 !important; }
+.dcr-h-full   { height: 100% !important; }
+
+.dcr-truncate {
+  overflow: hidden        !important;
+  white-space: nowrap     !important;
+  text-overflow: ellipsis !important;
+}
+
+.dcr-no-wrap      { white-space: nowrap   !important; }
+.dcr-break-all    { word-break: break-all !important; }
+.dcr-overflow-hidden { overflow: hidden   !important; }
+.dcr-overflow-auto   { overflow: auto     !important; }
+
+/* Visually hidden but accessible to screen readers */
+.dcr-sr-only {
+  position: absolute !important;
+  width: 1px         !important;
+  height: 1px        !important;
+  padding: 0         !important;
+  margin: -1px       !important;
+  overflow: hidden   !important;
+  clip: rect(0,0,0,0)!important;
+  white-space: nowrap!important;
+  border: 0          !important;
+}
+
 /* --- Content width ---------------------------------------------------------- */
 /*
  * Centered, max-width containers for panel content areas.
