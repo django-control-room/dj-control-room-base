@@ -479,7 +479,7 @@ document.querySelectorAll('.dcr-data-table__expand-btn').forEach(function (btn) 
   <p class="dcr-sg-section__desc">{% trans "Place " %}<code class="dcr-code">dcr-empty</code>{% trans " inside a " %}<code class="dcr-code">&lt;tbody&gt;</code>{% trans " cell spanning all columns so the table headers remain visible. Two patterns: no data at all, and no results matching active filters." %}</p>
 
   <div class="dcr-sg-preview">
-    <div class="dcr-data-table" style="width:100%">
+    <div class="dcr-data-table dcr-data-table--no-hover" style="width:100%">
       <div class="dcr-data-table__header">
         <h3 class="dcr-data-table__title">{% trans "Error Groups" %}</h3>
       </div>
@@ -509,7 +509,7 @@ document.querySelectorAll('.dcr-data-table__expand-btn').forEach(function (btn) 
     </div>
   </div>
   <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
-<pre class="dcr-sg-code"><code class="language-html">&lt;div class="dcr-data-table"&gt;
+<pre class="dcr-sg-code"><code class="language-html">&lt;div class="dcr-data-table dcr-data-table--no-hover"&gt;
   &lt;div class="dcr-data-table__header"&gt;
     &lt;h3 class="dcr-data-table__title"&gt;Error Groups&lt;/h3&gt;
   &lt;/div&gt;

@@ -2589,6 +2589,10 @@ a.dcr-pagination__page:hover {
   transition: background 0.1s ease;
 }
 
+.dcr-data-table--no-hover tbody tr:hover td {
+  background: transparent;
+}
+
 /* --- Expandable rows ------------------------------------------------------- */
 
 .dcr-col--expand {
