@@ -1,4 +1,5 @@
 import functools
+from typing import Optional
 
 from django.conf import settings as django_settings
 from django.contrib import admin
@@ -50,7 +51,7 @@ class PanelConfig:
         context = panel_config.get_context(request, title="My Panel")
     """
 
-    def __init__(self, settings_key: str, defaults: dict | None = None) -> None:
+    def __init__(self, settings_key: str, defaults: Optional[dict] = None) -> None:
         self.settings_key = settings_key
         self.defaults = defaults or {}
 
@@ -63,7 +64,7 @@ class PanelConfig:
         """Apply the DJ Control Room override settings to the panel config."""
         self._override_settings = settings
 
-    def get_settings(self, key: str | None = None) -> dict:
+    def get_settings(self, key: Optional[str] = None) -> dict:
         """Return merged panel settings (defined settings overrides applied over defaults)."""
         # settings defined for the panel in the consuming project's app settings
         defined_settings = getattr(django_settings, self.settings_key, None) or {}
@@ -96,7 +97,7 @@ class PanelConfig:
             return combined_settings.get(key)
         return combined_settings
 
-    def _resolve_permission_settings(self, scope: str | None = None) -> dict:
+    def _resolve_permission_settings(self, scope: Optional[str] = None) -> dict:
         merged = self.get_settings()
         scope_map_raw = merged["SCOPE_PERMISSIONS"]
         scope_permissions = scope_map_raw if isinstance(scope_map_raw, dict) else {}
@@ -111,7 +112,7 @@ class PanelConfig:
             scope_overrides = {}
         return {**panel_level, **scope_overrides}
 
-    def has_permission(self, request: HttpRequest, scope: str | None = None) -> bool:
+    def has_permission(self, request: HttpRequest, scope: Optional[str] = None) -> bool:
         """Return True if the request's user may access this panel or scope.
 
         Superusers bypass ``ALLOWED_GROUPS`` and panel-level gates (Django-admin
@@ -130,7 +131,7 @@ class PanelConfig:
             return request.user.groups.filter(name__in=allowed).exists()
         return True
 
-    def permission_required(self, scope: str | None = None):
+    def permission_required(self, scope: Optional[str] = None):
         """Decorator: redirect anonymous users to admin login; 403 otherwise if unauthorised."""
         def decorator(view_func):
             @functools.wraps(view_func)
