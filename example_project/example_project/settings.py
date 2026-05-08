@@ -176,3 +176,20 @@ LOGGING = {
         },
     },
 }
+
+DJ_CONTROL_ROOM_BASE_SETTINGS = {
+    "LOAD_DEFAULT_CSS": True,
+    "EXTRA_CSS": [],
+    "ALLOWED_GROUPS": [],
+    "REQUIRE_SUPERUSER": False,
+    "SCOPE_PERMISSIONS": {
+        "design-system": {
+            "ALLOWED_GROUPS": [],
+            "REQUIRE_SUPERUSER": False,
+        },
+        "examples": {
+            "ALLOWED_GROUPS": [],
+            "REQUIRE_SUPERUSER": False,
+        },
+    },
+}
