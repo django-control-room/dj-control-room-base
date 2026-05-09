@@ -41,6 +41,7 @@ nav:
   - Getting Started:
     - Installation: installation.md
     - Configuration: configuration.md
+  - Building Panels: building-panels.md
   - Development: development.md
 
 markdown_extensions:

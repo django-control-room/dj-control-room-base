@@ -90,7 +90,7 @@ publish:
 docs: install
 	mkdocs build
 
-docs_serve:
+docs_serve: docs
 	mkdocs serve
 
 docs_push: docs
