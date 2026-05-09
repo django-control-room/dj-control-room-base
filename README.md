@@ -5,251 +5,241 @@
 [![Python versions](https://img.shields.io/pypi/pyversions/dj-control-room-base.svg)](https://pypi.org/project/dj-control-room-base/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
+# dj-control-room-base
+
+![Admin home - DJ Control Room Base in the sidebar](https://raw.githubusercontent.com/yassi/dj-control-room-base/main/images/dj-control-room-base.png)
 
 
 
-# DJ control room base
+**dj-control-room-base** is a **core library** for [Django Control Room](https://github.com/yassi/dj-control-room) panels. It provides functionality for managing panel configuration, context, permissions and styles. All featured panels (ones developed by the DCR team) will use this as a base library for creating new panels.
 
-Core framework for Django Control Room panels
+Additionally, this project is also an installable panel on its own. As a panel it provides
+an interactive styleguide with examples that can make working on new panels all the more easier.
 
-**Compatible with [dj-control-room](https://github.com/yassi/dj-control-room).** Register this panel in the Control Room to manage it from a centralized dashboard.
+The library **centralizes settings** that every panel would otherwise duplicate: **CSS** (whether to load the default design-system bundle, extra stylesheets, and hub-level overrides) and **permissions** (staff checks, optional superuser-only mode, Django group allow lists, and **scoped** rules per view). Panel authors who adopt `PanelConfig`, the placeholder admin pattern (`PanelPlaceholderModel` / `BasePanelAdmin`), and the shared template context helpers get that behavior **for free** instead of wiring merges, decorators, and admin sidebar rules by hand on each project.
 
 - **Official site:** [djangocontrolroom.com](https://djangocontrolroom.com)
-- **Project repo:** [dj-control-room](https://github.com/yassi/dj-control-room)
+- **Control Room app:** [dj-control-room](https://github.com/yassi/dj-control-room)
 
-## Docs
+## Documentation
 
-[https://yassi.github.io/dj-control-room-base/](https://yassi.github.io/dj-control-room-base/)
+Published docs (MkDocs): [yassi.github.io/dj-control-room-base](https://yassi.github.io/dj-control-room-base/)
 
-## Features
+## What you get
 
-- **TBD**: Add your main features here
+- **Centralized CSS and permissions** - One `PanelConfig` + settings key merges defaults, project settings, and (when the hub is present) Control Room overrides. You declare policy once; views and the admin placeholder reuse it.
+- **Discoverable panel** - Registers with Control Room via the `dj_control_room.panels` entry point (`pyproject.toml`); see `dj_control_room_base/panel.py`.
+- **`PanelConfig`** - One object per panel: merges defaults, project settings, and Control Room overrides; helpers for template context, optional default and extra CSS, and **scoped** `permission_required` decorators.
+- **`PanelPlaceholderModel` / `BasePanelAdmin`** - Sidebar entry under Django admin that redirects to your panel URL, with no writable admin actions; respects the same permission rules as your views when you attach `panel_config`.
+- **Sample views** - Design system landing page (`index`) and reference examples (`examples`), useful as copy-paste starting points.
+- **Shipped assets** - Templates and static files under `dj_control_room_base/templates/` and `dj_control_room_base/static/`.
 
+This package declares **Django** as its only runtime dependency. Using the full Control Room dashboard requires installing **`dj-control-room`** separately (see below).
 
-### Project Structure
+## Screenshots
 
-```
-dj-control-room-base/
-├── dj_control_room_base/         # Main package
-│   ├── templates/           # Django templates
-│   ├── views.py             # Django views
-│   └── urls.py              # URL patterns
-├── example_project/         # Example Django project
-├── tests/                   # Test suite
-├── images/                  # Screenshots for README
-└── requirements.txt         # Development dependencies
-```
+Django admin picks up a sidebar entry for this panel (placeholder model, no extra migrations for app tables):
+
+![Admin home - DJ Control Room Base in the sidebar](https://raw.githubusercontent.com/yassi/dj-control-room-base/main/images/admin_home.png)
 
 ## Requirements
 
 - Python 3.9+
-- Django 4.2+
+- Django 4.2+ (tested in CI across Django 4.2, 5.2, and 6.0)
 
 
+## Project layout
 
-## Screenshots
+```
+dj-control-room-base/
+├── dj_control_room_base/
+│   ├── core/              # PanelConfig, BasePanelAdmin, PanelPlaceholderModel
+│   ├── templates/         # Panel templates
+│   ├── static/            # Design system CSS and assets
+│   ├── conf.py            # PanelConfig instance + settings key
+│   ├── panel.py           # Control Room entry-point panel class
+│   ├── views.py
+│   ├── urls.py
+│   ├── admin.py
+│   └── models.py          # Placeholder model for admin sidebar
+├── example_project/       # Runnable demo + pytest settings
+├── tests/
+├── mkdocs.yml             # Documentation site
+└── requirements.txt       # Dev / demo deps (includes dj-control-room)
+```
 
-### Django Admin Integration
-Seamlessly integrated into your Django admin interface. A new section for dj-control-room-base
-will appear in the same places where your models appear.
 
-**NOTE:** This application does not actually introduce any model or migrations.
+## Install and wire into Django
 
-![Admin Home](https://raw.githubusercontent.com/yassi/dj-control-room-base/main/images/admin_home.png)
-
-
-## Installation
-
-### 1. Install the Package
+### 1. Install
 
 ```bash
 pip install dj-control-room-base
 ```
 
-### 2. Add to Django Settings
+For the Control Room hub UI:
 
-Add `dj_control_room_base` to your `INSTALLED_APPS`:
+```bash
+pip install dj-control-room
+```
+
+### 2. `INSTALLED_APPS`
 
 ```python
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'dj_control_room_base',  # Add this line
-    # ... your other apps
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "dj_control_room_base",
+    # Optional: centralized dashboard
+    # "dj_control_room",
 ]
 ```
 
-### 3. Configure Settings (Optional)
+### 3. URL include
 
-Add any custom configuration to your Django settings if needed:
-
-```python
-# Optional: Add custom settings for dj_control_room_base
-DJ_CONTROL_ROOM_BASE_SETTINGS = {
-    # Add your configuration here
-}
-```
-
-
-
-
-### 4. Include URLs
-
-Add the Panel URLs to your main `urls.py`:
+Mount the panel under the admin namespace (path can differ; keep it consistent with how you document links):
 
 ```python
 from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('admin/dj-control-room-base/', include('dj_control_room_base.urls')),  # Add this line
-    path('admin/', admin.site.urls),
+    path("admin/dj-control-room-base/", include("dj_control_room_base.urls")),
+    path("admin/", admin.site.urls),
 ]
 ```
 
-### 5. Run Migrations and Create Superuser
+With Control Room:
+
+```python
+urlpatterns = [
+    path("admin/dj-control-room-base/", include("dj_control_room_base.urls")),
+    path("admin/dj-control-room/", include("dj_control_room.urls")),
+    path("admin/", admin.site.urls),
+]
+```
+
+The placeholder model’s admin changelist redirects to `dj_control_room_base:index`, so staff users land on the panel home after clicking the sidebar entry.
+
+### 4. Settings (optional)
+
+`dj_control_room_base.conf` defines `panel_config` with settings key **`DJ_CONTROL_ROOM_BASE_SETTINGS`**. You can override defaults from your project:
+
+```python
+DJ_CONTROL_ROOM_BASE_SETTINGS = {
+    "LOAD_DEFAULT_CSS": True,
+    "EXTRA_CSS": [],
+    # Panel-wide permission defaults (scopes can override below)
+    "ALLOWED_GROUPS": [],
+    "REQUIRE_SUPERUSER": False,
+    # Per-view scopes, keyed to match @panel_config.permission_required("...")
+    "SCOPE_PERMISSIONS": {
+        "design-system": {
+            "ALLOWED_GROUPS": [],
+            "REQUIRE_SUPERUSER": False,
+        },
+        "examples": {
+            "ALLOWED_GROUPS": [],
+            "REQUIRE_SUPERUSER": False,
+        },
+    },
+}
+```
+
+Rules of thumb:
+
+- Users must be **staff** (and authenticated) to reach panel views; anonymous users are redirected to the admin login.
+- **Superusers** bypass group checks but must still be staff.
+- If `ALLOWED_GROUPS` is non-empty for a scope, the user must belong to one of those groups (by name).
+- If `REQUIRE_SUPERUSER` is true for a scope, only superusers pass.
+
+When Control Room is installed, it can inject overrides into the same merged settings (see `PanelConfig.get_settings()` / `apply_override_settings` in code).
+
+
+### 5. Run the server
 
 ```bash
 python manage.py migrate
-python manage.py createsuperuser  # If you don't have an admin user
+python manage.py createsuperuser   # if needed
+python manage.py runserver
 ```
 
-### 6. Access the Panel
+Open `/admin/`, sign in, and use the **Dj Control Room Base** entry in the sidebar, or go directly to `/admin/dj-control-room-base/`.
 
-1. Start your Django development server:
-   ```bash
-   python manage.py runserver
-   ```
-
-2. Navigate to the Django admin at `http://127.0.0.1:8000/admin/`
-
-3. Look for the "DJ CONTROL ROOM BASE" section in the admin interface
+**Note:** The placeholder model uses `managed = False`; you do not run migrations for `dj_control_room_base` tables. You still run `migrate` for Django’s built-in apps.
 
 
-## DJ Control Room Integration
+## Django Control Room dashboard
 
-This panel is designed to work seamlessly with [DJ Control Room](https://github.com/yassi/dj-control-room), a centralized dashboard for managing Django admin panels.
+1. Add `dj_control_room` to `INSTALLED_APPS` (with `dj_control_room_base`).
+2. Include `path("admin/dj-control-room/", include("dj_control_room.urls"))` as above.
+3. Open `/admin/dj-control-room/` to see registered panels (this package advertises itself via the `dj_control_room.panels` entry point).
 
-### Integration
-
-register your panel in django's installed apps
-
-1. Add `dj_control_room` to `INSTALLED_APPS`:
-   ```python
-   INSTALLED_APPS = [
-       # ... other apps
-       'dj_control_room',
-       'dj_control_room_base',
-   ]
-   ```
-
-2. Include the Control Room URLs in your `urls.py`:
-   ```python
-   urlpatterns = [
-       path('', include('dj_control_room_base.urls')),  # Panel URLs
-       path('admin/dj-control-room/', include('dj_control_room.urls')),  # Control Room
-       path('admin/', admin.site.urls),
-   ]
-   ```
-
-3. Visit `/admin/dj-control-room/` to see all your panels in one place!
-
-### Panel Configuration
-
-The panel is configured via the `panel.py` file with the following attributes:
-
-- **ID**: `dj_control_room_base`
-- **Name**: DJ control room base
-- **Description**: Core framework for Django Control Room panels
-- **Icon**: database
-
-You can customize these values by editing `dj_control_room_base/panel.py`.
+Panel metadata (name, description, icon, docs/PyPI links) lives in `dj_control_room_base/panel.py`; customize a fork or your own panel package the same way.
 
 
-## License
+## Building your own panel on this package
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+Import primitives from `dj_control_room_base.core`:
 
----
+- **`PanelConfig`** - Instantiate in `conf.py` with your settings key and defaults; use `get_context`, `permission_required`, and CSS helpers in views.
+- **`PanelPlaceholderModel`** - Abstract `managed=False` base for a sidebar-only model.
+- **`BasePanelAdmin`** - Redirect changelist to your `namespace:index` URL; set `panel_config` for aligned permissions.
 
-## Development Setup
+Copy the entry-point pattern from `pyproject.toml`:
 
-If you want to contribute to this project or set it up for local development:
+```toml
+[project.entry-points."dj_control_room.panels"]
+my_panel = "my_panel.panel:MyPanel"
+```
 
-### Prerequisites
 
-- Python 3.9 or higher
-- Redis server running locally
-- Git
-- Autoconf
-- Docker
+## Development
 
-It is reccommended that you use docker since it will automate much of dev env setup
-
-### 1. Clone the Repository
+Clone and install in editable mode with dev dependencies:
 
 ```bash
 git clone https://github.com/yassi/dj-control-room-base.git
 cd dj-control-room-base
+python -m venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+make install                # pip install -r requirements.txt && pip install -e .
 ```
 
-### 2a. Set up dev environment using virtualenv
+Run tests locally (uses SQLite by default via `example_project` settings):
 
 ```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-pip install -e . # install dj-control-room-base package locally
-pip intall -r requirements.txt  # install all dev requirements
-
-# Alternatively
-make install # this will also do the above in one single command
-```
-
-### 2b. Set up dev environment using docker
-
-```bash
-make docker_up  # bring up all services (redis, memached) and dev environment container
-make docker_shell  # open up a shell in the docker conatiner
-```
-
-### 3. Set Up Example Project
-
-The repository includes an example Django project for development and testing
-
-```bash
-cd example_project
-python manage.py migrate
-python manage.py createsuperuser
-```
-
-### 4. Populate Test Data (Optional)
-
-Add any custom management commands for populating test data if needed.
-
-### 6. Run the Development Server
-
-```bash
-python manage.py runserver
-```
-
-Visit `http://127.0.0.1:8000/admin/` to access the Django admin with DJ control room base.
-
-### 7. Running Tests
-
-The project includes a comprehensive test suite. You can run them by using make or
-by invoking pytest directly:
-
-```bash
-# build and install all dev dependencies and run all tests inside of docker container
-make test_docker
-
-# Test without the docker on your host machine.
-# note that testing always requires a redis and memcached service to be up.
-# these are mostly easily brought up using docker
 make test_local
+# or: python -m pytest tests/ -v
 ```
+
+Coverage:
+
+```bash
+make test_coverage
+```
+
+Docker Compose provides a **dev** container (app on port 8000) and optional **Postgres**. From the repo root:
+
+```bash
+make docker_up
+make docker_shell    # working directory: /app/example_project
+```
+
+Inside the container you can run `python manage.py runserver 0.0.0.0:8000` or pytest. For Postgres-backed runs, set `DB_ENGINE=postgresql` and point host/user/password at the `postgres` service.
+
+Documentation:
+
+```bash
+make docs          # mkdocs build
+make docs_serve    # local preview
+```
+
+
+## License
+
+MIT. See [LICENSE](LICENSE).
