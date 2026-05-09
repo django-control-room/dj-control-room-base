@@ -124,7 +124,7 @@
       <tr>
         <td><code class="dcr-code">generate_report</code></td>
         <td><span class="dcr-status-text dcr-status-text--warning">◷ {% trans "Running" %}</span></td>
-        <td><code class="dcr-code">—</code></td>
+        <td><code class="dcr-code">-</code></td>
         <td style="text-align:right;color:var(--dcr-color-text-muted)">{% trans "now" %}</td>
       </tr>
       <tr>
@@ -136,7 +136,7 @@
       <tr>
         <td><code class="dcr-code">resize_image</code></td>
         <td><span class="dcr-status-text dcr-status-text--muted">↺ {% trans "Retry" %}</span></td>
-        <td><code class="dcr-code">—</code></td>
+        <td><code class="dcr-code">-</code></td>
         <td style="text-align:right;color:var(--dcr-color-text-muted)">{% trans "7m ago" %}</td>
       </tr>
     </tbody>
@@ -146,7 +146,7 @@
 {# Failed task callout #}
 <div class="dcr-callout dcr-callout--danger" style="margin-top:var(--dcr-space-lg)">
   <p class="dcr-callout__title">sync_inventory {% trans "failed" %}</p>
-  <p class="dcr-callout__body">ConnectionRefusedError: {% trans "Could not connect to inventory service at 10.0.1.42:5432. The task will not be retried automatically — check service health and requeue manually." %}</p>
+  <p class="dcr-callout__body">ConnectionRefusedError: {% trans "Could not connect to inventory service at 10.0.1.42:5432. The task will not be retried automatically - check service health and requeue manually." %}</p>
 </div>
 
 {# Workers compact table with subtle header #}
@@ -190,7 +190,7 @@
         <td>gevent</td>
         <td class="dcr-col--right">50</td>
         <td class="dcr-col--right">0</td>
-        <td class="dcr-col--right">—</td>
+        <td class="dcr-col--right">-</td>
       </tr>
     </tbody>
   </table>

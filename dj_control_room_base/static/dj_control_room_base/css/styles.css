@@ -1,8 +1,8 @@
 /* =============================================================================
-   DJ CONTROL ROOM BASE — Base Panel Styles  (styles.css)
+   DJ CONTROL ROOM BASE - Base Panel Styles  (styles.css)
 
    Styleguide chrome used only by the base panel's own live component showcase.
-   Not intended for downstream panels — they should load design-system.css only.
+   Not intended for downstream panels - they should load design-system.css only.
 
    Requires design-system.css to be loaded first (via panel_base.html).
    ============================================================================= */
@@ -61,7 +61,7 @@
   border-color: var(--dcr-color-accent);
 }
 
-/* Cross-page section navigation — uses dcr-tabs from design-system.css */
+/* Cross-page section navigation - uses dcr-tabs from design-system.css */
 .dcr-sg-topnav {
   margin-bottom: 0;
 }
@@ -147,7 +147,7 @@
   line-height: 1.6;
 }
 
-/* Preview canvas — white/main bg so that components render against their
+/* Preview canvas - white/main bg so that components render against their
    natural context and bg-subtle components (metric, callout) remain visible. */
 .dcr-sg-preview {
   padding: var(--dcr-space-lg);
@@ -206,7 +206,7 @@
   margin: 0 0 var(--dcr-space-xl) 0;
 }
 
-/* Inner <code> — hljs github-dark theme handles background/color;
+/* Inner <code> - hljs github-dark theme handles background/color;
    we just lock down the font and size to keep it consistent */
 .dcr-sg-code code {
   font-family: var(--dcr-font-mono) !important;
@@ -215,7 +215,7 @@
   line-height: 1.6;
 }
 
-/* Colour palette — grouped token swatches */
+/* Colour palette - grouped token swatches */
 
 .dcr-sg-palette {
   border: 1px solid var(--dcr-color-border);

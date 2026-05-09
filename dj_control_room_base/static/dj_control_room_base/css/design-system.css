@@ -1,14 +1,14 @@
 /* =============================================================================
-   DJ CONTROL ROOM — Design System  (design-system.css)
+   DJ CONTROL ROOM - Design System  (design-system.css)
 
    Architecture
    ──────────────
-   1. Tokens      — --dcr-* custom properties, the single source of truth.
+   1. Tokens - --dcr-* custom properties, the single source of truth.
                     Dark mode is handled here as a token override; no
                     component-level media queries needed.
-   2. Components  — dcr-* classes that consume only --dcr-* tokens.
+   2. Components - dcr-* classes that consume only --dcr-* tokens.
                     Zero references to Django admin class names or hex values.
-   3. Panel Patterns — Reusable styles for data-heavy panels (search,
+   3. Panel Patterns - Reusable styles for data-heavy panels (search,
                     key/value display, action buttons, pagination modes).
                     Uses original class names so existing panels continue to
                     work while consuming --dcr-* tokens for colours/spacing.
@@ -73,7 +73,7 @@
   --dcr-font-size-xl: 22px;
 }
 
-/* Dark mode — override tokens only; components update automatically.
+/* Dark mode - override tokens only; components update automatically.
    Covers two signals:
    1. OS/browser preference via media query (guarded so a manually-set
       data-theme="light" on <html> can always win).
@@ -134,7 +134,7 @@
   --dcr-color-indigo-bg: rgba(129, 140, 248, 0.12);
 }
 
-/* Explicit light toggle — always force light tokens even on a dark-OS system */
+/* Explicit light toggle - always force light tokens even on a dark-OS system */
 :root[data-theme="light"] {
   --dcr-color-text: #111827;
   --dcr-color-text-muted: #888888;
@@ -209,7 +209,7 @@
   font-weight: 700 !important;
 }
 
-/* Text colour utilities — one per semantic token */
+/* Text colour utilities - one per semantic token */
 .dcr-text-default {
   color: var(--dcr-color-text) !important;
 }
@@ -573,11 +573,11 @@
  * Centered, max-width containers for panel content areas.
  * Apply to the element wrapping dcr-page-header + body content.
  *
- *   sm   640px  — forms, simple detail pages
- *   md   960px  — standard panels
- *   lg   1280px — data-heavy panels (default for most panels)
- *   xl   1600px — wide dashboards / analytics
- *   full         — no width constraint (fills the column)
+ *   sm   640px - forms, simple detail pages
+ *   md   960px - standard panels
+ *   lg   1280px - data-heavy panels (default for most panels)
+ *   xl   1600px - wide dashboards / analytics
+ *   full - no width constraint (fills the column)
  */
 
 .dcr-content {
@@ -619,7 +619,7 @@
   gap: var(--dcr-space-md);
 }
 
-/* Back link as first child of the header — occupies its own full-width row */
+/* Back link as first child of the header - occupies its own full-width row */
 .dcr-page-header>.dcr-back-link {
   flex: 0 0 100%;
   margin: 0;
@@ -710,28 +710,28 @@
 
 /*
  * Use dcr-btn instead of Django admin's .button everywhere inside DCR panels.
- * Admin's .button is tied to submit-row / changelist chrome — using it couples
+ * Admin's .button is tied to submit-row / changelist chrome - using it couples
  * panel UI to admin internals and makes theming impossible.
  *
  * All semantic variants share the same visual rule:
- *   at rest  — transparent background, semantic-colored border + text
- *   hover    — semantic tinted background added
- *   active   — slightly deeper tint
+ *   at rest - transparent background, semantic-colored border + text
+ *   hover - semantic tinted background added
+ *   active - slightly deeper tint
  *
  * This is consistent across every variant and avoids dark-mode contrast
  * failures that solid fills would cause on light semantic colours (warning, info).
  *
  * Variants:
- *   (none)      neutral  — gray border, body text; accent tint on hover
- *   --primary   accent   — primary form submits, main call-to-action
- *   --success   green    — confirmations, approvals
- *   --warning   amber    — caution-level actions
- *   --danger    red      — destructive actions (flush, purge, delete)
- *   --info      blue     — informational / neutral-positive actions
- *   --muted     gray     — secondary / de-emphasised actions
- *   --sm        size     — compact; can combine with any variant
+ *   (none)      neutral - gray border, body text; accent tint on hover
+ *   --primary   accent - primary form submits, main call-to-action
+ *   --success   green - confirmations, approvals
+ *   --warning   amber - caution-level actions
+ *   --danger    red - destructive actions (flush, purge, delete)
+ *   --info      blue - informational / neutral-positive actions
+ *   --muted     gray - secondary / de-emphasised actions
+ *   --sm        size - compact; can combine with any variant
  *
- * Use <button> or <a> — the styles work on both.
+ * Use <button> or <a> - the styles work on both.
  */
 
 /*
@@ -739,7 +739,7 @@
  *
  * Base + variant controls the colour.
  * --ghost modifier switches any variant to transparent background + coloured border.
- * Icons: place any <svg> or inline element as a direct child — flex gap handles spacing.
+ * Icons: place any <svg> or inline element as a direct child - flex gap handles spacing.
  *
  *   <!-- Solid (default) -->
  *   <button class="dcr-btn dcr-btn--primary">Save</button>
@@ -897,7 +897,7 @@ a.dcr-btn--muted.dcr-btn--ghost:visited {
   flex-shrink: 0;
 }
 
-/* Icon-only — square, no horizontal text padding */
+/* Icon-only - square, no horizontal text padding */
 .dcr-btn--icon-only {
   padding: 8px;
 }
@@ -976,7 +976,7 @@ a.dcr-btn--muted.dcr-btn--ghost:visited {
   border-color: transparent;
 }
 
-/* ── Ghost modifier — transparent bg, coloured border + text ─────────── */
+/* ── Ghost modifier - transparent bg, coloured border + text ─────────── */
 /* Combine with any variant: dcr-btn--primary dcr-btn--ghost              */
 
 .dcr-btn--ghost {
@@ -1290,7 +1290,7 @@ a.dcr-dropdown__item--danger:active {
 /*
  * Fully-rounded chip for live status and state indicators.
  * Use wherever you need to communicate a running state, not a data category.
- * Text is sentence-case — write naturally, not in ALL CAPS.
+ * Text is sentence-case - write naturally, not in ALL CAPS.
  *
  * Variants: (none) · success · warning · danger · info · muted · purple · indigo
  * Modifiers: --solid
@@ -1316,7 +1316,7 @@ a.dcr-dropdown__item--danger:active {
   color: var(--dcr-color-accent);
 }
 
-/* Dot indicator — always matches pill text colour */
+/* Dot indicator - always matches pill text colour */
 .dcr-pill__dot {
   width: 7px;
   height: 7px;
@@ -1639,7 +1639,7 @@ a.dcr-dropdown__item--danger:active {
   margin: 0;
 }
 
-/* Monospace values (key names, import paths, etc.) — no code-block chrome */
+/* Monospace values (key names, import paths, etc.) - no code-block chrome */
 .dcr-dl__value--mono {
   font-family: var(--dcr-font-mono);
   font-size: var(--dcr-font-size-sm);
@@ -1653,7 +1653,7 @@ a.dcr-dropdown__item--danger:active {
 }
 
 /*
- * Horizontal variant — pairs flow left-to-right in a single row.
+ * Horizontal variant - pairs flow left-to-right in a single row.
  * Good for compact server/connection info bars at the top of a page.
  *
  *   <dl class="dcr-dl dcr-dl--horizontal">
@@ -1859,7 +1859,7 @@ a.dcr-dropdown__item--danger:active {
 }
 
 /*
- * Split card — full-width bordered card divided into equal sections by
+ * Split card - full-width bordered card divided into equal sections by
  * vertical rules. Use wherever you need a row of info/action cells inside
  * a single card chrome (e.g. call-to-action footer, feature comparison).
  *
@@ -1963,7 +1963,7 @@ a.dcr-dropdown__item--danger:active {
   flex-shrink: 0;
 }
 
-/* Colour variants — sets the tinted bg and matching icon colour */
+/* Colour variants - sets the tinted bg and matching icon colour */
 .dcr-panel-card__icon-wrap--accent {
   background: var(--dcr-color-accent-bg);
   border-color: transparent;
@@ -2077,7 +2077,7 @@ a.dcr-panel-card__link:active {
   text-decoration: none !important;
 }
 
-/* Placeholder card — dashed border, centred call-to-action */
+/* Placeholder card - dashed border, centred call-to-action */
 .dcr-panel-card--placeholder {
   border-style: dashed;
   background: var(--dcr-color-bg-subtle);
@@ -2096,7 +2096,7 @@ a.dcr-panel-card__link:active {
   opacity: 0.45;
 }
 
-/* Coming-soon card — slightly dimmed */
+/* Coming-soon card - slightly dimmed */
 .dcr-panel-card--coming-soon {
   opacity: 0.75;
 }
@@ -2107,7 +2107,7 @@ a.dcr-panel-card__link:active {
 /*
  * Generic bordered panel with composable zones.
  * Use this as the base for info cards, activity feeds, code viewers, and
- * any other card-like container — instead of creating a bespoke wrapper.
+ * any other card-like container - instead of creating a bespoke wrapper.
  *
  * Structure:
  *   <div class="dcr-card">
@@ -2259,8 +2259,8 @@ a.dcr-panel-card__link:active {
  * <table>.  The border-top creates a natural separator from the last row.
  *
  * Supports two modes:
- *   Page-based   — prev + numbered pages + next
- *   Cursor-based — prev + next only (for scan-cursor backends like Redis)
+ *   Page-based - prev + numbered pages + next
+ *   Cursor-based - prev + next only (for scan-cursor backends like Redis)
  *
  * Structure:
  *   <div class="dcr-pagination">
@@ -2366,7 +2366,7 @@ a.dcr-pagination__page:hover {
   text-decoration: none !important;
 }
 
-/* Active page — filled accent */
+/* Active page - filled accent */
 .dcr-pagination__page--active {
   background: var(--dcr-color-accent);
   border-color: var(--dcr-color-accent);
@@ -2396,10 +2396,10 @@ a.dcr-pagination__page:hover {
  * Card-wrapped table for data browsing panels.  The card is divided into four
  * optional zones: header, controls, table body, and pagination.
  *
- * Zone 1 — Header  (title + subtitle + right meta)
- * Zone 2 — Controls  (search field + filter dropdowns, subtle bg)
- * Zone 3 — Table body  (plain <table>, styled via descendants)
- * Zone 4 — Pagination  (dcr-pagination placed inside the card)
+ * Zone 1 - Header  (title + subtitle + right meta)
+ * Zone 2 - Controls  (search field + filter dropdowns, subtle bg)
+ * Zone 3 - Table body  (plain <table>, styled via descendants)
+ * Zone 4 - Pagination  (dcr-pagination placed inside the card)
  *
  *   <div class="dcr-data-table">
  *
@@ -2644,7 +2644,7 @@ a.dcr-pagination__page:hover {
   background: var(--dcr-color-bg) !important;
 }
 
-/* Code viewer flush inside an expand row — no outer radius or margin */
+/* Code viewer flush inside an expand row - no outer radius or margin */
 .dcr-data-table__expand-row .dcr-code-viewer {
   margin: 0;
   border-radius: 0;
@@ -2857,7 +2857,7 @@ a.dcr-pagination__page:hover {
   background: var(--dcr-color-danger);
 }
 
-/* Optional icon inside the input — wrap input + icon in dcr-inline-edit__field */
+/* Optional icon inside the input - wrap input + icon in dcr-inline-edit__field */
 .dcr-inline-edit__field {
   position: relative;
   display: inline-flex;
@@ -2976,22 +2976,22 @@ a.dcr-pagination__page:hover {
 /*
  * General-purpose form primitives for DCR panels.
  *
- * dcr-form          — column container (gap + padding); use anywhere a form lives
- *   dcr-form__row   — horizontal flex row of fields/controls
- *   dcr-form__label — small uppercase label above an entire row or group
+ * dcr-form - column container (gap + padding); use anywhere a form lives
+ *   dcr-form__row - horizontal flex row of fields/controls
+ *   dcr-form__label - small uppercase label above an entire row or group
  *
- * dcr-field         — individual field: stacks label above a control
- *   dcr-field__label  — xs uppercase label
- *   dcr-field--grow   — flex:1 so the field expands to fill its row
+ * dcr-field - individual field: stacks label above a control
+ *   dcr-field__label - xs uppercase label
+ *   dcr-field--grow - flex:1 so the field expands to fill its row
  *
- * dcr-input         — styled plain text / number / email input
- * dcr-select        — styled <select>
+ * dcr-input - styled plain text / number / email input
+ * dcr-select - styled <select>
  *
- * dcr-input-group   — icon + input combo (e.g. search field with magnifier)
+ * dcr-input-group - icon + input combo (e.g. search field with magnifier)
  *   dcr-input-group__icon
  *   dcr-input-group__input
  *
- * Example — search + filter bar inside dcr-data-table__controls:
+ * Example - search + filter bar inside dcr-data-table__controls:
  *
  *   <form class="dcr-form">
  *     <div class="dcr-form__row">
@@ -3024,7 +3024,7 @@ a.dcr-pagination__page:hover {
   padding: var(--dcr-space-md) var(--dcr-space-lg);
 }
 
-/* Default row — labels above individual fields, baseline-aligned */
+/* Default row - labels above individual fields, baseline-aligned */
 .dcr-form__row {
   display: flex;
   align-items: flex-end;
@@ -3032,7 +3032,7 @@ a.dcr-pagination__page:hover {
   flex-wrap: wrap;
 }
 
-/* Stretch row — all children same height; use for input + button pairs */
+/* Stretch row - all children same height; use for input + button pairs */
 .dcr-form__row--stretch {
   display: flex;
   align-items: stretch;
@@ -3147,7 +3147,7 @@ a.dcr-pagination__page:hover {
   outline: none;
 }
 
-/* Icon + input combo — icon is absolutely positioned inside the input */
+/* Icon + input combo - icon is absolutely positioned inside the input */
 .dcr-input-group {
   position: relative;
   flex: 1;
@@ -3215,7 +3215,7 @@ a.dcr-pagination__page:hover {
 
 /*
  * Icon + coloured text for use inside table cells.  Unlike dcr-status (dot +
- * label), this variant renders a symbol and text with no background pill — ideal
+ * label), this variant renders a symbol and text with no background pill - ideal
  * for table "Status" columns.
  *
  * Usage:
@@ -3304,7 +3304,7 @@ a.dcr-pagination__page:hover {
 /*
  * Use for destructive operational actions (flush, delete, purge).
  * Distinct from Django admin's .default/.deletelink which are form-submit
- * buttons — these are standalone operation triggers on panel pages.
+ * buttons - these are standalone operation triggers on panel pages.
  */
 
 .flush-button,
@@ -3371,8 +3371,8 @@ a.dcr-pagination__page:hover {
 /* --- Key type badges -------------------------------------------------------- */
 /*
  * Colour-coded chips for Redis/cache data types. Two size variants:
- *   .key-type       — compact (inside table cells)
- *   .key-type-badge — slightly larger (standalone labels)
+ *   .key-type - compact (inside table cells)
+ *   .key-type-badge - slightly larger (standalone labels)
  */
 
 .key-type {
@@ -3440,7 +3440,7 @@ a.dcr-pagination__page:hover {
 
 /* --- Panel search form ------------------------------------------------------ */
 /*
- * A standalone search form on a panel page — not the admin changelist search.
+ * A standalone search form on a panel page - not the admin changelist search.
  * Renders above a results list and supports multiple filter fields inline.
  */
 
@@ -3525,7 +3525,7 @@ a.dcr-pagination__page:hover {
 /* --- Key-value table -------------------------------------------------------- */
 /*
  * Displays structured key/value data (Redis hash fields, cache entry metadata,
- * task args, etc.). Distinct from admin changelist — no sorting or pagination.
+ * task args, etc.). Distinct from admin changelist - no sorting or pagination.
  */
 
 .key-value-table {

@@ -27,7 +27,7 @@ class PanelConfig:
     Binds a panel's settings key and defaults into a single reusable object.
 
     Instantiate once in the panel's conf.py, then use the instance methods
-    in views and elsewhere — no need to pass settings_key or defaults at
+    in views and elsewhere - no need to pass settings_key or defaults at
     every call site.
 
     Builtin defaults (:data:`PANEL_BUILTIN_DEFAULTS`) are merged beneath
@@ -70,9 +70,9 @@ class PanelConfig:
         defined_settings = getattr(django_settings, self.settings_key, None) or {}
 
         # combine settings and follow the order of precedence
-        # 0. builtins — package-wide defaults including permission keys (see ``PANEL_BUILTIN_DEFAULTS``)
-        # 1. defaults — settings defined in a panel's conf.py
-        # 2. override settings — settings defined in the dj-control-room package like
+        # 0. builtins - package-wide defaults including permission keys (see ``PANEL_BUILTIN_DEFAULTS``)
+        # 1. defaults - settings defined in a panel's conf.py
+        # 2. override settings - settings defined in the dj-control-room package like
         # DJ_CONTROL_ROOM_SETTINGS = {
         #     "LOAD_DEFAULT_CSS": False,
         #     "EXTRA_CSS": ["dj_control_room_base/css/overrides.css"],
@@ -82,7 +82,7 @@ class PanelConfig:
         #         }
         #     }
         # }
-        # 3. defined settings — settings defined in the consuming project's app settings
+        # 3. defined settings - settings defined in the consuming project's app settings
         # DJ_REDIS_PANEL_SETTINGS = {
         #     "LOAD_DEFAULT_CSS": False,
         #     "ALLOW_OPTION": True,

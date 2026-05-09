@@ -1,5 +1,5 @@
 """
-Tests for PanelConfig — settings merging, CSS context, and template context.
+Tests for PanelConfig - settings merging, CSS context, and template context.
 """
 
 from unittest.mock import MagicMock
@@ -19,7 +19,7 @@ _SETTINGS_KEY = "DJ_TEST_PANEL_SETTINGS"
 
 
 class TestPanelConfigGetSettings(TestCase):
-    """Tests for PanelConfig.get_settings() — precedence and merging."""
+    """Tests for PanelConfig.get_settings() - precedence and merging."""
 
     def _make_config(self, defaults=None):
         return PanelConfig(settings_key=_SETTINGS_KEY, defaults=defaults)
@@ -108,7 +108,7 @@ class TestPanelConfigApplyOverrideSettings(TestCase):
 
 
 class TestPanelConfigGetCssContext(TestCase):
-    """Tests for PanelConfig.get_css_context() — CSS link rendering."""
+    """Tests for PanelConfig.get_css_context() - CSS link rendering."""
 
     def test_load_default_css_true_in_context(self):
         config = PanelConfig(
@@ -177,7 +177,7 @@ class TestPanelConfigGetCssContext(TestCase):
 
 
 class TestPanelConfigGetContext(TestCase):
-    """Tests for PanelConfig.get_context() — full template context building."""
+    """Tests for PanelConfig.get_context() - full template context building."""
 
     def setUp(self):
         self.factory = RequestFactory()
@@ -207,7 +207,7 @@ class TestPanelConfigGetContext(TestCase):
 
 
 class TestPanelConfigHasPermission(TestCase):
-    """Tests for PanelConfig.has_permission() — panel-level and scope-level access."""
+    """Tests for PanelConfig.has_permission() - panel-level and scope-level access."""
 
     def setUp(self):
         self.factory = RequestFactory()

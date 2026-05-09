@@ -1,5 +1,5 @@
 """
-Tests for BasePanelAdmin — the reusable admin base class in core.
+Tests for BasePanelAdmin - the reusable admin base class in core.
 """
 
 from django.contrib import admin

@@ -3,7 +3,7 @@
   <div class="dcr-section-header dcr-section-header--plain">
     <h2 class="dcr-section-header__title">{% trans "Data Table" %}</h2>
   </div>
-  <p class="dcr-sg-section__desc">{% trans "Card-wrapped table with four named zones: " %}<strong>{% trans "header" %}</strong>{% trans " (title + badge + subtitle + right meta), " %}<strong>{% trans "controls" %}</strong>{% trans " (search + filters, subtle bg), " %}<strong>{% trans "table body" %}</strong>{% trans ", and " %}<strong>{% trans "pagination" %}</strong>{% trans ". All zones are optional — use only what you need. Add " %}<code class="dcr-code">dcr-data-table__header--subtle</code>{% trans " to tint the header, and " %}<code class="dcr-code">dcr-data-table__title-icon</code>{% trans " on an SVG to place an icon before the title text." %}</p>
+  <p class="dcr-sg-section__desc">{% trans "Card-wrapped table with four named zones: " %}<strong>{% trans "header" %}</strong>{% trans " (title + badge + subtitle + right meta), " %}<strong>{% trans "controls" %}</strong>{% trans " (search + filters, subtle bg), " %}<strong>{% trans "table body" %}</strong>{% trans ", and " %}<strong>{% trans "pagination" %}</strong>{% trans ". All zones are optional - use only what you need. Add " %}<code class="dcr-code">dcr-data-table__header--subtle</code>{% trans " to tint the header, and " %}<code class="dcr-code">dcr-data-table__title-icon</code>{% trans " on an SVG to place an icon before the title text." %}</p>
 
   <div class="dcr-sg-preview">
     <div class="dcr-data-table" style="width:100%">
@@ -39,7 +39,7 @@
             <td>gevent</td>
             <td class="dcr-col--right">50</td>
             <td class="dcr-col--right">0</td>
-            <td class="dcr-col--right">—</td>
+            <td class="dcr-col--right">-</td>
           </tr>
         </tbody>
       </table>
@@ -453,7 +453,7 @@ document.querySelectorAll('.dcr-data-table__expand-btn').forEach(function (btn) 
         </tbody>
       </table>
       <div class="dcr-pagination">
-        <span class="dcr-pagination__summary">{% trans "Cursor scan — page 2" %}</span>
+        <span class="dcr-pagination__summary">{% trans "Cursor scan - page 2" %}</span>
         <div class="dcr-pagination__controls">
           <a href="#" class="dcr-pagination__btn dcr-pagination__btn--prev" aria-label="{% trans 'Previous' %}">{% trans "Previous" %}</a>
           <a href="#" class="dcr-pagination__btn dcr-pagination__btn--next" aria-label="{% trans 'Next' %}">{% trans "Next" %}</a>
@@ -464,7 +464,7 @@ document.querySelectorAll('.dcr-data-table__expand-btn').forEach(function (btn) 
   <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
 <pre class="dcr-sg-code"><code class="language-html">&lt;!-- Cursor-based: no page numbers, just prev/next --&gt;
 &lt;div class="dcr-pagination"&gt;
-  &lt;span class="dcr-pagination__summary"&gt;Cursor scan — page 2&lt;/span&gt;
+  &lt;span class="dcr-pagination__summary"&gt;Cursor scan - page 2&lt;/span&gt;
   &lt;div class="dcr-pagination__controls"&gt;
     &lt;a href="?cursor=prev" class="dcr-pagination__btn dcr-pagination__btn--prev"&gt;Previous&lt;/a&gt;
     &lt;a href="?cursor=next" class="dcr-pagination__btn dcr-pagination__btn--next"&gt;Next&lt;/a&gt;
