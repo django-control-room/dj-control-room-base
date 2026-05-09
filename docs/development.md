@@ -131,6 +131,8 @@ dj-control-room-base/
 │   └── models.py              # BasePanelPlaceholder model
 ├── example_project/           # Runnable Django project used in tests
 │   └── example_project/
+│       ├── management/commands/
+│       │   └── render_design_system.py  # generates docs/design-system.html
 │       ├── settings.py        # Test/dev settings (SQLite + Postgres toggle)
 │       └── urls.py
 ├── tests/
@@ -149,6 +151,24 @@ dj-control-room-base/
 
 ---
 
+## Design system reference page
+
+`docs/design-system.html` is a committed, self-contained HTML file that serves as the static design system reference in the docs site. It is not regenerated automatically on every build - it is a maintained static artifact that you update intentionally when the design system templates change.
+
+To regenerate it after modifying `sg_partials/*.html` templates or `design-system.css`:
+
+```bash
+make render_design_system
+# equivalent to:
+python example_project/manage.py render_design_system --output docs/design-system.html
+```
+
+Then review the diff and commit the updated file alongside your template changes.
+
+The command renders all seven `sg_partials/*.html` templates via Django's template engine and inlines `design-system.css`, `styles.css`, and the syntax-highlighting assets into a single self-contained file. No database or authentication is required.
+
+---
+
 ## Makefile reference
 
 | Command | Description |
@@ -163,7 +183,7 @@ dj-control-room-base/
 | `make docker_shell` | Open an interactive shell in the dev container. |
 | `make build` | Build sdist and wheel into `dist/`. |
 | `make publish` | Upload `dist/` to PyPI via twine. |
-| `make docs` | Build the MkDocs site into `site/`. |
+| `make docs` | Render design system page, then build the MkDocs site into `site/`. |
 | `make docs_serve` | Serve the docs locally at `http://127.0.0.1:8000`. |
 | `make docs_push` | Build and deploy docs to GitHub Pages. |
 | `make clean` | Remove build artifacts (`build/`, `dist/`, `*.egg-info`). |

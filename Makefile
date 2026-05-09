@@ -17,7 +17,8 @@ help:
 	@echo "  make test_coverage   		Run tests with coverage report"
 	@echo "  make coverage_html   		Generate HTML coverage report"
 	@echo "  make publish         		Publish package to PyPI"
-	@echo "  make docs            		Build documentation"
+	@echo "  make render_design_system	Regenerate docs/design-system.html static reference"
+	@echo "  make docs            		Build documentation site (mkdocs)"
 	@echo "  make docs_serve      		Serve documentation locally"
 	@echo "  make docs_push       		Deploy documentation to GitHub Pages"
 	@echo "  make docker_up       		Start all Docker services (dev, Redis, cluster)"
@@ -86,6 +87,9 @@ coverage_html: test_coverage
 
 publish:
 	twine upload --repository $(PYPI_REPO) dist/*
+
+render_design_system: install
+	python example_project/manage.py render_design_system --output docs/design-system.html
 
 docs: install
 	mkdocs build

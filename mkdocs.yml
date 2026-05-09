@@ -42,6 +42,7 @@ nav:
     - Installation: installation.md
     - Configuration: configuration.md
   - Building Panels: building-panels.md
+  - Design System: design-system.html
   - Development: development.md
 
 markdown_extensions:
