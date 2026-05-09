@@ -7,7 +7,7 @@
 
 # dj-control-room-base
 
-![Admin home - DJ Control Room Base in the sidebar](https://raw.githubusercontent.com/yassi/dj-control-room-base/main/images/dj-control-room-base.png)
+![dj-control-room-base - a core library for creating DCR panels](images/dj-control-room-base.png)
 
 
 
@@ -38,9 +38,13 @@ This package declares **Django** as its only runtime dependency. Using the full 
 
 ## Screenshots
 
-Django admin picks up a sidebar entry for this panel (placeholder model, no extra migrations for app tables):
+**Django admin** - the placeholder model registers an app entry that redirects to the panel, with no extra migrations required:
 
-![Admin home - DJ Control Room Base in the sidebar](https://raw.githubusercontent.com/yassi/dj-control-room-base/main/images/admin_home.png)
+![Django admin home showing the DJ Control Room Base sidebar entry](images/admin_home.png)
+
+**The panel UI** - the bundled design system reference view, accessible at `/admin/dj-control-room-base/`:
+
+![DJ Control Room Base design system panel view](images/dcr-base-design-system.png)
 
 ## Requirements
 
@@ -127,37 +131,22 @@ The placeholder model’s admin changelist redirects to `dj_control_room_base:in
 
 ### 4. Settings (optional)
 
-`dj_control_room_base.conf` defines `panel_config` with settings key **`DJ_CONTROL_ROOM_BASE_SETTINGS`**. You can override defaults from your project:
+Add `DJ_CONTROL_ROOM_BASE_SETTINGS` to your Django settings to override any defaults:
 
 ```python
 DJ_CONTROL_ROOM_BASE_SETTINGS = {
     "LOAD_DEFAULT_CSS": True,
     "EXTRA_CSS": [],
-    # Panel-wide permission defaults (scopes can override below)
     "ALLOWED_GROUPS": [],
     "REQUIRE_SUPERUSER": False,
-    # Per-view scopes, keyed to match @panel_config.permission_required("...")
     "SCOPE_PERMISSIONS": {
-        "design-system": {
-            "ALLOWED_GROUPS": [],
-            "REQUIRE_SUPERUSER": False,
-        },
-        "examples": {
-            "ALLOWED_GROUPS": [],
-            "REQUIRE_SUPERUSER": False,
-        },
+        "design-system": {"ALLOWED_GROUPS": [], "REQUIRE_SUPERUSER": False},
+        "examples":       {"ALLOWED_GROUPS": [], "REQUIRE_SUPERUSER": False},
     },
 }
 ```
 
-Rules of thumb:
-
-- Users must be **staff** (and authenticated) to reach panel views; anonymous users are redirected to the admin login.
-- **Superusers** bypass group checks but must still be staff.
-- If `ALLOWED_GROUPS` is non-empty for a scope, the user must belong to one of those groups (by name).
-- If `REQUIRE_SUPERUSER` is true for a scope, only superusers pass.
-
-When Control Room is installed, it can inject overrides into the same merged settings (see `PanelConfig.get_settings()` / `apply_override_settings` in code).
+See [CSS and permissions](#css-and-permissions) below for a full explanation of each key and how they are merged.
 
 
 ### 5. Run the server
@@ -180,6 +169,86 @@ Open `/admin/`, sign in, and use the **Dj Control Room Base** entry in the sideb
 3. Open `/admin/dj-control-room/` to see registered panels (this package advertises itself via the `dj_control_room.panels` entry point).
 
 Panel metadata (name, description, icon, docs/PyPI links) lives in `dj_control_room_base/panel.py`; customize a fork or your own panel package the same way.
+
+
+## CSS and permissions
+
+`PanelConfig` is the central object that every panel built on this library uses. Instantiate it once in `conf.py` with a settings key and panel-level defaults, then call its helpers from views, templates, and the admin class. The same config object drives CSS injection, permission checks, and the full template context.
+
+### Settings merge order
+
+Settings are resolved fresh on every call so that runtime changes (e.g. from the Control Room hub) are always picked up. The merge order is, from lowest to highest priority:
+
+1. **Built-in defaults** (`PANEL_BUILTIN_DEFAULTS` in `core/panel_config.py`) - CSS and permission keys that every panel gets automatically, even if the panel author never declares them.
+2. **Panel defaults** - the `defaults` dict passed to `PanelConfig(...)` in the panel's own `conf.py`.
+3. **Hub overrides** - injected at runtime by `dj-control-room` via `apply_override_settings()` when the hub is installed. Lets the hub enforce global CSS or permission policies across all panels from a single place.
+4. **Project settings** - the dict at `settings.DJ_<PANEL>_SETTINGS` in the consuming Django project. These win over everything, so a project can always opt out of hub defaults.
+
+The result is that panel authors declare a minimal `defaults`, project owners override only what they need, and the hub can push cross-panel policy without touching individual panel settings files.
+
+### CSS settings
+
+| Key | Type | Default | Effect |
+|---|---|---|---|
+| `LOAD_DEFAULT_CSS` | `bool` | `True` | Loads the shared `design-system.css` bundle from this package. Set to `False` if the hub or a parent template already loads it. |
+| `EXTRA_CSS` | `list[str]` | `[]` | Additional stylesheets to inject. Relative paths are resolved through Django's `staticfiles`; absolute URLs (`http://`, `https://`, `//`) are used as-is. |
+
+In a view, call `panel_config.get_context(request, title="My Panel")` to get a context dict that already contains `dj_cr_load_default_css` and `dj_cr_extra_css` alongside the standard Django admin context. Templates use these to inject the right `<link>` tags without any per-view wiring.
+
+### Permission settings
+
+Panels built on this library follow a two-level permission model: a **panel-wide** policy, and optional **per-scope** overrides for individual views.
+
+**Panel-wide keys** (apply to all views unless a scope overrides them):
+
+| Key | Type | Default | Effect |
+|---|---|---|---|
+| `ALLOWED_GROUPS` | `list[str]` | `[]` | Django group names that may access the panel. Empty list means any staff user is allowed. |
+| `REQUIRE_SUPERUSER` | `bool` | `False` | Restricts the panel to superusers only. |
+
+**Per-view scopes** (`SCOPE_PERMISSIONS`):
+
+A scope is a string label that matches the argument passed to `@panel_config.permission_required("my-scope")` on a view. Each scope entry accepts the same `ALLOWED_GROUPS` and `REQUIRE_SUPERUSER` keys and overrides the panel-wide values for that view only.
+
+```python
+"SCOPE_PERMISSIONS": {
+    "reports": {"REQUIRE_SUPERUSER": True},     # only superusers
+    "dashboard": {"ALLOWED_GROUPS": ["ops"]},   # ops group only
+    "status": {},                               # inherits panel-wide policy
+}
+```
+
+**Resolution rules** (applied in order):
+
+1. The user must be **authenticated** and **staff**. Anonymous users are redirected to the Django admin login.
+2. **Superusers** always pass (they bypass group checks, matching Django admin behaviour).
+3. If `REQUIRE_SUPERUSER` is `True` for the resolved scope, non-superusers receive a 403.
+4. If `ALLOWED_GROUPS` is non-empty, the user must belong to at least one of those groups (checked by name). An empty list skips the group check.
+
+### Using it in a panel
+
+```python
+# myapp/conf.py
+from dj_control_room_base.core import PanelConfig
+
+panel_config = PanelConfig(
+    settings_key="DJ_MY_PANEL_SETTINGS",
+    defaults={
+        "LOAD_DEFAULT_CSS": True,
+        "EXTRA_CSS": [],
+    },
+)
+
+# myapp/views.py
+from .conf import panel_config
+
+@panel_config.permission_required("dashboard")
+def dashboard(request):
+    context = panel_config.get_context(request, title="Dashboard")
+    return render(request, "mypanel/dashboard.html", context)
+```
+
+That is the entirety of the wiring. Permission enforcement, login redirect, CSS injection, and the Django admin context are all handled by the two `panel_config` calls.
 
 
 ## Building your own panel on this package
