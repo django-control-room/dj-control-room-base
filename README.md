@@ -7,44 +7,55 @@
 
 # dj-control-room-base
 
-![dj-control-room-base - a core library for creating DCR panels](images/dj-control-room-base.png)
+![dj-control-room-base - a core library for creating DCR panels](https://raw.githubusercontent.com/yassi/dj-control-room-base/main/images/dj-control-room-base.png)
 
 
 
-**dj-control-room-base** is a **core library** for [Django Control Room](https://github.com/yassi/dj-control-room) panels. It provides functionality for managing panel configuration, context, permissions and styles. All featured panels (ones developed by the DCR team) will use this as a base library for creating new panels.
+**dj-control-room-base** is a core library for [Django Control Room](https://github.com/yassi/dj-control-room) panels. It provides the shared primitives that every panel needs: settings management, CSS injection, permission enforcement, admin sidebar integration, and template context helpers.
 
-Additionally, this project is also an installable panel on its own. As a panel it provides
-an interactive styleguide with examples that can make working on new panels all the more easier.
+**Official Django Control Room panels** ship with this package as a dependency and build on these APIs rather than reimplementing them panel by panel.
 
-The library **centralizes settings** that every panel would otherwise duplicate: **CSS** (whether to load the default design-system bundle, extra stylesheets, and hub-level overrides) and **permissions** (staff checks, optional superuser-only mode, Django group allow lists, and **scoped** rules per view). Panel authors who adopt `PanelConfig`, the placeholder admin pattern (`PanelPlaceholderModel` / `BasePanelAdmin`), and the shared template context helpers get that behavior **for free** instead of wiring merges, decorators, and admin sidebar rules by hand on each project.
+**Optionally**, the package can also be mounted as a full panel in its own right: it ships a bundled design system reference UI and example patterns that are useful when building or theming new panels.
 
 - **Official site:** [djangocontrolroom.com](https://djangocontrolroom.com)
 - **Control Room app:** [dj-control-room](https://github.com/yassi/dj-control-room)
+- **Docs:** [yassi.github.io/dj-control-room-base](https://yassi.github.io/dj-control-room-base/)
 
-## Documentation
+## What this library provides
 
-Published docs (MkDocs): [yassi.github.io/dj-control-room-base](https://yassi.github.io/dj-control-room-base/)
+### Centralized CSS and permissions
 
-## What you get
+The main value of this library is that it centralizes the settings every panel would otherwise duplicate independently. A single `PanelConfig` object, instantiated once in a panel's `conf.py`, handles:
 
-- **Centralized CSS and permissions** - One `PanelConfig` + settings key merges defaults, project settings, and (when the hub is present) Control Room overrides. You declare policy once; views and the admin placeholder reuse it.
-- **Discoverable panel** - Registers with Control Room via the `dj_control_room.panels` entry point (`pyproject.toml`); see `dj_control_room_base/panel.py`.
-- **`PanelConfig`** - One object per panel: merges defaults, project settings, and Control Room overrides; helpers for template context, optional default and extra CSS, and **scoped** `permission_required` decorators.
-- **`PanelPlaceholderModel` / `BasePanelAdmin`** - Sidebar entry under Django admin that redirects to your panel URL, with no writable admin actions; respects the same permission rules as your views when you attach `panel_config`.
-- **Sample views** - Design system landing page (`index`) and reference examples (`examples`), useful as copy-paste starting points.
-- **Shipped assets** - Templates and static files under `dj_control_room_base/templates/` and `dj_control_room_base/static/`.
+- **CSS injection** - whether to load the shared design-system bundle, and any additional stylesheets, resolved and injected into template context automatically
+- **Permission enforcement** - staff checks, optional superuser-only restriction, Django group allow lists, and per-view scope overrides, all driven from the same merged settings dict
+- **Settings merging** - panel-level defaults, hub overrides from `dj-control-room`, and project-level settings are merged in a defined precedence order so each layer can override only what it needs
 
-This package declares **Django** as its only runtime dependency. Using the full Control Room dashboard requires installing **`dj-control-room`** separately (see below).
+Panel authors who use `PanelConfig` get all of this for free. See [CSS and permissions](#css-and-permissions) below for the full reference.
+
+### Admin sidebar integration
+
+`PanelPlaceholderModel` and `BasePanelAdmin` give any panel a Django admin sidebar entry that redirects to the panel's main view, with no writable actions, no migrations, and automatic respect for the same permission rules configured on `PanelConfig`.
+
+### Template context helpers
+
+`panel_config.get_context(request, title="...")` returns a fully-prepared context dict that includes the standard Django admin context, CSS injection variables, and any extra kwargs you pass. No manual assembly required.
+
+### Entry-point discovery
+
+Panels register themselves with Control Room via a `pyproject.toml` entry point under `dj_control_room.panels`. This library ships the reference implementation of that pattern.
+
+The only runtime dependency is Django. `dj-control-room` is optional and only needed for the centralized hub dashboard.
 
 ## Screenshots
 
 **Django admin** - the placeholder model registers an app entry that redirects to the panel, with no extra migrations required:
 
-![Django admin home showing the DJ Control Room Base sidebar entry](images/admin_home.png)
+![Django admin home showing the DJ Control Room Base sidebar entry](https://raw.githubusercontent.com/yassi/dj-control-room-base/main/images/admin_home.png)
 
 **The panel UI** - the bundled design system reference view, accessible at `/admin/dj-control-room-base/`:
 
-![DJ Control Room Base design system panel view](images/dcr-base-design-system.png)
+![DJ Control Room Base design system panel view](https://raw.githubusercontent.com/yassi/dj-control-room-base/main/images/dcr-base-design-system.png)
 
 ## Requirements
 
@@ -73,41 +84,22 @@ dj-control-room-base/
 ```
 
 
-## Install and wire into Django
-
-### 1. Install
+## Quick start
 
 ```bash
 pip install dj-control-room-base
 ```
 
-For the Control Room hub UI:
-
-```bash
-pip install dj-control-room
-```
-
-### 2. `INSTALLED_APPS`
-
 ```python
+# settings.py
 INSTALLED_APPS = [
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
+    ...
     "dj_control_room_base",
-    # Optional: centralized dashboard
-    # "dj_control_room",
 ]
 ```
 
-### 3. URL include
-
-Mount the panel under the admin namespace (path can differ; keep it consistent with how you document links):
-
 ```python
+# urls.py
 from django.contrib import admin
 from django.urls import path, include
 
@@ -117,50 +109,14 @@ urlpatterns = [
 ]
 ```
 
-With Control Room:
-
-```python
-urlpatterns = [
-    path("admin/dj-control-room-base/", include("dj_control_room_base.urls")),
-    path("admin/dj-control-room/", include("dj_control_room.urls")),
-    path("admin/", admin.site.urls),
-]
-```
-
-The placeholder model’s admin changelist redirects to `dj_control_room_base:index`, so staff users land on the panel home after clicking the sidebar entry.
-
-### 4. Settings (optional)
-
-Add `DJ_CONTROL_ROOM_BASE_SETTINGS` to your Django settings to override any defaults:
-
-```python
-DJ_CONTROL_ROOM_BASE_SETTINGS = {
-    "LOAD_DEFAULT_CSS": True,
-    "EXTRA_CSS": [],
-    "ALLOWED_GROUPS": [],
-    "REQUIRE_SUPERUSER": False,
-    "SCOPE_PERMISSIONS": {
-        "design-system": {"ALLOWED_GROUPS": [], "REQUIRE_SUPERUSER": False},
-        "examples":       {"ALLOWED_GROUPS": [], "REQUIRE_SUPERUSER": False},
-    },
-}
-```
-
-See [CSS and permissions](#css-and-permissions) below for a full explanation of each key and how they are merged.
-
-
-### 5. Run the server
-
 ```bash
 python manage.py migrate
-python manage.py createsuperuser   # if needed
 python manage.py runserver
 ```
 
-Open `/admin/`, sign in, and use the **Dj Control Room Base** entry in the sidebar, or go directly to `/admin/dj-control-room-base/`.
+Open `/admin/` and sign in. A **DJ CONTROL ROOM BASE** entry appears in the sidebar and links to the panel at `/admin/dj-control-room-base/`.
 
-**Note:** The placeholder model uses `managed = False`; you do not run migrations for `dj_control_room_base` tables. You still run `migrate` for Django’s built-in apps.
-
+See the [full documentation](https://yassi.github.io/dj-control-room-base/) for installation options, configuration reference, and a guide for building your own panel on this library.
 
 ## Django Control Room dashboard
 
