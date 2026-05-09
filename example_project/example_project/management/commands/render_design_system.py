@@ -171,13 +171,14 @@ body {
   font-size: 14px;
   margin: 0;
   padding: 0;
+  background: var(--dcr-color-bg);
 }
 .dcr-docs-topbar {
   display: flex;
   align-items: center;
   gap: var(--dcr-space-md);
   padding: var(--dcr-space-sm) var(--dcr-space-lg);
-  background: var(--dcr-color-surface);
+  background: var(--dcr-color-bg);
   border-bottom: 1px solid var(--dcr-color-border);
   position: sticky;
   top: 0;
@@ -193,6 +194,9 @@ body {
 .dcr-docs-topbar__title {
   color: var(--dcr-color-text-muted);
   font-size: var(--dcr-font-size-sm);
+}
+.dcr-content {
+  padding-top: var(--dcr-space-lg);
 }
 """
 
