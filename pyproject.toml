@@ -39,7 +39,7 @@ dependencies = [
 ]
 
 [project.entry-points."dj_control_room.panels"]
-dj_control_room_base = "dj_control_room_base.panel:DJcontrolroombasePanel"
+dj_control_room_base = "dj_control_room_base.panel:DJControlRoomBasePanel"
 
 [project.optional-dependencies]
 dev = [
