@@ -10,6 +10,8 @@ from django.templatetags.static import static
 from django.urls import reverse
 from django.utils.html import format_html, mark_safe
 
+from dj_control_room_base.core.panel_tool import PanelTool
+
 
 # Default keys merged before panel ``defaults`` (see ``get_settings``). Panels omit
 # these in ``conf.py`` and still get consistent behaviour across CSS and permission.
@@ -51,9 +53,15 @@ class PanelConfig:
         context = panel_config.get_context(request, title="My Panel")
     """
 
-    def __init__(self, settings_key: str, defaults: Optional[dict] = None) -> None:
+    def __init__(
+        self,
+        settings_key: str,
+        defaults: Optional[dict] = None,
+        tools: Optional[list[PanelTool]] = None,
+    ) -> None:
         self.settings_key = settings_key
         self.defaults = defaults or {}
+        self.tools: list[PanelTool] = tools or []
 
         # This is used by the dj-control-room package to override settings for the panel
         # in order to provide a consistent interface for all panels. It is not needed
@@ -112,24 +120,31 @@ class PanelConfig:
             scope_overrides = {}
         return {**panel_level, **scope_overrides}
 
-    def has_permission(self, request: HttpRequest, scope: Optional[str] = None) -> bool:
-        """Return True if the request's user may access this panel or scope.
+    def _check_permission(self, user, scope: Optional[str] = None) -> bool:
+        """Return True if ``user`` may access this panel or scope.
+
+        Operates on a user object directly so it can be called outside of a
+        request context (e.g. tool dispatch, management commands).
 
         Superusers bypass ``ALLOWED_GROUPS`` and panel-level gates (Django-admin
-        style), but must still be staff and active for typical admin-backed views.
+        style), but must still be staff for typical admin-backed views.
         """
-        if not request.user.is_staff:
+        if not user.is_staff:
             return False
-        if request.user.is_superuser:
+        if user.is_superuser:
             return True
         settings = self._resolve_permission_settings(scope)
         if settings["REQUIRE_SUPERUSER"]:
-            return request.user.is_superuser
+            return user.is_superuser
         allowed_groups = settings["ALLOWED_GROUPS"]
         allowed = allowed_groups if isinstance(allowed_groups, (list, tuple)) else ()
         if allowed:
-            return request.user.groups.filter(name__in=allowed).exists()
+            return user.groups.filter(name__in=allowed).exists()
         return True
+
+    def has_permission(self, request: HttpRequest, scope: Optional[str] = None) -> bool:
+        """Return True if the request's user may access this panel or scope."""
+        return self._check_permission(request.user, scope)
 
     def permission_required(self, scope: Optional[str] = None):
         """Decorator: redirect anonymous users to admin login; 403 otherwise if unauthorised."""
