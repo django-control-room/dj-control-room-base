@@ -31,6 +31,10 @@ class DJcontrolroombasePanel:
     docs_url = "https://github.com/yassi/dj-control-room-base"
     pypi_url = "https://pypi.org/project/dj-control-room-base/"
 
+    def get_config(self):
+        from .conf import panel_config
+        return panel_config
+
     def get_url_name(self):
         """
         Return the URL name for the panel's main view.
