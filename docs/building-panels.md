@@ -44,12 +44,14 @@ dj_my_panel = "dj_my_panel.panel:MyPanel"
 
 ## 3. Create the panel class
 
-The panel class provides metadata that Control Room displays on the hub dashboard. Create `panel.py` in your app:
+The panel class is how your package introduces itself to the hub. It carries the metadata Control Room displays on the dashboard and provides the hook for returning your `PanelConfig`. Subclass `PanelPlugin` from `dj_control_room_base.core`:
 
 ```python
 # dj_my_panel/panel.py
+from dj_control_room_base.core import PanelPlugin
 
-class MyPanel:
+
+class MyPanel(PanelPlugin):
     name = "My Panel"
     description = "A short description of what this panel does."
     icon = "database"           # icon name from the design system
@@ -57,9 +59,12 @@ class MyPanel:
     docs_url = "https://github.com/yourname/dj-my-panel"
     pypi_url = "https://pypi.org/project/dj-my-panel/"
 
-    def get_url_name(self):
-        return "index"
+    def get_config(self):
+        from .conf import panel_config
+        return panel_config
 ```
+
+`get_config()` uses a local import so that `conf.py` is not pulled into the module namespace during entry-point discovery (which happens before Django is fully set up). The `get_url_name()` method defaults to `"index"` and only needs to be overridden if your main view uses a different name.
 
 ---
 
@@ -226,6 +231,30 @@ That is the full wiring. One `PanelConfig` declaration in `conf.py` gives all vi
 - Automatic CSS injection
 - Full Django admin context (breadcrumbs, sidebar, CSRF token, etc.)
 - Centralized project-level override via `DJ_MY_PANEL_SETTINGS`
+
+---
+
+## `PanelPlugin` reference
+
+`PanelPlugin` is the base class for all Control Room panel plugins. Subclass it in your panel's `panel.py` and point the `dj_control_room.panels` entry point at your subclass.
+
+| Attribute | Type | Required | Description |
+|---|---|---|---|
+| `name` | `str` | Yes | Display name shown on the hub dashboard. |
+| `description` | `str` | Yes | One-line description shown on the panel card. |
+| `icon` | `str` | Yes | Icon key (`database`, `layers`, `link`, `chart`, `radio`, `cog`, `alert`, …). |
+| `app_name` | `str` | No | Django app label. Defaults to the normalised PyPI dist name. |
+| `package` | `str` | No | PyPI distribution name. Defaults to the dist name from entry-point metadata. |
+| `docs_url` | `str` | No | URL to the panel's documentation. |
+| `pypi_url` | `str` | No | URL to the panel's PyPI page. |
+
+**Methods:**
+
+| Method | Default | Description |
+|---|---|---|
+| `get_url_name()` | `"index"` | URL name for the panel's main view. The hub resolves `reverse(f"{app_name}:{get_url_name()}")`. |
+| `get_config()` | `None` | Return the panel's `PanelConfig` instance. Override using a local import (see above). |
+| `validate()` | — | Assert all required attributes are set. Convenience method for tests; the registry runs its own validation at autodiscovery time. |
 
 ---
 

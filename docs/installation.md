@@ -120,7 +120,7 @@ If you installed `dj-control-room`, open `http://127.0.0.1:8000/admin/dj-control
 
 ## Using as a library only
 
-If you only want to use the shared primitives (`PanelConfig`, `PanelPlaceholderModel`, `BasePanelAdmin`) in your own panel without mounting this package's views or sidebar entry, you still need to add it to `INSTALLED_APPS` so Django can discover the static files and templates. You do not need to include the URLs.
+If you only want to use the shared primitives (`PanelPlugin`, `PanelConfig`, `PanelPlaceholderModel`, `BasePanelAdmin`) in your own panel without mounting this package's views or sidebar entry, you still need to add it to `INSTALLED_APPS` so Django can discover the static files and templates. You do not need to include the URLs.
 
 ```python
 INSTALLED_APPS = [

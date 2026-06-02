@@ -41,9 +41,11 @@ Panel authors who use `PanelConfig` get all of this for free. See [CSS and permi
 
 `panel_config.get_context(request, title="...")` returns a fully-prepared context dict that includes the standard Django admin context, CSS injection variables, and any extra kwargs you pass. No manual assembly required.
 
-### Entry-point discovery
+### Entry-point discovery and `PanelPlugin`
 
-Panels register themselves with Control Room via a `pyproject.toml` entry point under `dj_control_room.panels`. This library ships the reference implementation of that pattern.
+Panels register themselves with Control Room via a `pyproject.toml` entry point under `dj_control_room.panels`. The entry point points to a subclass of `PanelPlugin` (from `dj_control_room_base.core`), which carries the panel's identity metadata (name, description, icon, URLs) and wires back to the panel's `PanelConfig` via `get_config()`.
+
+This library ships both the `PanelPlugin` base class and its own concrete implementation in `panel.py` as a reference.
 
 The only runtime dependency is Django. `dj-control-room` is optional and only needed for the centralized hub dashboard.
 
@@ -68,7 +70,7 @@ The only runtime dependency is Django. `dj-control-room` is optional and only ne
 ```
 dj-control-room-base/
 ├── dj_control_room_base/
-│   ├── core/              # PanelConfig, BasePanelAdmin, PanelPlaceholderModel
+│   ├── core/              # PanelPlugin, PanelConfig, BasePanelAdmin, PanelPlaceholderModel
 │   ├── templates/         # Panel templates
 │   ├── static/            # Design system CSS and assets
 │   ├── conf.py            # PanelConfig instance + settings key
@@ -124,7 +126,7 @@ See the [full documentation](https://yassi.github.io/dj-control-room-base/) for 
 2. Include `path("admin/dj-control-room/", include("dj_control_room.urls"))` as above.
 3. Open `/admin/dj-control-room/` to see registered panels (this package advertises itself via the `dj_control_room.panels` entry point).
 
-Panel metadata (name, description, icon, docs/PyPI links) lives in `dj_control_room_base/panel.py`; customize a fork or your own panel package the same way.
+The panel's identity (name, description, icon, docs/PyPI links) is declared in `dj_control_room_base/panel.py` as a `PanelPlugin` subclass. Build your own panel package the same way.
 
 
 ## CSS and permissions
@@ -211,15 +213,30 @@ That is the entirety of the wiring. Permission enforcement, login redirect, CSS 
 
 Import primitives from `dj_control_room_base.core`:
 
+- **`PanelPlugin`** - Subclass in `panel.py` to declare your panel's identity (name, description, icon, URLs) and wire it to your `PanelConfig` via `get_config()`. Point the entry point at this subclass.
 - **`PanelConfig`** - Instantiate in `conf.py` with your settings key and defaults; use `get_context`, `permission_required`, and CSS helpers in views.
 - **`PanelPlaceholderModel`** - Abstract `managed=False` base for a sidebar-only model.
 - **`BasePanelAdmin`** - Redirect changelist to your `namespace:index` URL; set `panel_config` for aligned permissions.
 
-Copy the entry-point pattern from `pyproject.toml`:
+Register with the hub via `pyproject.toml`:
 
 ```toml
 [project.entry-points."dj_control_room.panels"]
 my_panel = "my_panel.panel:MyPanel"
+```
+
+```python
+# my_panel/panel.py
+from dj_control_room_base.core import PanelPlugin
+
+class MyPanel(PanelPlugin):
+    name = "My Panel"
+    description = "Does something useful"
+    icon = "cog"
+
+    def get_config(self):
+        from .conf import panel_config
+        return panel_config
 ```
 
 
