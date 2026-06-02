@@ -11,7 +11,7 @@
 
 
 
-**dj-control-room-base** is a core library for [Django Control Room](https://github.com/yassi/dj-control-room) panels. It provides the shared primitives that every panel needs: settings management, CSS injection, permission enforcement, admin sidebar integration, and template context helpers.
+**dj-control-room-base** is a core library for [Django Control Room](https://github.com/yassi/dj-control-room) panels. It provides the shared primitives that every panel needs: settings management, CSS injection, permission enforcement, admin sidebar integration, template context helpers, and MCP-style panel tools.
 
 **Official Django Control Room panels** ship with this package as a dependency and build on these APIs rather than reimplementing them panel by panel.
 
@@ -41,11 +41,17 @@ Panel authors who use `PanelConfig` get all of this for free. See [CSS and permi
 
 `panel_config.get_context(request, title="...")` returns a fully-prepared context dict that includes the standard Django admin context, CSS injection variables, and any extra kwargs you pass. No manual assembly required.
 
-### Entry-point discovery
+### Entry-point discovery and `PanelPlugin`
 
-Panels register themselves with Control Room via a `pyproject.toml` entry point under `dj_control_room.panels`. This library ships the reference implementation of that pattern.
+Panels register themselves with Control Room via a `pyproject.toml` entry point under `dj_control_room.panels`. The entry point points to a subclass of `PanelPlugin` (from `dj_control_room_base.core`), which carries the panel's identity metadata (name, description, icon, URLs) and wires back to the panel's `PanelConfig` via `get_config()`.
+
+This library ships both the `PanelPlugin` base class and its own concrete implementation in `panel.py` as a reference.
 
 The only runtime dependency is Django. `dj-control-room` is optional and only needed for the centralized hub dashboard.
+
+### Panel tools
+
+`PanelConfig` accepts an optional `tools` list of `PanelTool` instances. Each tool carries a name, a scope (reusing the same permission system as views), a human-readable description, a JSON Schema for its inputs, and a handler callable. When installed panels expose tools, the `dj-control-room` hub aggregates them across all panels, filters by the current user's permissions at request time, and dispatches calls through a unified endpoint — suitable for AI agent integrations and an in-admin chat experience with no per-panel HTTP wiring required.
 
 ## Screenshots
 
@@ -68,11 +74,12 @@ The only runtime dependency is Django. `dj-control-room` is optional and only ne
 ```
 dj-control-room-base/
 ├── dj_control_room_base/
-│   ├── core/              # PanelConfig, BasePanelAdmin, PanelPlaceholderModel
+│   ├── core/              # PanelPlugin, PanelConfig, PanelTool, BasePanelAdmin, PanelPlaceholderModel
 │   ├── templates/         # Panel templates
 │   ├── static/            # Design system CSS and assets
-│   ├── conf.py            # PanelConfig instance + settings key
+│   ├── conf.py            # PanelConfig instance (with example tools)
 │   ├── panel.py           # Control Room entry-point panel class
+│   ├── tools.py           # Example tool handler functions
 │   ├── views.py
 │   ├── urls.py
 │   ├── admin.py
@@ -124,7 +131,7 @@ See the [full documentation](https://yassi.github.io/dj-control-room-base/) for 
 2. Include `path("admin/dj-control-room/", include("dj_control_room.urls"))` as above.
 3. Open `/admin/dj-control-room/` to see registered panels (this package advertises itself via the `dj_control_room.panels` entry point).
 
-Panel metadata (name, description, icon, docs/PyPI links) lives in `dj_control_room_base/panel.py`; customize a fork or your own panel package the same way.
+The panel's identity (name, description, icon, docs/PyPI links) is declared in `dj_control_room_base/panel.py` as a `PanelPlugin` subclass. Build your own panel package the same way.
 
 
 ## CSS and permissions
@@ -211,15 +218,65 @@ That is the entirety of the wiring. Permission enforcement, login redirect, CSS 
 
 Import primitives from `dj_control_room_base.core`:
 
-- **`PanelConfig`** - Instantiate in `conf.py` with your settings key and defaults; use `get_context`, `permission_required`, and CSS helpers in views.
+- **`PanelPlugin`** - Subclass in `panel.py` to declare your panel's identity (name, description, icon, URLs) and wire it to your `PanelConfig` via `get_config()`. Point the entry point at this subclass.
+- **`PanelConfig`** - Instantiate in `conf.py` with your settings key, defaults, and optional `tools` list; use `get_context`, `permission_required`, and CSS helpers in views.
 - **`PanelPlaceholderModel`** - Abstract `managed=False` base for a sidebar-only model.
 - **`BasePanelAdmin`** - Redirect changelist to your `namespace:index` URL; set `panel_config` for aligned permissions.
 
-Copy the entry-point pattern from `pyproject.toml`:
+From `dj_control_room_base.core.panel_tool`:
+
+- **`PanelTool`** - Declare a tool with a name, scope, description, JSON Schema input definition, and handler callable.
+- **`PanelToolContext`** - Passed to each handler at call time: carries `user`, `inputs`, and `config`.
+- **`PanelToolResult`** - Returned by handlers: carries `success`, `message`, and a `data` dict.
+
+Register with the hub via `pyproject.toml`:
 
 ```toml
 [project.entry-points."dj_control_room.panels"]
 my_panel = "my_panel.panel:MyPanel"
+```
+
+```python
+# my_panel/panel.py
+from dj_control_room_base.core import PanelPlugin
+
+class MyPanel(PanelPlugin):
+    name = "My Panel"
+    description = "Does something useful"
+    icon = "cog"
+
+    def get_config(self):
+        from .conf import panel_config
+        return panel_config
+```
+
+To expose tools to the hub, add them to `PanelConfig` in `conf.py` and define handlers in a separate `tools.py` (use local imports inside handlers for anything that touches models):
+
+```python
+# my_panel/conf.py
+from dj_control_room_base.core import PanelConfig
+from dj_control_room_base.core.panel_tool import PanelTool
+from my_panel.tools import handle_get_item
+
+panel_config = PanelConfig(
+    settings_key="DJ_MY_PANEL_SETTINGS",
+    defaults={"LOAD_DEFAULT_CSS": True},
+    tools=[
+        PanelTool(
+            name="get_item",
+            scope="read",
+            description="Fetch a single item by key.",
+            input_schema={
+                "type": "object",
+                "properties": {
+                    "key": {"type": "string", "description": "The item key."},
+                },
+                "required": ["key"],
+            },
+            handler=handle_get_item,
+        ),
+    ],
+)
 ```
 
 

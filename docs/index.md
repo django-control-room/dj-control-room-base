@@ -35,9 +35,13 @@ Panel authors who use `PanelConfig` get all of this for free. See [Configuration
 
 `panel_config.get_context(request, title="...")` returns a fully-prepared context dict that includes the standard Django admin context, CSS injection variables, and any extra kwargs you pass. No manual assembly required.
 
-### Entry-point discovery
+### Entry-point discovery and `PanelPlugin`
 
-Panels register themselves with Control Room via a `pyproject.toml` entry point under `dj_control_room.panels`. This library ships the reference implementation of that pattern.
+Panels register themselves with Control Room via a `pyproject.toml` entry point under `dj_control_room.panels`. The entry point points to a subclass of `PanelPlugin` (from `dj_control_room_base.core`), which declares the panel's identity metadata and wires it back to a `PanelConfig` via `get_config()`. This library ships both the `PanelPlugin` base class and its own concrete implementation as a reference.
+
+### Panel tools
+
+`PanelConfig` accepts an optional `tools` list of `PanelTool` instances. Each tool declares a name, a scope (reusing the same permission system as views), a description, a JSON Schema for its inputs, and a handler callable. When a panel exposes tools, the `dj-control-room` hub aggregates them into a central registry, filters by user permissions, and dispatches calls through a unified endpoint — enabling AI agent integrations and an in-admin chat experience without any per-panel HTTP wiring. See [Building Panels — Panel Tools](building-panels.md#panel-tools) for the full guide.
 
 ---
 

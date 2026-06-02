@@ -44,12 +44,14 @@ dj_my_panel = "dj_my_panel.panel:MyPanel"
 
 ## 3. Create the panel class
 
-The panel class provides metadata that Control Room displays on the hub dashboard. Create `panel.py` in your app:
+The panel class is how your package introduces itself to the hub. It carries the metadata Control Room displays on the dashboard and provides the hook for returning your `PanelConfig`. Subclass `PanelPlugin` from `dj_control_room_base.core`:
 
 ```python
 # dj_my_panel/panel.py
+from dj_control_room_base.core import PanelPlugin
 
-class MyPanel:
+
+class MyPanel(PanelPlugin):
     name = "My Panel"
     description = "A short description of what this panel does."
     icon = "database"           # icon name from the design system
@@ -57,9 +59,12 @@ class MyPanel:
     docs_url = "https://github.com/yourname/dj-my-panel"
     pypi_url = "https://pypi.org/project/dj-my-panel/"
 
-    def get_url_name(self):
-        return "index"
+    def get_config(self):
+        from .conf import panel_config
+        return panel_config
 ```
+
+`get_config()` uses a local import so that `conf.py` is not pulled into the module namespace during entry-point discovery (which happens before Django is fully set up). The `get_url_name()` method defaults to `"index"` and only needs to be overridden if your main view uses a different name.
 
 ---
 
@@ -192,6 +197,121 @@ The base template automatically handles `dj_cr_load_default_css` and `dj_cr_extr
 
 ---
 
+## Panel tools
+
+Panel tools are optional, structured callables that the `dj-control-room` hub can aggregate across all installed panels and expose through a unified API. They are designed to power AI agent integrations (where an LLM calls tools on your behalf) and an in-admin chat experience, but they are generic enough to be used in any context that needs a structured, permission-aware callable.
+
+Tools reuse the same scope-based permission system as views — no separate permission wiring is needed.
+
+### Tool primitives
+
+All three are importable from `dj_control_room_base.core.panel_tool`:
+
+**`PanelTool`** — the tool definition, declared once at configuration time:
+
+| Field | Type | Description |
+|---|---|---|
+| `name` | `str` | Short identifier for this tool, unique within the panel (e.g. `"get_key"`). The hub namespaces it as `<panel_id>__<name>`. |
+| `scope` | `str` | Permission scope. Reuses the same scope strings as `@panel_config.permission_required(scope)`. |
+| `description` | `str` | Human-readable description of what the tool does. Shown to LLMs and in the hub tool listing. |
+| `input_schema` | `dict` | [JSON Schema](https://json-schema.org) object describing the tool's input arguments. Tools that take no arguments should use `{"type": "object", "properties": {}}`. |
+| `handler` | `Callable` | A function that receives a `PanelToolContext` and returns a `PanelToolResult`. |
+
+**`PanelToolContext`** — passed to the handler at call time:
+
+| Field | Type | Description |
+|---|---|---|
+| `user` | `Any` | The Django `User` object of the caller. |
+| `inputs` | `dict` | The validated input arguments for this call, matching the tool's `input_schema`. |
+| `config` | `Any` | The panel's `PanelConfig` instance, injected by the hub dispatcher. |
+
+**`PanelToolResult`** — returned by the handler:
+
+| Field | Type | Description |
+|---|---|---|
+| `success` | `bool` | Whether the tool call succeeded. |
+| `message` | `str` | A short human-readable summary of the outcome. |
+| `data` | `dict` | The structured result payload. Defaults to `{}`. |
+
+### Defining tools
+
+Keep handlers in a dedicated `tools.py` module. Use local imports inside handlers for anything that touches Django models — this keeps the module safe to import at any point in the Django startup sequence.
+
+```python
+# dj_my_panel/tools.py
+from dj_control_room_base.core.panel_tool import PanelToolContext, PanelToolResult
+
+
+def handle_get_item(ctx: PanelToolContext) -> PanelToolResult:
+    from .models import Item  # local import — safe at any startup stage
+
+    key = ctx.inputs["key"]
+    try:
+        item = Item.objects.get(key=key)
+        return PanelToolResult(
+            success=True,
+            message=f"Found item '{key}'.",
+            data={"key": item.key, "value": item.value},
+        )
+    except Item.DoesNotExist:
+        return PanelToolResult(success=False, message=f"Item '{key}' not found.")
+
+
+def handle_list_items(ctx: PanelToolContext) -> PanelToolResult:
+    from .models import Item
+
+    items = list(Item.objects.values("key", "value"))
+    return PanelToolResult(
+        success=True,
+        message=f"{len(items)} item(s) found.",
+        data={"items": items},
+    )
+```
+
+### Registering tools on `PanelConfig`
+
+Pass `tools=[...]` when instantiating `PanelConfig` in `conf.py`. Tools are not imported at module level — `conf.py` is only loaded when `get_config()` is called at request time.
+
+```python
+# dj_my_panel/conf.py
+from dj_control_room_base.core import PanelConfig
+from dj_control_room_base.core.panel_tool import PanelTool
+from dj_my_panel.tools import handle_get_item, handle_list_items
+
+panel_config = PanelConfig(
+    settings_key="DJ_MY_PANEL_SETTINGS",
+    defaults={"LOAD_DEFAULT_CSS": True},
+    tools=[
+        PanelTool(
+            name="get_item",
+            scope="read",
+            description="Fetch a single item by key.",
+            input_schema={
+                "type": "object",
+                "properties": {
+                    "key": {"type": "string", "description": "The item key to look up."},
+                },
+                "required": ["key"],
+            },
+            handler=handle_get_item,
+        ),
+        PanelTool(
+            name="list_items",
+            scope="read",
+            description="List all items.",
+            input_schema={"type": "object", "properties": {}},
+            handler=handle_list_items,
+        ),
+    ],
+)
+```
+
+The `scope` value (`"read"` above) can be configured by project owners via `SCOPE_PERMISSIONS` in `DJ_MY_PANEL_SETTINGS`, exactly like view scopes.
+
+Panel authors do not need to write any URL configuration for tools as this will be handled by the hub package `dj-control-room` if installed.
+
+---
+
 ## Full `conf.py` / `views.py` example
 
 ```python
@@ -229,9 +349,33 @@ That is the full wiring. One `PanelConfig` declaration in `conf.py` gives all vi
 
 ---
 
+## `PanelPlugin` reference
+
+`PanelPlugin` is the base class for all Control Room panel plugins. Subclass it in your panel's `panel.py` and point the `dj_control_room.panels` entry point at your subclass.
+
+| Attribute | Type | Required | Description |
+|---|---|---|---|
+| `name` | `str` | Yes | Display name shown on the hub dashboard. |
+| `description` | `str` | Yes | One-line description shown on the panel card. |
+| `icon` | `str` | Yes | Icon key (`database`, `layers`, `link`, `chart`, `radio`, `cog`, `alert`, …). |
+| `app_name` | `str` | No | Django app label. Defaults to the normalised PyPI dist name. |
+| `package` | `str` | No | PyPI distribution name. Defaults to the dist name from entry-point metadata. |
+| `docs_url` | `str` | No | URL to the panel's documentation. |
+| `pypi_url` | `str` | No | URL to the panel's PyPI page. |
+
+**Methods:**
+
+| Method | Default | Description |
+|---|---|---|
+| `get_url_name()` | `"index"` | URL name for the panel's main view. The hub resolves `reverse(f"{app_name}:{get_url_name()}")`. |
+| `get_config()` | `None` | Return the panel's `PanelConfig` instance. Override using a local import (see above). |
+| `validate()` | — | Assert all required attributes are set. Convenience method for tests; the registry runs its own validation at autodiscovery time. |
+
+---
+
 ## `PanelConfig` API reference
 
-### `PanelConfig(settings_key, defaults=None)`
+### `PanelConfig(settings_key, defaults=None, tools=None)`
 
 Instantiate once in `conf.py`.
 
@@ -239,6 +383,7 @@ Instantiate once in `conf.py`.
 |---|---|---|
 | `settings_key` | `str` | The Django settings variable name (e.g. `"DJ_MY_PANEL_SETTINGS"`). |
 | `defaults` | `dict` | Panel-level defaults merged above built-in defaults but below hub and project settings. |
+| `tools` | `list[PanelTool]` | Optional list of `PanelTool` instances exposed to the hub's tool registry. Defaults to `[]`. |
 
 ### `panel_config.get_settings(key=None)`
 
@@ -254,7 +399,11 @@ Returns only the CSS portion of the context (`dj_cr_load_default_css`, `dj_cr_ex
 
 ### `panel_config.has_permission(request, scope=None)`
 
-Returns `True` if the request's user may access the panel or a specific scope. Used internally by `permission_required` but available for manual checks.
+Returns `True` if the request's user may access the panel or a specific scope. Thin wrapper around `_check_permission` for use in view context where a full `request` object is available.
+
+### `panel_config._check_permission(user, scope=None)`
+
+Returns `True` if `user` may access the panel or a specific scope. Operates on a user object directly so it can be called outside of a request context — for example in tool dispatch, management commands, or background tasks.
 
 ### `@panel_config.permission_required(scope=None)`
 
