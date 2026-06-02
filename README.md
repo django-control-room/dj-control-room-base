@@ -11,7 +11,7 @@
 
 
 
-**dj-control-room-base** is a core library for [Django Control Room](https://github.com/yassi/dj-control-room) panels. It provides the shared primitives that every panel needs: settings management, CSS injection, permission enforcement, admin sidebar integration, and template context helpers.
+**dj-control-room-base** is a core library for [Django Control Room](https://github.com/yassi/dj-control-room) panels. It provides the shared primitives that every panel needs: settings management, CSS injection, permission enforcement, admin sidebar integration, template context helpers, and MCP-style panel tools.
 
 **Official Django Control Room panels** ship with this package as a dependency and build on these APIs rather than reimplementing them panel by panel.
 
@@ -49,6 +49,10 @@ This library ships both the `PanelPlugin` base class and its own concrete implem
 
 The only runtime dependency is Django. `dj-control-room` is optional and only needed for the centralized hub dashboard.
 
+### Panel tools
+
+`PanelConfig` accepts an optional `tools` list of `PanelTool` instances. Each tool carries a name, a scope (reusing the same permission system as views), a human-readable description, a JSON Schema for its inputs, and a handler callable. When installed panels expose tools, the `dj-control-room` hub aggregates them across all panels, filters by the current user's permissions at request time, and dispatches calls through a unified endpoint — suitable for AI agent integrations and an in-admin chat experience with no per-panel HTTP wiring required.
+
 ## Screenshots
 
 **Django admin** - the placeholder model registers an app entry that redirects to the panel, with no extra migrations required:
@@ -70,11 +74,12 @@ The only runtime dependency is Django. `dj-control-room` is optional and only ne
 ```
 dj-control-room-base/
 ├── dj_control_room_base/
-│   ├── core/              # PanelPlugin, PanelConfig, BasePanelAdmin, PanelPlaceholderModel
+│   ├── core/              # PanelPlugin, PanelConfig, PanelTool, BasePanelAdmin, PanelPlaceholderModel
 │   ├── templates/         # Panel templates
 │   ├── static/            # Design system CSS and assets
-│   ├── conf.py            # PanelConfig instance + settings key
+│   ├── conf.py            # PanelConfig instance (with example tools)
 │   ├── panel.py           # Control Room entry-point panel class
+│   ├── tools.py           # Example tool handler functions
 │   ├── views.py
 │   ├── urls.py
 │   ├── admin.py
@@ -214,9 +219,15 @@ That is the entirety of the wiring. Permission enforcement, login redirect, CSS 
 Import primitives from `dj_control_room_base.core`:
 
 - **`PanelPlugin`** - Subclass in `panel.py` to declare your panel's identity (name, description, icon, URLs) and wire it to your `PanelConfig` via `get_config()`. Point the entry point at this subclass.
-- **`PanelConfig`** - Instantiate in `conf.py` with your settings key and defaults; use `get_context`, `permission_required`, and CSS helpers in views.
+- **`PanelConfig`** - Instantiate in `conf.py` with your settings key, defaults, and optional `tools` list; use `get_context`, `permission_required`, and CSS helpers in views.
 - **`PanelPlaceholderModel`** - Abstract `managed=False` base for a sidebar-only model.
 - **`BasePanelAdmin`** - Redirect changelist to your `namespace:index` URL; set `panel_config` for aligned permissions.
+
+From `dj_control_room_base.core.panel_tool`:
+
+- **`PanelTool`** - Declare a tool with a name, scope, description, JSON Schema input definition, and handler callable.
+- **`PanelToolContext`** - Passed to each handler at call time: carries `user`, `inputs`, and `config`.
+- **`PanelToolResult`** - Returned by handlers: carries `success`, `message`, and a `data` dict.
 
 Register with the hub via `pyproject.toml`:
 
@@ -237,6 +248,35 @@ class MyPanel(PanelPlugin):
     def get_config(self):
         from .conf import panel_config
         return panel_config
+```
+
+To expose tools to the hub, add them to `PanelConfig` in `conf.py` and define handlers in a separate `tools.py` (use local imports inside handlers for anything that touches models):
+
+```python
+# my_panel/conf.py
+from dj_control_room_base.core import PanelConfig
+from dj_control_room_base.core.panel_tool import PanelTool
+from my_panel.tools import handle_get_item
+
+panel_config = PanelConfig(
+    settings_key="DJ_MY_PANEL_SETTINGS",
+    defaults={"LOAD_DEFAULT_CSS": True},
+    tools=[
+        PanelTool(
+            name="get_item",
+            scope="read",
+            description="Fetch a single item by key.",
+            input_schema={
+                "type": "object",
+                "properties": {
+                    "key": {"type": "string", "description": "The item key."},
+                },
+                "required": ["key"],
+            },
+            handler=handle_get_item,
+        ),
+    ],
+)
 ```
 
 
