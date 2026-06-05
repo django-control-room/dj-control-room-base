@@ -5,7 +5,12 @@
 
 {% block extrahead %}
 {{ block.super }}
-{% if dj_cr_load_default_css %}<link rel="stylesheet" href="{% static 'dj_control_room_base/css/design-system.css' %}">{% endif %}
+{% if dj_cr_load_default_css %}
+{% block default_panel_styles %}
+<link rel="stylesheet" href="{% static 'dj_control_room_base/css/design-system.css' %}">
+{% block panel_styles %}{% endblock %}
+{% endblock %}
+{% endif %}
 {{ dj_cr_extra_css }}
 {% endblock %}
 
