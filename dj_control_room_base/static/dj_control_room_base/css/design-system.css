@@ -328,6 +328,10 @@
   align-items: stretch !important;
 }
 
+.dcr-items-baseline {
+  align-items: baseline !important;
+}
+
 .dcr-justify-start {
   justify-content: flex-start !important;
 }
@@ -2756,6 +2760,101 @@ a.dcr-pagination__page:hover {
   white-space: pre;
   line-height: 1.5;
   margin-bottom: var(--dcr-space-md);
+}
+
+/* --- Steps ------------------------------------------------------------------ */
+/*
+ * Numbered installation / wizard steps with done and pending states.
+ * A vertical connector line links steps; it turns accent-colored once done.
+ *
+ *   <ol class="dcr-steps">
+ *     <li class="dcr-steps__step dcr-steps__step--done">
+ *       <div class="dcr-steps__indicator">
+ *         <svg ...checkmark...></svg>
+ *       </div>
+ *       <div class="dcr-steps__body">
+ *         <h4 class="dcr-steps__title">Install the package</h4>
+ *         <div class="dcr-steps__content">...</div>
+ *       </div>
+ *     </li>
+ *     <li class="dcr-steps__step">
+ *       <div class="dcr-steps__indicator">2</div>
+ *       <div class="dcr-steps__body">...</div>
+ *     </li>
+ *   </ol>
+ */
+
+.dcr-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.dcr-steps__step {
+  display: flex;
+  gap: var(--dcr-space-md);
+  position: relative;
+}
+
+/* Vertical connector line between steps */
+.dcr-steps__step:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: calc(1.125rem - 1px);
+  top: calc(2.25rem + var(--dcr-space-xs));
+  bottom: 0;
+  width: 2px;
+  background: var(--dcr-color-border);
+}
+
+.dcr-steps__step--done:not(:last-child)::before {
+  background: var(--dcr-color-success);
+}
+
+.dcr-steps__indicator {
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--dcr-font-size-sm);
+  font-weight: 700;
+  border: 2px solid var(--dcr-color-border);
+  background: var(--dcr-color-bg);
+  color: var(--dcr-color-text-muted);
+  position: relative;
+  z-index: 1;
+  margin-top: var(--dcr-space-xs);
+}
+
+.dcr-steps__step--done .dcr-steps__indicator,
+.dcr-steps__indicator--done {
+  background: var(--dcr-color-success);
+  border-color: var(--dcr-color-success);
+  color: #fff;
+}
+
+.dcr-steps__body {
+  flex: 1;
+  min-width: 0;
+  padding-bottom: var(--dcr-space-lg);
+}
+
+.dcr-steps__title {
+  font-size: var(--dcr-font-size-base);
+  font-weight: 600;
+  color: var(--dcr-color-text);
+  margin: 0 0 var(--dcr-space-sm) 0;
+  padding-top: var(--dcr-space-xs);
+}
+
+.dcr-steps__content {
+  color: var(--dcr-color-text-muted);
+  font-size: var(--dcr-font-size-sm);
 }
 
 

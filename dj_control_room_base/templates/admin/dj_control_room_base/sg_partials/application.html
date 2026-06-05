@@ -286,3 +286,104 @@
 {# Block #}
 &lt;code class="dcr-code dcr-code--block"&gt;{"status": "ok"}&lt;/code&gt;</code></pre>
 </section>
+
+<section class="dcr-sg-section" id="steps">
+  <div class="dcr-section-header dcr-section-header--plain">
+    <h2 class="dcr-section-header__title">{% trans "Steps" %}</h2>
+  </div>
+  <p class="dcr-sg-section__desc">{% trans "Numbered installation or wizard steps with done/pending states. A vertical connector line links steps and turns green as steps complete. Use " %}<code class="dcr-code">dcr-steps__step--done</code>{% trans " on completed steps. Step content can include plain text, code snippets, or any other markup." %}</p>
+
+  <div class="dcr-sg-preview dcr-sg-preview--stack">
+    <div class="dcr-card" style="max-width:520px">
+    <div class="dcr-card__body">
+    <ol class="dcr-steps">
+
+      <li class="dcr-steps__step dcr-steps__step--done">
+        <div class="dcr-steps__indicator">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="dcr-steps__body">
+          <h4 class="dcr-steps__title">{% trans "Install the package" %}</h4>
+          <div class="dcr-steps__content">
+            <span class="dcr-d-block dcr-text-sm dcr-text-muted dcr-mb-sm">{% trans "Add the panel to your project via pip." %}</span>
+            <div style="position:relative">
+              <code class="dcr-code dcr-code--block" style="margin:0;padding-right:2.5rem">pip install dj-redis-panel</code>
+              <button class="dcr-btn dcr-btn--ghost dcr-btn--sm" style="position:absolute;top:50%;right:var(--dcr-space-xs);transform:translateY(-50%)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <li class="dcr-steps__step">
+        <div class="dcr-steps__indicator">2</div>
+        <div class="dcr-steps__body">
+          <h4 class="dcr-steps__title">{% trans "Add to INSTALLED_APPS" %}</h4>
+          <div class="dcr-steps__content">
+            <span class="dcr-d-block dcr-text-sm dcr-text-muted dcr-mb-sm">{% trans "Register the app in your Django settings." %}</span>
+            <div style="position:relative">
+              <code class="dcr-code dcr-code--block" style="margin:0;padding-right:2.5rem">INSTALLED_APPS = [
+    # ...
+    "dj_redis_panel",
+]</code>
+              <button class="dcr-btn dcr-btn--ghost dcr-btn--sm" style="position:absolute;top:var(--dcr-space-xs);right:var(--dcr-space-xs)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <li class="dcr-steps__step">
+        <div class="dcr-steps__indicator">3</div>
+        <div class="dcr-steps__body">
+          <h4 class="dcr-steps__title">{% trans "Restart & visit the admin" %}</h4>
+          <div class="dcr-steps__content">
+            <p>{% trans "Restart your Django server. The panel appears automatically in Control Room." %}</p>
+          </div>
+        </div>
+      </li>
+
+    </ol>
+    </div>
+    </div>
+  </div>
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">&lt;div class="dcr-card"&gt;
+&lt;div class="dcr-card__body"&gt;
+&lt;ol class="dcr-steps"&gt;
+
+  &lt;!-- Completed step --&gt;
+  &lt;li class="dcr-steps__step dcr-steps__step--done"&gt;
+    &lt;div class="dcr-steps__indicator"&gt;
+      &lt;svg ...checkmark...&gt;&lt;/svg&gt;
+    &lt;/div&gt;
+    &lt;div class="dcr-steps__body"&gt;
+      &lt;h4 class="dcr-steps__title"&gt;Install the package&lt;/h4&gt;
+      &lt;div class="dcr-steps__content"&gt;
+        &lt;span class="dcr-d-block dcr-text-sm dcr-text-muted dcr-mb-sm"&gt;Subtitle text.&lt;/span&gt;
+        &lt;div style="position:relative"&gt;
+          &lt;code class="dcr-code dcr-code--block" style="margin:0;padding-right:2.5rem"&gt;pip install dj-redis-panel&lt;/code&gt;
+          &lt;button class="dcr-btn dcr-btn--ghost dcr-btn--sm"
+                  style="position:absolute;top:50%;right:var(--dcr-space-xs);transform:translateY(-50%)"&gt;
+            &lt;svg ...copy icon...&gt;&lt;/svg&gt;
+          &lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+
+  &lt;!-- Pending step --&gt;
+  &lt;li class="dcr-steps__step"&gt;
+    &lt;div class="dcr-steps__indicator"&gt;2&lt;/div&gt;
+    &lt;div class="dcr-steps__body"&gt;
+      &lt;h4 class="dcr-steps__title"&gt;Restart &amp;amp; visit the admin&lt;/h4&gt;
+      &lt;div class="dcr-steps__content"&gt;&lt;p&gt;...&lt;/p&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+</section>
