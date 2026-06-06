@@ -15,7 +15,7 @@
       hljs.highlightElement(el);
     });
 
-    var TABS = ['application','tokens','buttons','forms','data','cards','nav'];
+    var TABS = ['application','tokens','buttons','forms','data','cards','nav','icons'];
     var DEFAULT_TAB = 'application';
 
     function showTab(id) {
@@ -97,6 +97,7 @@
   <a href="#data"        class="dcr-tabs__tab" data-sg-tab="data">{% trans "Data Tables" %}</a>
   <a href="#cards"       class="dcr-tabs__tab" data-sg-tab="cards">{% trans "Cards &amp; Feeds" %}</a>
   <a href="#nav"         class="dcr-tabs__tab" data-sg-tab="nav">{% trans "Navigation" %}</a>
+  <a href="#icons"       class="dcr-tabs__tab" data-sg-tab="icons">{% trans "Icons" %}</a>
 </nav>
 
 <div id="sg-pane-application" class="dcr-sg-tab-pane">
@@ -125,6 +126,10 @@
 
 <div id="sg-pane-nav" class="dcr-sg-tab-pane" hidden>
   {% include "admin/dj_control_room_base/sg_partials/nav.html" %}
+</div>
+
+<div id="sg-pane-icons" class="dcr-sg-tab-pane" hidden>
+  {% include "admin/dj_control_room_base/sg_partials/icons.html" %}
 </div>
 
 </div>

@@ -1,0 +1,93 @@
+{% load i18n dcr_icons %}
+
+<section class="dcr-sg-section" id="icon-library">
+  <div class="dcr-section-header dcr-section-header--plain">
+    <h2 class="dcr-section-header__title">{% trans "Icon Library" %}</h2>
+  </div>
+  <p class="dcr-sg-section__desc">{% trans "Inline SVG icons rendered via the " %}<code class="dcr-code">{% templatetag openbrace %}{% templatetag openbrace %} dcr_icon {% templatetag closebrace %}{% templatetag closebrace %}</code>{% trans " template tag. All icons use " %}<code class="dcr-code">viewBox="0 0 24 24"</code>{% trans " with no hardcoded dimensions — size them entirely through CSS. Pass an optional " %}<code class="dcr-code">css_class</code>{% trans " argument to inject class(es) onto the " %}<code class="dcr-code">&lt;svg&gt;</code>{% trans " element." %}</p>
+
+  <div class="dcr-sg-preview dcr-sg-preview--stack">
+    <div style="display:flex;flex-wrap:wrap;gap:var(--dcr-space-md);align-items:flex-end">
+      {% for key in icon_keys %}
+      <div style="display:flex;flex-direction:column;align-items:center;gap:var(--dcr-space-xs)">
+        <div class="dcr-panel-card__icon-wrap dcr-icon-color--accent">{% dcr_icon key "dcr-panel-card__icon" %}</div>
+        <span style="font-size:var(--dcr-font-size-xs);color:var(--dcr-color-text-muted)">{{ key }}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">{# Load once at the top of the template #}
+{% verbatim %}{% load dcr_icons %}
+
+{# Full <svg> element — no class attribute #}
+{% dcr_icon "database" %}
+
+{# Full <svg> element — with one or more CSS classes #}
+{% dcr_icon "radio" "dcr-panel-card__icon" %}
+{% dcr_icon panel.icon "dcr-page-header__icon my-custom-class" %}
+
+{# Paths only — embed inside your own <svg> to control viewBox and attributes #}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"
+     fill="none" stroke="currentColor" stroke-width="1"
+     stroke-linecap="round" stroke-linejoin="round">
+  {% dcr_icon_paths "radio" %}
+</svg>
+
+{# Unknown keys fall back to the "default" grid icon #}
+{% dcr_icon "unknown-key" %}{% endverbatim %}</code></pre>
+</section>
+
+<section class="dcr-sg-section" id="icon-colors">
+  <div class="dcr-section-header dcr-section-header--plain">
+    <h2 class="dcr-section-header__title">{% trans "Icon Color Modifiers" %}</h2>
+  </div>
+  <p class="dcr-sg-section__desc">{% trans "Composable color classes for any icon container. Apply " %}<code class="dcr-code">dcr-icon-color--&lt;name&gt;</code>{% trans " alongside any sizing class — " %}<code class="dcr-code">dcr-panel-card__icon-wrap</code>{% trans " for cards, " %}<code class="dcr-code">dcr-page-header__icon</code>{% trans " for page headers, or any custom element. Color cascades to the SVG via " %}<code class="dcr-code">currentColor</code>{% trans "." %}</p>
+
+  <div class="dcr-sg-preview dcr-sg-preview--stack">
+    <span class="dcr-sg-row-label">{% trans "Tinted" %}</span>
+    <div style="display:flex;flex-wrap:wrap;gap:var(--dcr-space-md);align-items:flex-end;margin-bottom:var(--dcr-space-lg)">
+      {% for color in icon_colors %}
+      <div style="display:flex;flex-direction:column;align-items:center;gap:var(--dcr-space-xs)">
+        <div class="dcr-panel-card__icon-wrap dcr-icon-color--{{ color }}">{% dcr_icon "database" "dcr-panel-card__icon" %}</div>
+        <span style="font-size:var(--dcr-font-size-xs);color:var(--dcr-color-text-muted)">{{ color }}</span>
+      </div>
+      {% endfor %}
+    </div>
+    <span class="dcr-sg-row-label">{% trans "Solid" %}</span>
+    <div style="display:flex;flex-wrap:wrap;gap:var(--dcr-space-md);align-items:flex-end">
+      {% for color in icon_colors %}
+      <div style="display:flex;flex-direction:column;align-items:center;gap:var(--dcr-space-xs)">
+        <div class="dcr-panel-card__icon-wrap dcr-icon-color--{{ color }}-solid">{% dcr_icon "database" "dcr-panel-card__icon" %}</div>
+        <span style="font-size:var(--dcr-font-size-xs);color:var(--dcr-color-text-muted)">{{ color }}-solid</span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <p class="dcr-sg-code-label">{% trans "Usage" %}</p>
+<pre class="dcr-sg-code"><code class="language-html">{# Card icon wrap — tinted (default for panel cards) #}
+{% verbatim %}<div class="dcr-panel-card__icon-wrap dcr-icon-color--success">
+  {% dcr_icon "layers" "dcr-panel-card__icon" %}
+</div>
+
+{# Page header icon — tinted #}
+<div class="dcr-page-header__icon dcr-icon-color--indigo">
+  {% dcr_icon "radio" %}
+</div>
+
+{# Page header icon — solid #}
+<div class="dcr-page-header__icon dcr-icon-color--success-solid">
+  {% dcr_icon "layers" %}
+</div>
+
+{# PanelPlugin — set icon_color on the plugin class #}
+class MyPanel(PanelPlugin):
+    icon = "chart"
+    icon_color = "warning"          # tinted
+    icon_color = "warning-solid"    # solid{% endverbatim %}
+
+{# Tinted variants:  accent · success · warning · danger · info · indigo · purple · muted #}
+{# Solid variants:   append -solid to any tinted name, e.g. success-solid #}</code></pre>
+</section>

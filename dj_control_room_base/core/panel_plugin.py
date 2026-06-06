@@ -22,6 +22,12 @@ class PanelPlugin:
         description (str): One-line description shown on the panel card.
         icon (str): Icon key (``database``, ``layers``, ``link``, ``chart``,
             ``radio``, ``cog``, ``alert``, …).
+        icon_color (str): Color variant for the icon wrap.  Maps to the
+            ``dcr-icon-color--<value>`` CSS modifier, which works on both
+            panel card wraps and page header icons.  Tinted variants:
+            ``accent``, ``success``, ``warning``, ``danger``, ``info``,
+            ``indigo``, ``purple``, ``muted``.  Solid variants append
+            ``-solid`` (e.g. ``success-solid``).  Defaults to ``"muted"``.
 
     Optional attributes:
         app_name (str): Django app label as declared in ``INSTALLED_APPS`` and
@@ -63,6 +69,7 @@ class PanelPlugin:
             name = "My Panel"
             description = "Does something useful"
             icon = "cog"
+            icon_color = "accent"
 
             def get_config(self):
                 from .conf import panel_config
@@ -72,6 +79,7 @@ class PanelPlugin:
     name: str = None
     description: str = None
     icon: str = "default"
+    icon_color: str = "muted"
 
     # Stamped by the registry from entry-point metadata if not set explicitly.
     package: str = None

@@ -671,6 +671,10 @@
   color: #fff;
 }
 
+.dcr-page-header__icon--accent {
+  background: var(--dcr-color-accent);
+}
+
 .dcr-page-header__icon svg {
   width: 16px;
   height: 16px;
@@ -1965,85 +1969,53 @@ a.dcr-dropdown__item--danger:active {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-}
-
-/* Colour variants - sets the tinted bg and matching icon colour */
-.dcr-panel-card__icon-wrap--accent {
-  background: var(--dcr-color-accent-bg);
-  border-color: transparent;
-}
-
-.dcr-panel-card__icon-wrap--accent>.dcr-panel-card__icon {
   color: var(--dcr-color-accent);
 }
 
-.dcr-panel-card__icon-wrap--success {
-  background: var(--dcr-color-success-bg);
-  border-color: transparent;
-}
+/* =============================================================================
+   Icon Color Modifiers  (dcr-icon-color--*)
 
-.dcr-panel-card__icon-wrap--success>.dcr-panel-card__icon {
-  color: var(--dcr-color-success);
-}
+   Composable color classes for any icon container — works on
+   dcr-panel-card__icon-wrap, dcr-page-header__icon, or any element
+   that wraps an SVG using currentColor.
 
-.dcr-panel-card__icon-wrap--warning {
-  background: var(--dcr-color-warning-bg);
-  border-color: transparent;
-}
+   Tinted variants (--name):        translucent bg, coloured icon.
+   Solid variants  (--name-solid):  opaque bg, white icon.
+   ============================================================================= */
 
-.dcr-panel-card__icon-wrap--warning>.dcr-panel-card__icon {
-  color: var(--dcr-color-warning);
-}
+/* Tinted */
+.dcr-icon-color--accent  { background: var(--dcr-color-accent-bg);  color: var(--dcr-color-accent);  border-color: transparent; }
+.dcr-icon-color--success { background: var(--dcr-color-success-bg); color: var(--dcr-color-success); border-color: transparent; }
+.dcr-icon-color--warning { background: var(--dcr-color-warning-bg); color: var(--dcr-color-warning); border-color: transparent; }
+.dcr-icon-color--danger  { background: var(--dcr-color-danger-bg);  color: var(--dcr-color-danger);  border-color: transparent; }
+.dcr-icon-color--info    { background: var(--dcr-color-info-bg);    color: var(--dcr-color-info);    border-color: transparent; }
+.dcr-icon-color--muted   { background: var(--dcr-color-muted-bg);   color: var(--dcr-color-muted);   border-color: transparent; }
+.dcr-icon-color--purple  { background: var(--dcr-color-purple-bg);  color: var(--dcr-color-purple);  border-color: transparent; }
+.dcr-icon-color--indigo  { background: var(--dcr-color-indigo-bg);  color: var(--dcr-color-indigo);  border-color: transparent; }
 
-.dcr-panel-card__icon-wrap--danger {
-  background: var(--dcr-color-danger-bg);
-  border-color: transparent;
-}
+/* Solid */
+.dcr-icon-color--accent-solid  { background: var(--dcr-color-accent);  color: var(--dcr-color-text-inverse); border-color: transparent; }
+.dcr-icon-color--success-solid { background: var(--dcr-color-success); color: var(--dcr-color-text-inverse); border-color: transparent; }
+.dcr-icon-color--warning-solid { background: var(--dcr-color-warning); color: var(--dcr-color-text-inverse); border-color: transparent; }
+.dcr-icon-color--danger-solid  { background: var(--dcr-color-danger);  color: var(--dcr-color-text-inverse); border-color: transparent; }
+.dcr-icon-color--info-solid    { background: var(--dcr-color-info);    color: var(--dcr-color-text-inverse); border-color: transparent; }
+.dcr-icon-color--muted-solid   { background: var(--dcr-color-muted);   color: var(--dcr-color-text-inverse); border-color: transparent; }
+.dcr-icon-color--purple-solid  { background: var(--dcr-color-purple);  color: var(--dcr-color-text-inverse); border-color: transparent; }
+.dcr-icon-color--indigo-solid  { background: var(--dcr-color-indigo);  color: var(--dcr-color-text-inverse); border-color: transparent; }
 
-.dcr-panel-card__icon-wrap--danger>.dcr-panel-card__icon {
-  color: var(--dcr-color-danger);
-}
-
-.dcr-panel-card__icon-wrap--info {
-  background: var(--dcr-color-info-bg);
-  border-color: transparent;
-}
-
-.dcr-panel-card__icon-wrap--info>.dcr-panel-card__icon {
-  color: var(--dcr-color-info);
-}
-
-.dcr-panel-card__icon-wrap--muted {
-  background: var(--dcr-color-muted-bg);
-  border-color: transparent;
-}
-
-.dcr-panel-card__icon-wrap--muted>.dcr-panel-card__icon {
-  color: var(--dcr-color-muted);
-}
-
-.dcr-panel-card__icon-wrap--purple {
-  background: var(--dcr-color-purple-bg);
-  border-color: transparent;
-}
-
-.dcr-panel-card__icon-wrap--purple>.dcr-panel-card__icon {
-  color: var(--dcr-color-purple);
-}
-
-.dcr-panel-card__icon-wrap--indigo {
-  background: var(--dcr-color-indigo-bg);
-  border-color: transparent;
-}
-
-.dcr-panel-card__icon-wrap--indigo>.dcr-panel-card__icon {
-  color: var(--dcr-color-indigo);
-}
+/* Backward-compat aliases — dcr-panel-card__icon-wrap--* */
+.dcr-panel-card__icon-wrap--accent  { background: var(--dcr-color-accent-bg);  color: var(--dcr-color-accent);  border-color: transparent; }
+.dcr-panel-card__icon-wrap--success { background: var(--dcr-color-success-bg); color: var(--dcr-color-success); border-color: transparent; }
+.dcr-panel-card__icon-wrap--warning { background: var(--dcr-color-warning-bg); color: var(--dcr-color-warning); border-color: transparent; }
+.dcr-panel-card__icon-wrap--danger  { background: var(--dcr-color-danger-bg);  color: var(--dcr-color-danger);  border-color: transparent; }
+.dcr-panel-card__icon-wrap--info    { background: var(--dcr-color-info-bg);    color: var(--dcr-color-info);    border-color: transparent; }
+.dcr-panel-card__icon-wrap--muted   { background: var(--dcr-color-muted-bg);   color: var(--dcr-color-muted);   border-color: transparent; }
+.dcr-panel-card__icon-wrap--purple  { background: var(--dcr-color-purple-bg);  color: var(--dcr-color-purple);  border-color: transparent; }
+.dcr-panel-card__icon-wrap--indigo  { background: var(--dcr-color-indigo-bg);  color: var(--dcr-color-indigo);  border-color: transparent; }
 
 .dcr-panel-card__icon {
   width: 20px;
   height: 20px;
-  color: var(--dcr-color-accent);
   flex-shrink: 0;
 }
 
@@ -2760,6 +2732,27 @@ a.dcr-pagination__page:hover {
   white-space: pre;
   line-height: 1.5;
   margin-bottom: var(--dcr-space-md);
+}
+
+/* A code block with an overlaid copy button. */
+.dcr-code--copyable {
+  position: relative;
+  padding-right: 2.5rem;
+  margin: 0;
+}
+
+.dcr-code--copyable .dcr-copy-btn {
+  position: absolute;
+  right: var(--dcr-space-xs);
+}
+
+.dcr-code--copyable .dcr-copy-btn--center {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.dcr-code--copyable .dcr-copy-btn--top {
+  top: var(--dcr-space-xs);
 }
 
 /* --- Steps ------------------------------------------------------------------ */
