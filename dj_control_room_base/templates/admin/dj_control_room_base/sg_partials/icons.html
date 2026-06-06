@@ -1,10 +1,10 @@
-{% load i18n dcr_icons %}
+{% load i18n static dcr_icons %}
 
 <section class="dcr-sg-section" id="icon-library">
   <div class="dcr-section-header dcr-section-header--plain">
     <h2 class="dcr-section-header__title">{% trans "Icon Library" %}</h2>
   </div>
-  <p class="dcr-sg-section__desc">{% trans "Inline SVG icons rendered via the " %}<code class="dcr-code">{% templatetag openbrace %}{% templatetag openbrace %} dcr_icon {% templatetag closebrace %}{% templatetag closebrace %}</code>{% trans " template tag. All icons use " %}<code class="dcr-code">viewBox="0 0 24 24"</code>{% trans " with no hardcoded dimensions — size them entirely through CSS. Pass an optional " %}<code class="dcr-code">css_class</code>{% trans " argument to inject class(es) onto the " %}<code class="dcr-code">&lt;svg&gt;</code>{% trans " element." %}</p>
+  <p class="dcr-sg-section__desc">{% trans "Inline SVG icons rendered via the " %}<code class="dcr-code">{% templatetag openbrace %}{% templatetag openbrace %} dcr_icon {% templatetag closebrace %}{% templatetag closebrace %}</code>{% trans " template tag. All icons use " %}<code class="dcr-code">viewBox="0 0 24 24"</code>{% trans " with no hardcoded dimensions — size them entirely through CSS. Pass an optional " %}<code class="dcr-code">css_class</code>{% trans " argument to inject class(es) onto the element." %} {% trans "The tag also accepts an image URL or path — in that case an " %}<code class="dcr-code">&lt;img&gt;</code>{% trans " is emitted instead of an SVG, enabling custom logos and brand assets." %}</p>
 
   <div class="dcr-sg-preview dcr-sg-preview--stack">
     <div style="display:flex;flex-wrap:wrap;gap:var(--dcr-space-md);align-items:flex-end">
@@ -36,7 +36,21 @@
 </svg>
 
 {# Unknown keys fall back to the "default" grid icon #}
-{% dcr_icon "unknown-key" %}{% endverbatim %}</code></pre>
+{% dcr_icon "unknown-key" %}
+
+{# Image — emits <img> instead of <svg> (for custom logos / brand assets) #}
+
+{# Relative static path — resolved via Django staticfiles at render time  #}
+{# File lives at: <app>/static/my_panel/images/logo.png                   #}
+{% dcr_icon "my_panel/images/logo.png" %}
+
+{# Absolute URL — used as-is #}
+{% dcr_icon "https://cdn.example.com/logo.png" %}
+
+{# In panel.py — use icon_color="" for a plain wrap with no background tint #}
+class MyPanel(PanelPlugin):
+    icon = "my_panel/images/logo.png"
+    icon_color = ""  # no background color modifier{% endverbatim %}</code></pre>
 </section>
 
 <section class="dcr-sg-section" id="icon-colors">
@@ -86,8 +100,72 @@
 class MyPanel(PanelPlugin):
     icon = "chart"
     icon_color = "warning"          # tinted
-    icon_color = "warning-solid"    # solid{% endverbatim %}
+    icon_color = "warning-solid"    # solid
+    icon_color = ""                 # plain wrap, no color modifier (e.g. for logo images){% endverbatim %}
 
 {# Tinted variants:  accent · success · warning · danger · info · indigo · purple · muted #}
-{# Solid variants:   append -solid to any tinted name, e.g. success-solid #}</code></pre>
+{# Solid variants:   append -solid to any tinted name, e.g. success-solid               #}
+{# No modifier:      icon_color = ""  — plain wrap, useful with custom logo images       #}</code></pre>
+</section>
+
+<section class="dcr-sg-section" id="icon-images">
+  <div class="dcr-section-header dcr-section-header--plain">
+    <h2 class="dcr-section-header__title">{% trans "Image Icons" %}</h2>
+  </div>
+  <p class="dcr-sg-section__desc">{% trans "Pass a relative static path or an absolute URL as " %}<code class="dcr-code">icon</code>{% trans " to render a custom logo or brand image instead of an SVG. The path is resolved via Django's staticfiles system at render time, so it works correctly regardless of " %}<code class="dcr-code">STATIC_URL</code>{% trans " or CDN settings. Set " %}<code class="dcr-code">icon_color = \"\"</code>{% trans " for a plain wrap with no background tint — or keep a tint for contrast." %}</p>
+
+  {% with logo_url=icon_example_logo_url %}
+  <div class="dcr-sg-preview dcr-sg-preview--stack">
+    <div style="display:flex;flex-wrap:wrap;gap:var(--dcr-space-xl);align-items:flex-start">
+
+      <div style="display:flex;flex-direction:column;align-items:center;gap:var(--dcr-space-sm)">
+        <span style="font-size:var(--dcr-font-size-xs);color:var(--dcr-color-text-muted);margin-bottom:2px">{% trans "no tint" %}</span>
+        <div style="display:flex;gap:var(--dcr-space-md)">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:var(--dcr-space-xs)">
+            <div class="dcr-panel-card__icon-wrap">
+              <img src="{{ logo_url }}" alt="">
+            </div>
+            <span style="font-size:var(--dcr-font-size-xs);color:var(--dcr-color-text-muted)">card</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:var(--dcr-space-xs)">
+            <div class="dcr-page-header__icon">
+              <img src="{{ logo_url }}" alt="">
+            </div>
+            <span style="font-size:var(--dcr-font-size-xs);color:var(--dcr-color-text-muted)">header</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;align-items:center;gap:var(--dcr-space-sm)">
+        <span style="font-size:var(--dcr-font-size-xs);color:var(--dcr-color-text-muted);margin-bottom:2px">{% trans "muted tint" %}</span>
+        <div style="display:flex;gap:var(--dcr-space-md)">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:var(--dcr-space-xs)">
+            <div class="dcr-panel-card__icon-wrap dcr-icon-color--muted">
+              <img src="{{ logo_url }}" alt="">
+            </div>
+            <span style="font-size:var(--dcr-font-size-xs);color:var(--dcr-color-text-muted)">card</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:var(--dcr-space-xs)">
+            <div class="dcr-page-header__icon dcr-icon-color--muted">
+              <img src="{{ logo_url }}" alt="">
+            </div>
+            <span style="font-size:var(--dcr-font-size-xs);color:var(--dcr-color-text-muted)">header</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  {% endwith %}
+
+  <p class="dcr-sg-code-label">{% trans "panel.py" %}</p>
+<pre class="dcr-sg-code"><code class="language-python">{% verbatim %}# Place the logo at: my_panel/static/my_panel/images/logo.png
+# Django resolves it via staticfiles at render time — STATIC_URL-agnostic.
+
+class MyPanel(PanelPlugin):
+    name = "My Panel"
+    description = "Integrates with a third-party service"
+    icon = "my_panel/images/logo.png"
+    icon_color = ""          # plain wrap — no background tint
+    # icon_color = "muted"   # subtle grey tint for contrast{% endverbatim %}</code></pre>
 </section>

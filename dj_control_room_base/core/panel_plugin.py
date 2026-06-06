@@ -20,14 +20,29 @@ class PanelPlugin:
     Required attributes:
         name (str): Display name shown in the hub UI.
         description (str): One-line description shown on the panel card.
-        icon (str): Icon key (``database``, ``layers``, ``link``, ``chart``,
-            ``radio``, ``cog``, ``alert``, …).
+        icon (str): Either a built-in icon key (``database``, ``layers``,
+            ``link``, ``chart``, ``radio``, ``cog``, ``alert``, …) **or** an
+            image for a custom logo or brand asset.  Two image forms are
+            accepted:
+
+            - **Relative static path** — e.g.
+              ``"my_panel/images/logo.png"``.  The file should live at
+              ``<app>/static/my_panel/images/logo.png``; the hub resolves
+              the URL via Django's staticfiles system at render time, so it
+              works correctly regardless of ``STATIC_URL`` or CDN config.
+            - **Absolute URL** — e.g.
+              ``"https://cdn.example.com/logo.png"``.  Used as-is.
+
+            When an image is given the hub renders an ``<img>`` element
+            instead of an inline SVG.
         icon_color (str): Color variant for the icon wrap.  Maps to the
             ``dcr-icon-color--<value>`` CSS modifier, which works on both
             panel card wraps and page header icons.  Tinted variants:
             ``accent``, ``success``, ``warning``, ``danger``, ``info``,
             ``indigo``, ``purple``, ``muted``.  Solid variants append
-            ``-solid`` (e.g. ``success-solid``).  Defaults to ``"muted"``.
+            ``-solid`` (e.g. ``success-solid``).  Set to ``""`` for a plain
+            wrap with no background tint — useful when using a full-colour
+            logo image.  Defaults to ``"muted"``.
 
     Optional attributes:
         app_name (str): Django app label as declared in ``INSTALLED_APPS`` and
@@ -60,11 +75,9 @@ class PanelPlugin:
         present on a subclass it is silently ignored — the unique registry key
         is derived from the PyPI distribution name at discovery time.
 
-    Example::
+    Examples::
 
-        # mypanel/panel.py
-        from dj_control_room_base.core import PanelPlugin
-
+        # Built-in icon
         class MyPanel(PanelPlugin):
             name = "My Panel"
             description = "Does something useful"
@@ -74,6 +87,13 @@ class PanelPlugin:
             def get_config(self):
                 from .conf import panel_config
                 return panel_config
+
+        # Custom logo image — relative static path, resolved at render time
+        class MyThirdPartyPanel(PanelPlugin):
+            name = "My Panel"
+            description = "Integrates with a third-party service"
+            icon = "my_panel/images/logo.png"
+            icon_color = ""  # plain wrap, no background tint
     """
 
     name: str = None

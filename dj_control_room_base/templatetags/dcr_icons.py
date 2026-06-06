@@ -1,19 +1,30 @@
 """
-Template tags for rendering DJ Control Room panel icons as inline SVG.
+Template tags for rendering DJ Control Room panel icons.
 
 Two tags are provided:
 
-``dcr_icon`` — full ``<svg>`` element::
+``dcr_icon`` — renders either an inline ``<svg>`` or an ``<img>``, depending
+on whether ``key`` is a built-in icon name or an image URL/path::
 
     {% load dcr_icons %}
+
+    {# Built-in icon — emits <svg> #}
     {% dcr_icon "database" %}
     {% dcr_icon panel.icon "dcr-panel-card__icon" %}
-    {% dcr_icon panel_icon "dcr-page-header__icon my-extra-class" %}
+
+    {# Image — emits <img> (for custom logos, etc.) #}
+    {# Relative static path — resolved via Django staticfiles at render time     #}
+    {# File lives at: <app>/static/my_panel/images/logo.png                      #}
+    {% dcr_icon "my_panel/images/logo.png" "dcr-panel-card__icon" %}
+    {# Absolute URL — used as-is #}
+    {% dcr_icon "https://cdn.example.com/logo.png" "dcr-panel-card__icon" %}
 
 ``dcr_icon_paths`` — inner path content only, for composing into an existing
-``<svg>`` element::
+``<svg>`` element where you control the ``viewBox`` and attributes yourself::
 
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" …>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"
+         fill="none" stroke="currentColor" stroke-width="1.5"
+         stroke-linecap="round" stroke-linejoin="round">
       {% dcr_icon_paths "radio" %}
     </svg>
 
@@ -24,9 +35,20 @@ attributes in the stored strings.
 """
 
 from django.template import Library
+from django.templatetags.static import static as _static_url
 from django.utils.safestring import mark_safe
 
 register = Library()
+
+_IMAGE_EXTENSIONS = (".png", ".jpg", ".jpeg", ".webp", ".gif", ".svg")
+
+
+def _is_image(value: str) -> bool:
+    """Return True if *value* looks like an image rather than a built-in icon key."""
+    return (
+        value.startswith(("http://", "https://", "/"))
+        or any(value.endswith(ext) for ext in _IMAGE_EXTENSIONS)
+    )
 
 _SVG_ATTRS = (
     'xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" '
@@ -77,19 +99,34 @@ ICONS: dict[str, str] = {
 @register.simple_tag
 def dcr_icon(key: str, css_class: str = "") -> str:
     """
-    Render a panel icon as a full inline ``<svg>`` element.
+    Render a panel icon as an inline ``<svg>`` or an ``<img>``.
+
+    If *key* looks like an image (ends with a known extension, or starts with
+    ``http://``, ``https://``, or ``/``) an ``<img>`` element is returned.
+    Otherwise *key* is treated as a built-in icon name and an inline ``<svg>``
+    is returned; unknown keys fall back to the ``"default"`` grid icon.
+
+    Image resolution rules:
+
+    - **Relative static path** (e.g. ``"my_panel/images/logo.png"``) —
+      resolved through Django's staticfiles system using ``static()``.  Place
+      the file at ``<app>/static/my_panel/images/logo.png`` and Django will
+      return the correct URL regardless of ``STATIC_URL`` or CDN settings.
+    - **Absolute URL** (starts with ``http://``, ``https://``, or ``/``) —
+      used as-is.
 
     Args:
-        key: Icon key (e.g. ``"database"``, ``"radio"``).  Unknown keys fall
-            back to the ``"default"`` grid icon.
-        css_class: Space-separated CSS class(es) added to the ``<svg>``
-            element.  Omit or pass an empty string for no class attribute.
+        key: Built-in icon key **or** an image path/URL.
+        css_class: Space-separated CSS class(es) added to the element.
 
     Returns:
-        Mark-safe inline SVG string.
+        Mark-safe HTML string.
     """
-    content = ICONS.get(key, ICONS["default"])
     class_attr = f' class="{css_class}"' if css_class else ""
+    if _is_image(key):
+        src = key if key.startswith(("http://", "https://", "/")) else _static_url(key)
+        return mark_safe(f'<img src="{src}" alt=""{class_attr}>')
+    content = ICONS.get(key, ICONS["default"])
     return mark_safe(f"<svg {_SVG_ATTRS}{class_attr}>{content}</svg>")
 
 
