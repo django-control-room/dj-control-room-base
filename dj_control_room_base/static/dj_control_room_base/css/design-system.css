@@ -205,6 +205,10 @@
   font-weight: 500 !important;
 }
 
+.dcr-font-semibold {
+  font-weight: 600 !important;
+}
+
 .dcr-font-bold {
   font-weight: 700 !important;
 }
