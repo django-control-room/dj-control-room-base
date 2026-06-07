@@ -18,7 +18,19 @@
 {% block panel_branding %}{% endblock %}
 {% endblock %}
 
-{% block messages %}{% endblock %}
+{% block messages %}
+{% if messages %}
+<div style="padding: var(--dcr-space-md) var(--dcr-space-lg) 0">
+  {% for message in messages %}
+  {% with variant=message.tags|message_callout_variant %}
+  <div class="dcr-callout{% if variant %} dcr-callout--{{ variant }}{% endif %}">
+    <p class="dcr-callout__body">{{ message }}</p>
+  </div>
+  {% endwith %}
+  {% endfor %}
+</div>
+{% endif %}
+{% endblock %}
 {% block content_title %}{% endblock %}
 {% block content_subtitle %}{% endblock %}
 

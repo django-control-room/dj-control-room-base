@@ -153,3 +153,27 @@ def dcr_icon_paths(key: str) -> str:
         Mark-safe inner SVG path content string (no ``<svg>`` wrapper).
     """
     return mark_safe(ICONS.get(key, ICONS["default"]))
+
+
+_MESSAGE_VARIANT_MAP = {
+    "debug": "",
+    "info": "info",
+    "success": "success",
+    "warning": "warning",
+    "error": "danger",
+}
+
+
+@register.filter
+def message_callout_variant(tags: str) -> str:
+    """Return the dcr-callout variant suffix for a Django message tags string.
+
+    Maps Django's message level tags (e.g. "success", "error") to the
+    corresponding dcr-callout modifier (e.g. "success", "danger").
+    Returns an empty string for unknown/debug tags.
+    """
+    for tag in tags.split():
+        variant = _MESSAGE_VARIANT_MAP.get(tag)
+        if variant is not None:
+            return variant
+    return ""
