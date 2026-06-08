@@ -183,7 +183,7 @@ Attaching `panel_config` to `BasePanelAdmin` means the sidebar entry is only vis
 Extend `panel_base.html` (shipped with this library) to inherit the design system CSS wiring and Django admin chrome:
 
 ```html
-{% extends "admin/dj_control_room_base/panel_base.html" %}
+{% extends "dj_control_room_base/panel_base.html" %}
 
 {% block content %}
   <div class="dcr-page-header">
