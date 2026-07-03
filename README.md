@@ -158,6 +158,18 @@ The result is that panel authors declare a minimal `defaults`, project owners ov
 
 In a view, call `panel_config.get_context(request, title="My Panel")` to get a context dict that already contains `dj_cr_load_default_css` and `dj_cr_extra_css` alongside the standard Django admin context. Templates use these to inject the right `<link>` tags without any per-view wiring.
 
+### Theme adapters
+
+For admin skins that don't match the classic Django admin palette, the package ships optional token-override stylesheets under `dj_control_room_base/css/themes/`. They're opt-in per panel via `EXTRA_CSS` - nothing loads automatically:
+
+```python
+DJ_MY_PANEL_SETTINGS = {
+    "EXTRA_CSS": ["dj_control_room_base/css/themes/unfold.css"],
+}
+```
+
+`themes/unfold.css` remaps DCR's accent/surface/border/muted tokens to [django-unfold](https://github.com/unfoldadmin/django-unfold)'s own CSS variables (`--color-primary-*`, `--color-base-*`, `--color-font-*`), so panels match the host site's configured brand color. See the [configuration docs](https://yassi.github.io/dj-control-room-base/configuration/#theme-adapters) for details.
+
 ### Permission settings
 
 Panels built on this library follow a two-level permission model: a **panel-wide** policy, and optional **per-scope** overrides for individual views.
