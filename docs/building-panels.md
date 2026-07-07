@@ -300,7 +300,7 @@ The decorator only records metadata as a side effect — it returns the handler 
 
 ### Registering tools on `PanelConfig`
 
-Pass `tools=tool_registry.tools` when instantiating `PanelConfig` in `conf.py`. Tools are not imported at module level — `conf.py` is only loaded when `get_config()` is called at request time.
+Pass `tools=tool_registry.tools` when instantiating `PanelConfig` in `conf.py`.
 
 ```python
 # dj_my_panel/conf.py
