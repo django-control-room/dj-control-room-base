@@ -1,283 +1,230 @@
 /*
    DJ CONTROL ROOM - Jazzmin Theme Adapter  (themes/jazzmin.css)
 
-
    Not loaded automatically. Opt in per panel via EXTRA_CSS:
 
        DJ_<PANEL>_SETTINGS = {
            "EXTRA_CSS": ["dj_control_room_base/css/themes/jazzmin.css"],
        }
-
 */
 
-/* Unlike Unfold (which always stamps [x-data] on <html>, giving
-   design-system.css's OS-preference query a reliable "a JS theme switcher
-   is in control here" signal to back off), a default Jazzmin install often
-   never sets data-bs-theme at all - the toggle is opt-in UI. When it's
-   absent, design-system.css's raw `prefers-color-scheme: dark` query is
-   unguarded and will flip DCR to dark purely off OS/browser preference,
-   independently of - and regardless of - whatever Jazzmin itself is
-   rendering (which stays light, since Bootstrap only reacts to the
-   attribute, never to the OS preference on its own). That mismatch is the
-   "stuck in dark mode" bug. So below, `!important` is used to beat
-   design-system's OS-driven dark rule rather than specificity (that rule is
-   4 attribute/pseudo-class selectors deep - see its "signal 1" comment - so
-   a plain :root override can't outrank it).
-
-   This stylesheet is meant to be opt-in only for actual Jazzmin pages, but
-   EXTRA_CSS is static config, not tied to which admin theme is actually
-   active - so it may end up loaded alongside plain Django admin or Unfold
-   too (e.g. while switching between them during testing/config). The guard
-   below excludes *every* explicit "this page really is dark" signal
-   design-system.css recognises - not just Jazzmin's own - so this adapter
-   only forces light for the one case it's actually meant to fix: nothing
-   says dark, but the OS/browser does. */
+/* Jazzmin's dark signal is body.theme-<name> (see below), not data-bs-theme.
+   Without a guard, an OS/browser dark preference leaks through
+   design-system.css's `prefers-color-scheme` query even while Jazzmin stays
+   light - !important below beats that (non-important) rule. */
 :root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) {
-  /* Neutrals - match Jazzmin's Bootstrap 5 body/border/text variables.
-     These track whatever Bootswatch theme JAZZMIN_UI_TWEAKS["theme"] loads,
-     not just the default AdminLTE palette. */
-  --dcr-color-text: var(--bs-body-color, #111827) !important;
-  --dcr-color-text-muted: var(--bs-secondary-color, #888888) !important;
-  --dcr-color-text-inverse: #ffffff !important;
-  --dcr-color-bg: var(--bs-body-bg, #ffffff) !important;
-  --dcr-color-bg-subtle: var(--bs-tertiary-bg, #f9fafb) !important;
-  --dcr-color-border: var(--bs-border-color, #e5e7eb) !important;
-  --dcr-color-muted: var(--bs-secondary-color, #6b7280) !important;
-  --dcr-color-muted-bg: var(--bs-secondary-bg, rgba(107, 114, 128, 0.10)) !important;
+   --dcr-color-text: var(--bs-body-color, #111827) !important;
+   --dcr-color-text-muted: var(--bs-secondary-color, #888888) !important;
+   --dcr-color-text-inverse: #ffffff !important;
+   --dcr-color-bg: var(--bs-body-bg, #ffffff) !important;
+   --dcr-color-bg-subtle: var(--bs-tertiary-bg, #f9fafb) !important;
+   --dcr-color-border: var(--bs-border-color, #e5e7eb) !important;
+   --dcr-color-muted: var(--bs-secondary-color, #6b7280) !important;
+   --dcr-color-muted-bg: var(--bs-secondary-bg, rgba(107, 114, 128, 0.10)) !important;
 
-  /* Accent - match Jazzmin's configured Bootstrap/Bootswatch primary color.
-     accent-bg is a translucent tint of that same color (color-mix, not
-     Bootstrap's own --bs-primary-bg-subtle) - see the dark block below for
-     why. */
-  --dcr-color-accent: var(--bs-primary, #417690) !important;
-  --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #417690) 10%, transparent) !important;
+   --dcr-color-accent: var(--bs-primary, #417690) !important;
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #417690) 10%, transparent) !important;
 
-  /* Semantic colors design-system.css's OS-driven dark rule would otherwise
-     flip too; no direct Jazzmin/Bootstrap equivalents worth mapping to, so
-     just pin back to design-system.css's own light defaults. */
-  --dcr-color-success: #2e7d32 !important;
-  --dcr-color-success-bg: #e8f5e9 !important;
-  --dcr-color-warning: #b45309 !important;
-  --dcr-color-warning-bg: #fffbeb !important;
-  --dcr-color-danger: #ba2121 !important;
-  --dcr-color-danger-bg: #fdecea !important;
-  --dcr-color-info: #01579b !important;
-  --dcr-color-info-bg: #e1f5fe !important;
-  --dcr-color-purple: #7c3aed !important;
-  --dcr-color-purple-bg: #ede9fe !important;
-  --dcr-color-indigo: #4338ca !important;
-  --dcr-color-indigo-bg: #e0e7ff !important;
+   /* Semantic colors: no Jazzmin/Bootstrap equivalents, pin to light defaults. */
+   --dcr-color-success: #2e7d32 !important;
+   --dcr-color-success-bg: #e8f5e9 !important;
+   --dcr-color-warning: #b45309 !important;
+   --dcr-color-warning-bg: #fffbeb !important;
+   --dcr-color-danger: #ba2121 !important;
+   --dcr-color-danger-bg: #fdecea !important;
+   --dcr-color-info: #01579b !important;
+   --dcr-color-info-bg: #e1f5fe !important;
+   --dcr-color-purple: #7c3aed !important;
+   --dcr-color-purple-bg: #ede9fe !important;
+   --dcr-color-indigo: #4338ca !important;
+   --dcr-color-indigo-bg: #e0e7ff !important;
 }
 
-/* .dcr-bar-chart__bar's dark-mode background is a hardcoded color rather
-   than a --dcr-* token, so the blanket override above doesn't reach it -
-   needs its own reset back to the light value. */
+/* .dcr-bar-chart__bar's dark bg is hardcoded, not a --dcr-* token - reset separately. */
 :root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) .dcr-bar-chart__bar {
-  background: rgba(46, 125, 50, 0.40) !important;
+   background: rgba(46, 125, 50, 0.40) !important;
 }
 
-/* dj-signals-panel defines its own extended badge palette (--dsp-* tokens,
-   in its styles.css) on top of the shared --dcr-* ones above, using the same
-   OS-preference-leak-prone pattern. It has no jazzmin adapter of its own, so
-   pin its light values back here too - harmless no-op on panels that don't
-   define these tokens at all. */
-:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) {
-  --dsp-color-teal: #0f766e !important;
-  --dsp-color-teal-bg: #ccfbf1 !important;
-  --dsp-color-pink: #be185d !important;
-  --dsp-color-pink-bg: #fce7f3 !important;
-  --dsp-color-orange: #c2410c !important;
-  --dsp-color-orange-bg: #ffedd5 !important;
-  --dsp-color-cyan: #0e7490 !important;
-  --dsp-color-cyan-bg: #cffafe !important;
-  --dsp-color-lime: #4d7c0f !important;
-  --dsp-color-lime-bg: #ecfccb !important;
-  --dsp-color-rose: #9f1239 !important;
-  --dsp-color-rose-bg: #ffe4e6 !important;
-  --dsp-color-brown: #6b4423 !important;
-  --dsp-color-brown-bg: #f5ebe0 !important;
-  --dsp-color-slate: #334155 !important;
-  --dsp-color-slate-bg: #e2e8f0 !important;
-  --dsp-color-emerald: #047857 !important;
-  --dsp-color-emerald-bg: #d1fae5 !important;
-  --dsp-color-sky: #0369a1 !important;
-  --dsp-color-sky-bg: #e0f2fe !important;
-  --dsp-color-violet: #6d28d9 !important;
-  --dsp-color-violet-bg: #f3e8ff !important;
-  --dsp-color-fuchsia: #a21caf !important;
-  --dsp-color-fuchsia-bg: #fae8ff !important;
-  --dsp-color-yellow: #854d0e !important;
-  --dsp-color-yellow-bg: #fef9c3 !important;
-  --dsp-color-red: #991b1b !important;
-  --dsp-color-red-bg: #fee2e2 !important;
-  --dsp-color-green: #15803d !important;
-  --dsp-color-green-bg: #dcfce7 !important;
-  --dsp-color-blue: #1d4ed8 !important;
-  --dsp-color-blue-bg: #dbeafe !important;
-  --dsp-color-amber: #92400e !important;
-  --dsp-color-amber-bg: #fef3c7 !important;
-  --dsp-color-gold: #a16207 !important;
-  --dsp-color-gold-bg: #fefce8 !important;
-  --dsp-color-maroon: #7f1d1d !important;
-  --dsp-color-maroon-bg: #fde8e8 !important;
-  --dsp-color-navy: #1e3a5f !important;
-  --dsp-color-navy-bg: #dbe9f7 !important;
-  --dsp-color-olive: #4d5c1e !important;
-  --dsp-color-olive-bg: #eef3d8 !important;
-  --dsp-color-coral: #e4572e !important;
-  --dsp-color-coral-bg: #ffe8e0 !important;
-  --dsp-color-mint: #0f9d78 !important;
-  --dsp-color-mint-bg: #d7f7ec !important;
-  --dsp-color-plum: #86198f !important;
-  --dsp-color-plum-bg: #fbe7f6 !important;
+/* Per-theme accent (the only token that meaningfully differs across
+   Jazzmin's light Bootswatch skins), sourced from each theme's $primary.
+   Selectors repeat the :not() guard above to out-specificity it. */
+:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) body.theme-cerulean {
+   --dcr-color-accent: var(--bs-primary, #2fa4e7) !important;
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #2fa4e7) 10%, transparent) !important;
+}
+:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) body.theme-cosmo {
+   --dcr-color-accent: var(--bs-primary, #2780e3) !important;
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #2780e3) 10%, transparent) !important;
+}
+:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) body.theme-flatly {
+   --dcr-color-accent: var(--bs-primary, #2c3e50) !important;
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #2c3e50) 10%, transparent) !important;
+}
+:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) body.theme-journal {
+   --dcr-color-accent: var(--bs-primary, #eb6864) !important;
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #eb6864) 10%, transparent) !important;
+}
+:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) body.theme-litera {
+   --dcr-color-accent: var(--bs-primary, #4582ec) !important;
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #4582ec) 10%, transparent) !important;
+}
+:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) body.theme-lumen {
+   --dcr-color-accent: var(--bs-primary, #158cba) !important;
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #158cba) 10%, transparent) !important;
+}
+:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) body.theme-lux {
+   --dcr-color-accent: var(--bs-primary, #1a1a1a) !important;
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #1a1a1a) 10%, transparent) !important;
+}
+:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) body.theme-materia {
+   --dcr-color-accent: var(--bs-primary, #2196f3) !important;
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #2196f3) 10%, transparent) !important;
+}
+:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) body.theme-minty {
+   --dcr-color-accent: var(--bs-primary, #78c2ad) !important;
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #78c2ad) 10%, transparent) !important;
+}
+:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) body.theme-pulse {
+   --dcr-color-accent: var(--bs-primary, #593196) !important;
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #593196) 10%, transparent) !important;
+}
+:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) body.theme-sandstone {
+   --dcr-color-accent: var(--bs-primary, #325d88) !important;
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #325d88) 10%, transparent) !important;
+}
+:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) body.theme-simplex {
+   --dcr-color-accent: var(--bs-primary, #d9230f) !important;
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #d9230f) 10%, transparent) !important;
+}
+:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) body.theme-sketchy {
+   --dcr-color-accent: var(--bs-primary, #333333) !important;
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #333333) 10%, transparent) !important;
+}
+:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) body.theme-spacelab {
+   --dcr-color-accent: var(--bs-primary, #446e9b) !important;
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #446e9b) 10%, transparent) !important;
+}
+:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) body.theme-united {
+   --dcr-color-accent: var(--bs-primary, #e95420) !important;
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #e95420) 10%, transparent) !important;
+}
+:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) body.theme-yeti {
+   --dcr-color-accent: var(--bs-primary, #008cba) !important;
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #008cba) 10%, transparent) !important;
 }
 
-/* Dark mode - two independent ways Jazzmin ends up dark:
+/* Dark mode - real signal is body.theme-<name>: cyborg, darkly, slate,
+   solar, superhero are dark by design (see
+   https://django-jazzmin.readthedocs.io/ui_customisation/). data-bs-theme
+   isn't documented in jazzmin, kept only as forward-compat insurance.
 
-   1. data-bs-theme="dark" - Jazzmin's Bootstrap 5 color-mode toggle
-      (default_theme_mode "dark"/"auto", or the theme chooser), present on
-      <html>; see design-system.css's :root.dark handling for the base
-      mechanism this adapter builds on.
-   2. body.theme-<name> - Jazzmin tags <body> with a class for whichever
-      Bootswatch skin JAZZMIN_UI_TWEAKS["theme"] selects (see jazzmin's docs,
-      "DIY with custom CSS/JS"). A handful of skins - cyborg, darkly, slate,
-      solar, superhero, vapor - are dark-styled BY DESIGN, independent of the
-      data-bs-theme toggle: picking one of them renders dark even while
-      data-bs-theme still reads "light" (or is absent, e.g. on older Jazzmin
-      versions that predate the data-bs-theme/default_theme_mode mechanism
-      entirely). This is a version-independent way to catch that case, since
-      the theme-<name> body class has been around far longer.
+   Fallbacks apply only when --bs-* vars are missing (pre-Bootstrap-5
+   Jazzmin), sourced per-theme from bootswatch/dist/<name>/_variables.scss.
+   Muted-text uses rgba(text, 0.8) rather than each theme's $secondary swatch
+   (a button bg color, not Bootstrap's actual text-tint --bs-secondary-color)
+   which produced near-invisible dark-on-dark text. */
+:root[data-bs-theme="dark"] {
+   --dcr-color-text: var(--bs-body-color, #f3f4f6);
+   --dcr-color-text-muted: var(--bs-secondary-color, rgba(243, 244, 246, 0.8));
+   --dcr-color-bg: var(--bs-body-bg, #212529);
+   --dcr-color-bg-subtle: var(--bs-tertiary-bg, #2b3035);
+   --dcr-color-border: var(--bs-border-color, #495057);
+   --dcr-color-muted: var(--bs-secondary-color, rgba(243, 244, 246, 0.8));
+   --dcr-color-muted-bg: var(--bs-secondary-bg, rgba(255, 255, 255, 0.08));
 
-   The var() fallbacks below only kick in when the --bs-* custom properties
-   themselves don't exist - which is the case on pre-Bootstrap-5 Jazzmin
-   (no data-bs-theme/CSS-variable dark mode at all, just an entirely
-   separate pre-compiled Bootswatch v4 stylesheet per theme). On those
-   versions every dark install ends up on these literal fallback colors, so
-   they're picked to match actual Bootswatch dark themes' neutral grey
-   (Darkly's $body-bg is #212529 - identical to Bootstrap 5's own default
-   dark body-bg) rather than a near-black, so it doesn't look jarring next
-   to Jazzmin's own grey chrome. */
-:root[data-bs-theme="dark"],
-body.theme-cyborg,
-body.theme-darkly,
-body.theme-slate,
-body.theme-solar,
-body.theme-superhero,
-body.theme-vapor {
-  --dcr-color-text: var(--bs-body-color, #f3f4f6);
-  --dcr-color-text-muted: var(--bs-secondary-color, #9ca3af);
-  --dcr-color-bg: var(--bs-body-bg, #212529);
-  --dcr-color-bg-subtle: var(--bs-tertiary-bg, #2b3035);
-  --dcr-color-border: var(--bs-border-color, #495057);
-  --dcr-color-muted: var(--bs-secondary-color, #888888);
-  --dcr-color-muted-bg: var(--bs-secondary-bg, rgba(255, 255, 255, 0.08));
-
-  /* --bs-primary-bg-subtle is intentionally near-black in dark mode (it's
-     meant to sit *behind* --bs-primary-text-emphasis, not stand out as a
-     highlight chip), which read as "too dark" for how DCR uses accent-bg -
-     icon badges, stat highlights, etc. that are supposed to visually pop.
-     color-mix() tints the actual accent color instead, matching the
-     rgba(accent, 20%) approach design-system.css's own dark palette uses. */
-  --dcr-color-accent: var(--bs-primary, #79aec8);
-  --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #79aec8) 20%, transparent);
+   /* color-mix() tints the accent color instead of using
+      --bs-primary-bg-subtle, which is near-black in dark mode. */
+   --dcr-color-accent: var(--bs-primary, #79aec8);
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #79aec8) 20%, transparent);
 }
 
-/* .dcr-btn and .dcr-bar-chart__bar's dark styling in design-system.css is
-   keyed off :root-level signals only (data-theme/.dark/data-bs-theme), so it
-   doesn't react to the body.theme-<name> signal above - give them their own
-   matching override here, mirroring design-system.css's explicit dark rules. */
+body.theme-cyborg {
+   --dcr-color-text: var(--bs-body-color, #adafae);
+   --dcr-color-text-muted: var(--bs-secondary-color, rgba(173, 175, 174, 0.8));
+   --dcr-color-bg: var(--bs-body-bg, #060606);
+   --dcr-color-bg-subtle: var(--bs-tertiary-bg, #222222);
+   --dcr-color-border: var(--bs-border-color, #282828);
+   --dcr-color-muted: var(--bs-secondary-color, rgba(173, 175, 174, 0.8));
+   --dcr-color-muted-bg: var(--bs-secondary-bg, rgba(255, 255, 255, 0.08));
+   --dcr-color-accent: var(--bs-primary, #2a9fd6);
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #2a9fd6) 20%, transparent);
+}
+
+body.theme-darkly {
+   --dcr-color-text: var(--bs-body-color, #ffffff);
+   --dcr-color-text-muted: var(--bs-secondary-color, rgba(255, 255, 255, 0.8));
+   --dcr-color-bg: var(--bs-body-bg, #222222);
+   --dcr-color-bg-subtle: var(--bs-tertiary-bg, #303030);
+   --dcr-color-border: var(--bs-border-color, #444444);
+   --dcr-color-muted: var(--bs-secondary-color, rgba(255, 255, 255, 0.8));
+   --dcr-color-muted-bg: var(--bs-secondary-bg, rgba(255, 255, 255, 0.08));
+   --dcr-color-accent: var(--bs-primary, #375a7f);
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #375a7f) 20%, transparent);
+}
+
+/* Slate's own $primary is a dark grey (near-monochrome theme by design). */
+body.theme-slate {
+   --dcr-color-text: var(--bs-body-color, #aaaaaa);
+   --dcr-color-text-muted: var(--bs-secondary-color, rgba(170, 170, 170, 0.8));
+   --dcr-color-bg: var(--bs-body-bg, #272b30);
+   --dcr-color-bg-subtle: var(--bs-tertiary-bg, #32383e);
+   --dcr-color-border: var(--bs-border-color, #3a3f44);
+   --dcr-color-muted: var(--bs-secondary-color, rgba(170, 170, 170, 0.8));
+   --dcr-color-muted-bg: var(--bs-secondary-bg, rgba(255, 255, 255, 0.08));
+   --dcr-color-accent: var(--bs-primary, #3a3f44);
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #3a3f44) 20%, transparent);
+}
+
+body.theme-solar {
+   --dcr-color-text: var(--bs-body-color, #839496);
+   --dcr-color-text-muted: var(--bs-secondary-color, rgba(131, 148, 150, 0.8));
+   --dcr-color-bg: var(--bs-body-bg, #002b36);
+   --dcr-color-bg-subtle: var(--bs-tertiary-bg, #073642);
+   --dcr-color-border: var(--bs-border-color, #073642);
+   --dcr-color-muted: var(--bs-secondary-color, rgba(131, 148, 150, 0.8));
+   --dcr-color-muted-bg: var(--bs-secondary-bg, rgba(255, 255, 255, 0.08));
+   --dcr-color-accent: var(--bs-primary, #b58900);
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #b58900) 20%, transparent);
+}
+
+body.theme-superhero {
+   --dcr-color-text: var(--bs-body-color, #ebebeb);
+   --dcr-color-text-muted: var(--bs-secondary-color, rgba(235, 235, 235, 0.8));
+   --dcr-color-bg: var(--bs-body-bg, #0f2537);
+   --dcr-color-bg-subtle: var(--bs-tertiary-bg, #4e5d6c);
+   --dcr-color-border: var(--bs-border-color, #495057);
+   --dcr-color-muted: var(--bs-secondary-color, rgba(235, 235, 235, 0.8));
+   --dcr-color-muted-bg: var(--bs-secondary-bg, rgba(255, 255, 255, 0.08));
+   --dcr-color-accent: var(--bs-primary, #df6919);
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #df6919) 20%, transparent);
+}
+
+/* design-system.css's dark .dcr-btn/.dcr-bar-chart__bar rules are keyed off
+   :root-level signals only, so they miss body.theme-<name> - mirror them here. */
 :root[data-bs-theme="dark"] .dcr-btn:not([class*="dcr-btn--"]),
 body.theme-cyborg .dcr-btn:not([class*="dcr-btn--"]),
 body.theme-darkly .dcr-btn:not([class*="dcr-btn--"]),
 body.theme-slate .dcr-btn:not([class*="dcr-btn--"]),
 body.theme-solar .dcr-btn:not([class*="dcr-btn--"]),
-body.theme-superhero .dcr-btn:not([class*="dcr-btn--"]),
-body.theme-vapor .dcr-btn:not([class*="dcr-btn--"]) {
-  border-color: var(--dcr-color-accent);
+body.theme-superhero .dcr-btn:not([class*="dcr-btn--"]) {
+   border-color: var(--dcr-color-accent);
 }
 
 body.theme-cyborg .dcr-bar-chart__bar,
 body.theme-darkly .dcr-bar-chart__bar,
 body.theme-slate .dcr-bar-chart__bar,
 body.theme-solar .dcr-bar-chart__bar,
-body.theme-superhero .dcr-bar-chart__bar,
-body.theme-vapor .dcr-bar-chart__bar {
-  background: rgba(102, 187, 106, 0.45);
+body.theme-superhero .dcr-bar-chart__bar {
+   background: rgba(102, 187, 106, 0.45);
 }
 
-/* dj-signals-panel's --dsp-* badge palette, dark variant - same body.theme-*
-   signal as above (data-bs-theme="dark" is already covered by the explicit
-   dark toggle further down in dj-signals-panel's own styles.css). */
-body.theme-cyborg,
-body.theme-darkly,
-body.theme-slate,
-body.theme-solar,
-body.theme-superhero,
-body.theme-vapor {
-  --dsp-color-teal: #2dd4bf;
-  --dsp-color-teal-bg: rgba(45, 212, 191, 0.12);
-  --dsp-color-pink: #f472b6;
-  --dsp-color-pink-bg: rgba(244, 114, 182, 0.12);
-  --dsp-color-orange: #fb923c;
-  --dsp-color-orange-bg: rgba(251, 146, 60, 0.12);
-  --dsp-color-cyan: #22d3ee;
-  --dsp-color-cyan-bg: rgba(34, 211, 238, 0.12);
-  --dsp-color-lime: #a3e635;
-  --dsp-color-lime-bg: rgba(163, 230, 53, 0.12);
-  --dsp-color-rose: #fb7185;
-  --dsp-color-rose-bg: rgba(251, 113, 133, 0.12);
-  --dsp-color-brown: #c8a27a;
-  --dsp-color-brown-bg: rgba(200, 162, 122, 0.12);
-  --dsp-color-slate: #94a3b8;
-  --dsp-color-slate-bg: rgba(148, 163, 184, 0.12);
-  --dsp-color-emerald: #34d399;
-  --dsp-color-emerald-bg: rgba(52, 211, 153, 0.12);
-  --dsp-color-sky: #38bdf8;
-  --dsp-color-sky-bg: rgba(56, 189, 248, 0.12);
-  --dsp-color-violet: #a78bfa;
-  --dsp-color-violet-bg: rgba(167, 139, 250, 0.12);
-  --dsp-color-fuchsia: #e879f9;
-  --dsp-color-fuchsia-bg: rgba(232, 121, 249, 0.12);
-  --dsp-color-yellow: #facc15;
-  --dsp-color-yellow-bg: rgba(250, 204, 21, 0.12);
-  --dsp-color-red: #f87171;
-  --dsp-color-red-bg: rgba(248, 113, 113, 0.12);
-  --dsp-color-green: #4ade80;
-  --dsp-color-green-bg: rgba(74, 222, 128, 0.12);
-  --dsp-color-blue: #60a5fa;
-  --dsp-color-blue-bg: rgba(96, 165, 250, 0.12);
-  --dsp-color-amber: #fbbf24;
-  --dsp-color-amber-bg: rgba(251, 191, 36, 0.12);
-  --dsp-color-gold: #eab308;
-  --dsp-color-gold-bg: rgba(234, 179, 8, 0.12);
-  --dsp-color-maroon: #ef4444;
-  --dsp-color-maroon-bg: rgba(239, 68, 68, 0.12);
-  --dsp-color-navy: #7dabd8;
-  --dsp-color-navy-bg: rgba(125, 171, 216, 0.12);
-  --dsp-color-olive: #b5c96b;
-  --dsp-color-olive-bg: rgba(181, 201, 107, 0.12);
-  --dsp-color-coral: #ff8a65;
-  --dsp-color-coral-bg: rgba(255, 138, 101, 0.12);
-  --dsp-color-mint: #5eead4;
-  --dsp-color-mint-bg: rgba(94, 234, 212, 0.12);
-  --dsp-color-plum: #d946ef;
-  --dsp-color-plum-bg: rgba(217, 70, 239, 0.12);
-}
-
-/* Jazzmin's admin/base.html wraps {% block content %} directly in a
-   Bootstrap .row with no .col-* child (see jazzmin/templates/admin/base.html):
-
-       <div class="row">{% block content %}{% endblock %}</div>
-
-   .row is display:flex with negative gutter margins meant to be offset by a
-   .col-*'s padding. Since our .dcr-panel is a bare flex child with no such
-   offset, it doesn't stretch to fill the row and sits inset by the gutter.
-   Neutralize .row's flex/gutter behavior for this one known ancestor case so
-   the panel renders as a normal full-width block. */
-.row > .dcr-panel {
-  display: block;
-  flex: none;
-  width: 100%;
-  margin-left: 0;
-  margin-right: 0;
+/* Jazzmin wraps {% block content %} in a bare Bootstrap .row with no .col-*
+   child, so .dcr-panel doesn't get the padding offsetting .row's negative
+   gutter margins - force it back to a normal full-width block. */
+.row>.dcr-panel {
+   display: block;
+   flex: none;
+   width: 100%;
+   margin-left: 0;
+   margin-right: 0;
 }
