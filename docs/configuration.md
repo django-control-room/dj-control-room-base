@@ -115,6 +115,8 @@ You can also make your own theme adapters easily by following the `unfold.css` o
 `jazzmin.css` examples. This works very well for any Tailwind CSS or Bootstrap
 driven admin that exposes its palette as CSS custom properties.
 
+See [Theme Adapters](themes.md) for a full visual gallery, including every Jazzmin/Bootswatch skin currently supported.
+
 ---
 
 ## Permission settings

@@ -70,6 +70,8 @@ The only runtime dependency is Django. `dj-control-room` is optional and only ne
 
 **django-jazzmin support** - the same [theme adapter](#theme-adapters) mechanism ships a Jazzmin stylesheet that maps panels onto Jazzmin's Bootstrap 5 / Bootswatch palette.
 
+![Django Control Room running with the django-jazzmin admin theme](https://raw.githubusercontent.com/django-control-room/dj-control-room-base/main/images/dcr-base-jazzmin.png)
+
 ## Requirements
 
 - Python 3.9+
