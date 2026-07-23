@@ -138,6 +138,29 @@
    --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #79aec8) 20%, transparent);
 }
 
+/* No Bootstrap equivalent (same as the light block above), so one shared
+   dark value covers every skin - mirrors design-system.css's dark palette. */
+:root[data-bs-theme="dark"],
+body.theme-cyborg,
+body.theme-darkly,
+body.theme-slate,
+body.theme-solar,
+body.theme-superhero {
+   --dcr-color-text-inverse: #111827;
+   --dcr-color-success: #66bb6a;
+   --dcr-color-success-bg: rgba(102, 187, 106, 0.12);
+   --dcr-color-warning: #fbbf24;
+   --dcr-color-warning-bg: rgba(251, 191, 36, 0.12);
+   --dcr-color-danger: #ef5350;
+   --dcr-color-danger-bg: rgba(239, 83, 80, 0.12);
+   --dcr-color-info: #42a5f5;
+   --dcr-color-info-bg: rgba(66, 165, 245, 0.12);
+   --dcr-color-purple: #a78bfa;
+   --dcr-color-purple-bg: rgba(167, 139, 250, 0.12);
+   --dcr-color-indigo: #818cf8;
+   --dcr-color-indigo-bg: rgba(129, 140, 248, 0.12);
+}
+
 body.theme-cyborg {
    --dcr-color-text: var(--bs-body-color, #adafae);
    --dcr-color-text-muted: var(--bs-secondary-color, rgba(173, 175, 174, 0.8));
