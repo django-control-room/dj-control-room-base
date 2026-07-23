@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://django-control-room.github.io/dj-control-room-base/</loc>
+         <lastmod>2026-07-23</lastmod>
+    </url>
+    <url>
+         <loc>https://django-control-room.github.io/dj-control-room-base/building-panels/</loc>
+         <lastmod>2026-07-23</lastmod>
+    </url>
+    <url>
+         <loc>https://django-control-room.github.io/dj-control-room-base/configuration/</loc>
+         <lastmod>2026-07-23</lastmod>
+    </url>
+    <url>
+         <loc>https://django-control-room.github.io/dj-control-room-base/development/</loc>
+         <lastmod>2026-07-23</lastmod>
+    </url>
+    <url>
+         <loc>https://django-control-room.github.io/dj-control-room-base/installation/</loc>
+         <lastmod>2026-07-23</lastmod>
+    </url>
+    <url>
+         <loc>https://django-control-room.github.io/dj-control-room-base/themes/</loc>
+         <lastmod>2026-07-23</lastmod>
+    </url>
+</urlset>
