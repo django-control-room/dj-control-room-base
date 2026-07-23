@@ -99,15 +99,19 @@ Currently available:
 | File | For |
 |---|---|
 | `themes/unfold.css` | Projects using [django-unfold](https://github.com/unfoldadmin/django-unfold) as their admin skin. |
+| `themes/jazzmin.css` | Projects using [django-jazzmin](https://github.com/farridav/django-jazzmin) as their admin skin. |
 
-`themes/unfold.css` remaps a handful of `--dcr-*` tokens (accent color, surfaces, borders, muted text) to Unfold's own `--color-primary-*` / `--color-base-*` / `--color-font-*` CSS variables, so panels pick up the host site's configured brand color instead of DCR's classic-admin blue. It only touches tokens - never `dcr-*` component rules - and every override falls back to DCR's own default if the Unfold variable isn't present, so it's safe to load even if Unfold changes its internals in a future release. Semantic status colors (success/warning/danger/info) are left alone, since Unfold doesn't expose those as configurable brand colors.
+`themes/unfold.css` maps DCR's tokens onto [django-unfold](https://github.com/unfoldadmin/django-unfold)'s own CSS variables, so panels automatically pick up the host site's configured brand color. `themes/jazzmin.css` does the same for [django-jazzmin](https://github.com/farridav/django-jazzmin), tracking whichever Bootswatch theme (light or dark) is configured via `JAZZMIN_UI_TWEAKS["theme"]`. Both only touch tokens, never `dcr-*` component rules, and dark mode is handled automatically - no extra configuration needed beyond loading the stylesheet.
 
 Because this is opt-in per panel rather than hub-wide, each panel you want themed needs its own `EXTRA_CSS` entry for now.
 
-![Django Control Room running with the django-unfold admin theme](https://raw.githubusercontent.com/yassi/dj-control-room-base/main/images/dcr-base-unfold.png)
+![Django Control Room running with the django-unfold admin theme](https://raw.githubusercontent.com/django-control-room/dj-control-room-base/main/images/dcr-base-unfold.png)
 
-You can also make your own theme adapters easily by following the `unfold.css`
-example. This works very well for any tailwind.css driven admins.
+You can also make your own theme adapters easily by following the `unfold.css` or
+`jazzmin.css` examples. This works very well for any Tailwind CSS or Bootstrap
+driven admin that exposes its palette as CSS custom properties.
+
+See [Theme Adapters](themes.md) for a full visual gallery, including every Jazzmin/Bootswatch skin currently supported.
 
 ---
 

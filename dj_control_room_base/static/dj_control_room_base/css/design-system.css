@@ -74,7 +74,7 @@
 }
 
 /* Dark mode - override tokens only; components update automatically.
-   Covers three signals:
+   Covers four signals:
    1. OS/browser preference via media query (guarded so a manually-set
       data-theme="light" on <html> can always win). Also skipped whenever
       an Alpine-based theme switcher is present (detected via the [x-data]
@@ -82,13 +82,15 @@
       preference themselves in JS and express the result as a "dark" class
       (or its absence), so this raw media query would otherwise re-apply
       dark styling even after a user explicitly picks "light" while their
-      OS is set to dark.
+      OS is set to dark. Also skipped whenever data-bs-theme is present at
+      all, for the same reason (see signal 4).
    2. Django admin's explicit theme toggle, which sets data-theme="dark"
       directly on <html> regardless of OS preference.
    3. Tailwind-style theme switchers (e.g. django-unfold), which toggle a
-      plain "dark" class on <html> instead of a data-theme attribute.s   */
+      plain "dark" class on <html> instead of a data-theme attribute.
+   4. Bootstrap 5's color-mode attribute (e.g. django-jazzmin)                 */
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]):not([x-data]) {
+  :root:not([data-theme="light"]):not([x-data]):not([data-bs-theme]) {
     --dcr-color-text: #f3f4f6;
     --dcr-color-text-muted: #9ca3af;
     --dcr-color-text-inverse: #111827;
@@ -115,11 +117,13 @@
   }
 }
 
-/* Explicit dark toggle from Django admin (data-theme="dark" on <html>), or
-   from a Tailwind-style theme switcher (a plain "dark" class on <html>,
-   e.g. django-unfold) */
+/* Explicit dark toggle from Django admin (data-theme="dark" on <html>), from
+   a Tailwind-style theme switcher (a plain "dark" class on <html>, e.g.
+   django-unfold), or from Bootstrap 5's color-mode attribute (e.g.
+   django-jazzmin, which sets data-bs-theme="dark" on <html>) */
 :root[data-theme="dark"],
-:root.dark {
+:root.dark,
+:root[data-bs-theme="dark"] {
   --dcr-color-text: #f3f4f6;
   --dcr-color-text-muted: #9ca3af;
   --dcr-color-text-inverse: #111827;
@@ -814,13 +818,14 @@
 /* Dark mode: default button border picks up accent to match its text.
    Ghost buttons keep their own respective variant border colours.       */
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]):not([x-data]) .dcr-btn:not([class*="dcr-btn--"]) {
+  :root:not([data-theme="light"]):not([x-data]):not([data-bs-theme]) .dcr-btn:not([class*="dcr-btn--"]) {
     border-color: var(--dcr-color-accent);
   }
 }
 
 :root[data-theme="dark"] .dcr-btn:not([class*="dcr-btn--"]),
-:root.dark .dcr-btn:not([class*="dcr-btn--"]) {
+:root.dark .dcr-btn:not([class*="dcr-btn--"]),
+:root[data-bs-theme="dark"] .dcr-btn:not([class*="dcr-btn--"]) {
   border-color: var(--dcr-color-accent);
 }
 
@@ -3222,13 +3227,14 @@ a.dcr-pagination__page:hover {
 
 /* Dark mode: slightly brighter bars */
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]):not([x-data]) .dcr-bar-chart__bar {
+  :root:not([data-theme="light"]):not([x-data]):not([data-bs-theme]) .dcr-bar-chart__bar {
     background: rgba(102, 187, 106, 0.45);
   }
 }
 
 :root[data-theme="dark"] .dcr-bar-chart__bar,
-:root.dark .dcr-bar-chart__bar {
+:root.dark .dcr-bar-chart__bar,
+:root[data-bs-theme="dark"] .dcr-bar-chart__bar {
   background: rgba(102, 187, 106, 0.45);
 }
 
@@ -3346,8 +3352,8 @@ a.dcr-pagination__page:hover {
   border: 1px solid var(--dcr-color-border) !important;
   border-radius: var(--dcr-radius-lg) !important;
   padding: 10px var(--dcr-space-md) !important;
-  background: var(--dcr-color-bg);
-  color: var(--dcr-color-text);
+  background: var(--dcr-color-bg) !important;
+  color: var(--dcr-color-text) !important;
   font-size: var(--dcr-font-size-base);
   outline: none;
   line-height: 1.4;
@@ -3359,7 +3365,7 @@ a.dcr-pagination__page:hover {
 }
 
 .dcr-input:focus {
-  border-color: var(--dcr-color-accent);
+  border-color: var(--dcr-color-accent) !important;
 }
 
 /* Standalone select */
@@ -3434,10 +3440,11 @@ a.dcr-pagination__page:hover {
   min-height: 36px;
   border: 1px solid var(--dcr-color-border) !important;
   border-radius: var(--dcr-radius-xl) !important;
-  /* !important beats Django admin's input[type="text"] padding override */
+  /* !important beats Django admin's input[type="text"] rule, which out-
+     specifies a lone class selector on padding, background, and color alike */
   padding: 10px var(--dcr-space-md) 10px 40px !important;
-  background: var(--dcr-color-bg);
-  color: var(--dcr-color-text);
+  background: var(--dcr-color-bg) !important;
+  color: var(--dcr-color-text) !important;
   font-size: var(--dcr-font-size-base);
   outline: none;
   line-height: 1.4;
@@ -3445,11 +3452,11 @@ a.dcr-pagination__page:hover {
 }
 
 .dcr-input-group__input::placeholder {
-  color: var(--dcr-color-text-muted);
+  color: var(--dcr-color-text-muted) !important;
 }
 
 .dcr-input-group__input:focus {
-  border-color: var(--dcr-color-accent);
+  border-color: var(--dcr-color-accent) !important;
 }
 
 /* Buttons placed directly in a --stretch row fill the full height */

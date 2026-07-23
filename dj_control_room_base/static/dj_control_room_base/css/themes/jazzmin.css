@@ -1,0 +1,253 @@
+/*
+   DJ CONTROL ROOM - Jazzmin Theme Adapter  (themes/jazzmin.css)
+
+   Not loaded automatically. Opt in per panel via EXTRA_CSS:
+
+       DJ_<PANEL>_SETTINGS = {
+           "EXTRA_CSS": ["dj_control_room_base/css/themes/jazzmin.css"],
+       }
+*/
+
+/* Jazzmin's dark signal is body.theme-<name> (see below), not data-bs-theme.
+   Without a guard, an OS/browser dark preference leaks through
+   design-system.css's `prefers-color-scheme` query even while Jazzmin stays
+   light - !important below beats that (non-important) rule. */
+:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) {
+   --dcr-color-text: var(--bs-body-color, #111827) !important;
+   --dcr-color-text-muted: var(--bs-secondary-color, #888888) !important;
+   --dcr-color-text-inverse: #ffffff !important;
+   --dcr-color-bg: var(--bs-body-bg, #ffffff) !important;
+   --dcr-color-bg-subtle: var(--bs-tertiary-bg, #f9fafb) !important;
+   --dcr-color-border: var(--bs-border-color, #e5e7eb) !important;
+   --dcr-color-muted: var(--bs-secondary-color, #6b7280) !important;
+   --dcr-color-muted-bg: var(--bs-secondary-bg, rgba(107, 114, 128, 0.10)) !important;
+
+   --dcr-color-accent: var(--bs-primary, #417690) !important;
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #417690) 10%, transparent) !important;
+
+   /* Semantic colors: no Jazzmin/Bootstrap equivalents, pin to light defaults. */
+   --dcr-color-success: #2e7d32 !important;
+   --dcr-color-success-bg: #e8f5e9 !important;
+   --dcr-color-warning: #b45309 !important;
+   --dcr-color-warning-bg: #fffbeb !important;
+   --dcr-color-danger: #ba2121 !important;
+   --dcr-color-danger-bg: #fdecea !important;
+   --dcr-color-info: #01579b !important;
+   --dcr-color-info-bg: #e1f5fe !important;
+   --dcr-color-purple: #7c3aed !important;
+   --dcr-color-purple-bg: #ede9fe !important;
+   --dcr-color-indigo: #4338ca !important;
+   --dcr-color-indigo-bg: #e0e7ff !important;
+}
+
+/* .dcr-bar-chart__bar's dark bg is hardcoded, not a --dcr-* token - reset separately. */
+:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) .dcr-bar-chart__bar {
+   background: rgba(46, 125, 50, 0.40) !important;
+}
+
+/* Per-theme accent (the only token that meaningfully differs across
+   Jazzmin's light Bootswatch skins), sourced from each theme's $primary.
+   Selectors repeat the :not() guard above to out-specificity it. */
+:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) body.theme-cerulean {
+   --dcr-color-accent: var(--bs-primary, #2fa4e7) !important;
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #2fa4e7) 10%, transparent) !important;
+}
+:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) body.theme-cosmo {
+   --dcr-color-accent: var(--bs-primary, #2780e3) !important;
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #2780e3) 10%, transparent) !important;
+}
+:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) body.theme-flatly {
+   --dcr-color-accent: var(--bs-primary, #2c3e50) !important;
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #2c3e50) 10%, transparent) !important;
+}
+:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) body.theme-journal {
+   --dcr-color-accent: var(--bs-primary, #eb6864) !important;
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #eb6864) 10%, transparent) !important;
+}
+:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) body.theme-litera {
+   --dcr-color-accent: var(--bs-primary, #4582ec) !important;
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #4582ec) 10%, transparent) !important;
+}
+:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) body.theme-lumen {
+   --dcr-color-accent: var(--bs-primary, #158cba) !important;
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #158cba) 10%, transparent) !important;
+}
+:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) body.theme-lux {
+   --dcr-color-accent: var(--bs-primary, #1a1a1a) !important;
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #1a1a1a) 10%, transparent) !important;
+}
+:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) body.theme-materia {
+   --dcr-color-accent: var(--bs-primary, #2196f3) !important;
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #2196f3) 10%, transparent) !important;
+}
+:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) body.theme-minty {
+   --dcr-color-accent: var(--bs-primary, #78c2ad) !important;
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #78c2ad) 10%, transparent) !important;
+}
+:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) body.theme-pulse {
+   --dcr-color-accent: var(--bs-primary, #593196) !important;
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #593196) 10%, transparent) !important;
+}
+:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) body.theme-sandstone {
+   --dcr-color-accent: var(--bs-primary, #325d88) !important;
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #325d88) 10%, transparent) !important;
+}
+:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) body.theme-simplex {
+   --dcr-color-accent: var(--bs-primary, #d9230f) !important;
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #d9230f) 10%, transparent) !important;
+}
+:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) body.theme-sketchy {
+   --dcr-color-accent: var(--bs-primary, #333333) !important;
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #333333) 10%, transparent) !important;
+}
+:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) body.theme-spacelab {
+   --dcr-color-accent: var(--bs-primary, #446e9b) !important;
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #446e9b) 10%, transparent) !important;
+}
+:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) body.theme-united {
+   --dcr-color-accent: var(--bs-primary, #e95420) !important;
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #e95420) 10%, transparent) !important;
+}
+:root:not([data-theme="dark"]):not(.dark):not([data-bs-theme="dark"]) body.theme-yeti {
+   --dcr-color-accent: var(--bs-primary, #008cba) !important;
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #008cba) 10%, transparent) !important;
+}
+
+/* Dark mode - real signal is body.theme-<name>: cyborg, darkly, slate,
+   solar, superhero are dark by design (see
+   https://django-jazzmin.readthedocs.io/ui_customisation/). data-bs-theme
+   isn't documented in jazzmin, kept only as forward-compat insurance.
+
+   Fallbacks apply only when --bs-* vars are missing (pre-Bootstrap-5
+   Jazzmin), sourced per-theme from bootswatch/dist/<name>/_variables.scss.
+   Muted-text uses rgba(text, 0.8) rather than each theme's $secondary swatch
+   (a button bg color, not Bootstrap's actual text-tint --bs-secondary-color)
+   which produced near-invisible dark-on-dark text. */
+:root[data-bs-theme="dark"] {
+   --dcr-color-text: var(--bs-body-color, #f3f4f6);
+   --dcr-color-text-muted: var(--bs-secondary-color, rgba(243, 244, 246, 0.8));
+   --dcr-color-bg: var(--bs-body-bg, #212529);
+   --dcr-color-bg-subtle: var(--bs-tertiary-bg, #2b3035);
+   --dcr-color-border: var(--bs-border-color, #495057);
+   --dcr-color-muted: var(--bs-secondary-color, rgba(243, 244, 246, 0.8));
+   --dcr-color-muted-bg: var(--bs-secondary-bg, rgba(255, 255, 255, 0.08));
+
+   /* color-mix() tints the accent color instead of using
+      --bs-primary-bg-subtle, which is near-black in dark mode. */
+   --dcr-color-accent: var(--bs-primary, #79aec8);
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #79aec8) 20%, transparent);
+}
+
+/* No Bootstrap equivalent (same as the light block above), so one shared
+   dark value covers every skin - mirrors design-system.css's dark palette. */
+:root[data-bs-theme="dark"],
+body.theme-cyborg,
+body.theme-darkly,
+body.theme-slate,
+body.theme-solar,
+body.theme-superhero {
+   --dcr-color-text-inverse: #111827;
+   --dcr-color-success: #66bb6a;
+   --dcr-color-success-bg: rgba(102, 187, 106, 0.12);
+   --dcr-color-warning: #fbbf24;
+   --dcr-color-warning-bg: rgba(251, 191, 36, 0.12);
+   --dcr-color-danger: #ef5350;
+   --dcr-color-danger-bg: rgba(239, 83, 80, 0.12);
+   --dcr-color-info: #42a5f5;
+   --dcr-color-info-bg: rgba(66, 165, 245, 0.12);
+   --dcr-color-purple: #a78bfa;
+   --dcr-color-purple-bg: rgba(167, 139, 250, 0.12);
+   --dcr-color-indigo: #818cf8;
+   --dcr-color-indigo-bg: rgba(129, 140, 248, 0.12);
+}
+
+body.theme-cyborg {
+   --dcr-color-text: var(--bs-body-color, #adafae);
+   --dcr-color-text-muted: var(--bs-secondary-color, rgba(173, 175, 174, 0.8));
+   --dcr-color-bg: var(--bs-body-bg, #060606);
+   --dcr-color-bg-subtle: var(--bs-tertiary-bg, #222222);
+   --dcr-color-border: var(--bs-border-color, #282828);
+   --dcr-color-muted: var(--bs-secondary-color, rgba(173, 175, 174, 0.8));
+   --dcr-color-muted-bg: var(--bs-secondary-bg, rgba(255, 255, 255, 0.08));
+   --dcr-color-accent: var(--bs-primary, #2a9fd6);
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #2a9fd6) 20%, transparent);
+}
+
+body.theme-darkly {
+   --dcr-color-text: var(--bs-body-color, #ffffff);
+   --dcr-color-text-muted: var(--bs-secondary-color, rgba(255, 255, 255, 0.8));
+   --dcr-color-bg: var(--bs-body-bg, #222222);
+   --dcr-color-bg-subtle: var(--bs-tertiary-bg, #303030);
+   --dcr-color-border: var(--bs-border-color, #444444);
+   --dcr-color-muted: var(--bs-secondary-color, rgba(255, 255, 255, 0.8));
+   --dcr-color-muted-bg: var(--bs-secondary-bg, rgba(255, 255, 255, 0.08));
+   --dcr-color-accent: var(--bs-primary, #375a7f);
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #375a7f) 20%, transparent);
+}
+
+/* Slate's own $primary is a dark grey (near-monochrome theme by design). */
+body.theme-slate {
+   --dcr-color-text: var(--bs-body-color, #aaaaaa);
+   --dcr-color-text-muted: var(--bs-secondary-color, rgba(170, 170, 170, 0.8));
+   --dcr-color-bg: var(--bs-body-bg, #272b30);
+   --dcr-color-bg-subtle: var(--bs-tertiary-bg, #32383e);
+   --dcr-color-border: var(--bs-border-color, #3a3f44);
+   --dcr-color-muted: var(--bs-secondary-color, rgba(170, 170, 170, 0.8));
+   --dcr-color-muted-bg: var(--bs-secondary-bg, rgba(255, 255, 255, 0.08));
+   --dcr-color-accent: var(--bs-primary, #3a3f44);
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #3a3f44) 20%, transparent);
+}
+
+body.theme-solar {
+   --dcr-color-text: var(--bs-body-color, #839496);
+   --dcr-color-text-muted: var(--bs-secondary-color, rgba(131, 148, 150, 0.8));
+   --dcr-color-bg: var(--bs-body-bg, #002b36);
+   --dcr-color-bg-subtle: var(--bs-tertiary-bg, #073642);
+   --dcr-color-border: var(--bs-border-color, #073642);
+   --dcr-color-muted: var(--bs-secondary-color, rgba(131, 148, 150, 0.8));
+   --dcr-color-muted-bg: var(--bs-secondary-bg, rgba(255, 255, 255, 0.08));
+   --dcr-color-accent: var(--bs-primary, #b58900);
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #b58900) 20%, transparent);
+}
+
+body.theme-superhero {
+   --dcr-color-text: var(--bs-body-color, #ebebeb);
+   --dcr-color-text-muted: var(--bs-secondary-color, rgba(235, 235, 235, 0.8));
+   --dcr-color-bg: var(--bs-body-bg, #0f2537);
+   --dcr-color-bg-subtle: var(--bs-tertiary-bg, #4e5d6c);
+   --dcr-color-border: var(--bs-border-color, #495057);
+   --dcr-color-muted: var(--bs-secondary-color, rgba(235, 235, 235, 0.8));
+   --dcr-color-muted-bg: var(--bs-secondary-bg, rgba(255, 255, 255, 0.08));
+   --dcr-color-accent: var(--bs-primary, #df6919);
+   --dcr-color-accent-bg: color-mix(in srgb, var(--bs-primary, #df6919) 20%, transparent);
+}
+
+/* design-system.css's dark .dcr-btn/.dcr-bar-chart__bar rules are keyed off
+   :root-level signals only, so they miss body.theme-<name> - mirror them here. */
+:root[data-bs-theme="dark"] .dcr-btn:not([class*="dcr-btn--"]),
+body.theme-cyborg .dcr-btn:not([class*="dcr-btn--"]),
+body.theme-darkly .dcr-btn:not([class*="dcr-btn--"]),
+body.theme-slate .dcr-btn:not([class*="dcr-btn--"]),
+body.theme-solar .dcr-btn:not([class*="dcr-btn--"]),
+body.theme-superhero .dcr-btn:not([class*="dcr-btn--"]) {
+   border-color: var(--dcr-color-accent);
+}
+
+body.theme-cyborg .dcr-bar-chart__bar,
+body.theme-darkly .dcr-bar-chart__bar,
+body.theme-slate .dcr-bar-chart__bar,
+body.theme-solar .dcr-bar-chart__bar,
+body.theme-superhero .dcr-bar-chart__bar {
+   background: rgba(102, 187, 106, 0.45);
+}
+
+/* Jazzmin wraps {% block content %} in a bare Bootstrap .row with no .col-*
+   child, so .dcr-panel doesn't get the padding offsetting .row's negative
+   gutter margins - force it back to a normal full-width block. */
+.row>.dcr-panel {
+   display: block;
+   flex: none;
+   width: 100%;
+   margin-left: 0;
+   margin-right: 0;
+}
