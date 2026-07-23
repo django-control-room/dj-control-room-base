@@ -41,7 +41,7 @@ Panels register themselves with Control Room via a `pyproject.toml` entry point 
 
 ### Panel tools
 
-`PanelConfig` accepts an optional `tools` list of `PanelTool` instances. Each tool declares a name, a scope (reusing the same permission system as views), a description, a JSON Schema for its inputs, and a handler callable. When a panel exposes tools, the `dj-control-room` hub aggregates them into a central registry, filters by user permissions, and dispatches calls through a unified endpoint — enabling AI agent integrations and an in-admin chat experience without any per-panel HTTP wiring. See [Building Panels — Panel Tools](building-panels.md#panel-tools) for the full guide.
+`PanelConfig` accepts an optional `tools` list of `PanelTool` instances. Each tool declares a name, a scope (reusing the same permission system as views), a description, a JSON Schema for its inputs, and a handler callable. When a panel exposes tools, the `dj-control-room` hub aggregates them into a central registry, filters by user permissions, and dispatches calls through a unified endpoint, enabling AI agent integrations and an in-admin chat experience without any per-panel HTTP wiring. See [Building Panels - Panel Tools](building-panels.md#panel-tools) for the full guide.
 
 ---
 

@@ -30,7 +30,7 @@ DJ_MY_PANEL_SETTINGS = {
 
 ## django-jazzmin
 
-[`django-jazzmin`](https://github.com/farridav/django-jazzmin) is built on Bootstrap 5 and ships as a set of [Bootswatch](https://bootswatch.com/) skins, selected via `JAZZMIN_UI_TWEAKS["theme"]`. `themes/jazzmin.css` maps the same DCR tokens onto Bootstrap's `--bs-*` variables (`--bs-primary`, `--bs-body-*`, `--bs-border-color`, `--bs-secondary-color`, ...), with per-theme accent and dark-mode fallbacks sourced from each Bootswatch palette - so panels track whichever theme is active without any extra configuration.
+[`django-jazzmin`](https://github.com/farridav/django-jazzmin) is built on Bootstrap 5 and ships as a set of [Bootswatch](https://bootswatch.com/) skins, selected via `JAZZMIN_UI_TWEAKS["theme"]`. `themes/jazzmin.css` maps DCR's tokens onto Bootstrap's own CSS variables, so panels track whichever theme is active, including Jazzmin's dark skins, without any extra configuration.
 
 ```python
 DJ_MY_PANEL_SETTINGS = {
@@ -46,10 +46,10 @@ All of Jazzmin's built-in Bootswatch themes are covered, each with its own accen
 |---|---|
 | `cerulean`, `cosmo`, `flatly`, `journal`, `litera`, `lumen`, `lux`, `materia`, `minty`, `pulse`, `sandstone`, `simplex`, `sketchy`, `spacelab`, `united`, `yeti` | `cyborg`, `darkly`, `slate`, `solar`, `superhero` |
 
-Dark themes are detected via the `body.theme-<name>` class Jazzmin applies (not `data-bs-theme`, which Jazzmin doesn't document or set) - see [`ui_customisation`](https://django-jazzmin.readthedocs.io/ui_customisation/) for the full list Jazzmin ships.
+See [`ui_customisation`](https://django-jazzmin.readthedocs.io/ui_customisation/) for the full list of themes Jazzmin ships.
 
 ---
 
 ## Build your own
 
-Both adapters follow the same recipe: remap `--dcr-*` tokens to the host skin's variables, fall back to DCR's own defaults when a variable is missing, and leave semantic status colors (success/warning/danger/info) untouched since most skins don't expose those as configurable brand colors. This works well for any Tailwind CSS or Bootstrap admin skin that exposes its palette as CSS custom properties - use `unfold.css` or `jazzmin.css` as a starting point.
+Both adapters follow the same recipe: remap `--dcr-*` tokens to the host skin's own variables, with sensible fallbacks. This works well for any Tailwind CSS or Bootstrap admin skin that exposes its palette as CSS custom properties - use `unfold.css` or `jazzmin.css` as a starting point.

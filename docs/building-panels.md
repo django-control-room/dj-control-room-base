@@ -201,13 +201,13 @@ The base template automatically handles `dj_cr_load_default_css` and `dj_cr_extr
 
 Panel tools are optional, structured callables that the `dj-control-room` hub can aggregate across all installed panels and expose through a unified API. They are designed to power AI agent integrations (where an LLM calls tools on your behalf) and an in-admin chat experience, but they are generic enough to be used in any context that needs a structured, permission-aware callable.
 
-Tools reuse the same scope-based permission system as views — no separate permission wiring is needed.
+Tools reuse the same scope-based permission system as views, so no separate permission wiring is needed.
 
 ### Tool primitives
 
 All four are importable from `dj_control_room_base.core.panel_tool`:
 
-**`PanelTool`** — the tool definition. You'll rarely construct this directly (see `ToolRegistry` below), but it's what ends up on `PanelConfig.tools`:
+**`PanelTool`** - the tool definition. You'll rarely construct this directly (see `ToolRegistry` below), but it's what ends up on `PanelConfig.tools`:
 
 | Field | Type | Description |
 |---|---|---|
@@ -217,7 +217,7 @@ All four are importable from `dj_control_room_base.core.panel_tool`:
 | `input_schema` | `dict` | [JSON Schema](https://json-schema.org) object describing the tool's input arguments. Tools that take no arguments should use `{"type": "object", "properties": {}}`. |
 | `handler` | `Callable` | A function that receives a `PanelToolContext` and returns a `PanelToolResult`. |
 
-**`PanelToolContext`** — passed to the handler at call time:
+**`PanelToolContext`** - passed to the handler at call time:
 
 | Field | Type | Description |
 |---|---|---|
@@ -225,7 +225,7 @@ All four are importable from `dj_control_room_base.core.panel_tool`:
 | `inputs` | `dict` | The validated input arguments for this call, matching the tool's `input_schema`. |
 | `config` | `Any` | The panel's `PanelConfig` instance, injected by the hub dispatcher. |
 
-**`PanelToolResult`** — returned by the handler:
+**`PanelToolResult`** - returned by the handler:
 
 | Field | Type | Description |
 |---|---|---|
@@ -233,11 +233,11 @@ All four are importable from `dj_control_room_base.core.panel_tool`:
 | `message` | `str` | A short human-readable summary of the outcome. |
 | `data` | `dict` | The structured result payload. Defaults to `{}`. |
 
-**`ToolRegistry`** — collects `PanelTool`s via a `@registry.register(...)` decorator, so each tool's metadata lives directly above the handler it describes instead of in a separate list you have to keep in sync. This is the recommended way to define tools (see below).
+**`ToolRegistry`** - collects `PanelTool`s via a `@registry.register(...)` decorator, so each tool's metadata lives directly above the handler it describes instead of in a separate list you have to keep in sync. This is the recommended way to define tools (see below).
 
 ### Defining tools
 
-Keep handlers in a dedicated `tools.py` module. Use local imports inside handlers for anything that touches Django models — this keeps the module safe to import at any point in the Django startup sequence.
+Keep handlers in a dedicated `tools.py` module. Use local imports inside handlers for anything that touches Django models, which keeps the module safe to import at any point in the Django startup sequence.
 
 Instantiate one `ToolRegistry` per `tools.py` module and decorate each handler with `@registry.register(...)`:
 
@@ -265,7 +265,7 @@ registry = ToolRegistry()
     },
 )
 def handle_get_item(ctx: PanelToolContext) -> PanelToolResult:
-    from .models import Item  # local import — safe at any startup stage
+    from .models import Item  # local import - safe at any startup stage
 
     key = ctx.inputs["key"]
     try:
@@ -296,7 +296,7 @@ def handle_list_items(ctx: PanelToolContext) -> PanelToolResult:
     )
 ```
 
-The decorator only records metadata as a side effect — it returns the handler unchanged, so `handle_get_item` and `handle_list_items` remain plain, directly callable functions (e.g. in tests, just call `handle_get_item(ctx)`).
+The decorator only records metadata as a side effect: it returns the handler unchanged, so `handle_get_item` and `handle_list_items` remain plain, directly callable functions (e.g. in tests, just call `handle_get_item(ctx)`).
 
 ### Registering tools on `PanelConfig`
 
@@ -320,7 +320,7 @@ Panel authors do not need to write any URL configuration for tools as this will 
 
 #### Building the list manually
 
-`ToolRegistry` is a convenience, not a requirement — `PanelConfig(tools=...)` just needs a `list[PanelTool]`. If you'd rather construct `PanelTool` instances directly (e.g. building the list programmatically from some other source), that still works:
+`ToolRegistry` is a convenience, not a requirement - `PanelConfig(tools=...)` just needs a `list[PanelTool]`. If you'd rather construct `PanelTool` instances directly (e.g. building the list programmatically from some other source), that still works:
 
 ```python
 from dj_control_room_base.core.panel_tool import PanelTool
@@ -399,7 +399,7 @@ That is the full wiring. One `PanelConfig` declaration in `conf.py` gives all vi
 |---|---|---|
 | `get_url_name()` | `"index"` | URL name for the panel's main view. The hub resolves `reverse(f"{app_name}:{get_url_name()}")`. |
 | `get_config()` | `None` | Return the panel's `PanelConfig` instance. Override using a local import (see above). |
-| `validate()` | — | Assert all required attributes are set. Convenience method for tests; the registry runs its own validation at autodiscovery time. |
+| `validate()` | n/a | Assert all required attributes are set. Convenience method for tests; the registry runs its own validation at autodiscovery time. |
 
 ---
 
@@ -433,7 +433,7 @@ Returns `True` if the request's user may access the panel or a specific scope. T
 
 ### `panel_config._check_permission(user, scope=None)`
 
-Returns `True` if `user` may access the panel or a specific scope. Operates on a user object directly so it can be called outside of a request context — for example in tool dispatch, management commands, or background tasks.
+Returns `True` if `user` may access the panel or a specific scope. Operates on a user object directly so it can be called outside of a request context, for example in tool dispatch, management commands, or background tasks.
 
 ### `@panel_config.permission_required(scope=None)`
 

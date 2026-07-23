@@ -52,7 +52,7 @@ The only runtime dependency is Django. `dj-control-room` is optional and only ne
 
 ### Panel tools
 
-`PanelConfig` accepts an optional `tools` list of `PanelTool` instances. Each tool carries a name, a scope (reusing the same permission system as views), a human-readable description, a JSON Schema for its inputs, and a handler callable. When installed panels expose tools, the `dj-control-room` hub aggregates them across all panels, filters by the current user's permissions at request time, and dispatches calls through a unified endpoint — suitable for AI agent integrations and an in-admin chat experience with no per-panel HTTP wiring required.
+`PanelConfig` accepts an optional `tools` list of `PanelTool` instances. Each tool carries a name, a scope (reusing the same permission system as views), a human-readable description, a JSON Schema for its inputs, and a handler callable. When installed panels expose tools, the `dj-control-room` hub aggregates them across all panels, filters by the current user's permissions at request time, and dispatches calls through a unified endpoint, suitable for AI agent integrations and an in-admin chat experience with no per-panel HTTP wiring required.
 
 ## Screenshots
 
@@ -177,7 +177,7 @@ DJ_MY_PANEL_SETTINGS = {
 }
 ```
 
-`themes/unfold.css` remaps DCR's accent/surface/border/muted tokens to [django-unfold](https://github.com/unfoldadmin/django-unfold)'s own CSS variables (`--color-primary-*`, `--color-base-*`, `--color-font-*`), so panels match the host site's configured brand color. `themes/jazzmin.css` does the same for [django-jazzmin](https://github.com/farridav/django-jazzmin), mapping onto Bootstrap 5's `--bs-primary`, `--bs-body-*`, and `--bs-border-color` variables so panels track whichever Bootswatch theme Jazzmin is configured with. See the [configuration docs](https://django-control-room.github.io/dj-control-room-base/configuration/#theme-adapters) for details.
+`themes/unfold.css` matches panels to your [django-unfold](https://github.com/unfoldadmin/django-unfold) brand color, and `themes/jazzmin.css` does the same for [django-jazzmin](https://github.com/farridav/django-jazzmin), tracking whichever Bootswatch theme it's configured with. See the [configuration docs](https://django-control-room.github.io/dj-control-room-base/configuration/#theme-adapters) for details, or [Theme Adapters](https://django-control-room.github.io/dj-control-room-base/themes/) for a visual gallery.
 
 ### Permission settings
 
