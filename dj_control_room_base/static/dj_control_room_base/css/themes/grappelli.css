@@ -1,0 +1,50 @@
+/*
+   DJ CONTROL ROOM - Grappelli Theme Adapter  (themes/grappelli.css)
+
+   Not loaded automatically. Opt in per panel via EXTRA_CSS:
+
+       DJ_<PANEL>_SETTINGS = {
+           "EXTRA_CSS": ["dj_control_room_base/css/themes/grappelli.css"],
+       }
+*/
+
+/* Unlike Unfold/Jazzmin, Grappelli doesn't expose its palette as CSS custom
+   properties - its colors are hardcoded in screen.css - so these values are
+   copied from there directly rather than mapped to theme variables:
+*/
+:root {
+   --dcr-color-text: #444444 !important;
+   --dcr-color-text-muted: #9a9a9a !important;
+   --dcr-color-text-inverse: #ffffff !important;
+
+   --dcr-color-bg: #ffffff !important;
+   --dcr-color-bg-subtle: #eeeeee !important;
+   --dcr-color-border: #cccccc !important;
+   --dcr-color-muted: #9a9a9a !important;
+   --dcr-color-muted-bg: rgba(154, 154, 154, 0.14) !important;
+
+   --dcr-color-accent: #309bbf !important;
+   --dcr-color-accent-bg: rgba(48, 155, 191, 0.10) !important;
+
+   /* Grappelli's own delete-button/error-border red, not a design-system default. */
+   --dcr-color-danger: #bf3030 !important;
+   --dcr-color-danger-bg: rgba(191, 48, 48, 0.10) !important;
+
+   /* No Grappelli equivalent - pinned to design-system's light defaults. */
+   --dcr-color-success: #2e7d32 !important;
+   --dcr-color-success-bg: #e8f5e9 !important;
+   --dcr-color-warning: #b45309 !important;
+   --dcr-color-warning-bg: #fffbeb !important;
+   --dcr-color-info: #01579b !important;
+   --dcr-color-info-bg: #e1f5fe !important;
+   --dcr-color-purple: #7c3aed !important;
+   --dcr-color-purple-bg: #ede9fe !important;
+   --dcr-color-indigo: #4338ca !important;
+   --dcr-color-indigo-bg: #e0e7ff !important;
+}
+
+/* .dcr-bar-chart__bar's dark bg is hardcoded, not a --dcr-* token - reset
+   unconditionally since Grappelli never goes dark. */
+.dcr-bar-chart__bar {
+   background: rgba(46, 125, 50, 0.40) !important;
+}
