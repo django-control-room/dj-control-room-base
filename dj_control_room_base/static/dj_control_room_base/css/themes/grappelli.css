@@ -48,3 +48,12 @@
 .dcr-bar-chart__bar {
    background: rgba(46, 125, 50, 0.40) !important;
 }
+
+/* resolve spacing issues with h1s in page headers */
+h1.dcr-page-header__title {
+   padding-bottom: 0 !important;
+}
+
+.dcr-page-header .dcr-page-header__icon {
+   margin-top: var(--dcr-space-md) !important;
+}
