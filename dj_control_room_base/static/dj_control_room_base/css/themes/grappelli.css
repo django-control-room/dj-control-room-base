@@ -1,0 +1,123 @@
+/*
+   DJ CONTROL ROOM - Grappelli Theme Adapter  (themes/grappelli.css)
+
+   Not loaded automatically. Opt in per panel via EXTRA_CSS:
+
+       DJ_<PANEL>_SETTINGS = {
+           "EXTRA_CSS": ["dj_control_room_base/css/themes/grappelli.css"],
+       }
+*/
+
+/* Grappelli's palette is hardcoded (no CSS vars), copied here directly.
+   !important since Grappelli has no dark mode and must beat design-system's
+   `prefers-color-scheme` query. Tokens with no Grappelli equivalent just
+   repeat the light defaults so they survive that query too. */
+:root {
+   --dcr-color-text: #444444 !important;
+   --dcr-color-text-muted: #9a9a9a !important;
+   --dcr-color-text-inverse: #ffffff !important;
+
+   --dcr-color-bg: #ffffff !important;
+   --dcr-color-bg-subtle: #eeeeee !important;
+   --dcr-color-border: #cccccc !important;
+   --dcr-color-muted: #9a9a9a !important;
+   --dcr-color-muted-bg: rgba(154, 154, 154, 0.14) !important;
+
+   --dcr-color-accent: #309bbf !important;
+   --dcr-color-accent-bg: rgba(48, 155, 191, 0.10) !important;
+
+   --dcr-color-danger: #bf3030 !important;
+   --dcr-color-danger-bg: rgba(191, 48, 48, 0.10) !important;
+
+   /* No Grappelli equivalent - design-system's light defaults. */
+   --dcr-color-success: #2e7d32 !important;
+   --dcr-color-success-bg: #e8f5e9 !important;
+   --dcr-color-warning: #b45309 !important;
+   --dcr-color-warning-bg: #fffbeb !important;
+   --dcr-color-info: #01579b !important;
+   --dcr-color-info-bg: #e1f5fe !important;
+   --dcr-color-purple: #7c3aed !important;
+   --dcr-color-purple-bg: #ede9fe !important;
+   --dcr-color-indigo: #4338ca !important;
+   --dcr-color-indigo-bg: #e0e7ff !important;
+
+   /* Match Grappelli's tighter 2-5px radius scale. */
+   --dcr-radius: 2px !important;
+   --dcr-radius-md: 3px !important;
+   --dcr-radius-lg: 3px !important;
+   --dcr-radius-xl: 5px !important;
+}
+
+/* Hardcoded dark bg, not a --dcr-* token - Grappelli never goes dark. */
+.dcr-bar-chart__bar {
+   background: rgba(46, 125, 50, 0.40) !important;
+}
+
+.dcr-btn {
+   font-weight: bold !important;
+}
+
+/* Grappelli styles a bare `button` selector (meant for its own tiny
+   related-lookup popup icon) with a -25px left margin and a forced 25x25
+   size. That leaks onto every dcr-* button (dcr-btn, dcr-tabs__tab,
+   dcr-dropdown__item), shifting each one under its predecessor. No
+   !important needed - `.dcr-panel .dcr-classname` already outspecifies a
+   bare element selector. Margin-left/right only, so dcr-tabs__tab's own
+   `margin-bottom: -1px` survives. */
+.dcr-panel .dcr-btn,
+.dcr-panel .dcr-tabs__tab,
+.dcr-panel .dcr-dropdown__item {
+   margin-left: 0;
+   margin-right: 0;
+   height: auto;
+   overflow: visible;
+   vertical-align: baseline;
+}
+
+/* dcr-dropdown__item needs its own width: 100% to fill its menu. */
+.dcr-panel .dcr-btn,
+.dcr-panel .dcr-tabs__tab {
+   width: auto;
+}
+
+/* dcr-copy-btn is a dcr-btn too, but needs its own position: absolute to
+   overlay a code block. */
+.dcr-panel .dcr-btn:not(.dcr-copy-btn),
+.dcr-panel .dcr-tabs__tab,
+.dcr-panel .dcr-dropdown__item {
+   position: static;
+}
+
+/* Grappelli's `input[type=...]` rule out-specifies a single dcr-* class,
+   crushing inputs to a bold 25px-tall, 118px-wide box. min-height (not
+   height) neutralises it without breaking dcr-input-group__input's
+   `height: 100%` flex-stretch. */
+.dcr-panel input[type="text"],
+.dcr-panel input[type="password"],
+.dcr-panel input[type="url"],
+.dcr-panel input[type="email"],
+.dcr-panel input[type="number"],
+.dcr-panel input:not([type]) {
+   width: 100% !important;
+   min-height: 42px !important;
+   font-weight: 400 !important;
+   line-height: 1.4 !important;
+   overflow: visible !important;
+}
+
+/* Split out so it doesn't clobber components with their own focus ring
+   (e.g. dcr-inline-edit__input). */
+.dcr-panel input[type="text"]:not(:focus),
+.dcr-panel input[type="password"]:not(:focus),
+.dcr-panel input[type="url"]:not(:focus),
+.dcr-panel input[type="email"]:not(:focus),
+.dcr-panel input[type="number"]:not(:focus),
+.dcr-panel input:not([type]):not(:focus) {
+   box-shadow: none !important;
+}
+
+/* Resolve spacing issues with h1s in page headers. */
+h1.dcr-page-header__title {
+   padding-top: 0 !important;
+   padding-bottom: 0 !important;
+}

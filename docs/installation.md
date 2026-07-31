@@ -23,9 +23,7 @@ pip install dj-control-room-base dj-control-room
 
 ## 2. Add to `INSTALLED_APPS`
 
-=== "Standalone (library or panel only)"
-
-    ```python
+```python
     INSTALLED_APPS = [
         "django.contrib.admin",
         "django.contrib.auth",
@@ -33,45 +31,17 @@ pip install dj-control-room-base dj-control-room
         "django.contrib.sessions",
         "django.contrib.messages",
         "django.contrib.staticfiles",
-        "dj_control_room_base",
+        "dj_control_room_base",  # this panel / core library
+        # any panels you want to add go here
+        "dj_control_room",  # hub dashboard
     ]
-    ```
-
-=== "With Control Room hub"
-
-    ```python
-    INSTALLED_APPS = [
-        "django.contrib.admin",
-        "django.contrib.auth",
-        "django.contrib.contenttypes",
-        "django.contrib.sessions",
-        "django.contrib.messages",
-        "django.contrib.staticfiles",
-        "dj_control_room",        # hub dashboard
-        "dj_control_room_base",   # this panel / core library
-    ]
-    ```
+```
 
 ---
 
 ## 3. Include URLs
 
-=== "Standalone"
-
-    ```python
-    # urls.py
-    from django.contrib import admin
-    from django.urls import path, include
-
-    urlpatterns = [
-        path("admin/dj-control-room-base/", include("dj_control_room_base.urls")),
-        path("admin/", admin.site.urls),
-    ]
-    ```
-
-=== "With Control Room hub"
-
-    ```python
+```python
     # urls.py
     from django.contrib import admin
     from django.urls import path, include
@@ -81,7 +51,7 @@ pip install dj-control-room-base dj-control-room
         path("admin/dj-control-room/", include("dj_control_room.urls")),
         path("admin/", admin.site.urls),
     ]
-    ```
+```
 
 The URL prefix (`admin/dj-control-room-base/`) can be changed to whatever fits your project. The admin sidebar entry will still redirect users to the correct view via the named URL `dj_control_room_base:index`.
 

@@ -70,8 +70,8 @@ Additional stylesheets to inject after the default bundle (or after nothing, if 
 DJ_CONTROL_ROOM_BASE_SETTINGS = {
     "LOAD_DEFAULT_CSS": True,
     "EXTRA_CSS": [
-        "my_panel/css/overrides.css",            # resolved via staticfiles
-        "https://cdn.example.com/theme.css",     # used as-is
+        "my_panel/css/overrides.css",  # resolved via staticfiles
+        "https://cdn.example.com/theme.css",  # used as-is
     ],
 }
 ```
@@ -100,12 +100,8 @@ Currently available:
 |---|---|
 | `themes/unfold.css` | Projects using [django-unfold](https://github.com/unfoldadmin/django-unfold) as their admin skin. |
 | `themes/jazzmin.css` | Projects using [django-jazzmin](https://github.com/farridav/django-jazzmin) as their admin skin. |
+| `themes/grappelli.css` | Projects using [django-grappelli](https://github.com/sehmaschine/django-grappelli) as their admin skin. |
 
-`themes/unfold.css` maps DCR's tokens onto [django-unfold](https://github.com/unfoldadmin/django-unfold)'s own CSS variables, so panels automatically pick up the host site's configured brand color. `themes/jazzmin.css` does the same for [django-jazzmin](https://github.com/farridav/django-jazzmin), tracking whichever Bootswatch theme (light or dark) is configured via `JAZZMIN_UI_TWEAKS["theme"]`. Both only touch tokens, never `dcr-*` component rules, and dark mode is handled automatically - no extra configuration needed beyond loading the stylesheet.
-
-Because this is opt-in per panel rather than hub-wide, each panel you want themed needs its own `EXTRA_CSS` entry for now.
-
-![Django Control Room running with the django-unfold admin theme](https://raw.githubusercontent.com/django-control-room/dj-control-room-base/main/images/dcr-base-unfold.png)
 
 You can also make your own theme adapters easily by following the `unfold.css` or
 `jazzmin.css` examples. This works very well for any Tailwind CSS or Bootstrap
@@ -164,7 +160,6 @@ DJ_CONTROL_ROOM_BASE_SETTINGS = {
     # Panel-wide defaults (apply to any view not listed in SCOPE_PERMISSIONS)
     "ALLOWED_GROUPS": [],
     "REQUIRE_SUPERUSER": False,
-
     "SCOPE_PERMISSIONS": {
         # Only superusers can reach the design-system view
         "design-system": {
