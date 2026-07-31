@@ -76,6 +76,10 @@ The only runtime dependency is Django. `dj-control-room` is optional and only ne
 
 ![Django Control Room running with the django-jazzmin admin theme](https://raw.githubusercontent.com/django-control-room/dj-control-room-base/main/images/dcr-base-jazzmin.png)
 
+**django-grappelli support** - a [theme adapter](configuration.md#theme-adapters) maps panels onto Grappelli's own hardcoded palette, since Grappelli predates CSS custom properties and has no dark mode of its own.
+
+![Django Control Room running with the django-grappelli admin theme](https://raw.githubusercontent.com/django-control-room/dj-control-room-base/main/images/dcr-base-grappelli.png)
+
 See [Theme Adapters](themes.md) for the full gallery of supported admin skins.
 
 ---

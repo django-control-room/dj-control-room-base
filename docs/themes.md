@@ -50,6 +50,20 @@ See [`ui_customisation`](https://django-jazzmin.readthedocs.io/ui_customisation/
 
 ---
 
+## django-grappelli
+
+[`django-grappelli`](https://github.com/sehmaschine/django-grappelli) support via `themes/grappelli.css`, matching its teal accent and boxy, light-only look.
+
+```python
+DJ_MY_PANEL_SETTINGS = {
+    "EXTRA_CSS": ["dj_control_room_base/css/themes/grappelli.css"],
+}
+```
+
+![Django Control Room running with the django-grappelli admin theme](https://raw.githubusercontent.com/django-control-room/dj-control-room-base/main/images/dcr-base-grappelli.png)
+
+---
+
 ## Build your own
 
-Both adapters follow the same recipe: remap `--dcr-*` tokens to the host skin's own variables, with sensible fallbacks. This works well for any Tailwind CSS or Bootstrap admin skin that exposes its palette as CSS custom properties - use `unfold.css` or `jazzmin.css` as a starting point.
+Want to support another admin skin? Use `unfold.css`, `jazzmin.css`, or `grappelli.css` as a starting point and remap the `--dcr-*` tokens to match.
