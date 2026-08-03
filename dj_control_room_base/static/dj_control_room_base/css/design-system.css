@@ -3292,6 +3292,10 @@ a.dcr-pagination__page:hover {
   padding: var(--dcr-space-md) var(--dcr-space-lg);
 }
 
+.dcr-form--flush {
+  padding: 0;
+}
+
 /* Default row - labels above individual fields, baseline-aligned */
 .dcr-form__row {
   display: flex;
