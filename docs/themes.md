@@ -64,6 +64,20 @@ DJ_MY_PANEL_SETTINGS = {
 
 ---
 
+## django-admin-interface
+
+[`django-admin-interface`](https://github.com/fabiocaccamo/django-admin-interface)
+
+```python
+DJ_MY_PANEL_SETTINGS = {
+    "EXTRA_CSS": ["dj_control_room_base/css/themes/admin-interface.css"],
+}
+```
+
+![Django Control Room running with the django-admin-interface admin theme](https://raw.githubusercontent.com/django-control-room/dj-control-room-base/main/images/dcr-base-admin-interface.png)
+
+---
+
 ## Build your own
 
-Want to support another admin skin? Use `unfold.css`, `jazzmin.css`, or `grappelli.css` as a starting point and remap the `--dcr-*` tokens to match.
+Want to support another admin skin? Use `unfold.css`, `jazzmin.css`, `grappelli.css`, or `admin-interface.css` as a starting point and remap the `--dcr-*` tokens to match.

@@ -1,0 +1,52 @@
+/*
+   DJ CONTROL ROOM - django-admin-interface Theme Adapter
+   (themes/admin-interface.css)
+
+       DJ_<PANEL>_SETTINGS = {
+           "EXTRA_CSS": ["dj_control_room_base/css/themes/admin-interface.css"],
+       }
+
+*/
+
+.admin-interface {
+  /* Pin light neutrals so design-system's prefers-color-scheme /
+     data-theme="dark" don't fight admin-interface's forced values.
+ */
+  --dcr-color-text: #333333 !important;
+  --dcr-color-text-muted: #666666 !important;
+  --dcr-color-text-inverse: var(--admin-interface-module-text-color, #ffffff) !important;
+
+  --dcr-color-bg: #ffffff !important;
+  --dcr-color-bg-subtle: #f8f8f8 !important;
+  --dcr-color-border: #e5e7eb !important;
+  --dcr-color-muted: #666666 !important;
+  --dcr-color-muted-bg: rgba(102, 102, 102, 0.10) !important;
+
+  /* Brand accent = module / breadcrumb strip from the active Theme */
+  --dcr-color-accent: var(--admin-interface-module-background-color, #44B78B) !important;
+  --dcr-color-accent-bg: color-mix(in srgb,
+      var(--admin-interface-module-background-color, #44B78B) 12%,
+      transparent) !important;
+
+  --dcr-color-danger: var(--admin-interface-delete-button-background-color, #BA2121) !important;
+  --dcr-color-danger-bg: color-mix(in srgb,
+      var(--admin-interface-delete-button-background-color, #BA2121) 12%,
+      transparent) !important;
+
+  /* No Theme equivalents - design-system light defaults. */
+  --dcr-color-success: #2e7d32 !important;
+  --dcr-color-success-bg: #e8f5e9 !important;
+  --dcr-color-warning: #b45309 !important;
+  --dcr-color-warning-bg: #fffbeb !important;
+  --dcr-color-info: #01579b !important;
+  --dcr-color-info-bg: #e1f5fe !important;
+  --dcr-color-purple: #7c3aed !important;
+  --dcr-color-purple-bg: #ede9fe !important;
+  --dcr-color-indigo: #4338ca !important;
+  --dcr-color-indigo-bg: #e0e7ff !important;
+}
+
+/* .dcr-bar-chart__bar's dark bg is hardcoded, not a --dcr-* token. */
+.admin-interface .dcr-bar-chart__bar {
+  background: rgba(46, 125, 50, 0.40) !important;
+}
