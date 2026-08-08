@@ -101,6 +101,7 @@ Currently available:
 | `themes/unfold.css` | Projects using [django-unfold](https://github.com/unfoldadmin/django-unfold) as their admin skin. |
 | `themes/jazzmin.css` | Projects using [django-jazzmin](https://github.com/farridav/django-jazzmin) as their admin skin. |
 | `themes/grappelli.css` | Projects using [django-grappelli](https://github.com/sehmaschine/django-grappelli) as their admin skin. |
+| `themes/admin-interface.css` | Projects using [django-admin-interface](https://github.com/fabiocaccamo/django-admin-interface) as their admin skin. |
 
 
 You can also make your own theme adapters easily by following the `unfold.css` or

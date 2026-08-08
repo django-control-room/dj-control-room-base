@@ -80,6 +80,8 @@ The only runtime dependency is Django. `dj-control-room` is optional and only ne
 
 ![Django Control Room running with the django-grappelli admin theme](https://raw.githubusercontent.com/django-control-room/dj-control-room-base/main/images/dcr-base-grappelli.png)
 
+**django-admin-interface support** - a [theme adapter](configuration.md#theme-adapters) remaps panels onto the active Theme's `--admin-interface-*` CSS variables (accent, danger, radius), so colors edited in the Themes admin apply to DCR panels too.
+
 See [Theme Adapters](themes.md) for the full gallery of supported admin skins.
 
 ---

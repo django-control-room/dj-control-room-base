@@ -27,7 +27,7 @@
 - **Template context helpers** - `panel_config.get_context(request, ...)` returns a ready-to-use context with CSS and Django admin variables included.
 - **Entry-point discovery** - panels register with the hub via a `PanelPlugin` subclass and a `pyproject.toml` entry point.
 - **Panel tools** - optional, permission-scoped callables the `dj-control-room` hub aggregates for AI agent and in-admin chat integrations.
-- **Theme adapters** - opt-in stylesheets that match panels to `django-unfold`, `django-jazzmin`, or `django-grappelli`.
+- **Theme adapters** - opt-in stylesheets that match panels to `django-unfold`, `django-jazzmin`, `django-grappelli`, or `django-admin-interface`.
 
 See the [full documentation](https://django-control-room.github.io/dj-control-room-base/) for configuration options and a guide to building your own panel on this library.
 
