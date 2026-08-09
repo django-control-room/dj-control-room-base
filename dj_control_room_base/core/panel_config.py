@@ -34,10 +34,21 @@ THEME_ADAPTER_PATHS: dict[str, str] = {
 }
 
 
-def detect_theme_adapter_path() -> Optional[str]:
-    """Return the adapter static path for the first known theme in ``INSTALLED_APPS``."""
-    apps = list(django_settings.INSTALLED_APPS)
+def detect_theme_adapter_path(
+    installed_apps: Optional[list] = None,
+) -> Optional[str]:
+    """Return the adapter static path for the first known theme in ``INSTALLED_APPS``.
+
+    ``installed_apps`` may be passed explicitly (useful in tests); otherwise
+    ``django.conf.settings.INSTALLED_APPS`` is used.
+    """
+    apps = (
+        list(installed_apps)
+        if installed_apps is not None
+        else list(django_settings.INSTALLED_APPS)
+    )
     for app in apps:
+        # Support both "unfold" and "unfold.apps.UnfoldConfig"-style entries.
         label = app.split(".", 1)[0] if isinstance(app, str) else ""
         path = THEME_ADAPTER_PATHS.get(label)
         if path is not None:
