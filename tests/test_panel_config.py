@@ -2,20 +2,48 @@
 Tests for PanelConfig - settings merging, CSS context, and template context.
 """
 
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser, Group
 from django.core.exceptions import PermissionDenied
 from django.test import TestCase, RequestFactory, override_settings
 
-from dj_control_room_base.core import PanelConfig, PANEL_BUILTIN_DEFAULTS
+from dj_control_room_base.core import (
+    PANEL_BUILTIN_DEFAULTS,
+    THEME_ADAPTER_PATHS,
+    PanelConfig,
+    detect_theme_adapter_path,
+)
 
 
 User = get_user_model()
 
 
 _SETTINGS_KEY = "DJ_TEST_PANEL_SETTINGS"
+
+
+class TestDetectThemeAdapterPath(TestCase):
+    """Tests for detect_theme_adapter_path()."""
+
+    def test_picks_first_matching_installed_app(self):
+        path = detect_theme_adapter_path(
+            installed_apps=["django.contrib.admin", "jazzmin", "unfold"],
+        )
+        self.assertEqual(path, THEME_ADAPTER_PATHS["jazzmin"])
+
+    def test_supports_appconfig_style_entries(self):
+        path = detect_theme_adapter_path(
+            installed_apps=["admin_interface.apps.AdminInterfaceConfig"],
+        )
+        self.assertEqual(path, THEME_ADAPTER_PATHS["admin_interface"])
+
+    def test_no_theme_apps_returns_none(self):
+        self.assertIsNone(
+            detect_theme_adapter_path(
+                installed_apps=["django.contrib.admin", "django.contrib.auth"],
+            )
+        )
 
 
 class TestPanelConfigGetSettings(TestCase):
@@ -113,7 +141,11 @@ class TestPanelConfigGetCssContext(TestCase):
     def test_load_default_css_true_in_context(self):
         config = PanelConfig(
             settings_key=_SETTINGS_KEY,
-            defaults={"LOAD_DEFAULT_CSS": True, "EXTRA_CSS": []},
+            defaults={
+                "LOAD_DEFAULT_CSS": True,
+                "EXTRA_CSS": [],
+                "THEME_AUTO_DETECT": False,
+            },
         )
         ctx = config.get_css_context()
         self.assertTrue(ctx["dj_cr_load_default_css"])
@@ -122,7 +154,11 @@ class TestPanelConfigGetCssContext(TestCase):
     def test_load_default_css_false_in_context(self):
         config = PanelConfig(
             settings_key=_SETTINGS_KEY,
-            defaults={"LOAD_DEFAULT_CSS": True, "EXTRA_CSS": []},
+            defaults={
+                "LOAD_DEFAULT_CSS": True,
+                "EXTRA_CSS": [],
+                "THEME_AUTO_DETECT": False,
+            },
         )
         ctx = config.get_css_context()
         self.assertFalse(ctx["dj_cr_load_default_css"])
@@ -130,7 +166,11 @@ class TestPanelConfigGetCssContext(TestCase):
     def test_extra_css_empty_produces_empty_string(self):
         config = PanelConfig(
             settings_key=_SETTINGS_KEY,
-            defaults={"LOAD_DEFAULT_CSS": True, "EXTRA_CSS": []},
+            defaults={
+                "LOAD_DEFAULT_CSS": True,
+                "EXTRA_CSS": [],
+                "THEME_AUTO_DETECT": False,
+            },
         )
         ctx = config.get_css_context()
         self.assertEqual(str(ctx["dj_cr_extra_css"]), "")
@@ -138,7 +178,11 @@ class TestPanelConfigGetCssContext(TestCase):
     def test_extra_css_absolute_url_renders_link_tag(self):
         config = PanelConfig(
             settings_key=_SETTINGS_KEY,
-            defaults={"LOAD_DEFAULT_CSS": True, "EXTRA_CSS": ["https://cdn.example.com/theme.css"]},
+            defaults={
+                "LOAD_DEFAULT_CSS": True,
+                "EXTRA_CSS": ["https://cdn.example.com/theme.css"],
+                "THEME_AUTO_DETECT": False,
+            },
         )
         ctx = config.get_css_context()
         self.assertIn('href="https://cdn.example.com/theme.css"', str(ctx["dj_cr_extra_css"]))
@@ -146,12 +190,24 @@ class TestPanelConfigGetCssContext(TestCase):
     def test_extra_css_protocol_relative_url_renders_link_tag(self):
         config = PanelConfig(
             settings_key=_SETTINGS_KEY,
-            defaults={"LOAD_DEFAULT_CSS": True, "EXTRA_CSS": ["//cdn.example.com/theme.css"]},
+            defaults={
+                "LOAD_DEFAULT_CSS": True,
+                "EXTRA_CSS": ["//cdn.example.com/theme.css"],
+                "THEME_AUTO_DETECT": False,
+            },
         )
         ctx = config.get_css_context()
         self.assertIn('href="//cdn.example.com/theme.css"', str(ctx["dj_cr_extra_css"]))
 
-    @override_settings(STATIC_URL="/static/", **{_SETTINGS_KEY: {"EXTRA_CSS": ["mypanel/css/overrides.css"]}})
+    @override_settings(
+        STATIC_URL="/static/",
+        **{
+            _SETTINGS_KEY: {
+                "EXTRA_CSS": ["mypanel/css/overrides.css"],
+                "THEME_AUTO_DETECT": False,
+            }
+        },
+    )
     def test_extra_css_static_path_resolves_via_static(self):
         config = PanelConfig(
             settings_key=_SETTINGS_KEY,
@@ -167,6 +223,7 @@ class TestPanelConfigGetCssContext(TestCase):
             defaults={
                 "LOAD_DEFAULT_CSS": True,
                 "EXTRA_CSS": ["https://a.example.com/a.css", "https://b.example.com/b.css"],
+                "THEME_AUTO_DETECT": False,
             },
         )
         ctx = config.get_css_context()
@@ -174,6 +231,81 @@ class TestPanelConfigGetCssContext(TestCase):
         self.assertIn("a.example.com/a.css", output)
         self.assertIn("b.example.com/b.css", output)
         self.assertEqual(output.count("<link"), 2)
+
+    @override_settings(
+        STATIC_URL="/static/",
+        **{_SETTINGS_KEY: {"THEME_AUTO_DETECT": True, "EXTRA_CSS": []}},
+    )
+    @patch(
+        "dj_control_room_base.core.panel_config.detect_theme_adapter_path",
+        return_value=THEME_ADAPTER_PATHS["unfold"],
+    )
+    def test_theme_auto_detect_prepends_detected_adapter(self, _mock_detect):
+        config = PanelConfig(settings_key=_SETTINGS_KEY)
+        ctx = config.get_css_context()
+        output = str(ctx["dj_cr_extra_css"])
+        self.assertIn("themes/unfold.css", output)
+        self.assertEqual(output.count("<link"), 1)
+
+    @override_settings(
+        STATIC_URL="/static/",
+        **{_SETTINGS_KEY: {"THEME_AUTO_DETECT": False, "EXTRA_CSS": []}},
+    )
+    @patch(
+        "dj_control_room_base.core.panel_config.detect_theme_adapter_path",
+        return_value=THEME_ADAPTER_PATHS["unfold"],
+    )
+    def test_theme_auto_detect_false_skips_detection(self, mock_detect):
+        config = PanelConfig(settings_key=_SETTINGS_KEY)
+        ctx = config.get_css_context()
+        self.assertEqual(str(ctx["dj_cr_extra_css"]), "")
+        mock_detect.assert_not_called()
+
+    @override_settings(
+        STATIC_URL="/static/",
+        **{
+            _SETTINGS_KEY: {
+                "THEME_AUTO_DETECT": True,
+                "EXTRA_CSS": [
+                    "dj_control_room_base/css/themes/unfold.css",
+                    "https://cdn.example.com/extra.css",
+                ],
+            }
+        },
+    )
+    @patch(
+        "dj_control_room_base.core.panel_config.detect_theme_adapter_path",
+        return_value=THEME_ADAPTER_PATHS["unfold"],
+    )
+    def test_theme_auto_detect_dedupes_path_already_in_extra_css(self, _mock_detect):
+        config = PanelConfig(settings_key=_SETTINGS_KEY)
+        ctx = config.get_css_context()
+        output = str(ctx["dj_cr_extra_css"])
+        self.assertEqual(output.count("themes/unfold.css"), 1)
+        self.assertIn("cdn.example.com/extra.css", output)
+        self.assertEqual(output.count("<link"), 2)
+
+    @override_settings(
+        STATIC_URL="/static/",
+        **{
+            _SETTINGS_KEY: {
+                "THEME_AUTO_DETECT": True,
+                "EXTRA_CSS": ["https://cdn.example.com/extra.css"],
+            }
+        },
+    )
+    @patch(
+        "dj_control_room_base.core.panel_config.detect_theme_adapter_path",
+        return_value=THEME_ADAPTER_PATHS["grappelli"],
+    )
+    def test_theme_auto_detect_loads_before_extra_css(self, _mock_detect):
+        config = PanelConfig(settings_key=_SETTINGS_KEY)
+        output = str(config.get_css_context()["dj_cr_extra_css"])
+        adapter_pos = output.find("themes/grappelli.css")
+        extra_pos = output.find("cdn.example.com/extra.css")
+        self.assertGreater(adapter_pos, -1)
+        self.assertGreater(extra_pos, -1)
+        self.assertLess(adapter_pos, extra_pos)
 
 
 class TestPanelConfigGetContext(TestCase):

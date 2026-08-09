@@ -18,10 +18,31 @@ from dj_control_room_base.core.panel_tool import PanelTool
 PANEL_BUILTIN_DEFAULTS: dict[str, object] = {
     "LOAD_DEFAULT_CSS": True,
     "EXTRA_CSS": [],
+    "THEME_AUTO_DETECT": True,
     "ALLOWED_GROUPS": [],
     "REQUIRE_SUPERUSER": False,
     "SCOPE_PERMISSIONS": {},
 }
+
+# INSTALLED_APPS label -> static path under dj_control_room_base.
+# Detection walks INSTALLED_APPS in order and picks the first match.
+THEME_ADAPTER_PATHS: dict[str, str] = {
+    "unfold": "dj_control_room_base/css/themes/unfold.css",
+    "jazzmin": "dj_control_room_base/css/themes/jazzmin.css",
+    "grappelli": "dj_control_room_base/css/themes/grappelli.css",
+    "admin_interface": "dj_control_room_base/css/themes/admin-interface.css",
+}
+
+
+def detect_theme_adapter_path() -> Optional[str]:
+    """Return the adapter static path for the first known theme in ``INSTALLED_APPS``."""
+    apps = list(django_settings.INSTALLED_APPS)
+    for app in apps:
+        label = app.split(".", 1)[0] if isinstance(app, str) else ""
+        path = THEME_ADAPTER_PATHS.get(label)
+        if path is not None:
+            return path
+    return None
 
 
 class PanelConfig:
@@ -148,6 +169,7 @@ class PanelConfig:
 
     def permission_required(self, scope: Optional[str] = None):
         """Decorator: redirect anonymous users to admin login; 403 otherwise if unauthorised."""
+
         def decorator(view_func):
             @functools.wraps(view_func)
             def wrapper(request, *args, **kwargs):
@@ -159,14 +181,30 @@ class PanelConfig:
                 if not self.has_permission(request, scope):
                     raise PermissionDenied
                 return view_func(request, *args, **kwargs)
+
             return wrapper
+
         return decorator
 
     def get_css_context(self) -> dict:
-        """Return the CSS injection context dict for use in templates."""
+        """Return the CSS injection context dict for use in templates.
+
+        When ``THEME_AUTO_DETECT`` is enabled, detects a known admin skin
+        from ``INSTALLED_APPS`` and prepends its adapter path to ``EXTRA_CSS``
+        before rendering ``<link>`` tags. Disable it to opt out and load
+        adapters (or any other CSS) manually via ``EXTRA_CSS``. A path already
+        listed in ``EXTRA_CSS`` is not duplicated.
+        """
         settings = self.get_settings()
+        paths = list(settings.get("EXTRA_CSS", []) or [])
+        if settings.get("THEME_AUTO_DETECT", True) and settings.get(
+            "LOAD_DEFAULT_CSS", True
+        ):
+            adapter = detect_theme_adapter_path()
+            if adapter and adapter not in paths:
+                paths = [adapter, *paths]
         links = []
-        for path in settings.get("EXTRA_CSS", []):
+        for path in paths:
             url = (
                 path if path.startswith(("http://", "https://", "//")) else static(path)
             )
