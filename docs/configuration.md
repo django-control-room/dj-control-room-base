@@ -9,6 +9,7 @@ The settings key for this panel is **`DJ_CONTROL_ROOM_BASE_SETTINGS`**.
 DJ_CONTROL_ROOM_BASE_SETTINGS = {
     "LOAD_DEFAULT_CSS": True,
     "EXTRA_CSS": [],
+    "THEME_AUTO_DETECT": True,
     "ALLOWED_GROUPS": [],
     "REQUIRE_SUPERUSER": False,
     "SCOPE_PERMISSIONS": {},
@@ -80,16 +81,36 @@ DJ_CONTROL_ROOM_BASE_SETTINGS = {
     `panel_config.get_context(request)` calls `get_css_context()` internally and merges the result into the template context. Templates receive two variables:
 
     - `dj_cr_load_default_css` - boolean, whether to render the design-system `<link>` tag
-    - `dj_cr_extra_css` - pre-rendered `<link>` tag HTML for each `EXTRA_CSS` entry, marked safe
+    - `dj_cr_extra_css` - pre-rendered `<link>` tag HTML for the resolved theme adapter (if any) plus each `EXTRA_CSS` entry, marked safe
 
     If you are writing a panel template from scratch, extend `panel_base.html` (which handles these variables) or render them yourself.
 
-### Theme adapters
+### `THEME_AUTO_DETECT`
 
-The package ships optional token-override stylesheets under `dj_control_room_base/css/themes/` for admin skins that don't match the classic Django admin palette. These are **not loaded automatically** - add the one you need to `EXTRA_CSS` on each panel where you want it applied:
+**Type:** `bool` | **Default:** `True`
+
+When `True`, detect the first known admin skin in `INSTALLED_APPS` and inject its bundled [theme adapter](#theme-adapters) stylesheet through the same pipeline as `EXTRA_CSS`.
+
+When `False`, do nothing automatically - load an adapter (or any other CSS) yourself via `EXTRA_CSS`.
+
+Detection walks `INSTALLED_APPS` in order and picks the first of: `unfold`, `jazzmin`, `grappelli`, `admin_interface`. Classic Django admin (no skin app) loads nothing. If the adapter path is already listed in `EXTRA_CSS`, it is not duplicated.
 
 ```python
 DJ_MY_PANEL_SETTINGS = {
+    "THEME_AUTO_DETECT": True,  # default
+    # Or opt out and load manually:
+    # "THEME_AUTO_DETECT": False,
+    # "EXTRA_CSS": ["dj_control_room_base/css/themes/unfold.css"],
+}
+```
+
+### Theme adapters
+
+The package ships token-override stylesheets under `dj_control_room_base/css/themes/` for admin skins that don't match the classic Django admin palette. With the default `THEME_AUTO_DETECT = True`, the matching adapter is loaded automatically when the skin's app is in `INSTALLED_APPS`. To choose the adapter yourself, set `THEME_AUTO_DETECT` to `False` and add it via `EXTRA_CSS`:
+
+```python
+DJ_MY_PANEL_SETTINGS = {
+    "THEME_AUTO_DETECT": False,
     "EXTRA_CSS": ["dj_control_room_base/css/themes/unfold.css"],
 }
 ```
@@ -197,6 +218,7 @@ All supported keys with their types and defaults:
 |---|---|---|---|
 | `LOAD_DEFAULT_CSS` | `bool` | `True` | Load the bundled `design-system.css`. |
 | `EXTRA_CSS` | `list[str]` | `[]` | Extra stylesheets to inject (static paths or URLs). |
+| `THEME_AUTO_DETECT` | `bool` | `True` | Auto-detect a known admin skin and inject its theme adapter stylesheet. |
 | `ALLOWED_GROUPS` | `list[str]` | `[]` | Group names allowed panel-wide. Empty means any staff. |
 | `REQUIRE_SUPERUSER` | `bool` | `False` | Restrict panel to superusers only. |
 | `SCOPE_PERMISSIONS` | `dict` | `{}` | Per-scope overrides for `ALLOWED_GROUPS` and `REQUIRE_SUPERUSER`. |
