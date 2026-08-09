@@ -1,12 +1,15 @@
 # Theme Adapters
 
-Panels built on `dj_control_room_base` render with the classic Django admin palette by default. For projects using a themed admin skin, this package ships **theme adapters** - small, opt-in stylesheets that remap DCR's `--dcr-*` design tokens onto the host skin's own CSS variables, so panels blend in instead of clashing with the rest of the admin.
+Panels built on `dj_control_room_base` render with the classic Django admin palette by default. For projects using a themed admin skin, this package ships **theme adapters** - small stylesheets that remap DCR's `--dcr-*` design tokens onto the host skin's own CSS variables, so panels blend in instead of clashing with the rest of the admin.
 
-Adapters live under `dj_control_room_base/css/themes/` and are never loaded automatically. Add the one you need to `EXTRA_CSS` on each panel where you want it applied:
+Adapters live under `dj_control_room_base/css/themes/`. With the default `THEME_AUTO_DETECT = True`, `PanelConfig` detects the active admin skin from `INSTALLED_APPS` and injects the matching adapter through the same pipeline as `EXTRA_CSS`. Turn it off to opt out and load an adapter manually:
 
 ```python
 DJ_MY_PANEL_SETTINGS = {
-    "EXTRA_CSS": ["dj_control_room_base/css/themes/unfold.css"],
+    "THEME_AUTO_DETECT": True,  # default
+    # Or opt out:
+    # "THEME_AUTO_DETECT": False,
+    # "EXTRA_CSS": ["dj_control_room_base/css/themes/unfold.css"],
 }
 ```
 
