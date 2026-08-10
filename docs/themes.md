@@ -2,7 +2,7 @@
 
 Panels built on `dj_control_room_base` render with the classic Django admin palette by default. For projects using a themed admin skin, this package ships **theme adapters** - small stylesheets that remap DCR's `--dcr-*` design tokens onto the host skin's own CSS variables, so panels blend in instead of clashing with the rest of the admin.
 
-Adapters live under `dj_control_room_base/css/themes/`. With the default `THEME_AUTO_DETECT = True`, `PanelConfig` detects the active admin skin from `INSTALLED_APPS` and injects the matching adapter through the same pipeline as `EXTRA_CSS`. Turn it off to opt out and load an adapter manually:
+Adapters live under `dj_control_room_base/css/themes/`. With the default `THEME_AUTO_DETECT = True`, `PanelConfig` detects the active admin skin from `INSTALLED_APPS` and injects either a first-class adapter or a [general light/dark pin](configuration.md#general-light-and-dark-pins) through the same pipeline as `EXTRA_CSS`. Turn it off to opt out and load an adapter manually:
 
 ```python
 DJ_MY_PANEL_SETTINGS = {
@@ -13,7 +13,7 @@ DJ_MY_PANEL_SETTINGS = {
 }
 ```
 
-See [Configuration - Theme adapters](configuration.md#theme-adapters) for the full settings reference, fallback behavior, and dark-mode wiring. This page is a visual tour of what's currently supported.
+See [Configuration - Theme adapters](configuration.md#theme-adapters) for the full settings reference, general pin fallbacks, and dark-mode wiring. This page is a visual tour of what's currently supported.
 
 ---
 
@@ -81,6 +81,27 @@ DJ_MY_PANEL_SETTINGS = {
 
 ---
 
+## General light and dark pins (unsupported skins)
+
+Skins without a first-class adapter get a pinned palette when auto-detect finds them first in `INSTALLED_APPS`:
+
+- `themes/general-light.css` for light-chrome skins (for example [django-simpleui](https://github.com/newpanjing/simpleui) or [django-semantic-admin](https://github.com/globophobe/django-semantic-admin))
+- `themes/general-dark.css` for dark-chrome skins
+
+These pins keep panel surfaces aligned with the host chrome; they do not attempt brand remapping.
+
+```python
+DJ_MY_PANEL_SETTINGS = {
+    "EXTRA_CSS": ["dj_control_room_base/css/themes/general-light.css"],
+    # Or:
+    # "EXTRA_CSS": ["dj_control_room_base/css/themes/general-dark.css"],
+}
+```
+
+See [Configuration - General light and dark pins](configuration.md#general-light-and-dark-pins) for the recognized app labels.
+
+---
+
 ## Build your own
 
-Want to support another admin skin? Use `unfold.css`, `jazzmin.css`, `grappelli.css`, or `admin-interface.css` as a starting point and remap the `--dcr-*` tokens to match.
+Want to support another admin skin? Use `unfold.css`, `jazzmin.css`, `grappelli.css`, or `admin-interface.css` as a starting point and remap the `--dcr-*` tokens to match. Until then, a general light or dark pin keeps panels readable under that skin.
