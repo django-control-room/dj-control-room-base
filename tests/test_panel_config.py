@@ -12,9 +12,12 @@ from django.test import TestCase, RequestFactory, override_settings
 from dj_control_room_base.core import (
     PANEL_BUILTIN_DEFAULTS,
     THEME_ADAPTER_PATHS,
+    THEME_GENERAL_DARK_PATH,
+    THEME_GENERAL_LIGHT_PATH,
     PanelConfig,
     detect_theme_adapter_path,
 )
+from dj_control_room_base.core import panel_config as panel_config_module
 
 
 User = get_user_model()
@@ -44,6 +47,56 @@ class TestDetectThemeAdapterPath(TestCase):
                 installed_apps=["django.contrib.admin", "django.contrib.auth"],
             )
         )
+
+    def test_unsupported_theme_returns_general_light(self):
+        path = detect_theme_adapter_path(
+            installed_apps=["simpleui", "django.contrib.admin"],
+        )
+        self.assertEqual(path, THEME_GENERAL_LIGHT_PATH)
+
+    def test_unsupported_theme_appconfig_style_entry(self):
+        path = detect_theme_adapter_path(
+            installed_apps=["semantic_admin.apps.SemanticAdminConfig"],
+        )
+        self.assertEqual(path, THEME_GENERAL_LIGHT_PATH)
+
+    def test_supported_adapter_wins_over_later_general_pin_app(self):
+        path = detect_theme_adapter_path(
+            installed_apps=["unfold", "simpleui", "django.contrib.admin"],
+        )
+        self.assertEqual(path, THEME_ADAPTER_PATHS["unfold"])
+
+    def test_general_light_app_wins_when_first(self):
+        path = detect_theme_adapter_path(
+            installed_apps=["simpleui", "unfold", "django.contrib.admin"],
+        )
+        self.assertEqual(path, THEME_GENERAL_LIGHT_PATH)
+
+    def test_general_dark_app_returns_general_dark(self):
+        with patch.object(
+            panel_config_module,
+            "THEME_GENERAL_DARK_APPS",
+            frozenset({"fake_dark_admin"}),
+        ):
+            path = detect_theme_adapter_path(
+                installed_apps=["fake_dark_admin", "django.contrib.admin"],
+            )
+        self.assertEqual(path, THEME_GENERAL_DARK_PATH)
+
+    def test_general_light_wins_over_later_general_dark(self):
+        with patch.object(
+            panel_config_module,
+            "THEME_GENERAL_DARK_APPS",
+            frozenset({"fake_dark_admin"}),
+        ):
+            path = detect_theme_adapter_path(
+                installed_apps=[
+                    "simpleui",
+                    "fake_dark_admin",
+                    "django.contrib.admin",
+                ],
+            )
+        self.assertEqual(path, THEME_GENERAL_LIGHT_PATH)
 
 
 class TestPanelConfigGetSettings(TestCase):
@@ -306,6 +359,38 @@ class TestPanelConfigGetCssContext(TestCase):
         self.assertGreater(adapter_pos, -1)
         self.assertGreater(extra_pos, -1)
         self.assertLess(adapter_pos, extra_pos)
+
+    @override_settings(
+        STATIC_URL="/static/",
+        **{_SETTINGS_KEY: {"THEME_AUTO_DETECT": True, "EXTRA_CSS": []}},
+    )
+    @patch(
+        "dj_control_room_base.core.panel_config.detect_theme_adapter_path",
+        return_value=THEME_GENERAL_LIGHT_PATH,
+    )
+    def test_theme_auto_detect_prepends_general_light_for_unsupported(
+        self, _mock_detect
+    ):
+        config = PanelConfig(settings_key=_SETTINGS_KEY)
+        output = str(config.get_css_context()["dj_cr_extra_css"])
+        self.assertIn("themes/general-light.css", output)
+        self.assertEqual(output.count("<link"), 1)
+
+    @override_settings(
+        STATIC_URL="/static/",
+        **{_SETTINGS_KEY: {"THEME_AUTO_DETECT": True, "EXTRA_CSS": []}},
+    )
+    @patch(
+        "dj_control_room_base.core.panel_config.detect_theme_adapter_path",
+        return_value=THEME_GENERAL_DARK_PATH,
+    )
+    def test_theme_auto_detect_prepends_general_dark_for_unsupported(
+        self, _mock_detect
+    ):
+        config = PanelConfig(settings_key=_SETTINGS_KEY)
+        output = str(config.get_css_context()["dj_cr_extra_css"])
+        self.assertIn("themes/general-dark.css", output)
+        self.assertEqual(output.count("<link"), 1)
 
 
 class TestPanelConfigGetContext(TestCase):

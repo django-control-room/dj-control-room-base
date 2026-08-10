@@ -33,11 +33,44 @@ THEME_ADAPTER_PATHS: dict[str, str] = {
     "admin_interface": "dj_control_room_base/css/themes/admin-interface.css",
 }
 
+# General light/dark pin stylesheets for known third-party skins without a
+# first-class adapter. Pin design-system tokens so OS/browser color-scheme
+# preferences cannot clash with a light or dark host admin.
+THEME_GENERAL_LIGHT_PATH: str = "dj_control_room_base/css/themes/general-light.css"
+THEME_GENERAL_DARK_PATH: str = "dj_control_room_base/css/themes/general-dark.css"
+
+# INSTALLED_APPS labels for skins we recognize but do not ship a palette
+# remap for. First match in INSTALLED_APPS wins over later entries; a
+# supported adapter label always wins when it appears first.
+THEME_GENERAL_LIGHT_APPS: frozenset[str] = frozenset(
+    {
+        "simpleui",
+        "semantic_admin",
+        "django_admin_kubi",
+        "daisy",
+        "jet",
+        "djangocms_admin_style",
+        "bootstrap_admin",
+    }
+)
+THEME_GENERAL_DARK_APPS: frozenset[str] = frozenset(
+    "baton",
+)
+
 
 def detect_theme_adapter_path(
     installed_apps: Optional[list] = None,
 ) -> Optional[str]:
-    """Return the adapter static path for the first known theme in ``INSTALLED_APPS``.
+    """Return a theme stylesheet path for the first known skin in ``INSTALLED_APPS``.
+
+    Walks ``INSTALLED_APPS`` in order and returns:
+
+    - a first-class adapter path from :data:`THEME_ADAPTER_PATHS`, or
+    - :data:`THEME_GENERAL_LIGHT_PATH` / :data:`THEME_GENERAL_DARK_PATH`
+      when a known unsupported skin from
+      :data:`THEME_GENERAL_LIGHT_APPS` / :data:`THEME_GENERAL_DARK_APPS`
+      is found first, or
+    - ``None`` for stock Django admin (no theme app).
 
     ``installed_apps`` may be passed explicitly (useful in tests); otherwise
     ``django.conf.settings.INSTALLED_APPS`` is used.
@@ -53,6 +86,10 @@ def detect_theme_adapter_path(
         path = THEME_ADAPTER_PATHS.get(label)
         if path is not None:
             return path
+        if label in THEME_GENERAL_LIGHT_APPS:
+            return THEME_GENERAL_LIGHT_PATH
+        if label in THEME_GENERAL_DARK_APPS:
+            return THEME_GENERAL_DARK_PATH
     return None
 
 
@@ -201,10 +238,11 @@ class PanelConfig:
         """Return the CSS injection context dict for use in templates.
 
         When ``THEME_AUTO_DETECT`` is enabled, detects a known admin skin
-        from ``INSTALLED_APPS`` and prepends its adapter path to ``EXTRA_CSS``
-        before rendering ``<link>`` tags. Disable it to opt out and load
-        adapters (or any other CSS) manually via ``EXTRA_CSS``. A path already
-        listed in ``EXTRA_CSS`` is not duplicated.
+        from ``INSTALLED_APPS`` and prepends either its first-class adapter
+        or a general light/dark pin to ``EXTRA_CSS`` before rendering
+        ``<link>`` tags. Disable it to opt out and load adapters (or any
+        other CSS) manually via ``EXTRA_CSS``. A path already listed in
+        ``EXTRA_CSS`` is not duplicated.
         """
         settings = self.get_settings()
         paths = list(settings.get("EXTRA_CSS", []) or [])
