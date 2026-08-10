@@ -17,6 +17,26 @@ See [Configuration - Theme adapters](configuration.md#theme-adapters) for the fu
 
 ---
 
+## Compatibility status
+
+| Admin skin | `INSTALLED_APPS` label | Status | Stylesheet |
+|---|---|---|---|
+| Classic Django admin | — | Built-in (no adapter needed) | — |
+| [django-unfold](https://github.com/unfoldadmin/django-unfold) | `unfold` | First-class adapter | `themes/unfold.css` |
+| [django-jazzmin](https://github.com/farridav/django-jazzmin) | `jazzmin` | First-class adapter | `themes/jazzmin.css` |
+| [django-grappelli](https://github.com/sehmaschine/django-grappelli) | `grappelli` | First-class adapter | `themes/grappelli.css` |
+| [django-admin-interface](https://github.com/fabiocaccamo/django-admin-interface) | `admin_interface` | First-class adapter | `themes/admin-interface.css` |
+| [django-simpleui](https://github.com/newpanjing/simpleui) | `simpleui` | General light pin | `themes/general-light.css` |
+| [django-semantic-admin](https://github.com/globophobe/django-semantic-admin) | `semantic_admin` | General light pin | `themes/general-light.css` |
+| [django-admin-kubi](https://github.com/dengunorg/django-admin-kubi) | `django_admin_kubi` | General light pin | `themes/general-light.css` |
+| [django-daisy](https://github.com/hypy13/django-daisy) | `django_daisy` | General light pin | `themes/general-light.css` |
+| [django-jet](https://github.com/geex-arts/django-jet) | `jet` | General light pin | `themes/general-light.css` |
+| [djangocms-admin-style](https://github.com/django-cms/djangocms-admin-style) | `djangocms_admin_style` | General light pin | `themes/general-light.css` |
+| [bootstrap-admin](https://github.com/douglasmiranda/django-admin-bootstrap) | `bootstrap_admin` | General light pin | `themes/general-light.css` |
+
+
+---
+
 ## django-unfold
 
 [`django-unfold`](https://github.com/unfoldadmin/django-unfold) themes are driven by `--color-primary-*`, `--color-base-*`, and `--color-font-*` CSS variables. `themes/unfold.css` remaps DCR's accent, surface, border, and muted-text tokens onto those variables, so panels automatically pick up whatever brand color the project has configured for Unfold - light or dark mode included.

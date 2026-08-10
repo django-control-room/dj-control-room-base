@@ -143,11 +143,7 @@ Many third-party admin skins keep a fixed light or dark chrome and do not expose
 
 For curated lists of such skins, auto-detect loads `themes/general-light.css` or `themes/general-dark.css` instead. Those stylesheets pin `--dcr-*` tokens to the matching design-system palette (with `!important`) so panels stay readable. They do **not** remap brand/accent colors onto the host skin - for that, write a custom adapter and load it via `EXTRA_CSS`.
 
-Recognized general-light app labels (first match in `INSTALLED_APPS`):
-
-`simpleui`, `semantic_admin`, `django_admin_kubi`, `daisy`, `jet`, `bootstrap_admin`, `djangocms_admin_style`, `material`
-
-Recognized general-dark app labels: none yet (the stylesheet and detection path are ready; add labels as dark-only unsupported skins are identified).
+See [Theme Adapters - Compatibility status](themes.md#compatibility-status) for the full table.
 
 ---
 

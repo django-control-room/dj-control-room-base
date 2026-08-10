@@ -47,15 +47,13 @@ THEME_GENERAL_LIGHT_APPS: frozenset[str] = frozenset(
         "simpleui",
         "semantic_admin",
         "django_admin_kubi",
-        "daisy",
+        "django_daisy",
         "jet",
         "djangocms_admin_style",
         "bootstrap_admin",
     }
 )
-THEME_GENERAL_DARK_APPS: frozenset[str] = frozenset(
-    "baton",
-)
+THEME_GENERAL_DARK_APPS: frozenset[str] = frozenset({})
 
 
 def detect_theme_adapter_path(
