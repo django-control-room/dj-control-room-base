@@ -41,6 +41,13 @@ class TestDetectThemeAdapterPath(TestCase):
         )
         self.assertEqual(path, THEME_ADAPTER_PATHS["admin_interface"])
 
+    def test_detects_django_admin_dracula(self):
+        path = detect_theme_adapter_path(
+            installed_apps=["django_admin_dracula", "django.contrib.admin"],
+        )
+        self.assertEqual(path, THEME_ADAPTER_PATHS["django_admin_dracula"])
+        self.assertIn("themes/dracula.css", path)
+
     def test_no_theme_apps_returns_none(self):
         self.assertIsNone(
             detect_theme_adapter_path(

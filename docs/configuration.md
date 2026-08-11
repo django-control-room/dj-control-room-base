@@ -91,7 +91,7 @@ DJ_CONTROL_ROOM_BASE_SETTINGS = {
 
 When `True`, detect the first known admin skin in `INSTALLED_APPS` and inject a stylesheet through the same pipeline as `EXTRA_CSS`:
 
-1. A first-class [theme adapter](#theme-adapters) when the skin is `unfold`, `jazzmin`, `grappelli`, or `admin_interface`.
+1. A first-class [theme adapter](#theme-adapters) when the skin is `unfold`, `jazzmin`, `grappelli`, `admin_interface`, or `django_admin_dracula`.
 2. A [general light/dark pin](#general-light-and-dark-pins) (`themes/general-light.css` or `themes/general-dark.css`) when a known unsupported skin is detected first.
 3. Nothing for classic Django admin (no theme app).
 
@@ -127,6 +127,7 @@ Currently available:
 | `themes/jazzmin.css` | Projects using [django-jazzmin](https://github.com/farridav/django-jazzmin) as their admin skin. |
 | `themes/grappelli.css` | Projects using [django-grappelli](https://github.com/sehmaschine/django-grappelli) as their admin skin. |
 | `themes/admin-interface.css` | Projects using [django-admin-interface](https://github.com/fabiocaccamo/django-admin-interface) as their admin skin. |
+| `themes/dracula.css` | Projects using [django-admin-dracula](https://github.com/dracula/django-admin) as their admin skin. |
 | `themes/general-light.css` | Light-pin fallback for known skins without a first-class adapter (see below). |
 | `themes/general-dark.css` | Dark-pin fallback for known skins without a first-class adapter (see below). |
 

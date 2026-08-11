@@ -31,6 +31,7 @@ THEME_ADAPTER_PATHS: dict[str, str] = {
     "jazzmin": "dj_control_room_base/css/themes/jazzmin.css",
     "grappelli": "dj_control_room_base/css/themes/grappelli.css",
     "admin_interface": "dj_control_room_base/css/themes/admin-interface.css",
+    "django_admin_dracula": "dj_control_room_base/css/themes/dracula.css",
 }
 
 # General light/dark pin stylesheets for known third-party skins without a

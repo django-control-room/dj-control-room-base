@@ -1,0 +1,115 @@
+/*
+   DJ CONTROL ROOM - Dracula Theme Adapter  (themes/dracula.css)
+
+   DJ_<PANEL>_SETTINGS = {
+      "EXTRA_CSS": ["dj_control_room_base/css/themes/dracula.css"],
+   }
+*/
+
+:root {
+    --dcr-color-text: var(--body-fg, var(--dracula-current-line, #44475a)) !important;
+    --dcr-color-text-muted: var(--body-quiet-color, var(--dracula-comment, #6272a4)) !important;
+    --dcr-color-text-inverse: var(--primary-fg, #ffffff) !important;
+
+    --dcr-color-bg: var(--body-bg, #ffffff) !important;
+    --dcr-color-bg-subtle: var(--darkened-bg, var(--dracula-purple-light, #fbf9ff)) !important;
+    --dcr-color-border: var(--border-color, var(--hairline-color, #ccc)) !important;
+    --dcr-color-muted: var(--body-quiet-color, var(--dracula-comment, #6272a4)) !important;
+    --dcr-color-muted-bg: color-mix(in srgb,
+            var(--dracula-comment, #6272a4) 14%,
+            transparent) !important;
+
+    /* Purple is the distinctive Dracula brand (default buttons); cyan is --primary. */
+    --dcr-color-accent: var(--default-button-bg, var(--dracula-purple, #bd93f9)) !important;
+    --dcr-color-accent-bg: color-mix(in srgb,
+            var(--default-button-bg, var(--dracula-purple, #bd93f9)) 14%,
+            transparent) !important;
+
+    /* Keep design-system success green — the hub DCR logo uses
+     dcr-icon-color--success-solid and must not pick up Dracula neon green. */
+    --dcr-color-success: #2e7d32 !important;
+    --dcr-color-success-bg: #e8f5e9 !important;
+    --dcr-color-warning: var(--dracula-orange, #ffb86c) !important;
+    --dcr-color-warning-bg: var(--dracula-yellow-light, #fbffcf) !important;
+    --dcr-color-danger: var(--error-fg, var(--dracula-red, #ff5555)) !important;
+    --dcr-color-danger-bg: color-mix(in srgb,
+            var(--error-fg, var(--dracula-red, #ff5555)) 12%,
+            transparent) !important;
+    --dcr-color-info: var(--dracula-comment, #6272a4) !important;
+    --dcr-color-info-bg: var(--dracula-cyan-light, #d5f7ff) !important;
+    --dcr-color-purple: var(--dracula-purple, #bd93f9) !important;
+    --dcr-color-purple-bg: var(--dracula-purple-light, #fbf9ff) !important;
+    --dcr-color-indigo: var(--dracula-comment-darker, #445075) !important;
+    --dcr-color-indigo-bg: color-mix(in srgb,
+            var(--dracula-comment, #6272a4) 14%,
+            transparent) !important;
+}
+
+/* Explicit dark toggle. Semantic *‑bg pastels from the light :root need
+   translucent dark variants; surfaces already follow --body-* above. */
+html[data-theme="dark"] {
+    --dcr-color-success: #66bb6a !important;
+    --dcr-color-success-bg: rgba(102, 187, 106, 0.12) !important;
+    --dcr-color-warning: var(--dracula-orange, #ffb86c) !important;
+    --dcr-color-warning-bg: color-mix(in srgb,
+            var(--dracula-orange, #ffb86c) 14%,
+            transparent) !important;
+    --dcr-color-danger-bg: color-mix(in srgb,
+            var(--dracula-red, #ff5555) 14%,
+            transparent) !important;
+    --dcr-color-info: var(--dracula-cyan, #8be9fd) !important;
+    --dcr-color-info-bg: color-mix(in srgb,
+            var(--dracula-cyan, #8be9fd) 14%,
+            transparent) !important;
+    --dcr-color-purple-bg: color-mix(in srgb,
+            var(--dracula-purple, #bd93f9) 14%,
+            transparent) !important;
+    --dcr-color-indigo: var(--dracula-purple, #bd93f9) !important;
+    --dcr-color-indigo-bg: color-mix(in srgb,
+            var(--dracula-purple, #bd93f9) 14%,
+            transparent) !important;
+    --dcr-color-muted-bg: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* data-theme="auto" follows OS preference the same way Dracula's dark_mode.css does. */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --dcr-color-success: #66bb6a !important;
+        --dcr-color-success-bg: rgba(102, 187, 106, 0.12) !important;
+        --dcr-color-warning: var(--dracula-orange, #ffb86c) !important;
+        --dcr-color-warning-bg: color-mix(in srgb,
+                var(--dracula-orange, #ffb86c) 14%,
+                transparent) !important;
+        --dcr-color-danger-bg: color-mix(in srgb,
+                var(--dracula-red, #ff5555) 14%,
+                transparent) !important;
+        --dcr-color-info: var(--dracula-cyan, #8be9fd) !important;
+        --dcr-color-info-bg: color-mix(in srgb,
+                var(--dracula-cyan, #8be9fd) 14%,
+                transparent) !important;
+        --dcr-color-purple-bg: color-mix(in srgb,
+                var(--dracula-purple, #bd93f9) 14%,
+                transparent) !important;
+        --dcr-color-indigo: var(--dracula-purple, #bd93f9) !important;
+        --dcr-color-indigo-bg: color-mix(in srgb,
+                var(--dracula-purple, #bd93f9) 14%,
+                transparent) !important;
+        --dcr-color-muted-bg: rgba(255, 255, 255, 0.08) !important;
+    }
+}
+
+/* .dcr-bar-chart__bar's dark bg is hardcoded, not a --dcr-* token.
+   Keep design-system greens (not Dracula neon). */
+html[data-theme="dark"] .dcr-bar-chart__bar {
+    background: rgba(102, 187, 106, 0.45) !important;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .dcr-bar-chart__bar {
+        background: rgba(102, 187, 106, 0.45) !important;
+    }
+}
+
+html[data-theme="light"] .dcr-bar-chart__bar {
+    background: rgba(46, 125, 50, 0.40) !important;
+}

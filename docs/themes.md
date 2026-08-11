@@ -26,11 +26,12 @@ See [Configuration - Theme adapters](configuration.md#theme-adapters) for the fu
 | [django-jazzmin](https://github.com/farridav/django-jazzmin) | `jazzmin` | First-class adapter | `themes/jazzmin.css` |
 | [django-grappelli](https://github.com/sehmaschine/django-grappelli) | `grappelli` | First-class adapter | `themes/grappelli.css` |
 | [django-admin-interface](https://github.com/fabiocaccamo/django-admin-interface) | `admin_interface` | First-class adapter | `themes/admin-interface.css` |
+| [django-admin-dracula](https://github.com/dracula/django-admin) | `django_admin_dracula` | First-class adapter | `themes/dracula.css` |
 | [django-simpleui](https://github.com/newpanjing/simpleui) | `simpleui` | General light pin | `themes/general-light.css` |
 | [django-semantic-admin](https://github.com/globophobe/django-semantic-admin) | `semantic_admin` | General light pin | `themes/general-light.css` |
 | [django-admin-kubi](https://github.com/dengunorg/django-admin-kubi) | `django_admin_kubi` | General light pin | `themes/general-light.css` |
 | [django-daisy](https://github.com/hypy13/django-daisy) | `django_daisy` | General light pin | `themes/general-light.css` |
-| [django-jet](https://github.com/geex-arts/django-jet) | `jet` | General light pin | `themes/general-light.css` |
+| [django-jet-reboot](https://github.com/assem-ch/django-jet-reboot) | `jet` | General light pin | `themes/general-light.css` |
 | [djangocms-admin-style](https://github.com/django-cms/djangocms-admin-style) | `djangocms_admin_style` | General light pin | `themes/general-light.css` |
 | [bootstrap-admin](https://github.com/douglasmiranda/django-admin-bootstrap) | `bootstrap_admin` | General light pin | `themes/general-light.css` |
 
@@ -101,6 +102,20 @@ DJ_MY_PANEL_SETTINGS = {
 
 ---
 
+## django-admin-dracula
+
+[`django-admin-dracula`](https://github.com/dracula/django-admin) overrides Django admin CSS with the Dracula palette and supports light / dark / auto via Django's `data-theme` toggle. `themes/dracula.css` remaps DCR tokens onto Dracula's `--body-*`, `--default-button-bg`, and `--dracula-*` variables so panels track both modes (purple accent, cyan/pink/green semantic colors).
+
+```python
+DJ_MY_PANEL_SETTINGS = {
+    "EXTRA_CSS": ["dj_control_room_base/css/themes/dracula.css"],
+}
+```
+
+![Django Control Room running with the django-admin-dracula theme](https://raw.githubusercontent.com/django-control-room/dj-control-room-base/main/images/dcr-base-dracula.png)
+
+---
+
 ## General light and dark pins (unsupported skins)
 
 Skins without a first-class adapter get a pinned palette when auto-detect finds them first in `INSTALLED_APPS`:
@@ -124,4 +139,4 @@ See [Configuration - General light and dark pins](configuration.md#general-light
 
 ## Build your own
 
-Want to support another admin skin? Use `unfold.css`, `jazzmin.css`, `grappelli.css`, or `admin-interface.css` as a starting point and remap the `--dcr-*` tokens to match. Until then, a general light or dark pin keeps panels readable under that skin.
+Want to support another admin skin? Use `unfold.css`, `jazzmin.css`, `grappelli.css`, `admin-interface.css`, or `dracula.css` as a starting point and remap the `--dcr-*` tokens to match. Until then, a general light or dark pin keeps panels readable under that skin.
