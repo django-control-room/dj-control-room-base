@@ -1736,6 +1736,13 @@ a.dcr-dropdown__item--danger:active {
 }
 
 
+/* Panel root wrapper (panel_base.html). min-width:0 lets wide children scroll
+   inside flex hosts that default to min-width:auto. */
+.dcr-panel {
+  max-width: 100%;
+  min-width: 0;
+}
+
 /* --- Code viewer ------------------------------------------------------------ */
 
 /*
@@ -1762,6 +1769,10 @@ a.dcr-dropdown__item--danger:active {
   border-radius: var(--dcr-radius-xl);
   overflow: hidden;
   margin-bottom: var(--dcr-space-lg);
+  max-width: 100%;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .dcr-code-viewer__header {
@@ -1852,6 +1863,7 @@ a.dcr-dropdown__item--danger:active {
 .dcr-code-viewer__body {
   margin: 0;
   overflow-x: auto;
+  max-width: 100%;
 }
 
 /* hljs github-dark handles background/color; pin font + remove inner radius */
@@ -2279,6 +2291,8 @@ a.dcr-panel-card__link:active {
   overflow: hidden;
   margin-bottom: var(--dcr-space-lg);
   color: var(--dcr-color-text);
+  max-width: 100%;
+  min-width: 0;
 }
 
 .dcr-card__header {

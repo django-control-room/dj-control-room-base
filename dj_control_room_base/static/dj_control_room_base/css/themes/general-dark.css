@@ -1,0 +1,38 @@
+/*
+   DJ CONTROL ROOM - General dark pin  (themes/general-dark.css)
+
+   Broad compatibility layer for third-party admin skins that have no
+   first-class theme adapter and present a dark appearance.
+*/
+
+:root {
+  --dcr-color-text: #f3f4f6 !important;
+  --dcr-color-text-muted: #9ca3af !important;
+  --dcr-color-text-inverse: #111827 !important;
+
+  --dcr-color-bg: #1a1a1a !important;
+  --dcr-color-bg-subtle: #252525 !important;
+  --dcr-color-border: rgb(46, 46, 46) !important;
+
+  --dcr-color-accent: #79aec8 !important;
+  --dcr-color-accent-bg: rgba(65, 118, 144, 0.20) !important;
+  --dcr-color-success: #66bb6a !important;
+  --dcr-color-success-bg: rgba(102, 187, 106, 0.12) !important;
+  --dcr-color-warning: #fbbf24 !important;
+  --dcr-color-warning-bg: rgba(251, 191, 36, 0.12) !important;
+  --dcr-color-danger: #ef5350 !important;
+  --dcr-color-danger-bg: rgba(239, 83, 80, 0.12) !important;
+  --dcr-color-info: #42a5f5 !important;
+  --dcr-color-info-bg: rgba(66, 165, 245, 0.12) !important;
+  --dcr-color-muted: #888 !important;
+  --dcr-color-muted-bg: rgba(255, 255, 255, 0.08) !important;
+  --dcr-color-purple: #a78bfa !important;
+  --dcr-color-purple-bg: rgba(167, 139, 250, 0.12) !important;
+  --dcr-color-indigo: #818cf8 !important;
+  --dcr-color-indigo-bg: rgba(129, 140, 248, 0.12) !important;
+}
+
+/* .dcr-bar-chart__bar's dark bg is hardcoded, not a --dcr-* token. */
+.dcr-bar-chart__bar {
+  background: rgba(102, 187, 106, 0.45) !important;
+}

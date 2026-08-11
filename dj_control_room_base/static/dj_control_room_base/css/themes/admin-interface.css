@@ -50,3 +50,11 @@
 .admin-interface .dcr-bar-chart__bar {
   background: rgba(46, 125, 50, 0.40) !important;
 }
+
+/* Panel pages are not .change-list / .change-form, so they miss admin-
+   interface's content max-width rules. Allow the flex content column to
+   shrink so wide <pre> responses scroll inside .dcr-code-viewer. */
+.admin-interface .main > .content,
+.admin-interface #content {
+  min-width: 0;
+}

@@ -89,11 +89,15 @@ DJ_CONTROL_ROOM_BASE_SETTINGS = {
 
 **Type:** `bool` | **Default:** `True`
 
-When `True`, detect the first known admin skin in `INSTALLED_APPS` and inject its bundled [theme adapter](#theme-adapters) stylesheet through the same pipeline as `EXTRA_CSS`.
+When `True`, detect the first known admin skin in `INSTALLED_APPS` and inject a stylesheet through the same pipeline as `EXTRA_CSS`:
+
+1. A first-class [theme adapter](#theme-adapters) when the skin is `unfold`, `jazzmin`, `grappelli`, or `admin_interface`.
+2. A [general light/dark pin](#general-light-and-dark-pins) (`themes/general-light.css` or `themes/general-dark.css`) when a known unsupported skin is detected first.
+3. Nothing for classic Django admin (no theme app).
 
 When `False`, do nothing automatically - load an adapter (or any other CSS) yourself via `EXTRA_CSS`.
 
-Detection walks `INSTALLED_APPS` in order and picks the first of: `unfold`, `jazzmin`, `grappelli`, `admin_interface`. Classic Django admin (no skin app) loads nothing. If the adapter path is already listed in `EXTRA_CSS`, it is not duplicated.
+Detection walks `INSTALLED_APPS` in order; the first recognized theme app wins. If the resolved path is already listed in `EXTRA_CSS`, it is not duplicated.
 
 ```python
 DJ_MY_PANEL_SETTINGS = {
@@ -123,6 +127,8 @@ Currently available:
 | `themes/jazzmin.css` | Projects using [django-jazzmin](https://github.com/farridav/django-jazzmin) as their admin skin. |
 | `themes/grappelli.css` | Projects using [django-grappelli](https://github.com/sehmaschine/django-grappelli) as their admin skin. |
 | `themes/admin-interface.css` | Projects using [django-admin-interface](https://github.com/fabiocaccamo/django-admin-interface) as their admin skin. |
+| `themes/general-light.css` | Light-pin fallback for known skins without a first-class adapter (see below). |
+| `themes/general-dark.css` | Dark-pin fallback for known skins without a first-class adapter (see below). |
 
 
 You can also make your own theme adapters easily by following the `unfold.css` or
@@ -130,6 +136,14 @@ You can also make your own theme adapters easily by following the `unfold.css` o
 driven admin that exposes its palette as CSS custom properties.
 
 See [Theme Adapters](themes.md) for a full visual gallery, including every Jazzmin/Bootswatch skin currently supported.
+
+### General light and dark pins
+
+Many third-party admin skins keep a fixed light or dark chrome and do not expose the same color-scheme signals as stock Django admin / Unfold / Jazzmin. Without a first-class adapter, `design-system.css` can follow the OS preference (or stay on light defaults) and clash with that host.
+
+For curated lists of such skins, auto-detect loads `themes/general-light.css` or `themes/general-dark.css` instead. Those stylesheets pin `--dcr-*` tokens to the matching design-system palette (with `!important`) so panels stay readable. They do **not** remap brand/accent colors onto the host skin - for that, write a custom adapter and load it via `EXTRA_CSS`.
+
+See [Theme Adapters - Compatibility status](themes.md#compatibility-status) for the full table.
 
 ---
 
@@ -218,7 +232,7 @@ All supported keys with their types and defaults:
 |---|---|---|---|
 | `LOAD_DEFAULT_CSS` | `bool` | `True` | Load the bundled `design-system.css`. |
 | `EXTRA_CSS` | `list[str]` | `[]` | Extra stylesheets to inject (static paths or URLs). |
-| `THEME_AUTO_DETECT` | `bool` | `True` | Auto-detect a known admin skin and inject its theme adapter stylesheet. |
+| `THEME_AUTO_DETECT` | `bool` | `True` | Auto-detect a known admin skin and inject its adapter or a general light/dark pin. |
 | `ALLOWED_GROUPS` | `list[str]` | `[]` | Group names allowed panel-wide. Empty means any staff. |
 | `REQUIRE_SUPERUSER` | `bool` | `False` | Restrict panel to superusers only. |
 | `SCOPE_PERMISSIONS` | `dict` | `{}` | Per-scope overrides for `ALLOWED_GROUPS` and `REQUIRE_SUPERUSER`. |
