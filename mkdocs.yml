@@ -44,7 +44,7 @@ nav:
   - Building Panels: building-panels.md
   - Theme Adapters: themes.md
   - Design System: design-system.html
-  - Development: development.md
+  - Contributing: contributing.md
 
 markdown_extensions:
   - pymdownx.highlight:

@@ -1,5 +1,4 @@
-# Development
-
+# Contributing
 Setting up the project for local development and contributing.
 
 ---

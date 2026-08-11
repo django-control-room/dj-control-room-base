@@ -10,14 +10,14 @@
 
 ![dj-control-room-base - a core library for creating DCR panels](https://raw.githubusercontent.com/django-control-room/dj-control-room-base/main/images/dj-control-room-base.png)
 
-**dj-control-room-base** is a core library for [Django Control Room](https://github.com/django-control-room/dj-control-room) panels. It provides the shared primitives that every panel needs: settings management, CSS injection, permission enforcement, admin sidebar integration, template context helpers, and MCP-style panel tools.
+**dj-control-room-base** is a core library for [Django Control Room](https://django-control-room.github.io/dj-control-room/) panels. It provides the shared primitives that every panel needs: settings management, CSS injection, permission enforcement, admin sidebar integration, template context helpers, and MCP-style panel tools.
 
 **Official Django Control Room panels** ship with this package as a dependency and build on these APIs rather than reimplementing them panel by panel.
 
 **Optionally**, the package can also be mounted as a full panel in its own right: it ships a bundled design system reference UI and example patterns that are useful when building or theming new panels.
 
 - **Official site:** [djangocontrolroom.com](https://djangocontrolroom.com)
-- **Control Room app:** [dj-control-room](https://github.com/django-control-room/dj-control-room)
+- **Control Room app:** [dj-control-room](https://django-control-room.github.io/dj-control-room/)
 - **Docs:** [django-control-room.github.io/dj-control-room-base](https://django-control-room.github.io/dj-control-room-base/)
 
 ## What this library provides
@@ -67,7 +67,7 @@ Open `/admin/` and sign in. A **DJ CONTROL ROOM BASE** entry appears in the side
 
 See [Installation](https://django-control-room.github.io/dj-control-room-base/installation/) for the complete walkthrough, [Configuration](https://django-control-room.github.io/dj-control-room-base/configuration/) for CSS/permission settings and theme adapters, and [Building Panels](https://django-control-room.github.io/dj-control-room-base/building-panels/) for a guide to building your own panel on this library.
 
-## Development
+## Contributing
 
 ```bash
 git clone https://github.com/django-control-room/dj-control-room-base.git
@@ -76,8 +76,8 @@ make install
 make test_local
 ```
 
-See [Development](https://django-control-room.github.io/dj-control-room-base/development/) for Docker setup, coverage, and the full Makefile reference.
+See [Contributing](https://django-control-room.github.io/dj-control-room-base/contributing/) for Docker setup, coverage, and the full Makefile reference.
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+MIT. See [LICENSE](https://github.com/django-control-room/dj-control-room-base/blob/main/LICENSE).

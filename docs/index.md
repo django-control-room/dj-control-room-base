@@ -2,12 +2,12 @@
 
 ![dj-control-room-base connects panels to shared CSS, permissions, templates, and the Control Room hub](https://raw.githubusercontent.com/django-control-room/dj-control-room-base/main/images/dj-control-room-base.png)
 
-**dj-control-room-base** is the shared core library for [Django Control Room](https://github.com/django-control-room/dj-control-room) panels: settings, CSS injection, permissions, admin sidebar integration, and template helpers. Official panels depend on it instead of reimplementing those pieces.
+**dj-control-room-base** is the shared core library for [Django Control Room](https://django-control-room.github.io/dj-control-room/) panels: settings, CSS injection, permissions, admin sidebar integration, and template helpers. Official panels depend on it instead of reimplementing those pieces.
 
 Optionally it can also be mounted as a panel itself, a design-system reference UI useful when building or theming new panels.
 
 - **Official site:** [djangocontrolroom.com](https://djangocontrolroom.com)
-- **Control Room app:** [dj-control-room](https://github.com/django-control-room/dj-control-room)
+- **Control Room app:** [dj-control-room](https://django-control-room.github.io/dj-control-room/)
 - **Source:** [github.com/django-control-room/dj-control-room-base](https://github.com/django-control-room/dj-control-room-base)
 - **PyPI:** [pypi.org/project/dj-control-room-base](https://pypi.org/project/dj-control-room-base/)
 
@@ -22,7 +22,7 @@ Optionally it can also be mounted as a panel itself, a design-system reference U
 | [Building Panels](building-panels.md) | Authoring a panel on this library (including panel tools) |
 | [Theme Adapters](themes.md) | Supported admin skins, screenshots, and DIY adapters |
 | [Design System](design-system.html) | Live reference UI for `dcr-*` components |
-| [Development](development.md) | Contributing and local setup |
+| [Contributing](contributing.md) | Contributing and local setup |
 
 ---
 
