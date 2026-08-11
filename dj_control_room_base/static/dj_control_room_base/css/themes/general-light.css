@@ -36,3 +36,13 @@
 .dcr-bar-chart__bar {
   background: rgba(46, 125, 50, 0.40) !important;
 }
+
+/* django-daisy: outer row is `div.flex` with a `w-full` content column.
+   Without min-width:0 that column expands to fit wide <pre> response
+   bodies from the URL tester (and similar code viewers). */
+#content.content-wrapper,
+#content.main-wrapper,
+.main-content {
+  min-width: 0;
+  max-width: 100%;
+}
