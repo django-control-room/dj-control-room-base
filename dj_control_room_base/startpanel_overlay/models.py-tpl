@@ -1,0 +1,7 @@
+from dj_control_room_base.core import PanelPlaceholderModel
+
+
+class {{ camel_case_app_name }}Placeholder(PanelPlaceholderModel):
+    class Meta(PanelPlaceholderModel.Meta):
+        verbose_name = "{{ verbose_name }}"
+        verbose_name_plural = "{{ verbose_name }}"

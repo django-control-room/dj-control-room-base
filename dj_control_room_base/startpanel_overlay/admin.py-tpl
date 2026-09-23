@@ -1,0 +1,12 @@
+from django.contrib import admin
+
+from dj_control_room_base.core import BasePanelAdmin
+
+from .conf import panel_config
+from .models import {{ camel_case_app_name }}Placeholder
+
+
+@admin.register({{ camel_case_app_name }}Placeholder)
+class {{ camel_case_app_name }}PlaceholderAdmin(BasePanelAdmin):
+    redirect_url_name = "{{ app_name }}:index"
+    panel_config = panel_config

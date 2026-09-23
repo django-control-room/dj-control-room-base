@@ -1,0 +1,21 @@
+"""
+DJ Control Room panel for {{ verbose_name }}.
+
+Internal (unpackaged) panel. Registered with the hub from AppConfig.ready()
+via ``registry.register``, not via a setuptools entry point.
+"""
+
+from dj_control_room_base.core import PanelPlugin
+
+
+class {{ camel_case_app_name }}Panel(PanelPlugin):
+    name = "{{ verbose_name }}"
+    description = "{{ verbose_name }} Control Room panel"
+    icon = "cog"
+
+    app_name = "{{ app_name }}"
+
+    def get_config(self):
+        from .conf import panel_config
+
+        return panel_config
