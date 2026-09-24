@@ -111,44 +111,6 @@ make coverage_html   # runs test_coverage and prints the htmlcov path
 
 ---
 
-## Project structure
-
-```
-dj-control-room-base/
-├── dj_control_room_base/
-│   ├── core/
-│   │   ├── panel_config.py    # PanelConfig, PANEL_BUILTIN_DEFAULTS
-│   │   ├── admin.py           # BasePanelAdmin
-│   │   └── models.py          # PanelPlaceholderModel
-│   ├── templates/             # Panel HTML templates
-│   ├── static/                # design-system.css and other assets
-│   ├── conf.py                # PanelConfig instance for this panel
-│   ├── panel.py               # Control Room entry-point class
-│   ├── views.py               # index and examples views
-│   ├── urls.py                # URL patterns
-│   ├── admin.py               # BasePanelPlaceholderAdmin registration
-│   └── models.py              # BasePanelPlaceholder model
-├── example_project/           # Runnable Django project used in tests
-│   └── example_project/
-│       ├── management/commands/
-│       │   └── render_design_system.py  # generates docs/design-system.html
-│       ├── settings.py        # Test/dev settings (SQLite + Postgres toggle)
-│       └── urls.py
-├── tests/
-│   ├── conftest.py            # Pytest/Django setup
-│   ├── base.py                # Shared test base class
-│   ├── test_admin.py          # Admin integration tests
-│   ├── test_core_admin.py     # BasePanelAdmin unit tests
-│   └── test_panel_config.py   # PanelConfig unit tests
-├── docs/                      # This documentation site
-├── images/                    # Screenshots used in README and docs
-├── mkdocs.yml                 # Documentation site config
-├── pyproject.toml
-├── requirements.txt           # Dev dependencies
-└── Makefile
-```
-
----
 
 ## Design system reference page
 

@@ -26,6 +26,7 @@
 - **Admin sidebar integration** - `PanelPlaceholderModel` and `BasePanelAdmin` give any panel a sidebar entry with no extra migrations.
 - **Template context helpers** - `panel_config.get_context(request, ...)` returns a ready-to-use context with CSS and Django admin variables included.
 - **Entry-point discovery** - panels register with the hub via a `PanelPlugin` subclass and a `pyproject.toml` entry point.
+- **Internal panel scaffold** - `python manage.py dcr_startpanel <name>` creates a minimal project panel app (`dcr_`-prefixed). For publishable panel repos, use the Cookiecutter template.
 - **Panel tools** - optional, permission-scoped callables the `dj-control-room` hub aggregates for AI agent and in-admin chat integrations.
 - **Theme adapters** - stylesheets that match panels to `django-unfold`, `django-jazzmin`, `django-grappelli`, `django-admin-interface`, or `django-admin-dracula`, auto-selected from `INSTALLED_APPS` when `THEME_AUTO_DETECT` is enabled (default). Known unsupported skins get a `general-light` or `general-dark` pin instead of following OS color-scheme alone.
 
