@@ -72,7 +72,8 @@ exclude = ["tests*", "example_project*"]
 [tool.setuptools.package-data]
 "dj_control_room_base" = [
     "templates/**/*",
-    "static/**/*"
+    "static/**/*",
+    "startpanel_overlay/**/*",
 ]
 
 # pytest configuration

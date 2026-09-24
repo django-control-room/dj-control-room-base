@@ -1,3 +1,4 @@
 include README.md
 recursive-include dj_control_room_base/templates *
 recursive-include dj_control_room_base/static *
+recursive-include dj_control_room_base/startpanel_overlay *
