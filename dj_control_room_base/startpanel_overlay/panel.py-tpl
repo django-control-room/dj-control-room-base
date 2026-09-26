@@ -1,7 +1,7 @@
 """
 DJ Control Room panel for {{ verbose_name }}.
 
-Internal (unpackaged) panel. Registered with the hub from AppConfig.ready()
+Project (unpackaged) panel. Registered with the hub from AppConfig.ready()
 via ``registry.register``, not via a setuptools entry point.
 """
 

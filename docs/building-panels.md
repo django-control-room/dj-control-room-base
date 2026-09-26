@@ -6,7 +6,7 @@ By building on this library you get CSS injection, permission enforcement, admin
 
 ---
 
-## Internal project panels
+## Project panels
 
 To scaffold a panel that lives inside an existing Django project (not a published package):
 
@@ -18,6 +18,8 @@ That runs Django's `startapp` command, but it adds DCR specific changes
 the generated Django app files.
 
 It does not edit `INSTALLED_APPS`. After generation it prints the entry to add, plus the URL include. List the app before `dj_control_room` so the hub sidebar picks it up.
+
+The generated app registers from `AppConfig.ready()` (no entry point). The hub lists it under **Project Panels**, not Official Panels or Community Panels. Packaged plugins stay in those other sections even if they also call `register()`.
 
 For a complete publishable panel repository (PyPI metadata, docs, tests, entry point), use [cookiecutter-dj-control-room-plugin](https://github.com/django-control-room/cookiecutter-dj-control-room-plugin) instead.
 
