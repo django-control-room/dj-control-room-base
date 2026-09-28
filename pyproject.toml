@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "dj-control-room-base"
-version = "1.5.0"
+version = "1.6.0"
 description = "Core framework for Django Control Room panels"
 readme = "README.md"
 license = {text = "MIT"}
@@ -72,7 +72,8 @@ exclude = ["tests*", "example_project*"]
 [tool.setuptools.package-data]
 "dj_control_room_base" = [
     "templates/**/*",
-    "static/**/*"
+    "static/**/*",
+    "startpanel_overlay/**/*",
 ]
 
 # pytest configuration

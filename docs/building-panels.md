@@ -6,6 +6,25 @@ By building on this library you get CSS injection, permission enforcement, admin
 
 ---
 
+## Project panels
+
+To scaffold a panel that lives inside an existing Django project (not a published package):
+
+```bash
+python manage.py dcr_startpanel customer_lookup
+```
+
+That runs Django's `startapp` command, but it adds DCR specific changes
+the generated Django app files.
+
+It does not edit `INSTALLED_APPS`. After generation it prints the entry to add, plus the URL include. List the app before `dj_control_room` so the hub sidebar picks it up.
+
+The generated app registers from `AppConfig.ready()` (no entry point). The hub lists it under **Project Panels**, not Official Panels or Community Panels. Packaged plugins stay in those other sections even if they also call `register()`.
+
+For a complete publishable panel repository (PyPI metadata, docs, tests, entry point), use [cookiecutter-dj-control-room-plugin](https://github.com/django-control-room/cookiecutter-dj-control-room-plugin) instead.
+
+---
+
 ## Prerequisites
 
 Your panel will be a standard Django app distributed as a Python package. It needs to:
@@ -54,13 +73,14 @@ from dj_control_room_base.core import PanelPlugin
 class MyPanel(PanelPlugin):
     name = "My Panel"
     description = "A short description of what this panel does."
-    icon = "database"           # icon name from the design system
-    app_name = "dj_my_panel"   # must match the app label in INSTALLED_APPS
+    icon = "database"  # icon name from the design system
+    app_name = "dj_my_panel"  # must match the app label in INSTALLED_APPS
     docs_url = "https://github.com/yourname/dj-my-panel"
     pypi_url = "https://pypi.org/project/dj-my-panel/"
 
     def get_config(self):
         from .conf import panel_config
+
         return panel_config
 ```
 
@@ -153,6 +173,7 @@ Use `PanelPlaceholderModel` and `BasePanelAdmin` to register a Django admin side
 ```python
 # dj_my_panel/models.py
 from dj_control_room_base.core import PanelPlaceholderModel
+
 
 class MyPanelPlaceholder(PanelPlaceholderModel):
     class Meta(PanelPlaceholderModel.Meta):
